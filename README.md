@@ -3,6 +3,10 @@
 The Misty Step design system. One CSS file: tokens, base styles, and a
 small set of primitives. Import it and the project looks like ours.
 
+Live at [misty-step.github.io/aesthetic](https://misty-step.github.io/aesthetic/) —
+the system demonstrating itself: every primitive on the page is the
+stylesheet, unmodified.
+
 ## Why
 
 - **Consistent.** Every project that imports it shares the same surfaces,
@@ -19,7 +23,7 @@ small set of primitives. Import it and the project looks like ours.
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.2.0
+pnpm add github:misty-step/aesthetic#v2.3.0
 ```
 
 ```css
@@ -35,7 +39,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.2.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.3.0/aesthetic.css"
 />
 ```
 
@@ -96,25 +100,26 @@ Everything else is the shared identity.
 
 ## Primitives
 
-| Class | Role |
-| --- | --- |
-| `.ae-screen` / `.ae-bar` / `.ae-stage` | Viewport shell: chrome bars and a centered stage |
-| `.ae-stage-scroll` | Inner scroll for long documents; the page still never scrolls |
-| `.ae-view` | One screenful of content with a quiet entrance |
-| `.ae-nav` + `.ae-nav-ind` | View switcher with a sliding ink underline (the site positions the indicator on view change) |
-| `.ae-row-link` | List rows where the whole row is the link (kills cursor strobing between rows) |
-| `.ae-chrome` / `.ae-foot` | The 13px chrome register; hairline-topped two-end footer |
-| `.ae-icon` | Lucide icon sizing: 1.5px stroke, round caps, rides with text |
-| `.ae-mode` | Icon mode toggle: sun/moon rotate-crossfade |
-| `.ae-panel` | Soft depth for dense content: light shadow in light mode, wash in dark, radius 0 |
-| `.ae-name` | The name: weight 800, letterspaced, never large |
-| `.ae-lede` | The argument, plainly |
-| `.ae-group` / `.ae-h` | A section and its muted heading |
-| `.ae-item` / `.ae-dim` | Medium ink / muted ink |
-| `.ae-accent` | THE accent: one per view |
-| `.ae-label` / `.ae-input` | Form fields as lines, not boxes |
-| `.ae-button` / `.ae-button-quiet` | Buttons are not links: solid ink primary, hairline secondary |
-| `.ae-send` | The send moment: label resolves to "Sent ✓" once, then the button rests disabled |
+| Class                                  | Role                                                                                         |
+| -------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `.ae-screen` / `.ae-bar` / `.ae-stage` | Viewport shell: chrome bars and a centered stage                                             |
+| `.ae-wide`                             | Screen modifier: the 68rem measure for catalog, specimen, and dashboard shapes               |
+| `.ae-stage-scroll`                     | Inner scroll for long documents; the page still never scrolls                                |
+| `.ae-view`                             | One screenful of content with a quiet entrance                                               |
+| `.ae-nav` + `.ae-nav-ind`              | View switcher with a sliding ink underline (the site positions the indicator on view change) |
+| `.ae-row-link`                         | List rows where the whole row is the link (kills cursor strobing between rows)               |
+| `.ae-chrome` / `.ae-foot`              | The 13px chrome register; hairline-topped two-end footer                                     |
+| `.ae-icon`                             | Lucide icon sizing: 1.5px stroke, round caps, rides with text                                |
+| `.ae-mode`                             | Icon mode toggle: sun/moon rotate-crossfade                                                  |
+| `.ae-panel`                            | Soft depth for dense content: light shadow in light mode, wash in dark, radius 0             |
+| `.ae-name`                             | The name: weight 800, letterspaced, never large                                              |
+| `.ae-lede`                             | The argument, plainly                                                                        |
+| `.ae-group` / `.ae-h`                  | A section and its muted heading                                                              |
+| `.ae-item` / `.ae-dim`                 | Medium ink / muted ink                                                                       |
+| `.ae-accent`                           | THE accent: one per view                                                                     |
+| `.ae-label` / `.ae-input`              | Form fields as lines, not boxes                                                              |
+| `.ae-button` / `.ae-button-quiet`      | Buttons are not links: solid ink primary, hairline secondary                                 |
+| `.ae-send`                             | The send moment: label resolves to "Sent ✓" once, then the button rests disabled             |
 
 ## Cursor law
 
@@ -148,7 +153,9 @@ status icons sit after the word ("Sent ✓"). The shipped choreography:
 ```html
 <button class="ae-button ae-send">
   <span class="ae-send-label">Send message</span>
-  <span class="ae-send-done" aria-hidden="true">Sent <svg class="ae-icon">…check…</svg></span>
+  <span class="ae-send-done" aria-hidden="true"
+    >Sent <svg class="ae-icon">…check…</svg></span
+  >
 </button>
 <!-- on success: button.classList.add('is-sent'); button.disabled = true -->
 ```

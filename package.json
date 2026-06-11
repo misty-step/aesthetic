@@ -26,5 +26,10 @@
     "tokens.json",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "3.8.4",
+    "stylelint": "17.13.0",
+    "stylelint-config-standard": "40.0.0"
+  }
 }

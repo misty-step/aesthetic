@@ -45,14 +45,14 @@
   --ae-accent-dark: #8c9eff;
 
   --ae-font: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --ae-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo,
-    monospace;
+  --ae-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --ae-w-regular: 400;
   --ae-w-medium: 550;
   --ae-w-black: 800;
 
   --ae-measure: 38rem; /* rem: bars in the 13px chrome register must not shrink the measure */
+  --ae-measure-wide: 68rem;
   --ae-radius: 0;
 
   /* motion: feedback, never decoration */
@@ -237,6 +237,13 @@ a:hover {
 .ae-stage-scroll > * {
   margin-block: 0;
   padding-block: 2em;
+}
+
+/* a wide screen: catalog, specimen, and dashboard shapes that cannot
+   live in 38rem. One decision per screen — set it on .ae-screen. */
+.ae-wide .ae-bar,
+.ae-wide .ae-stage {
+  width: min(var(--ae-measure-wide), 100% - 5rem);
 }
 
 /* a view: one screenful of content; remount to replay the entrance */

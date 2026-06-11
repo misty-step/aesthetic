@@ -1,0 +1,183 @@
+/* the aesthetic site's own glue — page composition for the specimen
+   and catalog. The site is a consumer: aesthetic.css is imported
+   unmodified, and everything here is layout local to these pages. */
+
+.bar-end {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.6em;
+}
+
+.bar-links {
+  display: inline-flex;
+  gap: 1.5em;
+}
+
+/* ── the specimen sheet (index) ───────────────────────────────────── */
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3em 3.5em;
+  align-items: start;
+}
+
+.spec-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .spec-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .spec-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.law-cap {
+  margin-top: 0.8em;
+}
+
+/* the register grid: three inks by three weights */
+.reg-grid {
+  display: grid;
+  grid-template-columns: auto repeat(3, minmax(0, 1fr));
+  gap: 0.1em 1.6em;
+  align-items: baseline;
+}
+
+.reg-grid .rh {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ae-ink-faint);
+}
+
+.x-faint {
+  color: var(--ae-ink-faint);
+}
+.w4 {
+  font-weight: var(--ae-w-regular);
+}
+.w5 {
+  font-weight: var(--ae-w-medium);
+}
+.w8 {
+  font-weight: var(--ae-w-black);
+}
+
+/* ── the catalog (primitives) ─────────────────────────────────────── */
+
+.idx {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.idx th {
+  text-align: left;
+  font-weight: var(--ae-w-medium);
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-muted);
+  padding: 0 1.5em 0.6em 0;
+}
+
+.idx td {
+  border-top: 1px solid var(--ae-line);
+  padding: 0.5em 1.5em 0.5em 0;
+}
+
+.idx .cls {
+  font-family: var(--ae-font-mono);
+  white-space: nowrap;
+}
+
+.idx .cls a {
+  color: var(--ae-ink);
+  text-decoration: none;
+}
+
+.idx .cls a:hover {
+  color: var(--ae-accent);
+}
+
+.idx .role {
+  color: var(--ae-ink-muted);
+}
+
+.idx .since {
+  font-family: var(--ae-font-mono);
+  color: var(--ae-ink-faint);
+  text-align: right;
+  padding-right: 0;
+}
+
+/* detail views: render beside canonical markup */
+.src-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 3.5em;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .src-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.src-code {
+  background: var(--ae-wash);
+  padding: 1.6em;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-x: auto;
+  color: var(--ae-ink-muted);
+}
+
+.src-code .t {
+  color: var(--ae-ink);
+}
+
+/* hash-routed views: one visible at a time, entrance replays on swap */
+[data-route] {
+  display: none;
+}
+[data-route].is-on {
+  display: block;
+}
+
+.back-link {
+  margin-bottom: 1.6em;
+}
+
+/* small structural mock for the shell detail */
+.mini-shell {
+  border: 1px solid var(--ae-line);
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
+.mini-shell .ms-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6em 1em;
+}
+
+.mini-shell .ms-stage {
+  border-block: 1px solid var(--ae-line);
+  padding: 2.2em 1em;
+  text-align: center;
+}
+
+/* bounded scroll sample for the stage-scroll detail */
+.scrollbox {
+  height: 8.5em;
+  overflow-y: auto;
+  border: 1px solid var(--ae-line);
+  padding: 0 1em;
+}

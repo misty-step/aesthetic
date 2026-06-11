@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — the misty step design system</title>
+    <meta
+      name="description"
+      content="One stylesheet: one font size, nine registers, one accent per view, screens that never scroll. The Misty Step design system, demonstrated live."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="aesthetic.css" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="./">AESTHETIC</a>
+        <span class="bar-end">
+          <span class="ae-chrome bar-links"
+            ><a href="primitives.html">primitives</a
+            ><a href="https://github.com/misty-step/aesthetic">github</a></span
+          >
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <main class="ae-stage">
+        <div class="ae-view">
+          <div class="spec-grid">
+            <div>
+              <h2 class="ae-h">NINE REGISTERS</h2>
+              <div class="reg-grid">
+                <span class="rh"></span><span class="rh">400</span
+                ><span class="rh">550</span><span class="rh">800</span>
+                <span class="rh">ink</span><span class="w4">quiet</span
+                ><span class="w5">steady</span><span class="w8">loud</span>
+                <span class="rh">muted</span><span class="ae-dim w4">quiet</span
+                ><span class="ae-dim w5">steady</span
+                ><span class="ae-dim w8">loud</span>
+                <span class="rh">faint</span
+                ><span class="x-faint w4">quiet</span
+                ><span class="x-faint w5">steady</span
+                ><span class="x-faint w8">loud</span>
+              </div>
+              <p class="ae-dim law-cap">
+                One font size. Three inks by three weights — heavier and
+                blacker, never larger.
+              </p>
+            </div>
+            <div>
+              <h2 class="ae-h">MOTION IS FEEDBACK</h2>
+              <form data-ae-demo>
+                <label class="ae-label" for="email">Email</label>
+                <input
+                  class="ae-input"
+                  id="email"
+                  type="email"
+                  placeholder="you@misty-step.com"
+                  style="margin-bottom: 1.2em"
+                />
+                <button class="ae-button ae-send" type="submit">
+                  <span class="ae-send-label">Send message</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <p class="ae-dim law-cap">
+                Never decoration. Success resolves once and persists — send it
+                and see.
+              </p>
+            </div>
+            <div>
+              <h2 class="ae-h">SCREENS, NOT PAGES</h2>
+              <nav class="ae-nav">
+                <button class="is-active">work</button>
+                <button>writing</button>
+                <button>contact</button>
+                <span class="ae-nav-ind"></span>
+              </nav>
+              <p class="ae-dim law-cap">
+                Every view fits the viewport; the underline slides, nothing
+                scrolls.
+              </p>
+            </div>
+            <div>
+              <h2 class="ae-h">ONE ACCENT</h2>
+              <p>
+                The <span class="ae-accent">single instance</span> per view —
+                this sheet just spent its.
+              </p>
+              <p class="ae-dim law-cap">
+                A link rests in ink and
+                <a href="primitives.html#registers">warms on hover</a>; the
+                accent is rationed.
+              </p>
+            </div>
+            <div>
+              <h2 class="ae-h">BUTTONS ARE NOT LINKS</h2>
+              <p style="display: flex; gap: 1em; flex-wrap: wrap">
+                <button class="ae-button">Primary</button>
+                <button class="ae-button ae-button-quiet">Quiet</button>
+              </p>
+              <p class="ae-dim law-cap">
+                Links navigate, buttons act — they never share a costume.
+              </p>
+            </div>
+            <div>
+              <h2 class="ae-h">LIGHT AND DARK</h2>
+              <div class="ae-foot">
+                <span>v2.3.0 · MIT</span>
+                <span class="ae-foot-links"
+                  ><a href="https://github.com/misty-step/aesthetic">github</a
+                  ><a href="primitives.html">primitives</a></span
+                >
+              </div>
+              <p class="ae-dim law-cap">
+                Defaulting to your system, overruled by the toggle above. Chrome
+                stays 13px.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          <code>pnpm add github:misty-step/aesthetic#v2.3.0</code>
+        </p>
+        <p class="ae-chrome">
+          one stylesheet · no build step · a misty step production
+        </p>
+      </footer>
+    </div>
+
+    <script src="recipes.js"></script>
+  </body>
+</html>
