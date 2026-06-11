@@ -12,22 +12,23 @@ without one.
 
 - [ ] View switches choreograph exit and entrance (old view eases out,
       new one eases in), not just an entrance on remount.
-- [ ] The nav's active state moves (weight/ink change eased, or a small
-      indicator) instead of snapping.
-- [ ] Mode toggle cross-fades surface and ink over ~240ms instead of
-      flashing instantly.
-- [ ] Form submit has a success moment: the submit line resolves into
-      the confirmation without a layout jump.
+- [x] The nav's active state moves: `.ae-nav-ind` sliding underline
+      shipped in v2.1.
+- [ ] Mode change cross-fades surface and ink over ~240ms instead of
+      flashing instantly (the toggle's own sun/moon crossfade shipped
+      in v2.2; the page-wide surface/ink flash remains).
+- [x] Form submit has a success moment: `.ae-send` shipped in v2.2.0.
 - [ ] Under prefers-reduced-motion every one of the above is instant,
       and a demo page proves both paths.
 
 ## Children
 
-1. Exit/enter view choreography (CSS-only if possible; document the
-   pattern consumers need, e.g. a `data-leaving` hook).
+1. Exit/enter view choreography — the easing vocabulary lives here;
+   the canonical `data-leaving` hook consumers wire up belongs to the
+   recipes layer (backlog 005).
 2. Mode-change crossfade (transition on color/background scoped to the
    change, without transitioning everything always).
-3. Form feedback choreography for `.ae-input` / `.ae-button`.
+3. ~~Form feedback choreography~~ — shipped as the send moment, v2.2.0.
 4. Demo page exercising all of it (see backlog 003).
 
 ## Notes

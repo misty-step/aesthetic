@@ -1,6 +1,6 @@
 # Build the showcase page and CI guardrails
 
-Priority: P2 · Status: pending · Estimate: M
+Priority: P1 · Status: pending · Estimate: M
 
 ## Goal
 
@@ -33,3 +33,9 @@ tag ships to two production sites.
 zero tests, zero lint, and no rendered reference. The demo doubles as
 documentation, the visual-diff target, and the place to develop motion
 work (backlog 001) honestly.
+
+Promoted P2 → P1 in the 2026-06-11 groom: two backlog premises went
+stale within a day of seeding because there is no rendered reference to
+check against, and both the motion epic (001) and the recipes epic
+(005) name the demo page as their proof surface. The demo should run on
+the 005 recipes verbatim — zero ad-hoc glue.
