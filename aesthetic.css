@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v2.1.0
+   aesthetic v2.2.0
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
    The law:
@@ -11,7 +11,11 @@
    · Every view fits the viewport. 100dvh screens, no page scrolling;
      when content exceeds one screen, a quiet nav swaps views.
    · Motion is feedback, never decoration: small, brief, eased, and
-     gone when the user prefers reduced motion.
+     gone when the user prefers reduced motion. State resolutions are
+     gentler (--ae-gentle) and resolve once — success persists, it is
+     never rewound. Nothing changes size while it animates.
+   · Buttons are not links: contained ink shapes. Links navigate,
+     buttons act. Accents are not spent on buttons.
    · Light and dark, defaulting to the system, with a user toggle.
 
    Steering: every token is a CSS custom property, but downstream
@@ -55,6 +59,7 @@
   --ae-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --ae-quick: 160ms;
   --ae-soft: 240ms;
+  --ae-gentle: 480ms; /* state resolutions: slower than feedback, never abrupt */
 
   color-scheme: light dark;
 }
@@ -523,33 +528,97 @@ textarea.ae-input {
   min-height: 5.5em;
 }
 
-/* the submit is the accent instance when a form is the action */
+/* buttons are not links: contained shape, ink, never resizing.
+   Primary is solid ink; .ae-button-quiet is the hairline secondary.
+   Accents are not spent on buttons. */
 .ae-button {
-  display: inline-block;
-  background: transparent;
-  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background: var(--ae-ink);
+  border: 1px solid var(--ae-ink);
   border-radius: var(--ae-radius);
-  padding: 0.6em 0;
+  color: var(--ae-surface);
+  font-weight: var(--ae-w-medium);
+  padding: 0.55em 1.5em;
   min-height: 44px;
   cursor: pointer;
-  color: var(--ae-accent);
-  font-weight: var(--ae-w-medium);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
   transition:
-    color var(--ae-quick) var(--ae-ease),
+    opacity var(--ae-quick) var(--ae-ease),
+    background-color var(--ae-quick) var(--ae-ease),
     transform var(--ae-quick) var(--ae-ease);
 }
 
+.ae-button:hover {
+  opacity: 0.9;
+}
+
 .ae-button:active {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.99);
 }
 
 .ae-button:disabled {
-  color: var(--ae-ink-muted);
   cursor: default;
-  text-decoration: none;
+  opacity: 0.7;
   transform: none;
+}
+
+.ae-button-quiet {
+  background: transparent;
+  color: var(--ae-ink);
+}
+
+.ae-button-quiet:hover {
+  background: var(--ae-wash);
+  opacity: 1;
+}
+
+/* the send moment: the label gives way to the resolved state, gently,
+   once. Success persists — disable the button instead of resetting it.
+   Markup: <button class="ae-button ae-send">
+             <span class="ae-send-label">Send message</span>
+             <span class="ae-send-done">Sent <svg class="ae-icon">…check…</svg></span>
+           </button>
+   Add .is-sent to resolve. The status icon sits AFTER the word.
+   The button never changes size: the resting label defines the box and
+   the resolved layer is absolutely stacked over it. */
+.ae-send {
+  position: relative;
+  overflow: hidden;
+}
+
+.ae-send .ae-send-label,
+.ae-send .ae-send-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  transition:
+    opacity var(--ae-gentle) var(--ae-ease),
+    transform var(--ae-gentle) var(--ae-ease);
+}
+
+.ae-send .ae-send-done {
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(45%);
+}
+
+.ae-send.is-sent .ae-send-label {
+  opacity: 0;
+  transform: translateY(-55%);
+}
+
+.ae-send.is-sent .ae-send-done {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ae-send.is-sent,
+.ae-send.is-sent:disabled {
+  opacity: 1;
 }
 
 /* ── small screens ────────────────────────────────────────────────── */

@@ -19,7 +19,7 @@ small set of primitives. Import it and the project looks like ours.
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.1.0
+pnpm add github:misty-step/aesthetic#v2.2.0
 ```
 
 ```css
@@ -35,7 +35,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.1.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.2.0/aesthetic.css"
 />
 ```
 
@@ -112,7 +112,9 @@ Everything else is the shared identity.
 | `.ae-group` / `.ae-h` | A section and its muted heading |
 | `.ae-item` / `.ae-dim` | Medium ink / muted ink |
 | `.ae-accent` | THE accent: one per view |
-| `.ae-label` / `.ae-input` / `.ae-button` | Forms as lines, not boxes |
+| `.ae-label` / `.ae-input` | Form fields as lines, not boxes |
+| `.ae-button` / `.ae-button-quiet` | Buttons are not links: solid ink primary, hairline secondary |
+| `.ae-send` | The send moment: label resolves to "Sent ✓" once, then the button rests disabled |
 
 ## Cursor law
 
@@ -130,6 +132,29 @@ hover. Approved alternates, kept here so changing is one decision away:
   (`background-image` gradient, `background-size 0% → 100%`).
 - **Draw on hover** — no underline at rest (weight 550 marks the link),
   a 1px underline draws left-to-right on hover.
+
+## Buttons and the send moment
+
+Links navigate; buttons act — they never share a costume. `.ae-button` is
+the solid-ink primary, `.ae-button-quiet` the hairline secondary; both are
+contained shapes with radius 0 and a small press. Accents are not spent on
+buttons.
+
+State resolutions run at `--ae-gentle` (480ms) — slower than feedback,
+never abrupt — and resolve exactly once: success persists and the control
+disables; it is never rewound. Nothing changes size while it animates, and
+status icons sit after the word ("Sent ✓"). The shipped choreography:
+
+```html
+<button class="ae-button ae-send">
+  <span class="ae-send-label">Send message</span>
+  <span class="ae-send-done">Sent <svg class="ae-icon">…check…</svg></span>
+</button>
+<!-- on success: button.classList.add('is-sent'); button.disabled = true -->
+```
+
+Forms stay naked on the stage: a couple of line fields need no panel.
+Reserve `.ae-panel` for genuinely dense content.
 
 ## Icons
 
