@@ -1,54 +1,47 @@
 # aesthetic
 
-The Misty Step design system. One package, imported by every project, used
-religiously.
+The Misty Step design system. One CSS file: tokens, base styles, and a
+small set of primitives. Import it and the project looks like ours.
 
-The package name is deliberately unopinionated: the *system* is permanent,
-the *language* it ships will evolve. The v1 language is **TACET**, chosen
-through ten design-catalog rounds in June 2026.
+## Why
 
-## The law (v1: TACET)
-
-- **One size.** Exactly one font size on every surface, including the
-  headline, which is heavier and blacker, never larger.
-- **Nine registers.** Three inks (ink, muted, faint) by three weights
-  (400, 550, 800). Hierarchy comes from ink, weight, position, and space.
-- **One accent instance per viewport.** The single action that matters now.
-  Everything else is ink.
-- **Zero animation.** State changes are instant, like a terminal. The
-  stylesheet enforces this with a global kill rule.
-- **One column, vast space.** Max 38em. No rules, no cards, no boxes;
-  whitespace is the only divider.
-- **Geist / Geist Mono.** 16px, line-height 1.8, radius 0.
+- **Consistent.** Every project that imports it shares the same surfaces,
+  type, spacing, and discipline. No per-project CSS archaeology.
+- **Tiny.** A single stylesheet, no build step required, no JavaScript.
+- **Opinionated.** One font size everywhere (hierarchy comes from ink and
+  weight), one accent per view, viewport-sized screens instead of
+  scrolling pages, motion only as feedback.
+- **Steerable.** Downstream projects override one token pair, the accent,
+  to get their own personality without forking the system.
 
 ## Install
 
-As a dependency (any bundler or PostCSS pipeline):
+With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v1.0.0
+pnpm add github:misty-step/aesthetic#v2.0.0
 ```
 
 ```css
-/* plain */
+/* plain CSS */
 @import '@misty-step/aesthetic';
 
 /* Tailwind v4: import into the base layer so utilities stay composable */
 @import '@misty-step/aesthetic' layer(base);
 ```
 
-No build step (static HTML):
+Without a build step:
 
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v1.0.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.0.0/aesthetic.css"
 />
 ```
 
-Fonts are the consumer's job: load Geist and Geist Mono however your stack
-prefers (Google Fonts link, `next/font`, self-hosted) and, if the family is
-exposed through a variable, point the kit at it:
+Load Geist and Geist Mono however your stack prefers (Google Fonts,
+`next/font`, self-hosted). If the family comes through a variable, point
+the kit at it:
 
 ```css
 :root {
@@ -57,45 +50,66 @@ exposed through a variable, point the kit at it:
 }
 ```
 
+## Layout
+
+Pages are screens, not scrolls. Compose:
+
+```html
+<div class="ae-screen">
+  <header class="ae-bar">
+    <a class="ae-name" href="/">NAME</a>
+    <nav class="ae-nav">…view buttons…</nav>
+    <button class="ae-mode">dark</button>
+  </header>
+  <main class="ae-stage">
+    <div class="ae-view">…one screenful of content…</div>
+  </main>
+  <footer class="ae-bar"><p class="ae-dim">…</p></footer>
+</div>
+```
+
+`.ae-screen` is exactly one viewport tall and never scrolls. If content
+cannot fit one screen, split it into views and swap them with `.ae-nav`
+(remounting `.ae-view` replays its entrance). For genuinely long
+documents (legal pages), use `.ae-stage-scroll`: the document scrolls
+inside the stage, the chrome stays put.
+
+## Modes
+
+Light and dark ship together and default to the system preference. A
+toggle sets `.dark` / `.light` (next-themes compatible) or
+`data-ae-mode="dark|light"` on the root element; style the control with
+`.ae-mode`.
+
 ## Steering
 
-Every token is a CSS custom property, but downstream projects are
-sanctioned to override exactly one pair, and that is how a project gets its
-personality:
+Override exactly one pair to give a project its personality:
 
 ```css
 :root {
-  --ae-accent: #0e7a4d; /* light-mode accent */
-  --ae-accent-dark: #6fd2a8; /* dark-mode accent */
+  --ae-accent: #0e7a4d;
+  --ae-accent-dark: #6fd2a8;
 }
 ```
 
-Everything else is the shared identity. Override it and you have left the
-system.
-
-## Dark mode
-
-Tokens follow `prefers-color-scheme` automatically. A site that pins a mode
-sets `.dark` / `.light` (next-themes compatible) or
-`data-ae-mode="dark|light"` on the root element.
+Everything else is the shared identity.
 
 ## Primitives
 
 | Class | Role |
 | --- | --- |
-| `.ae-page` | The page: one 38em column in vast space |
+| `.ae-screen` / `.ae-bar` / `.ae-stage` | Viewport shell: chrome bars and a centered stage |
+| `.ae-stage-scroll` | Inner scroll for long documents; the page still never scrolls |
+| `.ae-view` | One screenful of content with a quiet entrance |
+| `.ae-nav` | View switcher: muted words, active is ink |
+| `.ae-mode` | Light/dark toggle styling |
 | `.ae-name` | The name: weight 800, letterspaced, never large |
-| `.ae-lede` | The page's whole argument, plainly |
-| `.ae-group` | A section: whitespace is the only divider |
-| `.ae-h` | Group heading: muted, spaced, medium |
-| `.ae-item` | An item that matters: medium ink |
-| `.ae-dim` | Supporting matter: muted ink |
-| `.ae-accent` | THE accent: exactly one instance per viewport |
-| `.ae-label` / `.ae-input` | Forms as lines, not boxes |
-| `.ae-button` | The submit as the accent instance |
+| `.ae-lede` | The argument, plainly |
+| `.ae-group` / `.ae-h` | A section and its muted heading |
+| `.ae-item` / `.ae-dim` | Medium ink / muted ink |
+| `.ae-accent` | THE accent: one per view |
+| `.ae-label` / `.ae-input` / `.ae-button` | Forms as lines, not boxes |
 
 ## Versioning
 
-Semver, tagged. The law itself only changes with a major version and an
-operator verdict; tokens and primitives that do not change the law are
-minor. Consumers pin a tag and upgrade deliberately.
+Semver, tagged. Consumers pin a tag and upgrade deliberately.

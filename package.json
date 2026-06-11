@@ -1,14 +1,14 @@
 {
   "name": "@misty-step/aesthetic",
-  "version": "1.0.0",
-  "description": "The Misty Step design system. The v1 language is TACET: one text size, hierarchy by ink and weight, one accent instance per viewport, zero animation.",
+  "version": "2.0.0",
+  "description": "The Misty Step design system. One font size, nine ink-and-weight registers, one accent per view, viewport screens instead of scrolling pages, motion as feedback only.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/misty-step/aesthetic.git"
   },
   "homepage": "https://github.com/misty-step/aesthetic#readme",
-  "keywords": ["design-system", "css", "tokens", "tacet"],
+  "keywords": ["design-system", "css", "tokens", "viewport"],
   "main": "aesthetic.css",
   "style": "aesthetic.css",
   "exports": {

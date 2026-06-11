@@ -1,26 +1,23 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v1.0.0
+   aesthetic v2.0.0
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
-   The v1 language is TACET: the quiet interface. One text size,
-   hierarchy by ink and weight, success in silence. Anything that does
-   not change what the reader does next is not rendered.
-
    The law:
-   · One size. Exactly one font size on every surface, including the
-     headline, which is heavier and blacker, never larger.
+   · One size. Exactly one font size on every surface; the headline is
+     heavier and blacker, never larger.
    · Three inks by three weights (400 / 550 / 800): nine registers.
-   · Exactly one accent instance per viewport: the single action that
+   · Exactly one accent instance per view: the single action that
      matters now.
-   · Zero animation. State changes are instant, like a terminal.
-   · A single column (max 38em) in vast space. No rules, no cards,
-     no boxes; whitespace is the only divider.
+   · Every view fits the viewport. 100dvh screens, no page scrolling;
+     when content exceeds one screen, a quiet nav swaps views.
+   · Motion is feedback, never decoration: small, brief, eased, and
+     gone when the user prefers reduced motion.
+   · Light and dark, defaulting to the system, with a user toggle.
 
    Steering: every token is a CSS custom property, but downstream
    projects are sanctioned to override exactly one pair:
-   --ae-accent / --ae-accent-dark. That is how a project gets its
-   personality. Everything else is the shared identity; override it
-   and you have left the system.
+   --ae-accent / --ae-accent-dark. Everything else is the shared
+   identity.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── tokens ───────────────────────────────────────────────────────── */
@@ -54,6 +51,11 @@
   --ae-measure: 38em;
   --ae-radius: 0;
 
+  /* motion: feedback, never decoration */
+  --ae-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --ae-quick: 160ms;
+  --ae-soft: 240ms;
+
   color-scheme: light dark;
 }
 
@@ -70,7 +72,7 @@
   }
 }
 
-/* pinned dark: class or attribute set by the site's mode control */
+/* pinned dark: class or attribute set by the site's mode toggle */
 .dark,
 [data-ae-mode='dark'] {
   --ae-surface: var(--ae-surface-dark);
@@ -82,15 +84,7 @@
   --ae-accent: var(--ae-accent-dark);
 }
 
-/* ── the law ──────────────────────────────────────────────────────── */
-
-/* zero animation, no exceptions */
-*,
-*::before,
-*::after {
-  transition: none !important;
-  animation: none !important;
-}
+/* ── base ─────────────────────────────────────────────────────────── */
 
 html {
   scroll-behavior: auto;
@@ -156,38 +150,135 @@ a {
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-color: var(--ae-ink-faint);
+  transition: text-decoration-color var(--ae-quick) var(--ae-ease);
 }
 
 a:hover {
   text-decoration-color: currentColor;
 }
 
-/* ── primitives ───────────────────────────────────────────────────── */
+/* ── screens: every view fits the viewport ────────────────────────── */
 
-/* the page: one column, vast space */
-.ae-page {
-  max-width: var(--ae-measure);
-  margin: 0 auto;
-  padding: 16vh 2.5em 6em;
+/* the screen: one viewport, no page scroll */
+.ae-screen {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
+
+/* a bar: quiet chrome at the top or bottom of a screen */
+.ae-bar {
+  flex: none;
+  width: min(var(--ae-measure), 100% - 5em);
+  margin-inline: auto;
+  padding: 1.4em 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5em;
+}
+
+/* the stage: the screen's content, vertically centered */
+.ae-stage {
+  flex: 1;
+  min-height: 0;
+  width: min(var(--ae-measure), 100% - 5em);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* long documents scroll inside the stage, never the page */
+.ae-stage-scroll {
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding-block: 2em;
+}
+
+/* a view: one screenful of content; remount to replay the entrance */
+.ae-view {
+  animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+}
+
+@keyframes ae-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* the nav: quiet words that swap views */
+.ae-nav {
+  display: flex;
+  gap: 1.6em;
+}
+
+.ae-nav a,
+.ae-nav button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ae-ink-muted);
+  font-weight: var(--ae-w-medium);
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  transition: color var(--ae-quick) var(--ae-ease);
+}
+
+.ae-nav a:hover,
+.ae-nav button:hover {
+  color: var(--ae-ink);
+}
+
+.ae-nav [aria-current],
+.ae-nav .is-active {
+  color: var(--ae-ink);
+  font-weight: var(--ae-w-black);
+}
+
+/* the mode toggle: quiet chrome, never the accent */
+.ae-mode {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ae-ink-faint);
+  letter-spacing: 0.18em;
+  transition: color var(--ae-quick) var(--ae-ease);
+}
+
+.ae-mode:hover {
+  color: var(--ae-ink);
+}
+
+/* ── registers ────────────────────────────────────────────────────── */
 
 /* the name: heavy and spaced, never large */
 .ae-name {
   font-weight: var(--ae-w-black);
   letter-spacing: 0.38em;
-  margin-bottom: 3.2em;
+}
+
+a.ae-name {
+  text-decoration: none;
 }
 
 /* the lede: the page's whole argument, plainly */
 .ae-lede {
-  margin-bottom: 4em;
   max-width: 34em;
   text-wrap: pretty;
 }
 
 /* a group: whitespace is the only divider */
 .ae-group {
-  margin-bottom: 3.4em;
+  margin-bottom: 2.6em;
+}
+
+.ae-group:last-child {
+  margin-bottom: 0;
 }
 
 .ae-group p {
@@ -212,7 +303,7 @@ a:hover {
   color: var(--ae-ink-muted);
 }
 
-/* THE accent: exactly one instance per viewport */
+/* THE accent: exactly one instance per view */
 .ae-accent {
   color: var(--ae-accent);
   font-weight: var(--ae-w-medium);
@@ -239,6 +330,7 @@ a:hover {
   border-bottom: 1px solid var(--ae-line);
   border-radius: var(--ae-radius);
   padding: 0.4em 0;
+  transition: border-color var(--ae-quick) var(--ae-ease);
 }
 
 .ae-input::placeholder {
@@ -251,8 +343,8 @@ a:hover {
 }
 
 textarea.ae-input {
-  resize: vertical;
-  min-height: 6.5em;
+  resize: none;
+  min-height: 5.5em;
 }
 
 /* the submit is the accent instance when a form is the action */
@@ -268,18 +360,42 @@ textarea.ae-input {
   font-weight: var(--ae-w-medium);
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition:
+    color var(--ae-quick) var(--ae-ease),
+    transform var(--ae-quick) var(--ae-ease);
+}
+
+.ae-button:active {
+  transform: translateY(1px);
 }
 
 .ae-button:disabled {
   color: var(--ae-ink-muted);
   cursor: default;
   text-decoration: none;
+  transform: none;
 }
 
 /* ── small screens ────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  .ae-page {
-    padding: 8vh 1.2em 4em;
+  .ae-bar,
+  .ae-stage {
+    width: calc(100% - 2.4em);
+  }
+
+  .ae-group {
+    margin-bottom: 2em;
+  }
+}
+
+/* ── reduced motion: everything is instant ────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }
