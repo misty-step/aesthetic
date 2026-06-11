@@ -19,7 +19,7 @@ small set of primitives. Import it and the project looks like ours.
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.0.0
+pnpm add github:misty-step/aesthetic#v2.0.1
 ```
 
 ```css
@@ -35,7 +35,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.0.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.0.1/aesthetic.css"
 />
 ```
 

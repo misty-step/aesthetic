@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v2.0.0
+   aesthetic v2.0.1
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
    The law:
@@ -174,12 +174,14 @@ a:hover {
   margin-inline: auto;
   padding: 1.4em 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1.5em;
+  gap: 0.4em 1.5em;
 }
 
-/* the stage: the screen's content, vertically centered */
+/* the stage: the screen's content, vertically centered; a view that
+   cannot fit scrolls inside the stage, never the page */
 .ae-stage {
   flex: 1;
   min-height: 0;
@@ -187,13 +189,17 @@ a:hover {
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  overflow-y: auto;
 }
 
-/* long documents scroll inside the stage, never the page */
-.ae-stage-scroll {
-  justify-content: flex-start;
-  overflow-y: auto;
+.ae-stage > * {
+  margin-block: auto;
+  padding-block: 1.5em;
+}
+
+/* long documents: top-aligned instead of centered */
+.ae-stage-scroll > * {
+  margin-block: 0;
   padding-block: 2em;
 }
 
