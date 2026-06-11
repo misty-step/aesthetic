@@ -79,6 +79,6 @@ derivation from the law; if it can't be derived, either the law gets
 an explicit amendment or the component gets a more aesthetic answer
 (e.g. a badge might be weight, not a colored pill).
 
-Sequencing: 006 (color-scheme fix) and 003's demo skeleton first, then
+Sequencing: 006 (color-scheme fix) and 003's site skeleton first, then
 child 1 (the law rewrite) gates everything; 001 and 005 proceed in
 parallel as feeders. 002 and 004 fold into children 8 and 2.

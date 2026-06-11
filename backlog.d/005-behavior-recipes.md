@@ -19,8 +19,8 @@ for the same four primitives.
 - [ ] The send recipe announces success to screen readers — the
       `aria-hidden` done layer is currently silent, so an SR user never
       hears "Sent" on a still-"Send message"-labeled disabled button.
-- [ ] The demo page (backlog 003) runs on the recipes verbatim: zero
-      ad-hoc glue in `demo/`.
+- [ ] The site (backlog 003) runs on the recipes verbatim: zero
+      ad-hoc glue in `site/`.
 - [ ] README points each JS-requiring primitive at its recipe, and the
       Layout example's mode toggle matches the canonical icon markup
       (today it still shows the v1 text toggle `>dark<`).
@@ -38,7 +38,7 @@ for the same four primitives.
    exit hook when backlog 001 lands the vocabulary.
 4. Send moment recipe: `is-sent`, `disabled`, and an SR announcement
    (`role="status"` live region or label swap — decide and document).
-5. Wire the demo page (backlog 003) to consume the recipes verbatim.
+5. Wire the site (backlog 003) to consume the recipes verbatim.
 6. Migrate one production consumer onto the recipes.
 
 ## Notes

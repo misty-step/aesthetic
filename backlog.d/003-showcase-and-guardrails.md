@@ -1,41 +1,72 @@
-# Build the showcase page and CI guardrails
+# Build the aesthetic site: marketing, catalog, lab, and guardrails
 
-Priority: P1 · Status: pending · Estimate: M
+Priority: P0 · Status: pending · Estimate: L
 
 ## Goal
 
-The system demonstrates itself and defends itself: a live page showing
-every primitive in both modes, and CI that catches regressions before a
-tag ships to two production sites.
+The system gets its own comprehensive first consumer: a site in this
+repo — manifesto, primitive catalog, recipes, lab, and archetype
+gauntlet — built solely with the system itself, riding HEAD, so every
+change to aesthetic is exercised, rendered, and regression-checked the
+moment it lands.
 
 ## Oracle
 
-- [ ] A demo page in this repo, built with the kit itself, shows every
-      primitive (screen, bars, nav, views, registers, form) in light and
-      dark, deployed (GitHub Pages) at a stable URL.
-- [ ] CI runs stylelint + prettier on every push and fails on violations.
-- [ ] Visual regression screenshots of the demo page (both modes) run in
-      CI; an unintended pixel change fails the build.
-- [ ] The repo has a CLAUDE.md stating the law and the release flow, so
-      a cold agent can contribute safely.
+- [ ] `site/` in this repo, deployed to a stable URL (GitHub Pages
+      first; custom domain is an operator call later), linked from the
+      README.
+- [ ] Zero build step, zero framework: hand-written HTML consuming
+      `aesthetic.css` and the backlog-005 recipes verbatim, so every
+      page is view-source-able canonical markup. A generator (e.g.
+      11ty) may be adopted later only when page count makes shared
+      chrome painful — never a JS framework.
+- [ ] The site rides HEAD — the only consumer sanctioned to do so;
+      production consumers keep pinning tags. Stated in CLAUDE.md.
+- [ ] The landing screen states the law in the system's own voice (the
+      CSS header is the draft), composed as one `.ae-screen`.
+- [ ] Every primitive has a catalog entry: rendered example,
+      copy-paste markup, and its derivation from the law (the README's
+      decision-register pattern, made public).
+- [ ] A `/lab` section hosts in-progress motion and component work
+      (LAB 001/002 precedent), explicitly excluded from visual
+      regression.
+- [ ] CI: stylelint + prettier fail on violations; Playwright
+      screenshots of the stable pages (catalog + archetypes, both
+      modes) fail on unintended pixel change.
+- [ ] CLAUDE.md states the law, the release flow, and the site
+      structure, so a cold agent can contribute safely.
 
 ## Children
 
-1. `demo/index.html` exercising every primitive with real copy.
-2. GitHub Pages deploy + link from README.
-3. stylelint + prettier + CI workflow.
-4. Playwright screenshot diff of the demo in CI.
-5. CLAUDE.md.
+1. Site skeleton: `site/index.html` (the manifesto screen) +
+   `site/primitives.html`, GitHub Pages deploy, README link.
+2. Catalog entries for every shipped primitive: rendered + markup +
+   law derivation.
+3. Recipes wired verbatim once backlog 005 lands them; until then the
+   skeleton may carry minimal inline glue marked `TODO(005)`.
+4. `/lab`: the motion work of backlog 001 develops here.
+5. Archetype gauntlet pages — dashboard, docs, settings, landing —
+   joint with backlog 007 child 7 (these pages ARE its acceptance
+   test).
+6. Guardrails: stylelint + prettier + CI, Playwright visual diff of
+   stable pages in both modes, CLAUDE.md.
 
 ## Notes
 
-**Why (harness lens):** the package ships to two production sites with
-zero tests, zero lint, and no rendered reference. The demo doubles as
-documentation, the visual-diff target, and the place to develop motion
-work (backlog 001) honestly.
+**Why (operator-requested, 2026-06-11 session):** the two production
+consumers exercise one narrow archetype each and cannot be the
+comprehensive showcase; iteration on the system needs a consumer that
+exists to exercise all of it. Form-factor decisions argued in-session:
+monorepo over separate repo (the site must ride HEAD — a repo boundary
+reintroduces the tag-bump friction 002 exists to kill; the npm `files`
+allowlist already keeps `site/` out of the package), and static-first
+over framework (the marketing site for "one stylesheet, no build step"
+must itself prove the claim; view-source is the reference docs; the
+React path is proven by production consumers and 007's registry
+child). The lab/regression tension resolves by scope: snapshot stable
+pages, exclude `/lab`.
 
-Promoted P2 → P1 in the 2026-06-11 groom: two backlog premises went
-stale within a day of seeding because there is no rendered reference to
-check against, and both the motion epic (001) and the recipes epic
-(005) name the demo page as their proof surface. The demo should run on
-the 005 recipes verbatim — zero ad-hoc glue.
+Grown from the original "demo page + CI guardrails" ticket in the
+2026-06-11 groom; promoted P1 → P0 as the iteration substrate for
+001, 005, and 007. Earlier note (2026-06-11 morning) on the P2 → P1
+promotion is superseded by this rewrite.
