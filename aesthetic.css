@@ -578,7 +578,8 @@ textarea.ae-input {
    once. Success persists — disable the button instead of resetting it.
    Markup: <button class="ae-button ae-send">
              <span class="ae-send-label">Send message</span>
-             <span class="ae-send-done">Sent <svg class="ae-icon">…check…</svg></span>
+             <span class="ae-send-done" aria-hidden="true">Sent
+               <svg class="ae-icon">…check…</svg></span>
            </button>
    Add .is-sent to resolve. The status icon sits AFTER the word.
    The button never changes size: the resting label defines the box and

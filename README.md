@@ -148,7 +148,7 @@ status icons sit after the word ("Sent ✓"). The shipped choreography:
 ```html
 <button class="ae-button ae-send">
   <span class="ae-send-label">Send message</span>
-  <span class="ae-send-done">Sent <svg class="ae-icon">…check…</svg></span>
+  <span class="ae-send-done" aria-hidden="true">Sent <svg class="ae-icon">…check…</svg></span>
 </button>
 <!-- on success: button.classList.add('is-sent'); button.disabled = true -->
 ```
