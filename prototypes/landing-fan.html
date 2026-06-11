@@ -1,391 +1,698 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>aesthetic — five directions for the site</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap">
-<link rel="stylesheet" href="../aesthetic.css">
-<style>
-/* ── prototype glue: sketch only, never ships ─────────────────────── */
-.proto-variant { display: none; }
-.proto-variant.is-on { display: block; }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — five directions for the site</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
 
-.proto-picker {
-  position: fixed;
-  bottom: 1.1em;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  align-items: stretch;
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  background: var(--ae-surface);
-  border: 1px solid var(--ae-line);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
-}
-.proto-picker button {
-  font-family: inherit;
-  font-size: inherit;
-  letter-spacing: inherit;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  color: var(--ae-ink-muted);
-  padding: 0.8em 1.1em;
-  transition: color var(--ae-quick) var(--ae-ease);
-}
-.proto-picker button:hover { color: var(--ae-ink); }
-.proto-picker button.is-active { color: var(--ae-surface); background: var(--ae-ink); }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
 
-/* wider stage for catalog-shaped variants — flags a real decision:
+      /* wider stage for catalog-shaped variants — flags a real decision:
    the site needs a sanctioned wide measure */
-.proto-wide .ae-bar,
-.proto-wide .ae-stage { width: min(68em, 100% - 5em); }
+      .proto-wide .ae-bar,
+      .proto-wide .ae-stage {
+        width: min(68em, 100% - 5em);
+      }
 
-.bar-end { display: inline-flex; align-items: center; gap: 1.4em; }
+      .bar-end {
+        display: inline-flex;
+        align-items: center;
+        gap: 1.4em;
+      }
 
-/* registers specimen grid */
-.reg-grid {
-  display: grid;
-  grid-template-columns: auto repeat(3, minmax(0, 1fr));
-  gap: 0.1em 1.6em;
-  align-items: baseline;
-}
-.reg-grid .rh {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ae-ink-faint);
-}
-.x-faint { color: var(--ae-ink-faint); }
-.w4 { font-weight: var(--ae-w-regular); }
-.w5 { font-weight: var(--ae-w-medium); }
-.w8 { font-weight: var(--ae-w-black); }
+      /* registers specimen grid */
+      .reg-grid {
+        display: grid;
+        grid-template-columns: auto repeat(3, minmax(0, 1fr));
+        gap: 0.1em 1.6em;
+        align-items: baseline;
+      }
+      .reg-grid .rh {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+      .x-faint {
+        color: var(--ae-ink-faint);
+      }
+      .w4 {
+        font-weight: var(--ae-w-regular);
+      }
+      .w5 {
+        font-weight: var(--ae-w-medium);
+      }
+      .w8 {
+        font-weight: var(--ae-w-black);
+      }
 
-/* specimen sheet */
-.spec-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2.8em 3.5em;
-  align-items: start;
-}
-.spec-grid > * { min-width: 0; }
-@media (max-width: 900px) { .spec-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px) { .spec-grid { grid-template-columns: 1fr; } }
+      /* specimen sheet */
+      .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2.8em 3.5em;
+        align-items: start;
+      }
+      .spec-grid > * {
+        min-width: 0;
+      }
+      @media (max-width: 900px) {
+        .spec-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .spec-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-/* workbench index table */
-.idx { width: 100%; border-collapse: collapse; }
-.idx th {
-  text-align: left;
-  font-weight: var(--ae-w-medium);
-  letter-spacing: 0.14em;
-  color: var(--ae-ink-muted);
-  padding: 0 1.5em 0.6em 0;
-}
-.idx td { border-top: 1px solid var(--ae-line); padding: 0.5em 1.5em 0.5em 0; }
-.idx .cls { font-family: var(--ae-font-mono); color: var(--ae-ink); white-space: nowrap; }
-.idx .role { color: var(--ae-ink-muted); }
-.idx .since { font-family: var(--ae-font-mono); color: var(--ae-ink-faint); text-align: right; padding-right: 0; }
+      /* workbench index table */
+      .idx {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .idx th {
+        text-align: left;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        padding: 0 1.5em 0.6em 0;
+      }
+      .idx td {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.5em 1.5em 0.5em 0;
+      }
+      .idx .cls {
+        font-family: var(--ae-font-mono);
+        color: var(--ae-ink);
+        white-space: nowrap;
+      }
+      .idx .role {
+        color: var(--ae-ink-muted);
+      }
+      .idx .since {
+        font-family: var(--ae-font-mono);
+        color: var(--ae-ink-faint);
+        text-align: right;
+        padding-right: 0;
+      }
 
-/* source split */
-.src-split {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 3.5em;
-  align-items: start;
-}
-@media (max-width: 900px) { .src-split { grid-template-columns: 1fr; } }
-.src-code {
-  background: var(--ae-wash);
-  padding: 1.6em;
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.75;
-  overflow-x: auto;
-  color: var(--ae-ink-muted);
-}
-.src-code .t { color: var(--ae-ink); }
+      /* source split */
+      .src-split {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        gap: 3.5em;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .src-split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .src-code {
+        background: var(--ae-wash);
+        padding: 1.6em;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.75;
+        overflow-x: auto;
+        color: var(--ae-ink-muted);
+      }
+      .src-code .t {
+        color: var(--ae-ink);
+      }
 
-.demo-views > .ae-view { display: none; }
-.demo-views > .ae-view.is-on { display: block; }
-</style>
-</head>
-<body>
+      .demo-views > .ae-view {
+        display: none;
+      }
+      .demo-views > .ae-view.is-on {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
 
-<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
-</svg>
-
-<!-- ═══ A · MANIFESTO — the law is the landing ═══════════════════════ -->
-<section class="proto-variant is-on" id="va">
-  <div class="ae-screen">
-    <header class="ae-bar">
-      <a class="ae-name" href="#">AESTHETIC</a>
-      <span class="bar-end">
-        <span class="ae-chrome"><a href="https://github.com/misty-step/aesthetic">GitHub</a></span>
-        <button class="ae-mode js-mode" aria-label="toggle color mode">
-          <svg class="ae-icon ae-sun"><use href="#i-sun"/></svg>
-          <svg class="ae-icon ae-moon"><use href="#i-moon"/></svg>
-        </button>
-      </span>
-    </header>
-    <main class="ae-stage">
-      <div class="ae-view">
-        <div class="ae-group">
-          <p class="ae-lede">One stylesheet. Tokens, base styles, and a small
-          set of primitives — import it and the project looks like ours.</p>
-        </div>
-        <div class="ae-group">
-          <h2 class="ae-h">THE LAW</h2>
-          <p><span class="ae-item">One size.</span> <span class="ae-dim">The headline is heavier and blacker, never larger.</span></p>
-          <p><span class="ae-item">Nine registers.</span> <span class="ae-dim">Three inks by three weights; hierarchy without scale.</span></p>
-          <p><span class="ae-item">One accent.</span> <span class="ae-dim"><span class="ae-accent">Exactly one instance</span> per view — this screen just spent its.</span></p>
-          <p><span class="ae-item">Screens, not pages.</span> <span class="ae-dim">Every view fits the viewport; nothing scrolls.</span></p>
-          <p><span class="ae-item">Motion is feedback.</span> <span class="ae-dim">Small, brief, eased — and gone when you prefer reduced motion.</span></p>
-          <p><span class="ae-item">Buttons are not links.</span> <span class="ae-dim">Links navigate, buttons act; they never share a costume.</span></p>
-          <p><span class="ae-item">Light and dark.</span> <span class="ae-dim">Defaulting to your system, overruled by the toggle above.</span></p>
-        </div>
-        <p class="ae-chrome"><code>pnpm add github:misty-step/aesthetic#v2.2.0</code></p>
-      </div>
-    </main>
-    <footer class="ae-bar">
-      <p class="ae-chrome">v2.2.0 · MIT</p>
-      <p class="ae-chrome">a misty step production</p>
-    </footer>
-  </div>
-</section>
-
-<!-- ═══ B · SPECIMEN — every primitive, live, one screen ═════════════ -->
-<section class="proto-variant proto-wide" id="vb">
-  <div class="ae-screen">
-    <header class="ae-bar">
-      <a class="ae-name" href="#">AESTHETIC</a>
-      <p class="ae-chrome">every primitive on this screen is live — try them</p>
-      <span class="bar-end">
-        <span class="ae-chrome"><a href="https://github.com/misty-step/aesthetic">GitHub</a></span>
-        <button class="ae-mode js-mode" aria-label="toggle color mode">
-          <svg class="ae-icon ae-sun"><use href="#i-sun"/></svg>
-          <svg class="ae-icon ae-moon"><use href="#i-moon"/></svg>
-        </button>
-      </span>
-    </header>
-    <main class="ae-stage">
-      <div class="ae-view">
-        <div class="spec-grid">
-          <div>
-            <h2 class="ae-h">REGISTERS</h2>
-            <div class="reg-grid">
-              <span class="rh"></span><span class="rh">400</span><span class="rh">550</span><span class="rh">800</span>
-              <span class="rh">ink</span><span class="w4">quiet</span><span class="w5">steady</span><span class="w8">loud</span>
-              <span class="rh">muted</span><span class="ae-dim w4">quiet</span><span class="ae-dim w5">steady</span><span class="ae-dim w8">loud</span>
-              <span class="rh">faint</span><span class="x-faint w4">quiet</span><span class="x-faint w5">steady</span><span class="x-faint w8">loud</span>
+    <!-- ═══ A · MANIFESTO — the law is the landing ═══════════════════════ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome"
+              ><a href="https://github.com/misty-step/aesthetic"
+                >GitHub</a
+              ></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="ae-group">
+              <p class="ae-lede">
+                One stylesheet. Tokens, base styles, and a small set of
+                primitives — import it and the project looks like ours.
+              </p>
             </div>
-          </div>
-          <div>
-            <h2 class="ae-h">FORM</h2>
-            <form class="js-form">
-              <label class="ae-label" for="spec-email">Email</label>
-              <input class="ae-input" id="spec-email" type="email" placeholder="you@misty-step.com" style="margin-bottom:1.2em">
-              <button class="ae-button ae-send" type="submit">
-                <span class="ae-send-label">Send message</span>
-                <span class="ae-send-done" aria-hidden="true">Sent <svg class="ae-icon"><use href="#i-check"/></svg></span>
-              </button>
-            </form>
-          </div>
-          <div>
-            <h2 class="ae-h">NAV</h2>
-            <nav class="ae-nav js-nav">
-              <button class="is-active">work</button>
-              <button>writing</button>
-              <button>contact</button>
-              <span class="ae-nav-ind"></span>
-            </nav>
-            <p class="ae-dim" style="margin-top:1em">the underline slides; views remount with a quiet entrance.</p>
-          </div>
-          <div>
-            <h2 class="ae-h">LINK &amp; ACCENT</h2>
-            <p>A link rests in ink and <a href="#">warms on hover</a>.</p>
-            <p>The <span class="ae-accent">one accent</span> marks the action that matters.</p>
-          </div>
-          <div>
-            <h2 class="ae-h">BUTTONS</h2>
-            <p style="display:flex;gap:1em;flex-wrap:wrap">
-              <button class="ae-button">Primary</button>
-              <button class="ae-button ae-button-quiet">Quiet</button>
+            <div class="ae-group">
+              <h2 class="ae-h">THE LAW</h2>
+              <p>
+                <span class="ae-item">One size.</span>
+                <span class="ae-dim"
+                  >The headline is heavier and blacker, never larger.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Nine registers.</span>
+                <span class="ae-dim"
+                  >Three inks by three weights; hierarchy without scale.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">One accent.</span>
+                <span class="ae-dim"
+                  ><span class="ae-accent">Exactly one instance</span> per view
+                  — this screen just spent its.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Screens, not pages.</span>
+                <span class="ae-dim"
+                  >Every view fits the viewport; nothing scrolls.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Motion is feedback.</span>
+                <span class="ae-dim"
+                  >Small, brief, eased — and gone when you prefer reduced
+                  motion.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Buttons are not links.</span>
+                <span class="ae-dim"
+                  >Links navigate, buttons act; they never share a
+                  costume.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Light and dark.</span>
+                <span class="ae-dim"
+                  >Defaulting to your system, overruled by the toggle
+                  above.</span
+                >
+              </p>
+            </div>
+            <p class="ae-chrome">
+              <code>pnpm add github:misty-step/aesthetic#v2.2.0</code>
             </p>
           </div>
-          <div>
-            <h2 class="ae-h">CHROME</h2>
-            <div class="ae-foot">
-              <span>v2.2.0 · MIT</span>
-              <span class="ae-foot-links"><a href="#">github</a><a href="#">npm</a></span>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">v2.2.0 · MIT</p>
+          <p class="ae-chrome">a misty step production</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · SPECIMEN — every primitive, live, one screen ═════════════ -->
+    <section class="proto-variant proto-wide" id="vb">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <p class="ae-chrome">
+            every primitive on this screen is live — try them
+          </p>
+          <span class="bar-end">
+            <span class="ae-chrome"
+              ><a href="https://github.com/misty-step/aesthetic"
+                >GitHub</a
+              ></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">REGISTERS</h2>
+                <div class="reg-grid">
+                  <span class="rh"></span><span class="rh">400</span
+                  ><span class="rh">550</span><span class="rh">800</span>
+                  <span class="rh">ink</span><span class="w4">quiet</span
+                  ><span class="w5">steady</span><span class="w8">loud</span>
+                  <span class="rh">muted</span
+                  ><span class="ae-dim w4">quiet</span
+                  ><span class="ae-dim w5">steady</span
+                  ><span class="ae-dim w8">loud</span>
+                  <span class="rh">faint</span
+                  ><span class="x-faint w4">quiet</span
+                  ><span class="x-faint w5">steady</span
+                  ><span class="x-faint w8">loud</span>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">FORM</h2>
+                <form class="js-form">
+                  <label class="ae-label" for="spec-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="spec-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                    style="margin-bottom: 1.2em"
+                  />
+                  <button class="ae-button ae-send" type="submit">
+                    <span class="ae-send-label">Send message</span>
+                    <span class="ae-send-done" aria-hidden="true"
+                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                    ></span>
+                  </button>
+                </form>
+              </div>
+              <div>
+                <h2 class="ae-h">NAV</h2>
+                <nav class="ae-nav js-nav">
+                  <button class="is-active">work</button>
+                  <button>writing</button>
+                  <button>contact</button>
+                  <span class="ae-nav-ind"></span>
+                </nav>
+                <p class="ae-dim" style="margin-top: 1em">
+                  the underline slides; views remount with a quiet entrance.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">LINK &amp; ACCENT</h2>
+                <p>A link rests in ink and <a href="#">warms on hover</a>.</p>
+                <p>
+                  The <span class="ae-accent">one accent</span> marks the action
+                  that matters.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">BUTTONS</h2>
+                <p style="display: flex; gap: 1em; flex-wrap: wrap">
+                  <button class="ae-button">Primary</button>
+                  <button class="ae-button ae-button-quiet">Quiet</button>
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">CHROME</h2>
+                <div class="ae-foot">
+                  <span>v2.2.0 · MIT</span>
+                  <span class="ae-foot-links"
+                    ><a href="#">github</a><a href="#">npm</a></span
+                  >
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            <code>pnpm add github:misty-step/aesthetic#v2.2.0</code>
+          </p>
+          <p class="ae-chrome">
+            one stylesheet · no build step · no javascript required
+          </p>
+        </footer>
       </div>
-    </main>
-    <footer class="ae-bar">
-      <p class="ae-chrome"><code>pnpm add github:misty-step/aesthetic#v2.2.0</code></p>
-      <p class="ae-chrome">one stylesheet · no build step · no javascript required</p>
-    </footer>
-  </div>
-</section>
+    </section>
 
-<!-- ═══ C · EDITORIAL — the argument, then the law, then proof ═══════ -->
-<section class="proto-variant" id="vc">
-  <div class="ae-screen">
-    <header class="ae-bar">
-      <a class="ae-name" href="#">AESTHETIC</a>
-      <nav class="ae-nav js-nav js-views" data-views="vc-views">
-        <button class="is-active" data-view="0">the argument</button>
-        <button data-view="1">the law</button>
-        <button data-view="2">the proof</button>
-        <span class="ae-nav-ind"></span>
-      </nav>
-      <button class="ae-mode js-mode" aria-label="toggle color mode">
-        <svg class="ae-icon ae-sun"><use href="#i-sun"/></svg>
-        <svg class="ae-icon ae-moon"><use href="#i-moon"/></svg>
-      </button>
-    </header>
-    <main class="ae-stage demo-views" id="vc-views">
-      <div class="ae-view is-on">
-        <div class="ae-group">
-          <p class="ae-lede">Component libraries hand you parts and let every
-          product wander. This is the opposite bet: a small law, strictly
-          kept — one font size, nine registers, one accent, screens that
-          never scroll — so anything we build is unmistakably ours.</p>
-        </div>
-        <div class="ae-group">
-          <p class="ae-dim">No build step. No JavaScript required. One
-          stylesheet shared by every Misty Step production.</p>
-        </div>
-        <p class="ae-chrome"><code>pnpm add github:misty-step/aesthetic#v2.2.0</code></p>
+    <!-- ═══ C · EDITORIAL — the argument, then the law, then proof ═══════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <nav class="ae-nav js-nav js-views" data-views="vc-views">
+            <button class="is-active" data-view="0">the argument</button>
+            <button data-view="1">the law</button>
+            <button data-view="2">the proof</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage demo-views" id="vc-views">
+          <div class="ae-view is-on">
+            <div class="ae-group">
+              <p class="ae-lede">
+                Component libraries hand you parts and let every product wander.
+                This is the opposite bet: a small law, strictly kept — one font
+                size, nine registers, one accent, screens that never scroll — so
+                anything we build is unmistakably ours.
+              </p>
+            </div>
+            <div class="ae-group">
+              <p class="ae-dim">
+                No build step. No JavaScript required. One stylesheet shared by
+                every Misty Step production.
+              </p>
+            </div>
+            <p class="ae-chrome">
+              <code>pnpm add github:misty-step/aesthetic#v2.2.0</code>
+            </p>
+          </div>
+          <div class="ae-view">
+            <div class="ae-group">
+              <h2 class="ae-h">THE LAW</h2>
+              <p>
+                <span class="ae-item">One size.</span>
+                <span class="ae-dim">Heavier and blacker, never larger.</span>
+              </p>
+              <p>
+                <span class="ae-item">Nine registers.</span>
+                <span class="ae-dim">Three inks by three weights.</span>
+              </p>
+              <p>
+                <span class="ae-item">One accent.</span>
+                <span class="ae-dim"
+                  >Per view, <span class="ae-accent">exactly once</span>.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Screens, not pages.</span>
+                <span class="ae-dim">Every view fits the viewport.</span>
+              </p>
+              <p>
+                <span class="ae-item">Motion is feedback.</span>
+                <span class="ae-dim"
+                  >Never decoration; success resolves once.</span
+                >
+              </p>
+              <p>
+                <span class="ae-item">Buttons are not links.</span>
+                <span class="ae-dim">Links navigate, buttons act.</span>
+              </p>
+              <p>
+                <span class="ae-item">Light and dark.</span>
+                <span class="ae-dim"
+                  >The system decides; you may overrule.</span
+                >
+              </p>
+            </div>
+          </div>
+          <div class="ae-view">
+            <div class="ae-group">
+              <h2 class="ae-h">THE PROOF</h2>
+              <p>
+                Everything on this page — the bars, the nav you just used, this
+                very sentence — is the stylesheet, unmodified.
+              </p>
+            </div>
+            <div class="ae-group">
+              <form class="js-form" style="max-width: 24em">
+                <label class="ae-label" for="vc-email">Email</label>
+                <input
+                  class="ae-input"
+                  id="vc-email"
+                  type="email"
+                  placeholder="you@misty-step.com"
+                  style="margin-bottom: 1.2em"
+                />
+                <button class="ae-button ae-send" type="submit">
+                  <span class="ae-send-label">Send message</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">v2.2.0 · MIT</p>
+          <p class="ae-chrome">
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </p>
+        </footer>
       </div>
-      <div class="ae-view">
-        <div class="ae-group">
-          <h2 class="ae-h">THE LAW</h2>
-          <p><span class="ae-item">One size.</span> <span class="ae-dim">Heavier and blacker, never larger.</span></p>
-          <p><span class="ae-item">Nine registers.</span> <span class="ae-dim">Three inks by three weights.</span></p>
-          <p><span class="ae-item">One accent.</span> <span class="ae-dim">Per view, <span class="ae-accent">exactly once</span>.</span></p>
-          <p><span class="ae-item">Screens, not pages.</span> <span class="ae-dim">Every view fits the viewport.</span></p>
-          <p><span class="ae-item">Motion is feedback.</span> <span class="ae-dim">Never decoration; success resolves once.</span></p>
-          <p><span class="ae-item">Buttons are not links.</span> <span class="ae-dim">Links navigate, buttons act.</span></p>
-          <p><span class="ae-item">Light and dark.</span> <span class="ae-dim">The system decides; you may overrule.</span></p>
-        </div>
-      </div>
-      <div class="ae-view">
-        <div class="ae-group">
-          <h2 class="ae-h">THE PROOF</h2>
-          <p>Everything on this page — the bars, the nav you just used, this
-          very sentence — is the stylesheet, unmodified.</p>
-        </div>
-        <div class="ae-group">
-          <form class="js-form" style="max-width:24em">
-            <label class="ae-label" for="vc-email">Email</label>
-            <input class="ae-input" id="vc-email" type="email" placeholder="you@misty-step.com" style="margin-bottom:1.2em">
-            <button class="ae-button ae-send" type="submit">
-              <span class="ae-send-label">Send message</span>
-              <span class="ae-send-done" aria-hidden="true">Sent <svg class="ae-icon"><use href="#i-check"/></svg></span>
-            </button>
-          </form>
-        </div>
-      </div>
-    </main>
-    <footer class="ae-bar">
-      <p class="ae-chrome">v2.2.0 · MIT</p>
-      <p class="ae-chrome"><a href="https://github.com/misty-step/aesthetic">github</a></p>
-    </footer>
-  </div>
-</section>
+    </section>
 
-<!-- ═══ D · WORKBENCH — the index is the landing ═════════════════════ -->
-<section class="proto-variant proto-wide" id="vd">
-  <div class="ae-screen">
-    <header class="ae-bar">
-      <a class="ae-name" href="#">AESTHETIC</a>
-      <p class="ae-chrome">the misty step design system · index of primitives</p>
-      <button class="ae-mode js-mode" aria-label="toggle color mode">
-        <svg class="ae-icon ae-sun"><use href="#i-sun"/></svg>
-        <svg class="ae-icon ae-moon"><use href="#i-moon"/></svg>
-      </button>
-    </header>
-    <main class="ae-stage ae-stage-scroll">
-      <div class="ae-view">
-        <div class="ae-group">
-          <p><span class="ae-item">One stylesheet, seventeen primitives, two
-          production consumers.</span> <span class="ae-dim">Each class below
-          links to a rendered specimen and its canonical markup.</span></p>
-        </div>
-        <table class="idx ae-chrome">
-          <thead>
-            <tr><th>CLASS</th><th>ROLE</th><th>SINCE</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="cls">.ae-screen / .ae-bar / .ae-stage</td><td class="role">viewport shell: chrome bars, centered stage</td><td class="since">2.0</td></tr>
-            <tr><td class="cls">.ae-stage-scroll</td><td class="role">inner scroll for long documents — this very table</td><td class="since">2.0</td></tr>
-            <tr><td class="cls">.ae-view</td><td class="role">one screenful, quiet entrance on remount</td><td class="since">2.0</td></tr>
-            <tr><td class="cls">.ae-nav + .ae-nav-ind</td><td class="role">view switcher, sliding ink underline</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-row-link</td><td class="role">whole-row links; the cursor never strobes</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-chrome / .ae-foot</td><td class="role">the 13px chrome register; hairline footer</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-icon</td><td class="role">Lucide at 1.5px stroke, riding with text</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-mode</td><td class="role">sun/moon rotate-crossfade toggle</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-panel</td><td class="role">soft depth for dense content, radius 0</td><td class="since">2.1</td></tr>
-            <tr><td class="cls">.ae-name</td><td class="role">weight 800, letterspaced, never large</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-lede</td><td class="role">the argument, plainly</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-group / .ae-h</td><td class="role">a section and its muted heading</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-item / .ae-dim</td><td class="role">medium ink / muted ink</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-accent</td><td class="role">THE accent: one per view</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-label / .ae-input</td><td class="role">fields as lines, not boxes</td><td class="since">1.0</td></tr>
-            <tr><td class="cls">.ae-button / .ae-button-quiet</td><td class="role">solid ink primary, hairline secondary</td><td class="since">2.2</td></tr>
-            <tr><td class="cls">.ae-send</td><td class="role">label resolves to “Sent ✓”, exactly once</td><td class="since">2.2</td></tr>
-          </tbody>
-        </table>
+    <!-- ═══ D · WORKBENCH — the index is the landing ═════════════════════ -->
+    <section class="proto-variant proto-wide" id="vd">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <p class="ae-chrome">
+            the misty step design system · index of primitives
+          </p>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage ae-stage-scroll">
+          <div class="ae-view">
+            <div class="ae-group">
+              <p>
+                <span class="ae-item"
+                  >One stylesheet, seventeen primitives, two production
+                  consumers.</span
+                >
+                <span class="ae-dim"
+                  >Each class below links to a rendered specimen and its
+                  canonical markup.</span
+                >
+              </p>
+            </div>
+            <table class="idx ae-chrome">
+              <thead>
+                <tr>
+                  <th>CLASS</th>
+                  <th>ROLE</th>
+                  <th>SINCE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="cls">.ae-screen / .ae-bar / .ae-stage</td>
+                  <td class="role">
+                    viewport shell: chrome bars, centered stage
+                  </td>
+                  <td class="since">2.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-stage-scroll</td>
+                  <td class="role">
+                    inner scroll for long documents — this very table
+                  </td>
+                  <td class="since">2.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-view</td>
+                  <td class="role">one screenful, quiet entrance on remount</td>
+                  <td class="since">2.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-nav + .ae-nav-ind</td>
+                  <td class="role">view switcher, sliding ink underline</td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-row-link</td>
+                  <td class="role">
+                    whole-row links; the cursor never strobes
+                  </td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-chrome / .ae-foot</td>
+                  <td class="role">
+                    the 13px chrome register; hairline footer
+                  </td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-icon</td>
+                  <td class="role">Lucide at 1.5px stroke, riding with text</td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-mode</td>
+                  <td class="role">sun/moon rotate-crossfade toggle</td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-panel</td>
+                  <td class="role">soft depth for dense content, radius 0</td>
+                  <td class="since">2.1</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-name</td>
+                  <td class="role">weight 800, letterspaced, never large</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-lede</td>
+                  <td class="role">the argument, plainly</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-group / .ae-h</td>
+                  <td class="role">a section and its muted heading</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-item / .ae-dim</td>
+                  <td class="role">medium ink / muted ink</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-accent</td>
+                  <td class="role">THE accent: one per view</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-label / .ae-input</td>
+                  <td class="role">fields as lines, not boxes</td>
+                  <td class="since">1.0</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-button / .ae-button-quiet</td>
+                  <td class="role">solid ink primary, hairline secondary</td>
+                  <td class="since">2.2</td>
+                </tr>
+                <tr>
+                  <td class="cls">.ae-send</td>
+                  <td class="role">label resolves to “Sent ✓”, exactly once</td>
+                  <td class="since">2.2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            <code>pnpm add github:misty-step/aesthetic#v2.2.0</code>
+          </p>
+          <p class="ae-chrome">
+            v2.2.0 · MIT ·
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </p>
+        </footer>
       </div>
-    </main>
-    <footer class="ae-bar">
-      <p class="ae-chrome"><code>pnpm add github:misty-step/aesthetic#v2.2.0</code></p>
-      <p class="ae-chrome">v2.2.0 · MIT · <a href="https://github.com/misty-step/aesthetic">github</a></p>
-    </footer>
-  </div>
-</section>
+    </section>
 
-<!-- ═══ E · SOURCE — the page is the documentation ═══════════════════ -->
-<section class="proto-variant proto-wide" id="ve">
-  <div class="ae-screen">
-    <header class="ae-bar">
-      <a class="ae-name" href="#">AESTHETIC</a>
-      <nav class="ae-nav js-nav js-views" data-views="ve-views">
-        <button class="is-active" data-view="0">form</button>
-        <button data-view="1">nav</button>
-        <button data-view="2">registers</button>
-        <span class="ae-nav-ind"></span>
-      </nav>
-      <button class="ae-mode js-mode" aria-label="toggle color mode">
-        <svg class="ae-icon ae-sun"><use href="#i-sun"/></svg>
-        <svg class="ae-icon ae-moon"><use href="#i-moon"/></svg>
-      </button>
-    </header>
-    <main class="ae-stage demo-views" id="ve-views">
-      <div class="ae-view is-on">
-        <div class="ae-group">
-          <p class="ae-lede">What renders on the left is the markup on the
-          right. The page is the documentation — view source and ship it.</p>
-        </div>
-        <div class="src-split">
-          <form class="js-form">
-            <label class="ae-label" for="ve-email">Email</label>
-            <input class="ae-input" id="ve-email" type="email" placeholder="you@misty-step.com" style="margin-bottom:1.2em">
-            <button class="ae-button ae-send" type="submit">
-              <span class="ae-send-label">Send message</span>
-              <span class="ae-send-done" aria-hidden="true">Sent <svg class="ae-icon"><use href="#i-check"/></svg></span>
-            </button>
-          </form>
-          <pre class="src-code"><code>&lt;<span class="t">label</span> class="<span class="t">ae-label</span>"&gt;Email&lt;/label&gt;
+    <!-- ═══ E · SOURCE — the page is the documentation ═══════════════════ -->
+    <section class="proto-variant proto-wide" id="ve">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <nav class="ae-nav js-nav js-views" data-views="ve-views">
+            <button class="is-active" data-view="0">form</button>
+            <button data-view="1">nav</button>
+            <button data-view="2">registers</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage demo-views" id="ve-views">
+          <div class="ae-view is-on">
+            <div class="ae-group">
+              <p class="ae-lede">
+                What renders on the left is the markup on the right. The page is
+                the documentation — view source and ship it.
+              </p>
+            </div>
+            <div class="src-split">
+              <form class="js-form">
+                <label class="ae-label" for="ve-email">Email</label>
+                <input
+                  class="ae-input"
+                  id="ve-email"
+                  type="email"
+                  placeholder="you@misty-step.com"
+                  style="margin-bottom: 1.2em"
+                />
+                <button class="ae-button ae-send" type="submit">
+                  <span class="ae-send-label">Send message</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">label</span> class="<span class="t">ae-label</span>"&gt;Email&lt;/label&gt;
 &lt;<span class="t">input</span> class="<span class="t">ae-input</span>" type="email"&gt;
 
 &lt;<span class="t">button</span> class="<span class="t">ae-button ae-send</span>"&gt;
@@ -395,21 +702,25 @@
   &lt;/span&gt;
 &lt;/button&gt;
 <span class="t">// on success:</span> add .is-sent, set disabled</code></pre>
-        </div>
-      </div>
-      <div class="ae-view">
-        <div class="ae-group">
-          <p class="ae-lede">The nav is quiet words; the underline does the
-          moving. The site positions the indicator on view change.</p>
-        </div>
-        <div class="src-split">
-          <nav class="ae-nav js-nav">
-            <button class="is-active">work</button>
-            <button>writing</button>
-            <button>contact</button>
-            <span class="ae-nav-ind"></span>
-          </nav>
-          <pre class="src-code"><code>&lt;<span class="t">nav</span> class="<span class="t">ae-nav</span>"&gt;
+            </div>
+          </div>
+          <div class="ae-view">
+            <div class="ae-group">
+              <p class="ae-lede">
+                The nav is quiet words; the underline does the moving. The site
+                positions the indicator on view change.
+              </p>
+            </div>
+            <div class="src-split">
+              <nav class="ae-nav js-nav">
+                <button class="is-active">work</button>
+                <button>writing</button>
+                <button>contact</button>
+                <span class="ae-nav-ind"></span>
+              </nav>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">nav</span> class="<span class="t">ae-nav</span>"&gt;
   &lt;button aria-current="page"&gt;work&lt;/button&gt;
   &lt;button&gt;writing&lt;/button&gt;
   &lt;button&gt;contact&lt;/button&gt;
@@ -417,127 +728,153 @@
 &lt;/nav&gt;
 <span class="t">// position .ae-nav-ind</span> (left/width)
 <span class="t">// on view change</span></code></pre>
-        </div>
-      </div>
-      <div class="ae-view">
-        <div class="ae-group">
-          <p class="ae-lede">Nine registers from three inks and three
-          weights. Hierarchy without a second font size.</p>
-        </div>
-        <div class="src-split">
-          <div class="reg-grid">
-            <span class="rh"></span><span class="rh">400</span><span class="rh">550</span><span class="rh">800</span>
-            <span class="rh">ink</span><span class="w4">quiet</span><span class="w5">steady</span><span class="w8">loud</span>
-            <span class="rh">muted</span><span class="ae-dim w4">quiet</span><span class="ae-dim w5">steady</span><span class="ae-dim w8">loud</span>
-            <span class="rh">faint</span><span class="x-faint w4">quiet</span><span class="x-faint w5">steady</span><span class="x-faint w8">loud</span>
+            </div>
           </div>
-          <pre class="src-code"><code>&lt;p&gt;plain ink&lt;/p&gt;
+          <div class="ae-view">
+            <div class="ae-group">
+              <p class="ae-lede">
+                Nine registers from three inks and three weights. Hierarchy
+                without a second font size.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="reg-grid">
+                <span class="rh"></span><span class="rh">400</span
+                ><span class="rh">550</span><span class="rh">800</span>
+                <span class="rh">ink</span><span class="w4">quiet</span
+                ><span class="w5">steady</span><span class="w8">loud</span>
+                <span class="rh">muted</span><span class="ae-dim w4">quiet</span
+                ><span class="ae-dim w5">steady</span
+                ><span class="ae-dim w8">loud</span>
+                <span class="rh">faint</span
+                ><span class="x-faint w4">quiet</span
+                ><span class="x-faint w5">steady</span
+                ><span class="x-faint w8">loud</span>
+              </div>
+              <pre class="src-code"><code>&lt;p&gt;plain ink&lt;/p&gt;
 &lt;p class="<span class="t">ae-item</span>"&gt;medium ink&lt;/p&gt;
 &lt;p class="<span class="t">ae-name</span>"&gt;BLACK INK&lt;/p&gt;
 &lt;p class="<span class="t">ae-dim</span>"&gt;muted&lt;/p&gt;
 &lt;p class="<span class="t">ae-h</span>"&gt;MUTED HEADING&lt;/p&gt;
 <span class="t">// faint is decoration only:</span>
 <span class="t">// placeholders, resting underlines</span></code></pre>
-        </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            <code>pnpm add github:misty-step/aesthetic#v2.2.0</code>
+          </p>
+          <p class="ae-chrome">
+            v2.2.0 · MIT ·
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </p>
+        </footer>
       </div>
-    </main>
-    <footer class="ae-bar">
-      <p class="ae-chrome"><code>pnpm add github:misty-step/aesthetic#v2.2.0</code></p>
-      <p class="ae-chrome">v2.2.0 · MIT · <a href="https://github.com/misty-step/aesthetic">github</a></p>
-    </footer>
-  </div>
-</section>
+    </section>
 
-<!-- ── the picker: comparison tooling, not part of any variant ─────── -->
-<nav class="proto-picker" aria-label="variant picker">
-  <button data-v="va" class="is-active">A manifesto</button>
-  <button data-v="vb">B specimen</button>
-  <button data-v="vc">C editorial</button>
-  <button data-v="vd">D workbench</button>
-  <button data-v="ve">E source</button>
-</nav>
+    <!-- ── the picker: comparison tooling, not part of any variant ─────── -->
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A manifesto</button>
+      <button data-v="vb">B specimen</button>
+      <button data-v="vc">C editorial</button>
+      <button data-v="vd">D workbench</button>
+      <button data-v="ve">E source</button>
+    </nav>
 
-<script>
-/* prototype glue — recipe-shaped, rebuilt properly in backlog 005 */
+    <script>
+      /* prototype glue — recipe-shaped, rebuilt properly in backlog 005 */
 
-/* mode toggle: pin the opposite of the current effective scheme;
+      /* mode toggle: pin the opposite of the current effective scheme;
    also pins style.colorScheme (the backlog-006 fix, previewed) */
-const root = document.documentElement;
-function isDark() {
-  if (root.classList.contains('dark')) return true;
-  if (root.classList.contains('light')) return false;
-  return matchMedia('(prefers-color-scheme: dark)').matches;
-}
-document.querySelectorAll('.js-mode').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const dark = isDark();
-    root.classList.toggle('dark', !dark);
-    root.classList.toggle('light', dark);
-    root.style.colorScheme = dark ? 'light' : 'dark';
-  });
-});
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
 
-/* nav indicator: position under the active item */
-function placeInd(nav) {
-  const active = nav.querySelector('.is-active');
-  const ind = nav.querySelector('.ae-nav-ind');
-  if (!active || !ind || !nav.offsetWidth) return;
-  ind.style.left = active.offsetLeft + 'px';
-  ind.style.width = active.offsetWidth + 'px';
-}
-function placeAllInds() {
-  document.querySelectorAll('.js-nav').forEach(placeInd);
-}
-document.querySelectorAll('.js-nav').forEach((nav) => {
-  nav.querySelectorAll('button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      nav.querySelectorAll('button').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      placeInd(nav);
-    });
-  });
-});
-addEventListener('resize', placeAllInds);
-if (document.fonts) document.fonts.ready.then(placeAllInds);
+      /* nav indicator: position under the active item */
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+      document.querySelectorAll('.js-nav').forEach((nav) => {
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            placeInd(nav);
+          });
+        });
+      });
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
 
-/* view swap: display toggle replays the entrance animation */
-document.querySelectorAll('.js-views').forEach((nav) => {
-  const views = document.getElementById(nav.dataset.views).querySelectorAll(':scope > .ae-view');
-  nav.querySelectorAll('button[data-view]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      views.forEach((v, i) => v.classList.toggle('is-on', i === Number(btn.dataset.view)));
-    });
-  });
-});
+      /* view swap: display toggle replays the entrance animation */
+      document.querySelectorAll('.js-views').forEach((nav) => {
+        const views = document
+          .getElementById(nav.dataset.views)
+          .querySelectorAll(':scope > .ae-view');
+        nav.querySelectorAll('button[data-view]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            views.forEach((v, i) =>
+              v.classList.toggle('is-on', i === Number(btn.dataset.view)),
+            );
+          });
+        });
+      });
 
-/* the send moment: resolve once, persist */
-document.querySelectorAll('.js-form').forEach((form) => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('.ae-send');
-    btn.classList.add('is-sent');
-    btn.disabled = true;
-  });
-});
+      /* the send moment: resolve once, persist */
+      document.querySelectorAll('.js-form').forEach((form) => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('.ae-send');
+          btn.classList.add('is-sent');
+          btn.disabled = true;
+        });
+      });
 
-/* variant picker (prototype tooling) */
-const picker = document.querySelector('.proto-picker');
-const variants = document.querySelectorAll('.proto-variant');
-function showVariant(id) {
-  variants.forEach((s) => s.classList.toggle('is-on', s.id === id));
-  picker.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b.dataset.v === id));
-  requestAnimationFrame(placeAllInds);
-}
-picker.querySelectorAll('button').forEach((btn) => {
-  btn.addEventListener('click', () => showVariant(btn.dataset.v));
-});
-addEventListener('keydown', (e) => {
-  const ids = ['va', 'vb', 'vc', 'vd', 've'];
-  if (e.key >= '1' && e.key <= '5' && !e.target.matches('input,textarea')) {
-    showVariant(ids[Number(e.key) - 1]);
-  }
-});
-placeAllInds();
-</script>
-</body>
+      /* variant picker (prototype tooling) */
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      function showVariant(id) {
+        variants.forEach((s) => s.classList.toggle('is-on', s.id === id));
+        picker
+          .querySelectorAll('button')
+          .forEach((b) => b.classList.toggle('is-active', b.dataset.v === id));
+        requestAnimationFrame(placeAllInds);
+      }
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => showVariant(btn.dataset.v));
+      });
+      addEventListener('keydown', (e) => {
+        const ids = ['va', 'vb', 'vc', 'vd', 've'];
+        if (
+          e.key >= '1' &&
+          e.key <= '5' &&
+          !e.target.matches('input,textarea')
+        ) {
+          showVariant(ids[Number(e.key) - 1]);
+        }
+      });
+      placeAllInds();
+    </script>
+  </body>
 </html>

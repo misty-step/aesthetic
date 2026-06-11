@@ -15,7 +15,7 @@ way, while the identity laws hold everywhere.
       `law` block): identity laws (ink/weight hierarchy, motion as
       feedback, buttons are not links, hairlines, radius 0, cursor law)
       apply everywhere; "viewport screens" and "one accent per view"
-      are re-scoped as laws of the screen *archetype*, with accent
+      are re-scoped as laws of the screen _archetype_, with accent
       generalized to "rationed: one per region."
 - [ ] Status inks exist: danger/success/warn pairs for both modes,
       designed ink-forward (text + hairline, never filled boxes), each

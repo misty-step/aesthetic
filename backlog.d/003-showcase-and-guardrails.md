@@ -27,9 +27,9 @@ moment it lands.
 - [ ] Every primitive has a catalog entry: rendered example,
       copy-paste markup, and its derivation from the law (the README's
       decision-register pattern, made public).
-- [ ] A `/lab` section hosts in-progress motion and component work
-      (LAB 001/002 precedent), explicitly excluded from visual
-      regression.
+- [ ] Lab work stays internal: experiments live in `prototypes/`
+      (LAB 001/002 precedent), viewable locally, never part of the
+      deployed artifact — the Pages workflow publishes only `site/`.
 - [ ] CI: stylelint + prettier fail on violations; Playwright
       screenshots of the stable pages (catalog + archetypes, both
       modes) fail on unintended pixel change.
@@ -44,7 +44,9 @@ moment it lands.
    law derivation.
 3. Recipes wired verbatim once backlog 005 lands them; until then the
    skeleton may carry minimal inline glue marked `TODO(005)`.
-4. `/lab`: the motion work of backlog 001 develops here.
+4. Lab convention: motion and component experiments (backlog 001,
+   epic 007 candidates) develop in `prototypes/`, local-only;
+   verdicts graduate into the stylesheet and the catalog.
 5. Archetype gauntlet pages — dashboard, docs, settings, landing —
    joint with backlog 007 child 7 (these pages ARE its acceptance
    test).
