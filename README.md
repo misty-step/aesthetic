@@ -3,7 +3,7 @@
 The Misty Step design system. One CSS file: tokens, base styles, and a
 small set of primitives. Import it and the project looks like ours.
 
-Live at [misty-step.github.io/aesthetic](https://misty-step.github.io/aesthetic/) —
+Live at [aesthetic.mistystep.io](https://aesthetic.mistystep.io/) —
 the system demonstrating itself: every primitive on the page is the
 stylesheet, unmodified.
 
