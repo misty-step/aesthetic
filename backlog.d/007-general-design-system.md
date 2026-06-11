@@ -1,6 +1,6 @@
 # Generalize into a full design system without diluting the law
 
-Priority: P1 · Status: pending · Estimate: XL
+Priority: P0 · Status: ready · Estimate: XL
 
 ## Goal
 
@@ -9,40 +9,61 @@ can be built entirely from this system and come out unmistakably ours:
 the standard UI catalog and UX flows exist, each answered the aesthetic
 way, while the identity laws hold everywhere.
 
+**Ratified 2026-06-11:** the operator confirmed this is the mandate —
+"covers anything and everything that any application built under
+Misty Step would need" — and added two arcs: the agent-facing identity
+prose (DESIGN.md, seeded same day) and a no-npm distribution path
+(child 8, confirmed feasible).
+
 ## Oracle
 
-- [ ] The law is stratified in writing (CSS header, README, tokens.json
-      `law` block): identity laws (ink/weight hierarchy, motion as
-      feedback, buttons are not links, hairlines, radius 0, cursor law)
-      apply everywhere; "viewport screens" and "one accent per view"
-      are re-scoped as laws of the screen _archetype_, with accent
-      generalized to "rationed: one per region."
+- [ ] The law is stratified in writing (CSS header, README, DESIGN.md,
+      tokens.json `law`): identity laws (ink/weight hierarchy, motion
+      as feedback, buttons are not links, hairlines, radius 0, cursor
+      law) apply everywhere; "viewport screens" and "one accent per
+      view" are re-scoped as laws of the screen _archetype_, with the
+      identity-level form "the accent is rationed." The operator
+      explicitly questions the one-accent law (2026-06-11) — child 1
+      ends with their sign-off on the final wording.
 - [ ] Status inks exist: danger/success/warn pairs for both modes,
       designed ink-forward (text + hairline, never filled boxes), each
       passing AA in the backlog-004 contrast table.
-- [ ] The standard catalog is covered: select, checkbox, radio, switch,
-      field validation/error, dialog, popover/dropdown, tooltip, toast,
-      table, badge, skeleton/progress, empty state — each with a
-      written rationale deriving it from the law (the decision-register
-      pattern the README already uses for links).
+- [ ] The standard catalog is covered against the shadcn-59 inventory
+      (June 2026: 18 form controls, 10 overlays, 7 navigation, 10 data
+      display, 8 feedback/status, 5 layout): select, checkbox, radio,
+      switch, field validation, dialog, popover/dropdown, tooltip,
+      toast, table, badge, skeleton/progress, empty state, tabs,
+      accordion, breadcrumb — each either shipped with a written
+      derivation from the law, or explicitly refused with the more
+      aesthetic answer named (a badge may be weight, not a pill).
 - [ ] At least three archetypes ship beyond the screen: document, app
       shell (chrome + sidebar + dense content), form flow.
 - [ ] The demo gauntlet (extends backlog 003): a dashboard, a docs
       page, a settings/form flow, and the landing screen, both modes,
       built with zero law-breaking glue.
-- [ ] Distribution: the one-CSS-file import path still works unchanged
-      for the simple case, and components are also installable via a
-      shadcn-compatible registry (`npx shadcn add @misty-step/...`,
-      Universal Registry Items so it is framework-agnostic).
+- [ ] The site splits into a marketing landing and a full catalog:
+      the homepage argues the system (specimen stays its proof), the
+      catalog page documents every primitive, token, and recipe.
+- [ ] DESIGN.md stays true as the system grows: every new component's
+      derivation lands there or in the catalog, and the image-language
+      block survives unedited unless docs/IMAGES.md changes.
+- [ ] Distribution: the one-CSS-file import path still works unchanged,
+      and `npx shadcn@latest add @misty-step/aesthetic` (or the direct
+      /r/aesthetic.json URL) installs the system into an empty
+      directory with no npm account involved on either side.
 
 ## Children
 
 1. Stratify the law: identity vs archetype, written into the CSS
-   header, README, and tokens.json; "accent is rationed" replaces
-   "one accent per view" at system level.
+   header, README, DESIGN.md, and tokens.json; "the accent is
+   rationed" replaces "one accent per view" at system level, with the
+   screen archetype keeping the strict form. Ends with operator
+   sign-off — they may want the one-accent law loosened further or
+   dropped; bring them the wording, not a fait accompli.
 2. Status inks: design the danger/success/warn pairs (the hardest
    taste problem in the epic — restraint is the brand); extend the
-   contrast table (backlog 004 merges into this child).
+   contrast table (backlog 004 merges into this child). Fan-and-pick
+   in prototypes/, like the site.
 3. Form completeness: select, checkbox, radio, switch, validation
    states — "a line, not a box" extended to choice controls.
 4. Overlay components: dialog, popover/dropdown, tooltip, toast, each
@@ -51,34 +72,44 @@ way, while the identity laws hold everywhere.
    primitives rather than reinventing focus management).
 5. Data & structure: table (dense = chrome register, codified), tabs
    generalized from `.ae-nav`, badge/status text, skeleton/progress,
-   empty states.
+   empty states, accordion/collapsible.
 6. Archetypes: document, app shell, form flow; screen remains the
    flagship.
-7. Demo gauntlet: dashboard + docs + settings + landing (grows
-   backlog 003's demo into the acceptance test).
-8. Registry distribution: shadcn-compatible registry.json + built
-   items, layered on the unchanged single-file CSS core; npm publish
-   (backlog 002) folds into this child when credentials land.
+7. The site grows up: marketing landing (the argument, the feel, the
+   install) + catalog page (every primitive with rendered specimen,
+   canonical markup, and law derivation — the existing primitives
+   page is the seed). Demo gauntlet pages hang off the catalog.
+8. Registry distribution (folds backlog 002): serve
+   `/r/registry.json` + `/r/aesthetic.json` as static files from the
+   site (shadcn universal registry item, `type: registry:item`, files
+   inlined with explicit `~/` targets — works in any project, no
+   framework, no npm; precedent: tweakcn's CSS-only registry, v0's
+   URL registry). A release script regenerates the JSON from
+   aesthetic.css/tokens.json at tag time and bumps consumer pins —
+   the one-command release oracle from 002 lands here. Namespace:
+   `"@misty-step": "https://aesthetic.mistystep.io/r/{name}.json"`.
+   Later children can ship per-component items (e.g.
+   `@misty-step/send-moment` = CSS + recipe JS + markup snippet).
 
 ## Notes
 
-**Why (premise-inversion + competitor lens, 2026-06-11 session):** the
-operator asked for exactly this — general enough for arbitrary
-projects, opinionated enough to stay ours. Diagnosis: the current law
-conflates identity laws (generalize perfectly) with archetype laws
-(viewport screens, one accent per view — true only of the
-portfolio/landing shape both consumers share). Generalize by
-stratifying the law, never by diluting it. Steal shadcn's
-architecture, not its aesthetics: registry distribution of code you
-own, behavior/styling separation, small semantic token vocabulary
-(verified current 2026: Universal Registry Items are
-framework-agnostic; `npx shadcn create` offers Base UI — by the
-Radix/Floating UI/MUI teams — as the primitive layer). Guardrail
-against becoming Material: every component must carry a written
-derivation from the law; if it can't be derived, either the law gets
-an explicit amendment or the component gets a more aesthetic answer
-(e.g. a badge might be weight, not a colored pill).
+**Why (premise-inversion + competitor lens, 2026-06-11 session; ratified
+by the operator the same day):** the current law conflates identity laws
+(generalize perfectly) with archetype laws (viewport screens, one accent
+per view — true only of the portfolio/landing shape both consumers
+share). Generalize by stratifying the law, never by diluting it. Steal
+shadcn's architecture, not its aesthetics: registry distribution of
+code you own, behavior/styling separation, small semantic token
+vocabulary (shadcn's entire semantic surface is ~33 color variables +
+a radius scale — ours is 7 color tokens per mode; staying smaller is
+the point). Registry research (2026-06-11): no notable CSS-only design
+system ships a shadcn-compatible registry today — the slot is open.
+Guardrail against becoming Material: every component carries a written
+derivation from the law; if it can't be derived, either the law gets an
+explicit amendment or the component gets a more aesthetic answer.
 
-Sequencing: 006 (color-scheme fix) and 003's site skeleton first, then
-child 1 (the law rewrite) gates everything; 001 and 005 proceed in
-parallel as feeders. 002 and 004 fold into children 8 and 2.
+Sequencing: child 1 (the law rewrite) gates everything; 2 (status inks)
+is the next taste-critical session and wants the operator's eyes; 8
+(registry) is independent and can ship any time; 001 and 005 proceed in
+parallel as feeders. 004 folds into child 2; 002 folds into child 8
+(both pending ratification — see those tickets).

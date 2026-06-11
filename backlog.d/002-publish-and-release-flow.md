@@ -1,6 +1,15 @@
 # Publish to npm and script the release flow
 
-Priority: P1 · Status: blocked · Estimate: S
+Priority: P3 · Status: blocked · Estimate: S
+
+**Deletion candidate (2026-06-11, awaiting ratification):** the
+operator asked for an install path that avoids npm credentials, and
+the registry research (007 child 8) confirms one: a shadcn-compatible
+registry is static JSON served from aesthetic.mistystep.io — no npm
+account anywhere — and git-tag + jsDelivr already cover the pin and
+CDN paths. npm publish adds a third channel only if a consumer
+specifically demands `npm install` resolution. The release-scripting
+oracle (one command bumps every consumer) migrates to 007 child 8.
 
 ## Goal
 

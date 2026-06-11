@@ -30,6 +30,23 @@ without one.
    change, without transitioning everything always).
 3. ~~Form feedback choreography~~ — shipped as the send moment, v2.2.0.
 4. Demo page exercising all of it (see backlog 003).
+5. LAB: input anticipation. A focus affordance that ramps in as the
+   pointer approaches (`intent = max(0, 1 - d/180)^2`), operator-fed
+   (2026-06-11). As written it breaks the law twice — it precedes the
+   interaction and never resolves — so it enters as a prototypes/ LAB
+   with a verdict, not a recipe. Lawful constraints if it survives:
+   opacity only (no translate/scale/magnetism), ramp the hairline ink
+   and cap below the committed hover state, nearest-edge winner-take-
+   all so exactly one target responds per view, snap to the real
+   focus/hover state on contact, listener only under
+   `(hover: hover) and (pointer: fine)`, off under reduced motion,
+   single passive pointermove writing one `--intent` custom property
+   per rAF. Prior art: Apple iPadOS pointer magnetism (withheld from
+   hover elements on purpose), Rauno Freiberg's "inferring intent,"
+   TanStack/ForesightJS invisible prefetch. Verdict bias going in:
+   marketing-site tell, expect FAIL — but it is the strongest test of
+   whether "anticipation is feedback about intent" earns a law
+   carve-out.
 
 ## Notes
 

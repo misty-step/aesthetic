@@ -16,6 +16,9 @@ feedback only (resolves once, persists), buttons are not links.
 ## Repo shape
 
 - `aesthetic.css` + `tokens.json` — the package (npm `files` allowlist).
+- `DESIGN.md` — the identity in prose, for agents generating anything
+  visual (views, components, images). Read it before visual work;
+  `docs/IMAGES.md` is the extended image-language canon.
 - `site/` — the public site (specimen landing + primitives catalog),
   built only with the system itself: zero build step, zero framework.
   It is the ONLY consumer that rides HEAD; `site/aesthetic.css` is a

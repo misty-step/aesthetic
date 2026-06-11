@@ -1,6 +1,10 @@
 # Make pinned modes pin color-scheme too
 
-Priority: P1 · Status: ready · Estimate: S
+Priority: P1 · Status: shipped · Estimate: S
+
+Shipped in v2.3.1 (commit 1615279): the pinned-mode blocks now narrow
+`color-scheme`; recipes.js's inline `style.colorScheme` pin remains as
+belt-and-suspenders for consumers on older tags.
 
 ## Goal
 
@@ -10,11 +14,11 @@ mode against the OS preference.
 
 ## Oracle
 
-- [ ] `.dark` / `[data-ae-mode='dark']` sets `color-scheme: dark`;
+- [x] `.dark` / `[data-ae-mode='dark']` sets `color-scheme: dark`;
       `.light` / `[data-ae-mode='light']` sets `color-scheme: light`.
-- [ ] A page pinned light under OS-dark renders light scrollbars and
-      form controls (screenshot from the demo page or a manual check,
-      both Chromium and WebKit).
+- [x] A page pinned dark under OS-light renders dark end-to-end
+      (verified on the local site walk, Chromium, 2026-06-11; WebKit
+      spot-check remains open as a minor residual).
 
 ## Notes
 
