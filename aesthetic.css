@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v2.2.0
+   aesthetic v2.2.1
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
    The law:
@@ -52,7 +52,7 @@
   --ae-w-medium: 550;
   --ae-w-black: 800;
 
-  --ae-measure: 38em;
+  --ae-measure: 38rem; /* rem: bars in the 13px chrome register must not shrink the measure */
   --ae-radius: 0;
 
   /* motion: feedback, never decoration */
@@ -206,7 +206,7 @@ a:hover {
 /* a bar: quiet chrome at the top or bottom of a screen */
 .ae-bar {
   flex: none;
-  width: min(var(--ae-measure), 100% - 5em);
+  width: min(var(--ae-measure), 100% - 5rem);
   margin-inline: auto;
   padding: 1.4em 0;
   display: flex;
@@ -221,7 +221,7 @@ a:hover {
 .ae-stage {
   flex: 1;
   min-height: 0;
-  width: min(var(--ae-measure), 100% - 5em);
+  width: min(var(--ae-measure), 100% - 5rem);
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -627,7 +627,7 @@ textarea.ae-input {
 @media (max-width: 640px) {
   .ae-bar,
   .ae-stage {
-    width: calc(100% - 2.4em);
+    width: calc(100% - 2.4rem);
   }
 
   .ae-group {
