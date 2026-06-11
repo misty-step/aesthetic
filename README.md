@@ -19,7 +19,7 @@ small set of primitives. Import it and the project looks like ours.
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.0.1
+pnpm add github:misty-step/aesthetic#v2.1.0
 ```
 
 ```css
@@ -35,7 +35,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.0.1/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.1.0/aesthetic.css"
 />
 ```
 
@@ -101,14 +101,41 @@ Everything else is the shared identity.
 | `.ae-screen` / `.ae-bar` / `.ae-stage` | Viewport shell: chrome bars and a centered stage |
 | `.ae-stage-scroll` | Inner scroll for long documents; the page still never scrolls |
 | `.ae-view` | One screenful of content with a quiet entrance |
-| `.ae-nav` | View switcher: muted words, active is ink |
-| `.ae-mode` | Light/dark toggle styling |
+| `.ae-nav` + `.ae-nav-ind` | View switcher with a sliding ink underline (the site positions the indicator on view change) |
+| `.ae-row-link` | List rows where the whole row is the link (kills cursor strobing between rows) |
+| `.ae-chrome` / `.ae-foot` | The 13px chrome register; hairline-topped two-end footer |
+| `.ae-icon` | Lucide icon sizing: 1.5px stroke, round caps, rides with text |
+| `.ae-mode` | Icon mode toggle: sun/moon rotate-crossfade |
+| `.ae-panel` | Soft depth for dense content: light shadow in light mode, wash in dark, radius 0 |
 | `.ae-name` | The name: weight 800, letterspaced, never large |
 | `.ae-lede` | The argument, plainly |
 | `.ae-group` / `.ae-h` | A section and its muted heading |
 | `.ae-item` / `.ae-dim` | Medium ink / muted ink |
 | `.ae-accent` | THE accent: one per view |
 | `.ae-label` / `.ae-input` / `.ae-button` | Forms as lines, not boxes |
+
+## Cursor law
+
+Static text never shows the I-beam (`body { cursor: default }`); the
+pointer appears only on interactive elements, and the text cursor only in
+inputs. In lists, use `.ae-row-link` so the cursor never strobes across
+dead bands between rows.
+
+## Link treatment
+
+Locked: ink at rest with a faint underline, warming to the accent on
+hover. Approved alternates, kept here so changing is one decision away:
+
+- **Marker sweep** — a wash highlight eases across the link
+  (`background-image` gradient, `background-size 0% → 100%`).
+- **Draw on hover** — no underline at rest (weight 550 marks the link),
+  a 1px underline draws left-to-right on hover.
+
+## Icons
+
+Lucide (ISC), inlined as SVG `<symbol>` sprites per site, styled by
+`.ae-icon`. Ubiquitous but clean; revisit if a more distinct voice is
+worth the trade later.
 
 ## Versioning
 

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v2.0.1
+   aesthetic v2.1.0
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
    The law:
@@ -98,6 +98,7 @@ body {
   font-size: 16px;
   font-weight: var(--ae-w-regular);
   line-height: 1.8;
+  cursor: default; /* no I-beam on static text; pointer/text are earned */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -144,17 +145,47 @@ samp {
   outline-offset: 3px;
 }
 
-/* prose links are ink; color is reserved for the accent instance */
+/* links: ink at rest, warm to accent on hover (the locked treatment).
+   Approved alternates, documented for easy change, live in the README:
+   marker sweep and draw-on-hover. */
 a {
   color: inherit;
+  cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-color: var(--ae-ink-faint);
-  transition: text-decoration-color var(--ae-quick) var(--ae-ease);
+  padding-block: 0.35em;
+  margin-block: -0.35em;
+  transition:
+    color var(--ae-quick) var(--ae-ease),
+    text-decoration-color var(--ae-quick) var(--ae-ease);
 }
 
 a:hover {
+  color: var(--ae-accent);
   text-decoration-color: currentColor;
+}
+
+/* list rows: the whole row is the link, so the cursor never crosses a
+   dead band between rows */
+.ae-row-link {
+  display: block;
+  text-decoration: none;
+  padding: 0.42em 0;
+  margin-block: 0;
+  color: inherit;
+}
+
+.ae-row-link:hover {
+  color: inherit;
+}
+
+.ae-row-link .ae-item {
+  transition: color var(--ae-quick) var(--ae-ease);
+}
+
+.ae-row-link:hover .ae-item {
+  color: var(--ae-accent);
 }
 
 /* ── screens: every view fits the viewport ────────────────────────── */
@@ -215,21 +246,23 @@ a:hover {
   }
 }
 
-/* the nav: quiet words that swap views */
+/* the nav: quiet words with a sliding ink underline. The site positions
+   .ae-nav-ind under the active item (left/width) on view change. */
 .ae-nav {
+  position: relative;
   display: flex;
-  gap: 1.6em;
+  gap: 2em;
 }
 
 .ae-nav a,
 .ae-nav button {
   background: transparent;
   border: 0;
-  padding: 0;
+  padding: 0 0 0.6em;
+  margin-block: 0;
   cursor: pointer;
   color: var(--ae-ink-muted);
   font-weight: var(--ae-w-medium);
-  letter-spacing: 0.18em;
   text-decoration: none;
   transition: color var(--ae-quick) var(--ae-ease);
 }
@@ -242,22 +275,158 @@ a:hover {
 .ae-nav [aria-current],
 .ae-nav .is-active {
   color: var(--ae-ink);
-  font-weight: var(--ae-w-black);
 }
 
-/* the mode toggle: quiet chrome, never the accent */
+.ae-nav-ind {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--ae-ink);
+  transition:
+    left var(--ae-soft) var(--ae-ease),
+    width var(--ae-soft) var(--ae-ease);
+}
+
+/* chrome: the one sanctioned second size. Content gets 16px; chrome
+   (footers, utility links, metadata) gets 13px and muted ink. */
+.ae-chrome {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
+.ae-chrome a {
+  color: var(--ae-ink-muted);
+  text-decoration: none;
+}
+
+.ae-chrome a:hover {
+  color: var(--ae-ink);
+}
+
+/* the footer: hairline-topped, two ends, chrome register */
+.ae-foot {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+  border-top: 1px solid var(--ae-line);
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em 2em;
+  flex-wrap: wrap;
+}
+
+.ae-foot a {
+  color: var(--ae-ink-muted);
+  text-decoration: none;
+}
+
+.ae-foot a:hover {
+  color: var(--ae-ink);
+}
+
+.ae-foot-links {
+  display: inline-flex;
+  gap: 1.5em;
+  align-items: center;
+}
+
+/* icons: Lucide (ISC), inlined as SVG symbols. 1.5px stroke, round
+   caps, sized to ride alongside text. */
+.ae-icon {
+  width: 1.2em;
+  height: 1.2em;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  vertical-align: -0.2em;
+}
+
+/* the mode toggle: an icon button; sun and moon rotate-crossfade.
+   Markup: button.ae-mode > svg.ae-icon.ae-sun + svg.ae-icon.ae-moon */
 .ae-mode {
+  position: relative;
+  width: 2.2em;
+  height: 2.2em;
   background: transparent;
   border: 0;
   padding: 0;
   cursor: pointer;
-  color: var(--ae-ink-faint);
+  color: var(--ae-ink-muted);
   letter-spacing: 0.18em;
   transition: color var(--ae-quick) var(--ae-ease);
 }
 
 .ae-mode:hover {
   color: var(--ae-ink);
+}
+
+.ae-mode .ae-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.25em;
+  height: 1.25em;
+  transition:
+    opacity var(--ae-soft) var(--ae-ease),
+    transform var(--ae-soft) var(--ae-ease);
+}
+
+.ae-mode .ae-sun {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+.ae-mode .ae-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.dark .ae-mode .ae-sun,
+[data-ae-mode='dark'] .ae-mode .ae-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+.dark .ae-mode .ae-moon,
+[data-ae-mode='dark'] .ae-mode .ae-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* a panel: soft depth for dense content (forms). Radius stays 0. */
+.ae-panel {
+  background: var(--ae-surface);
+  padding: 2em;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+.dark .ae-panel,
+[data-ae-mode='dark'] .ae-panel {
+  background: var(--ae-wash);
+  box-shadow: none;
+}
+
+/* auto dark (no pinned mode): panel and mode icon follow the OS */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-ae-mode='light']) .ae-panel {
+    background: var(--ae-wash);
+    box-shadow: none;
+  }
+
+  :root:not(.light):not([data-ae-mode='light']) .ae-mode .ae-sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  :root:not(.light):not([data-ae-mode='light']) .ae-mode .ae-moon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
 }
 
 /* ── registers ────────────────────────────────────────────────────── */
@@ -332,6 +501,7 @@ a.ae-name {
   box-sizing: border-box;
   background: transparent;
   color: var(--ae-ink);
+  cursor: text;
   border: 0;
   border-bottom: 1px solid var(--ae-line);
   border-radius: var(--ae-radius);
