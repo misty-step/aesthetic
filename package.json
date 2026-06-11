@@ -1,6 +1,6 @@
 {
   "name": "@misty-step/aesthetic",
-  "version": "2.2.1",
+  "version": "2.3.1",
   "description": "The Misty Step design system. One font size, nine ink-and-weight registers, one accent per view, viewport screens instead of scrolling pages, motion as feedback only.",
   "license": "MIT",
   "repository": {

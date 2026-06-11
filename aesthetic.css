@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   aesthetic v2.2.1
+   aesthetic v2.3.1
    The Misty Step design system. https://github.com/misty-step/aesthetic
 
    The law:
@@ -77,9 +77,17 @@
   }
 }
 
+/* pinned modes narrow color-scheme so UA widgets (scrollbars, form
+   controls) match the pinned mode instead of following the OS */
+.light,
+[data-ae-mode='light'] {
+  color-scheme: light;
+}
+
 /* pinned dark: class or attribute set by the site's mode toggle */
 .dark,
 [data-ae-mode='dark'] {
+  color-scheme: dark;
   --ae-surface: var(--ae-surface-dark);
   --ae-wash: var(--ae-wash-dark);
   --ae-ink: var(--ae-ink-dark);
@@ -360,6 +368,9 @@ a:hover {
    Markup: button.ae-mode > svg.ae-icon.ae-sun + svg.ae-icon.ae-moon */
 .ae-mode {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 2.2em;
   height: 2.2em;
   background: transparent;
@@ -367,8 +378,14 @@ a:hover {
   padding: 0;
   cursor: pointer;
   color: var(--ae-ink-muted);
-  letter-spacing: 0.18em;
   transition: color var(--ae-quick) var(--ae-ease);
+}
+
+/* the icons are absolutely stacked, so the button has no in-flow text;
+   this zero-width space gives it a real baseline so bars can
+   baseline-align it with neighboring links */
+.ae-mode::before {
+  content: '\200b';
 }
 
 .ae-mode:hover {

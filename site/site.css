@@ -13,6 +13,19 @@
   gap: 1.5em;
 }
 
+/* an inline link inside footer prose still reads as a link: the chrome
+   register strips underlines for utility links, so restore the system's
+   faint underline here */
+footer.ae-bar a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--ae-ink-faint);
+}
+
+footer.ae-bar a:hover {
+  text-decoration-color: currentColor;
+}
+
 /* ── the specimen sheet (index) ───────────────────────────────────── */
 
 .spec-grid {
