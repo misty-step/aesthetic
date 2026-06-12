@@ -1,6 +1,6 @@
 # Adopt aesthetic across every misty-step surface
 
-Priority: P0 · Status: ready · Estimate: XL
+Priority: P0 · Status: in-progress · Estimate: XL
 
 ## Goal
 

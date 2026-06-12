@@ -1,6 +1,6 @@
 # Codify the faint-ink contract with a contrast table
 
-Priority: P2 · Status: ready · Estimate: S
+Priority: P2 · Status: shipped · Estimate: S
 
 ## Goal
 

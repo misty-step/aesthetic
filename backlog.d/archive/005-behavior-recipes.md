@@ -1,6 +1,6 @@
 # Ship the canonical behavior layer as recipes
 
-Priority: P1 · Status: in-progress · Estimate: M
+Priority: P1 · Status: shipped · Estimate: M
 
 ## Goal
 

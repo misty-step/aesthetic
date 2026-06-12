@@ -1,6 +1,6 @@
 # Build the aesthetic site: marketing, catalog, lab, and guardrails
 
-Priority: P0 · Status: in-progress · Estimate: L
+Priority: P0 · Status: shipped · Estimate: L
 
 ## Goal
 
@@ -21,14 +21,19 @@ moment it lands.
       stated in CLAUDE.md.
 - [x] The landing screen states the law in the system's own voice
       (the manual homepage, v2.4.0).
-- [ ] Every primitive has a catalog entry: rendered example,
-      copy-paste markup, and its derivation from the law — including
-      everything 007 children 3/4/5 land.
+- [x] Every primitive has a catalog entry: rendered example,
+      copy-paste markup, and its derivation from the law — thirty-eight
+      entries as of v2.5.0.
 - [x] Lab work stays internal: `prototypes/` is local-only; the Pages
       workflow publishes only `site/`.
-- [ ] Guardrails: stylelint + prettier in CI (shipped); Playwright
-      screenshots of the stable pages (homepage + catalog +
-      gauntlet, both modes) fail on unintended pixel change.
+- [x] Guardrails: stylelint + prettier + recipes-freshness in CI;
+      Playwright LAW gates (tests/law.spec.ts) assert the law itself
+      on every stable page in both modes — max font size, radius 0,
+      no page scroll, cursor law, clean console, mode resolution, the
+      send announcement — with screenshots uploaded as CI artifacts.
+      (Decided 2026-06-12: law assertions over pixel diffs — they
+      catch the violation class directly and need no platform-bound
+      baselines; pixel diffs can still come later if drift appears.)
 - [x] CLAUDE.md states the law, the release flow, and the site
       structure.
 
@@ -36,13 +41,10 @@ moment it lands.
 
 1. ~~Site skeleton + Pages deploy~~ — SHIPPED v2.3.0.
 2. ~~Manual homepage~~ — SHIPPED v2.4.0.
-3. Catalog entries for every primitive 007 lands (joint with 007
-   child 7): rendered + markup + law derivation.
-4. Archetype gauntlet pages — dashboard, docs, settings flow — joint
-   with 007 child 6 and 009 (these pages ARE their acceptance test).
-5. Playwright visual regression: screenshot the stable pages in both
-   modes in CI; diffs fail the build. Keep the dependency dev-only;
-   the site itself stays build-free.
+3. ~~Catalog entries for every primitive~~ — SHIPPED v2.5.0.
+4. ~~Archetype gauntlet pages~~ — SHIPPED v2.5.0 (dashboard, docs,
+   settings + the steering page).
+5. ~~CI guardrails~~ — SHIPPED v2.5.0 as the Playwright law gates.
 
 ## Notes
 

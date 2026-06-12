@@ -1,6 +1,6 @@
 # Ship the framework bridges: Tailwind v4, React, next-themes
 
-Priority: P0 · Status: ready · Estimate: S
+Priority: P0 · Status: shipped · Estimate: S
 
 ## Goal
 

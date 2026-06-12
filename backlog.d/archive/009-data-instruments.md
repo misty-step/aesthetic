@@ -1,6 +1,6 @@
 # Build the data instruments: meter, numerals, delta, spark
 
-Priority: P1 · Status: ready · Estimate: M
+Priority: P1 · Status: shipped · Estimate: M
 
 ## Goal
 

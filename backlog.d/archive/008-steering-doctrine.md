@@ -1,6 +1,6 @@
 # Write the volume knob: steering doctrine for loud consumers
 
-Priority: P0 · Status: ready · Estimate: M
+Priority: P0 · Status: shipped · Estimate: M
 
 ## Goal
 

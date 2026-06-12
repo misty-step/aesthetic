@@ -43,5 +43,5 @@ sh('npx prettier --check . --log-level warn');
 sh('npx stylelint aesthetic.css site/site.css');
 sh(`git add -A`);
 sh(`git commit -m "release: v${next}"`);
-sh(`git tag v${next}`);
+sh(`git tag -a v${next} -m "v${next}"`);
 console.log(`\nv${next} cut (was ${prev}). Push with: git push --follow-tags`);
