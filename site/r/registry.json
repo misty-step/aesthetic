@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "misty-step",
+  "homepage": "https://aesthetic.mistystep.io",
+  "items": [
+    {
+      "name": "aesthetic",
+      "type": "registry:item",
+      "title": "aesthetic",
+      "description": "The Misty Step design system, v2.4.0: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
+      "files": [
+        {
+          "path": "aesthetic.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.css"
+        },
+        {
+          "path": "tokens.json",
+          "type": "registry:file",
+          "target": "~/aesthetic.tokens.json"
+        }
+      ]
+    },
+    {
+      "name": "recipes",
+      "type": "registry:item",
+      "title": "aesthetic recipes",
+      "description": "The canonical behavior glue for aesthetic v2.4.0: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, toasts, popovers. Dependency-free.",
+      "files": [
+        {
+          "path": "recipes/recipes.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.recipes.js"
+        }
+      ]
+    }
+  ]
+}
