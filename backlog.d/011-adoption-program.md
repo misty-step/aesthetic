@@ -58,8 +58,8 @@ with before/after evidence.
 7. **linejam** (SUBSTANTIAL): its Kenya theme is already our
    philosophy — make aesthetic the substrate (tokens, type, controls,
    dialogs), re-express the tactile stamp/washi identity as steering
-   + project tokens; the four-theme system collapses to ae light/dark
-   plus steering (argued in the PR; operator decides on merge).
+   - project tokens; the four-theme system collapses to ae light/dark
+     plus steering (argued in the PR; operator decides on merge).
 
 Not applicable (no UI surface, 2026-06-12 survey): canary (Rust API,
 agents are the UI), memory-engine (Rust kernel/CLI), daedalus (Python

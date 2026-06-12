@@ -14,12 +14,11 @@ breaking the one-size law, and the dashboard archetype unparks.
       filled pill, no gradient. The fill is ink by default; it takes a
       status ink only when the level IS the signal (curb's
       warn/kill thresholds). Optional `.ae-meter-mark` threshold ticks.
-- [ ] `.ae-num`: tabular numerals (mono, `font-variant-numeric:
-      tabular-nums`) so columns of figures align and tick without
-      jitter. The display-register question gets its lawful answer,
-      recorded in the catalog: a hero figure is weight 800 mono at the
-      one size — never larger; the instrument reads loud through
-      weight and isolation, not scale.
+- [ ] `.ae-num`: tabular mono numerals so columns of figures align
+      and tick without jitter. The display-register question gets its
+      lawful answer, recorded in the catalog: a hero figure is weight
+      800 mono at the one size — never larger; the instrument reads
+      loud through weight and isolation, not scale.
 - [ ] `.ae-delta`: change indicators ride the glyph rule — the ▲/▼
       arrow (Lucide stroke) takes the status ink, the figure stays ink.
 - [ ] `.ae-spark`: the inline sparkline convention — an SVG polyline,

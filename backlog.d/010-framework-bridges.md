@@ -15,8 +15,8 @@ toggle plugs into next-themes — with zero divergent token systems.
       Tailwind theme tokens (`--color-surface`, `--color-wash`,
       `--color-ink`, `--color-ink-muted`, `--color-ink-faint`,
       `--color-line`, `--color-accent`, `--color-ok/warn/err`,
-      `--font-sans`, `--font-mono`, `--radius-*: 0`) so `bg-surface
-      text-ink border-line` utilities are the system.
+      `--font-sans`, `--font-mono`, `--radius-*: 0`) so the
+      `bg-surface text-ink border-line` utilities are the system.
 - [ ] The Geist wiring is complete for next/font and plain `<link>`
       consumers (the README's variable-font pointer, finished with a
       worked next/font example).

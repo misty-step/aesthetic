@@ -47,7 +47,7 @@ operator's mandate names this directly: affordances for fast-and-loose
 applications that remain clearly misty-step. Kenya Hara stays the
 core; the doctrine writes down which dials turn and which never do.
 
-Extra hues are *project tokens* (e.g. `--sploot-coral`), spent under
+Extra hues are _project tokens_ (e.g. `--sploot-coral`), spent under
 the same judgment as the accent; they ride content (type, glyphs,
 illustration), never replace ink hierarchy or fill pills. A loud
 project turns up hue count and accent frequency — never radius, size
