@@ -1526,7 +1526,7 @@ details.ae-fold:last-of-type {
 }
 
 .ae-rail a,
-.ae-rail button {
+.ae-rail button:not(.ae-mode) {
   display: block;
   width: 100%;
   background: transparent;

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>steering — the volume knob — aesthetic</title>
+    <meta
+      name="description"
+      content="One specimen fragment under six consumer schemes: the accent is a volume knob, not a fork. Same bones, different personality, always family."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="aesthetic.css" />
+    <link rel="stylesheet" href="site.css" />
+    <style>
+      /* page glue: the knob grid and the spec frames. A spec hosts one
+         consumer's scheme; in dark, each spec re-resolves its accent the
+         way a steered :root would (the root remap cannot see a subtree
+         override). .s-house and .s-curb turn no dials — that is the
+         point — so they have no rules here. */
+      .knob {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
+        gap: 1.5em;
+      }
+
+      .spec {
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        border: 1px solid var(--ae-line);
+        padding: 2em;
+      }
+
+      .spec > p {
+        margin-bottom: 0.5em;
+      }
+
+      .spec > .ae-plate-cap {
+        margin-bottom: 1.2em;
+      }
+
+      .spec .ae-button {
+        margin-top: 1em;
+      }
+
+      .dark .spec,
+      [data-ae-mode='dark'] .spec {
+        --ae-accent: var(--ae-accent-dark);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light):not([data-ae-mode='light']) .spec {
+          --ae-accent: var(--ae-accent-dark);
+        }
+      }
+
+      .s-chrondle {
+        --ae-accent: #1f7a55;
+        --ae-accent-dark: #6ee7b7;
+      }
+
+      .s-sploot {
+        --ae-accent: #0c6a84;
+        --ae-accent-dark: #00f0ff;
+      }
+
+      .s-doomscrum {
+        --ae-accent-dark: #b6ff2e;
+      }
+
+      .s-linejam {
+        --ae-accent: #c2410c;
+        --ae-accent-dark: #ff8a5c;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-square" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="./">AESTHETIC</a>
+        <span class="bar-end">
+          <span class="ae-chrome bar-links"
+            ><a href="./primitives.html">primitives</a
+            ><a href="https://github.com/misty-step/aesthetic">github</a></span
+          >
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <main class="ae-stage ae-stage-scroll">
+        <div class="ae-view">
+          <div class="ae-group">
+            <h2 class="ae-h">STEERING · THE VOLUME KNOB</h2>
+            <p class="ae-lede">
+              One specimen fragment, six consumer schemes. Steering is a volume
+              knob, not a fork: a consumer overrides
+              <code>--ae-accent</code> / <code>--ae-accent-dark</code> — and the
+              status triplet or a project hue when its domain earns one — and
+              every surface follows. Same bones, different personality, always
+              family.
+            </p>
+            <p>
+              Never steered: one size, nine registers, hairlines, radius 0,
+              motion as feedback, status on the glyph, buttons that are not
+              links. Hover each card's link to feel its accent warm; the buttons
+              stay ink everywhere — the accent is never spent on them.
+            </p>
+          </div>
+
+          <div class="ae-group">
+            <div class="knob">
+              <div class="spec s-house" id="spec-house">
+                <p class="ae-plate-cap">MISTY-STEP · HOUSE ULTRAMARINE</p>
+                <p class="ae-name">MISTY STEP</p>
+                <p>
+                  The studio is
+                  <span class="ae-accent">open for commissions</span>;
+                  <a href="#spec-house">the ledger</a> is public.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Deploy 4121 resolved on production.
+                </p>
+                <p><span class="ae-tag">studio</span></p>
+                <button class="ae-button" type="button">Send message</button>
+              </div>
+
+              <div class="spec s-chrondle" id="spec-chrondle">
+                <p class="ae-plate-cap">CHRONDLE · EVERGREEN</p>
+                <p class="ae-name">CHRONDLE</p>
+                <p>
+                  Day 412 is <span class="ae-accent">live</span>; the year hides
+                  between <a href="#spec-chrondle">1517</a> and 1917.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Streak alive — 41 days.
+                </p>
+                <p><span class="ae-tag">daily</span></p>
+                <button class="ae-button" type="button">Submit guess</button>
+              </div>
+
+              <div class="spec s-curb" id="spec-curb">
+                <p class="ae-plate-cap">CURB · STEERING CAN BE ZERO</p>
+                <p class="ae-name">CURB</p>
+                <p>
+                  Identity through composition:
+                  <a href="gauntlet/dashboard.html">the fleet board</a> turns
+                  <span class="ae-accent">no dials</span>.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  24 agents nominal.
+                </p>
+                <p><span class="ae-tag">fleet</span></p>
+                <button class="ae-button" type="button">Park agent</button>
+              </div>
+
+              <div class="spec s-sploot" id="spec-sploot">
+                <p class="ae-plate-cap">SPLOOT · LAGOON + PROJECT HUES</p>
+                <p class="ae-name">SPLOOT</p>
+                <p>
+                  The pack is <span class="ae-accent">mid-walk</span>;
+                  <a href="#spec-sploot">two routes</a> are logged.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Walk closed at 7:42.
+                </p>
+                <p>
+                  <svg class="ae-icon" style="color: #b91c1c">
+                    <use href="#i-square" />
+                  </svg>
+                  banjo
+                  <svg class="ae-icon" style="color: #6d28d9">
+                    <use href="#i-square" />
+                  </svg>
+                  biscuit <span class="ae-tag">pack</span>
+                </p>
+                <button class="ae-button" type="button">Log walk</button>
+              </div>
+
+              <div class="spec dark s-doomscrum" id="spec-doomscrum">
+                <p class="ae-plate-cap">DOOMSCRUM · ACID, PINNED DARK</p>
+                <p class="ae-name">DOOMSCRUM</p>
+                <p>
+                  Sprint 13 is <span class="ae-accent">burning down</span>;
+                  <a href="#spec-doomscrum">the retro</a> waits.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Standup survived — 9 of 9.
+                </p>
+                <p>
+                  <svg class="ae-icon" style="color: #2ee6ff">
+                    <use href="#i-square" />
+                  </svg>
+                  mainline <span class="ae-tag">sprint 13</span>
+                </p>
+                <button class="ae-button" type="button">Start standup</button>
+              </div>
+
+              <div class="spec s-linejam" id="spec-linejam">
+                <p class="ae-plate-cap">LINEJAM · EMBER</p>
+                <p class="ae-name">LINEJAM</p>
+                <p>
+                  The 7 line is <span class="ae-accent">jammed</span> at Court
+                  St; <a href="#spec-linejam">a reroute</a> is suggested.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Platform clear at Hoyt.
+                </p>
+                <p><span class="ae-tag">transit</span></p>
+                <button class="ae-button" type="button">Watch line</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-group">
+            <p class="ae-chrome">
+              steer it yourself:
+              <a
+                href="https://github.com/misty-step/aesthetic/blob/master/docs/ADOPTING.md"
+                >docs/ADOPTING.md</a
+              >
+              · every primitive: <a href="./primitives.html">the catalog</a>
+            </p>
+          </div>
+        </div>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
+        </p>
+        <p class="ae-chrome">
+          the aesthetic powering
+          <a href="https://mistystep.io">Misty Step</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="recipes.js"></script>
+  </body>
+</html>

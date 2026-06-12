@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>docs gauntlet — aesthetic</title>
+    <meta
+      name="description"
+      content="The document archetype under load: a condensed adoption guide rendered as unclassed markdown-shaped HTML inside one .ae-doc, scrolling in the stage."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <link rel="stylesheet" href="../site.css" />
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen">
+      <header class="ae-bar">
+        <a class="ae-name" href="../">AESTHETIC</a>
+        <span class="bar-end">
+          <span class="ae-chrome bar-links"
+            ><a href="../primitives.html">primitives</a
+            ><a href="https://github.com/misty-step/aesthetic">github</a></span
+          >
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <main class="ae-stage ae-stage-scroll">
+        <div class="ae-view">
+          <nav
+            class="ae-crumbs"
+            aria-label="breadcrumb"
+            style="margin-bottom: 1.6em"
+          >
+            <ol>
+              <li><a href="../">docs</a></li>
+              <li><span aria-current="page">adopting</span></li>
+            </ol>
+          </nav>
+          <article class="ae-doc">
+            <h2>Adopting aesthetic</h2>
+            <p>
+              One request, one file, no build step.
+              <code>aesthetic.css</code> carries the whole system — tokens,
+              registers, screens, forms, instruments — and
+              <code>tokens.json</code> rides along for tooling that wants the
+              values raw. Consumers pin a git tag and upgrade deliberately; the
+              file never moves under you.
+            </p>
+            <pre><code>pnpm add github:misty-step/aesthetic#v2.4.0</code></pre>
+            <p>Adoption is four small moves:</p>
+            <ol>
+              <li>Link the stylesheet, ahead of your own styles.</li>
+              <li>Load Geist and Geist Mono.</li>
+              <li>
+                Boot the mode in <code>&lt;head&gt;</code>, before first paint.
+              </li>
+              <li>Steer the scheme — the accent is yours.</li>
+            </ol>
+
+            <h3>Link the stylesheet</h3>
+            <p>
+              Reference <code>aesthetic.css</code> with a plain
+              <code>&lt;link rel="stylesheet"&gt;</code> before any page glue,
+              so your local layout rules can lean on the tokens. There is
+              nothing to compile and nothing to configure; the import is the
+              install. Vendoring the file works exactly the same — it has no
+              dependencies.
+            </p>
+
+            <h3>Load Geist</h3>
+            <p>
+              The system sets <code>--ae-font</code> to Geist and
+              <code>--ae-font-mono</code> to Geist Mono, falling back to
+              Helvetica and the platform monospace until they arrive. One Google
+              Fonts request covers both families:
+            </p>
+            <ul>
+              <li>
+                <code>Geist:wght@100..900</code> — the text face; the system
+                spends exactly three weights: 400, 550, 800.
+              </li>
+              <li>
+                <code>Geist+Mono:wght@100..900</code> — tables, tags, figures,
+                code.
+              </li>
+              <li>
+                Self-hosting works the same; only the family names matter.
+              </li>
+            </ul>
+
+            <h3>Boot the mode</h3>
+            <p>
+              Light and dark are equals, defaulting to the system preference
+              with a user toggle. Inline a tiny script in
+              <code>&lt;head&gt;</code> that reads the persisted
+              <code>ae-mode</code> choice and sets the root class before first
+              paint, so the page never flashes the wrong mode. The optional
+              <code>recipes.js</code> carries the toggle itself and the rest of
+              the behavior glue.
+            </p>
+            <blockquote>
+              The change is one soft 700ms breath — a view transition where
+              supported, a uniform color ease where not, instant under reduced
+              motion.
+            </blockquote>
+
+            <h3>Steer the accent</h3>
+            <p>
+              Identity comes from ink, hairlines, type, and motion; the accent
+              is yours. Override the scheme dials at <code>:root</code> after
+              the import and every surface follows — see
+              <a href="../steering.html">the volume knob</a> for six schemes
+              riding one fragment.
+            </p>
+            <div class="ae-plate">
+              <p class="ae-plate-cap">TABLE 1 · THE SCHEME DIALS</p>
+              <table class="ae-table">
+                <thead>
+                  <tr>
+                    <th>dial</th>
+                    <th>light</th>
+                    <th>dark</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">accent</td>
+                    <td>#2643d0</td>
+                    <td>#8c9eff</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">ok</td>
+                    <td>#15714b</td>
+                    <td>#6fd2a8</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">warn</td>
+                    <td>#8a5f32</td>
+                    <td>#c49d72</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">err</td>
+                    <td>#a84138</td>
+                    <td>#e58379</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="ae-plate-note">
+                Each dial is a pair — <code>--ae-accent</code> /
+                <code>--ae-accent-dark</code>, and likewise for the status
+                triplet. Everything not listed — ink, wash, line, type — is the
+                shared identity; do not steer it.
+              </p>
+            </div>
+
+            <hr />
+
+            <p>
+              The law itself lives in the header of the file and in
+              <code>tokens.json</code>; the canonical markup for every primitive
+              is in <a href="../primitives.html">the catalog</a> — view-source
+              is documentation.
+            </p>
+          </article>
+        </div>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
+        </p>
+        <p class="ae-chrome">
+          the aesthetic powering
+          <a href="https://mistystep.io">Misty Step</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="../recipes.js"></script>
+  </body>
+</html>

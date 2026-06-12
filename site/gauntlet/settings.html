@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>settings gauntlet — aesthetic</title>
+    <meta
+      name="description"
+      content="The form-flow archetype under load: settings rows that fold open, choice marks, validation, an anticipating form with a send moment, FAQ folds, and a dialog."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <link rel="stylesheet" href="../site.css" />
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen">
+      <header class="ae-bar">
+        <a class="ae-name" href="../">AESTHETIC</a>
+        <span class="bar-end">
+          <span class="ae-chrome bar-links"
+            ><a href="../primitives.html">primitives</a
+            ><a href="https://github.com/misty-step/aesthetic">github</a></span
+          >
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <main class="ae-stage">
+        <div class="ae-view">
+          <div class="ae-group">
+            <h2 class="ae-h">SETTINGS</h2>
+            <div class="ae-settings">
+              <button class="ae-setting" type="button">
+                Theme <span class="ae-setting-val">system</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">system</button>
+                  <button type="button">light</button>
+                  <button type="button">dark</button>
+                </div>
+              </div>
+              <button class="ae-setting" type="button">
+                Region <span class="ae-setting-val">us-east-1</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">us-east-1</button>
+                  <button type="button">eu-west-1</button>
+                  <button type="button">ap-south-1</button>
+                </div>
+              </div>
+              <button class="ae-setting" type="button">
+                Auto-deploy <span class="ae-setting-val">on</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">on</button>
+                  <button type="button">off</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">PREFERENCES</h2>
+            <label class="ae-choice"
+              ><input class="ae-check" type="checkbox" checked /> Email me on
+              deploy</label
+            >
+            <label class="ae-choice"
+              ><input class="ae-check" type="checkbox" /> Email me on failure
+              only</label
+            >
+            <p style="margin-top: 1.4em"></p>
+            <label class="ae-choice"
+              ><input class="ae-radio" type="radio" name="plan" /> Hobby</label
+            >
+            <label class="ae-choice"
+              ><input class="ae-radio" type="radio" name="plan" checked />
+              Pro</label
+            >
+            <label class="ae-choice"
+              ><input class="ae-radio" type="radio" name="plan" /> Fleet</label
+            >
+            <p style="margin-top: 1.4em"></p>
+            <label class="ae-choice"
+              ><input class="ae-switch" type="checkbox" checked /> Weekly
+              digest</label
+            >
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">BILLING</h2>
+            <label class="ae-label" for="bill-email">Billing email</label>
+            <input
+              class="ae-input"
+              id="bill-email"
+              type="email"
+              value="ops@"
+              aria-invalid="true"
+              aria-describedby="bill-email-note"
+            />
+            <p class="ae-field-note" id="bill-email-note">
+              <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+              Not a valid address.
+            </p>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">INVITE AN OPERATOR</h2>
+            <form data-ae-anticipate data-ae-demo>
+              <label class="ae-label" for="op-name">Name</label>
+              <input
+                class="ae-input"
+                id="op-name"
+                type="text"
+                placeholder="Ada Doyle"
+                style="margin-bottom: 1.2em"
+              />
+              <label class="ae-label" for="op-email">Email</label>
+              <input
+                class="ae-input"
+                id="op-email"
+                type="email"
+                placeholder="ada@misty-step.com"
+                style="margin-bottom: 1.6em"
+              />
+              <button class="ae-button ae-send" type="submit">
+                <span class="ae-send-label">Send invite</span>
+                <span class="ae-send-done" aria-hidden="true"
+                  >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                ></span>
+              </button>
+            </form>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">QUESTIONS</h2>
+            <details class="ae-fold">
+              <summary>What counts as an active agent?</summary>
+              <p class="ae-dim">
+                Any agent that has taken a turn in the trailing hour. Parked
+                agents hold their state and spend nothing.
+              </p>
+            </details>
+            <details class="ae-fold">
+              <summary>When do budgets reset?</summary>
+              <p class="ae-dim">
+                At 00:00 UTC, monthly. The meter warns at 80% — the fill takes a
+                status hue only when the level is the signal.
+              </p>
+            </details>
+          </div>
+
+          <div class="ae-group">
+            <button
+              class="ae-button ae-button-quiet"
+              type="button"
+              id="dlg-open"
+            >
+              Reset defaults…
+            </button>
+          </div>
+        </div>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
+        </p>
+        <p class="ae-chrome">
+          the aesthetic powering
+          <a href="https://mistystep.io">Misty Step</a>
+        </p>
+      </footer>
+    </div>
+
+    <dialog class="ae-dialog" id="dlg-reset">
+      <p class="ae-dialog-title">Reset to defaults?</p>
+      <p class="ae-dim">
+        Every choice above returns to the house value. Invites already sent are
+        kept.
+      </p>
+      <div class="ae-dialog-acts">
+        <button class="ae-button ae-button-quiet" type="button" id="dlg-cancel">
+          Cancel
+        </button>
+        <button class="ae-button" type="button" id="dlg-confirm">Reset</button>
+      </div>
+    </dialog>
+
+    <script src="../recipes.js"></script>
+    <script>
+      /* the dialog: the quiet button asks, both actions close */
+      (() => {
+        const dlg = document.getElementById('dlg-reset');
+        if (!dlg) return;
+        document
+          .getElementById('dlg-open')
+          .addEventListener('click', () => dlg.showModal());
+        document
+          .getElementById('dlg-cancel')
+          .addEventListener('click', () => dlg.close());
+        document
+          .getElementById('dlg-confirm')
+          .addEventListener('click', () => dlg.close());
+      })();
+    </script>
+  </body>
+</html>

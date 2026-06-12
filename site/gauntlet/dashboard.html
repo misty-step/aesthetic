@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>dashboard gauntlet — aesthetic</title>
+    <meta
+      name="description"
+      content="The app-shell archetype under load: a fleet-of-agents ops board composed from the data instruments — figures, deltas, sparks, meters, and a plated table."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <style>
+      /* page glue: row layout for the board, nothing more. */
+      .figs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.8em 4em;
+      }
+
+      .gauges {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+        gap: 1.8em 4em;
+        max-width: 52em;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-arrow-up" viewBox="0 0 24 24">
+        <path d="m5 12 7-7 7 7" />
+        <path d="M12 19V5" />
+      </symbol>
+      <symbol id="i-arrow-down" viewBox="0 0 24 24">
+        <path d="M12 5v14" />
+        <path d="m19 12-7 7-7-7" />
+      </symbol>
+    </svg>
+
+    <div class="ae-shell">
+      <aside class="ae-rail">
+        <p class="ae-h">PLACES</p>
+        <a href="#" aria-current="page">agents</a>
+        <a href="#">history</a>
+        <a href="#">budgets</a>
+        <a href="#">settings</a>
+        <div class="ae-rail-foot">
+          <p class="ae-h">SPECIMEN</p>
+          <a href="../">aesthetic</a>
+          <a href="../primitives.html">primitives</a>
+          <p style="margin-top: 1.2em">
+            <button class="ae-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </p>
+        </div>
+      </aside>
+      <main class="ae-desk">
+        <nav
+          class="ae-crumbs"
+          aria-label="breadcrumb"
+          style="margin-bottom: 1.8em"
+        >
+          <ol>
+            <li><a href="#">fleet</a></li>
+            <li><span aria-current="page">agents</span></li>
+          </ol>
+        </nav>
+
+        <div class="ae-group">
+          <h2 class="ae-h">TODAY</h2>
+          <div class="figs">
+            <div>
+              <p class="ae-chrome">active agents</p>
+              <p>
+                <span class="ae-num ae-strong">24</span>
+                <span class="ae-delta ae-num ae-dim"
+                  ><svg
+                    class="ae-icon ae-ok"
+                    style="width: 0.9em; height: 0.9em"
+                  >
+                    <use href="#i-arrow-up" /></svg
+                  >+3</span
+                >
+              </p>
+              <p>
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,19 14,16 28,17 42,12 56,14 70,9 84,10 100,5"
+                  />
+                </svg>
+              </p>
+            </div>
+            <div>
+              <p class="ae-chrome">median wait</p>
+              <p>
+                <span class="ae-num ae-strong">41s</span>
+                <span class="ae-delta ae-num ae-dim"
+                  ><svg
+                    class="ae-icon ae-ok"
+                    style="width: 0.9em; height: 0.9em"
+                  >
+                    <use href="#i-arrow-down" /></svg
+                  >−9s</span
+                >
+              </p>
+              <p>
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,5 14,8 28,7 42,12 56,10 70,15 84,14 100,19"
+                  />
+                </svg>
+              </p>
+            </div>
+            <div>
+              <p class="ae-chrome">spend · today</p>
+              <p>
+                <span class="ae-num ae-strong">$212.40</span>
+                <span class="ae-delta ae-num ae-dim"
+                  ><svg
+                    class="ae-icon ae-err"
+                    style="width: 0.9em; height: 0.9em"
+                  >
+                    <use href="#i-arrow-up" /></svg
+                  >+18%</span
+                >
+              </p>
+              <p>
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,16 14,17 28,13 42,14 56,10 70,12 84,7 100,4"
+                  />
+                </svg>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ae-group">
+          <h2 class="ae-h">CAPACITY</h2>
+          <div class="gauges">
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.4em">
+                fleet concurrency · <span class="ae-num">58%</span>
+              </p>
+              <div
+                class="ae-meter"
+                role="meter"
+                aria-valuenow="58"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="fleet concurrency"
+              >
+                <span class="ae-meter-fill" style="width: 58%"></span>
+                <span class="ae-meter-mark" style="left: 80%"></span>
+              </div>
+            </div>
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.4em">
+                monthly budget · <span class="ae-num">91%</span>
+              </p>
+              <div
+                class="ae-meter"
+                role="meter"
+                aria-valuenow="91"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="monthly budget"
+              >
+                <span class="ae-meter-fill ae-warn" style="width: 91%"></span>
+                <span class="ae-meter-mark" style="left: 80%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ae-group">
+          <div class="ae-plate">
+            <p class="ae-plate-cap">TABLE 1 · ACTIVE AGENTS</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>agent</th>
+                  <th>status</th>
+                  <th>model</th>
+                  <th class="num">spend · usd</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ae-item">pathfinder</td>
+                  <td>
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    running
+                  </td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">41.12</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">mason</td>
+                  <td>
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    running
+                  </td>
+                  <td><span class="ae-tag">opus</span></td>
+                  <td class="num">96.30</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">scribe</td>
+                  <td>
+                    <svg class="ae-icon ae-warn">
+                      <use href="#i-triangle-alert" />
+                    </svg>
+                    retrying
+                  </td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">8.71</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">bursar</td>
+                  <td>
+                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                    failed
+                  </td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">12.04</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">courier</td>
+                  <td>
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    running
+                  </td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">4.55</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              Spend is the trailing 24 hours, metered per turn. Budgets reset at
+              00:00 UTC.
+            </p>
+          </div>
+        </div>
+
+        <div class="ae-group">
+          <h2 class="ae-h">PARKED</h2>
+          <div class="ae-empty">
+            <p class="ae-item">No parked agents.</p>
+            <p class="ae-dim">
+              Park an agent and it lands here, holding its state and spending
+              nothing.
+            </p>
+            <p>
+              <button
+                class="ae-button ae-button-quiet ae-button-compact"
+                type="button"
+              >
+                Park an agent
+              </button>
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../recipes.js"></script>
+  </body>
+</html>
