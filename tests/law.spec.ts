@@ -112,12 +112,17 @@ test('the catalog routes by hash and the toggle flips the mode', async ({
   await expect(page.locator('[data-route="index"]')).toBeHidden();
 
   await page.locator('.ae-mode').first().click();
-  const pinned = await page.evaluate(() =>
-    document.documentElement.classList.contains('dark')
-      ? 'dark'
-      : document.documentElement.classList.contains('light')
-        ? 'light'
-        : 'none',
-  );
-  expect(pinned).not.toBe('none');
+  // the flip runs inside startViewTransition's async update callback —
+  // poll rather than read immediately
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.documentElement.classList.contains('dark')
+          ? 'dark'
+          : document.documentElement.classList.contains('light')
+            ? 'light'
+            : 'none',
+      ),
+    )
+    .not.toBe('none');
 });
