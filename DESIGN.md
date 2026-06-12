@@ -41,10 +41,25 @@ glows, nothing floats, nothing bounces.
 - Light and dark are equals, defaulting to the system preference. The
   change itself is one soft 700ms breath (view transition).
 
+## The volume knob
+
+Steering has two strata. **Invariants** are never steered: one size
+per surface (+ the 13px chrome register), nine ink-and-weight
+registers, hairlines and radius 0, motion as feedback that resolves
+once, status on the glyph, buttons are not links, the cursor law,
+light and dark as equals. **Dials** are the project's: the accent —
+one hue or several, extra hues named as project tokens
+(`--sploot-coral`) and spent on content, never on pills or hierarchy;
+the status triplet; density (measure, chrome register, app shell);
+the mono ratio. A calm tool turns every dial down; a loud one turns
+up hue count and accent frequency — never radius, size scale, or
+ambient motion. Worked examples: `docs/ADOPTING.md`.
+
 ## Never
 
-- No drop shadows as decoration (the panel's soft depth is the lone
-  sanctioned use), no gradients-as-paint, no glassmorphism.
+- No drop shadows as decoration (the panel/dialog/toast soft depth is
+  the lone sanctioned family), no gradients-as-paint, no
+  glassmorphism.
 - No rounded corners. Radius is 0 everywhere.
 - No filled colored pills or badges: status color rides glyphs and
   words, never boxes.
@@ -68,10 +83,24 @@ glows, nothing floats, nothing bounces.
    resolves once and persists. Choice controls keep progressive
    disclosure: settings rest as label · value rows that fold open a
    quiet chooser (`.ae-settings`).
-5. A decision is asked in the panel costume (`.ae-dialog`); tables are
-   13px mono instruments framed as numbered plates (`.ae-table`,
+5. A decision is asked in the panel costume (`.ae-dialog`); a menu
+   floats as a hairline slip (`.ae-pop`); news waits at the edge
+   (`.ae-toast`); hints whisper (`[data-ae-tip]`); tables are 13px
+   mono instruments framed as numbered plates (`.ae-table`,
    `.ae-plate`); view swaps are a simple cut.
-6. The canonical markup for every primitive is in `site/` —
+6. Choice marks are squares — checkbox fills with ink, radio holds an
+   ink core, the switch slides along a hairline channel
+   (`.ae-choice`). A badge is a mono word (`.ae-tag`), never a filled
+   pill. Waiting is still wash (`.ae-skeleton`), never a shimmer.
+7. Data is drawn in ink: gauges are ruled lines (`.ae-meter`), figures
+   are tabular numerals (`.ae-num`, loud by weight via `.ae-strong`),
+   deltas put the hue on the arrow (`.ae-delta`), trends are pen
+   strokes (`.ae-spark`).
+8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
+   a 13px rail beside the working desk), the document (`.ae-doc` —
+   markdown drops in unclassed), and the form flow (settings rows,
+   choice marks, one send moment).
+9. The canonical markup for every primitive is in `site/` —
    view-source is documentation.
 
 ## The image language
