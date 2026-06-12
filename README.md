@@ -13,17 +13,19 @@ stylesheet, unmodified.
   type, spacing, and discipline. No per-project CSS archaeology.
 - **Tiny.** A single stylesheet, no build step required, no JavaScript.
 - **Opinionated.** One font size everywhere (hierarchy comes from ink and
-  weight), one accent per view, viewport-sized screens instead of
-  scrolling pages, motion only as feedback.
-- **Steerable.** Downstream projects override one token pair, the accent,
-  to get their own personality without forking the system.
+  weight), viewport-sized screens instead of scrolling pages, motion only
+  as feedback, status on the glyph instead of colored pills.
+- **Steerable.** The accent is yours: downstream projects define their
+  scheme (`--ae-accent` / `--ae-accent-dark`, and the status triplet when
+  the domain needs it) and use it with judgment — identity comes from
+  ink, hairlines, type, and motion, not from a color-counting rule.
 
 ## Install
 
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.3.1
+pnpm add github:misty-step/aesthetic#v2.4.0
 ```
 
 ```css
@@ -39,7 +41,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.3.1/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.4.0/aesthetic.css"
 />
 ```
 
@@ -87,16 +89,63 @@ toggle sets `.dark` / `.light` (next-themes compatible) or
 
 ## Steering
 
-Override exactly one pair to give a project its personality:
+Define your scheme to give a project its personality:
 
 ```css
 :root {
   --ae-accent: #0e7a4d;
   --ae-accent-dark: #6fd2a8;
+  /* and, when the domain needs different status hues:
+     --ae-ok / --ae-warn / --ae-err (+ their -dark pairs) */
 }
 ```
 
+Use the accent wherever judgment says — there is no counting rule.
 Everything else is the shared identity.
+
+## Status
+
+Status rides the glyph: color the icon (`✕ ✓ !` as Lucide strokes),
+never the sentence, never a filled pill.
+
+```html
+<p><svg class="ae-icon ae-err">…x…</svg> Not a valid address.</p>
+<p><svg class="ae-icon ae-ok">…check…</svg> Deploy complete.</p>
+<p><svg class="ae-icon ae-warn">…triangle…</svg> Certificate expires soon.</p>
+```
+
+`--ae-ok` / `--ae-warn` / `--ae-err` pass AA on both surfaces and are
+steerable per project.
+
+## Dialogs
+
+A decision is asked in the panel costume, in the top layer:
+`<dialog class="ae-dialog">` + `showModal()`. Soft depth over a whisper
+of paper dim; `.ae-dialog-title` and `.ae-dialog-acts` (quiet cancel,
+solid confirm) complete the shape. Escape declines.
+
+## Data
+
+Tables are instruments: `.ae-table` is 13px mono with lowercase headers
+on a wash band and hairline row rules. A column header always shares its
+column's alignment (`.num` on the `th` and its `td`s). Frame a table as
+a numbered figure with `.ae-plate` + `.ae-plate-cap` ("TABLE 1 · …") +
+`.ae-plate-note`.
+
+## Settings rows
+
+Choice controls keep progressive disclosure: each setting rests as one
+hairline row (`.ae-settings` > `.ae-setting` button with an
+`.ae-setting-val`), and activating it folds open an `.ae-setting-panel`
+holding an `.ae-menu` of options — the same quiet list answers selects
+of any length. Behavior glue lives in `site/recipes.js`.
+
+## Input anticipation
+
+Opt-in (`<form data-ae-anticipate>`): the nearest field's label and line
+warm toward ink as the pointer approaches — color only, capped at 60%,
+mouse-only, instant off under reduced motion. Focus always snaps to the
+committed state. The driver lives in `site/recipes.js`.
 
 ## Primitives
 
@@ -116,10 +165,15 @@ Everything else is the shared identity.
 | `.ae-lede`                             | The argument, plainly                                                                        |
 | `.ae-group` / `.ae-h`                  | A section and its muted heading                                                              |
 | `.ae-item` / `.ae-dim`                 | Medium ink / muted ink                                                                       |
-| `.ae-accent`                           | THE accent: one per view                                                                     |
+| `.ae-accent`                           | The accent: yours to define and spend with judgment                                          |
+| `.ae-ok` / `.ae-warn` / `.ae-err`      | Status inks for glyphs: the icon carries the hue, the word stays ink                         |
 | `.ae-label` / `.ae-input`              | Form fields as lines, not boxes                                                              |
 | `.ae-button` / `.ae-button-quiet`      | Buttons are not links: solid ink primary, hairline secondary                                 |
 | `.ae-send`                             | The send moment: label resolves to "Sent ✓" once, then the button rests disabled             |
+| `.ae-dialog`                           | The decision panel: `<dialog>` in the panel costume over a paper-dim backdrop                |
+| `.ae-table` / `.ae-plate`              | The data instrument: 13px mono, wash header band; framed as a numbered figure                |
+| `.ae-settings` / `.ae-menu`            | Settings rows that open: label · value lines unfolding a quiet chooser                       |
+| `[data-ae-anticipate]`                 | Opt-in input anticipation: the nearest field warms as the pointer nears                      |
 
 ## Cursor law
 
@@ -142,8 +196,7 @@ hover. Approved alternates, kept here so changing is one decision away:
 
 Links navigate; buttons act — they never share a costume. `.ae-button` is
 the solid-ink primary, `.ae-button-quiet` the hairline secondary; both are
-contained shapes with radius 0 and a small press. Accents are not spent on
-buttons.
+contained shapes with radius 0 and a small press.
 
 State resolutions run at `--ae-gentle` (480ms) — slower than feedback,
 never abrupt — and resolve exactly once: success persists and the control

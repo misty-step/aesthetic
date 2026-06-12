@@ -36,7 +36,10 @@ glows, nothing floats, nothing bounces.
   animates. Reduced motion makes everything instant.
 - Buttons are not links: links are inked text that navigates; buttons
   are contained ink shapes that act. They never share a costume.
-- Light and dark are equals, defaulting to the system preference.
+- Status rides the glyph: danger, success, and warning color the icon
+  (✕ ✓ !), never the sentence, never a filled pill.
+- Light and dark are equals, defaulting to the system preference. The
+  change itself is one soft 700ms breath (view transition).
 
 ## Never
 
@@ -62,8 +65,13 @@ glows, nothing floats, nothing bounces.
 3. Structure with whitespace and hairlines (`--ae-line`), never with
    boxes around boxes.
 4. Forms are lines, not boxes; submission gets a send moment that
-   resolves once and persists.
-5. The canonical markup for every primitive is in `site/` —
+   resolves once and persists. Choice controls keep progressive
+   disclosure: settings rest as label · value rows that fold open a
+   quiet chooser (`.ae-settings`).
+5. A decision is asked in the panel costume (`.ae-dialog`); tables are
+   13px mono instruments framed as numbered plates (`.ae-table`,
+   `.ae-plate`); view swaps are a simple cut.
+6. The canonical markup for every primitive is in `site/` —
    view-source is documentation.
 
 ## The image language
