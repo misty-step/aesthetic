@@ -1,0 +1,1779 @@
+<!--
+  LAB choice controls · round 2 — VERDICT: (pending operator review)
+  Round 1 kept TEXT and UNDERLINE; GEOMETRY, ROWS, DENSE killed; NATIVE
+  fine but not distinct. This round fixes the off/ON caps asymmetry
+  (both words lowercase, the live one ink + 550), answers the
+  long-select problem in every variant (a Timezone field with twelve
+  options), and retires every native popup in favor of a hairline panel
+  listbox: button trigger, surface background, 13px options, arrow keys
+  / Enter / Escape. Six answers over the same Misty Step settings form:
+  A text 2, B underline 2, C on the line, D hybrid, E ballot,
+  F native+.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · choice controls fan 2</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      /* ── shared form scaffolding ───────────────────────────────────── */
+      fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        min-width: 0;
+      }
+      legend {
+        padding: 0;
+      }
+      .fg {
+        margin-bottom: 1.5em;
+      }
+      .lede-accent {
+        margin-bottom: 1.8em;
+      }
+
+      /* a visually hidden but fully operable input: the control stays
+         real, keyboard-reachable, and announce-able */
+      .vh {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+
+      /* ── the shared listbox: trigger + hairline panel ──────────────── */
+      .cl {
+        position: relative;
+      }
+      .cl-btn {
+        background: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        font: inherit;
+        color: var(--ae-ink);
+        text-align: left;
+        cursor: pointer;
+      }
+      /* the line trigger: the select value sits on the field hairline */
+      .cl-line {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8em;
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.4em 0;
+        transition: border-color var(--ae-quick) var(--ae-ease);
+      }
+      .cl-line[aria-expanded='true'] {
+        border-bottom-color: var(--ae-ink);
+      }
+      /* the mono register, for the text idiom */
+      .cl-mono {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+      /* the drawn chevron: flips when the panel is open */
+      .cl-chev {
+        flex: none;
+        width: 0.38em;
+        height: 0.38em;
+        border-right: 1px solid var(--ae-ink-muted);
+        border-bottom: 1px solid var(--ae-ink-muted);
+        transform: translateY(-25%) rotate(45deg);
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .cl-btn[aria-expanded='true'] .cl-chev {
+        transform: translateY(0) rotate(225deg);
+      }
+      /* the panel: surface, hairline border, 13px options, bounded —
+         twelve timezones scroll inside instead of growing the page */
+      .cl-panel {
+        position: absolute;
+        z-index: 6;
+        top: calc(100% + 0.4em);
+        left: 0;
+        min-width: 100%;
+        width: max-content;
+        max-width: min(24em, 86vw);
+        max-height: 14.5em;
+        overflow-y: auto;
+        margin: 0;
+        padding: 0.35em 0;
+        list-style: none;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .cl-panel:focus {
+        outline: none;
+      }
+      .cl-opt {
+        padding: 0.25em 0.95em;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        white-space: nowrap;
+      }
+      .cl-opt.is-active {
+        background: var(--ae-wash);
+        color: var(--ae-ink);
+      }
+      .cl-opt[aria-selected='true'] {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* ── A · TEXT 2 — the mono idiom, refined ──────────────────────── */
+      .a-rows {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+      .a-opt {
+        display: flex;
+        align-items: center;
+        gap: 0.7em;
+        cursor: pointer;
+        padding: 0.3em 0;
+      }
+      .a-box {
+        position: relative;
+        width: 11px;
+        height: 11px;
+        flex: none;
+        border: 1px solid var(--ae-ink-muted);
+        transition:
+          background-color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .a-opt:hover .a-box {
+        border-color: var(--ae-ink);
+      }
+      .a-box::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 6px;
+        height: 3px;
+        border-left: 1.5px solid var(--ae-surface);
+        border-bottom: 1.5px solid var(--ae-surface);
+        transform: translate(-50%, -65%) rotate(-45deg);
+        opacity: 0;
+      }
+      .vh:checked + .a-box {
+        background: var(--ae-ink);
+        border-color: var(--ae-ink);
+      }
+      .vh:checked + .a-box::after {
+        opacity: 1;
+      }
+      /* the square radio: outer hairline square, inner ink square */
+      .a-rad::after {
+        width: 5px;
+        height: 5px;
+        border: 0;
+        background: var(--ae-ink);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .vh:checked + .a-rad {
+        background: transparent;
+        border-color: var(--ae-ink);
+      }
+      .vh:checked + .a-rad::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      /* the switch: off / on, both lowercase; the live word is
+         ink + 550, never caps */
+      .a-sw {
+        white-space: pre;
+      }
+      .a-sw span {
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      /* the separator is generated, so markup whitespace cannot break it */
+      .a-on::before {
+        content: ' / ';
+        color: var(--ae-ink-faint);
+        font-weight: var(--ae-w-regular);
+      }
+      .a-sw .a-off {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .a-sw .a-on {
+        color: var(--ae-ink-muted);
+      }
+      .vh:checked + .a-sw .a-off {
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-regular);
+      }
+      .vh:checked + .a-sw .a-on {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .vh:focus-visible + .a-box,
+      .vh:focus-visible + .a-sw {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: 3px;
+      }
+
+      /* ── B · UNDERLINE 2 — words carry the nav's ink underline ─────── */
+      .u-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2em 1.6em;
+      }
+      .u-opt {
+        cursor: pointer;
+      }
+      .u-word {
+        display: inline-block;
+        padding-bottom: 0.18em;
+        border-bottom: 2px solid transparent;
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-medium);
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .u-opt:hover .u-word {
+        color: var(--ae-ink);
+      }
+      .vh:checked + .u-word {
+        color: var(--ae-ink);
+        border-bottom-color: var(--ae-ink);
+      }
+      /* the two-word switch: off / on, the live word underlined */
+      .u-sw {
+        display: inline-flex;
+        gap: 1.2em;
+      }
+      .u-sw .u-word {
+        border-bottom-color: transparent;
+        color: var(--ae-ink-muted);
+      }
+      .u-sw .u-off {
+        color: var(--ae-ink);
+        border-bottom-color: var(--ae-ink);
+      }
+      .vh:checked + .u-sw .u-off {
+        color: var(--ae-ink-muted);
+        border-bottom-color: transparent;
+      }
+      .vh:checked + .u-sw .u-on {
+        color: var(--ae-ink);
+        border-bottom-color: var(--ae-ink);
+      }
+      .vh:focus-visible + .u-word,
+      .vh:focus-visible + .u-sw {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: 3px;
+      }
+      /* the underline select trigger: the value wears the ink line and
+         a chevron; too many options to be words, so it opens the panel */
+      .u-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7em;
+      }
+      .u-trigger .cl-val {
+        display: inline-block;
+        padding-bottom: 0.18em;
+        border-bottom: 2px solid var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* ── C · ON THE LINE — every control lives on the field hairline ── */
+      .o-opt {
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+        cursor: pointer;
+        padding: 0.25em 0;
+      }
+      /* the checkbox: a tick interrupting a short line */
+      .o-tick {
+        position: relative;
+        width: 1.9em;
+        height: 1em;
+        flex: none;
+      }
+      .o-tick::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--ae-line);
+      }
+      .vh:checked + .o-tick::before {
+        background: linear-gradient(
+          to right,
+          var(--ae-line) 0 24%,
+          transparent 24% 76%,
+          var(--ae-line) 76% 100%
+        );
+      }
+      .o-tick::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0.55em;
+        height: 0.3em;
+        border-left: 2px solid var(--ae-ink);
+        border-bottom: 2px solid var(--ae-ink);
+        transform: translate(-50%, -60%) rotate(-45deg) scale(0);
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .vh:checked + .o-tick::after {
+        transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+      }
+      /* the radio group: one continuous hairline; the chosen label's
+         segment is inked 2px */
+      .o-rads {
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .o-ropt {
+        cursor: pointer;
+        margin-right: 1.8em;
+      }
+      .o-ropt:last-child {
+        margin-right: 0;
+      }
+      .o-word {
+        position: relative;
+        display: inline-block;
+        padding: 0.2em 0 0.4em;
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-medium);
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .o-ropt:hover .o-word {
+        color: var(--ae-ink);
+      }
+      .o-word::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: var(--ae-ink);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--ae-soft) var(--ae-ease);
+      }
+      .vh:checked + .o-word {
+        color: var(--ae-ink);
+      }
+      .vh:checked + .o-word::after {
+        transform: scaleX(1);
+      }
+      /* the switch: an ink dot sliding along its line */
+      .o-track {
+        position: relative;
+        width: 2.4em;
+        height: 1em;
+        flex: none;
+      }
+      .o-track::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--ae-line);
+        transition: background-color var(--ae-quick) var(--ae-ease);
+      }
+      .o-dot {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0.55em;
+        height: 0.55em;
+        margin-top: -0.275em;
+        background: var(--ae-ink);
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .vh:checked + .o-track::before {
+        background: var(--ae-ink-muted);
+      }
+      .vh:checked + .o-track .o-dot {
+        transform: translateX(1.85em);
+      }
+      .vh:focus-visible + .o-tick,
+      .vh:focus-visible + .o-word,
+      .vh:focus-visible + .o-track {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: 3px;
+      }
+
+      /* ── E · BALLOT — the print idiom: numbered hairline list ──────── */
+      .e-list {
+        border-top: 1px solid var(--ae-line);
+      }
+      .e-row {
+        display: flex;
+        align-items: center;
+        gap: 0.85em;
+        padding: 0.38em 0.1em;
+        border-bottom: 1px solid var(--ae-line);
+        cursor: pointer;
+      }
+      .e-no {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-faint);
+        flex: none;
+        width: 1.5em;
+      }
+      .e-box {
+        position: relative;
+        width: 0.78em;
+        height: 0.78em;
+        flex: none;
+        border: 1px solid var(--ae-ink);
+      }
+      .e-box::after {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: var(--ae-ink);
+        transform: scale(0);
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .vh:checked ~ .e-box::after {
+        transform: scale(1);
+      }
+      .e-lab {
+        color: var(--ae-ink-muted);
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .e-row:hover .e-lab {
+        color: var(--ae-ink);
+      }
+      .vh:checked ~ .e-lab {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      /* the long list answer: a bounded scrollbox, hairlines intact */
+      .e-scroll {
+        max-height: 10.4em;
+        overflow-y: auto;
+      }
+      .vh:focus-visible ~ .e-box {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: 3px;
+      }
+
+      /* ── F · NATIVE+ — real inputs, restyled hard ──────────────────── */
+      .n-choice {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        cursor: pointer;
+        padding: 0.18em 0;
+      }
+      .n-check,
+      .n-radio {
+        appearance: none;
+        -webkit-appearance: none;
+        accent-color: var(--ae-ink); /* fallback if appearance is ignored */
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        flex: none;
+        border: 1px solid var(--ae-ink-muted);
+        border-radius: 0;
+        background: transparent;
+        cursor: pointer;
+        transition:
+          background-color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .n-choice:hover .n-check,
+      .n-choice:hover .n-radio {
+        border-color: var(--ae-ink);
+      }
+      .n-check:checked {
+        background-color: var(--ae-ink);
+        border-color: var(--ae-ink);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5 5 9l4.5-5' fill='none' stroke='%23fcfcfc' stroke-width='1.8'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 11px 11px;
+      }
+      .dark .n-check:checked {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5 5 9l4.5-5' fill='none' stroke='%23121212' stroke-width='1.8'/%3E%3C/svg%3E");
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light) .n-check:checked {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5 5 9l4.5-5' fill='none' stroke='%23121212' stroke-width='1.8'/%3E%3C/svg%3E");
+        }
+      }
+      .n-radio:checked {
+        background-color: var(--ae-ink);
+        border-color: var(--ae-ink);
+        box-shadow: inset 0 0 0 3px var(--ae-surface);
+      }
+      .n-swt {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 34px;
+        height: 16px;
+        margin: 0;
+        flex: none;
+        border: 1px solid var(--ae-ink-muted);
+        border-radius: 0;
+        cursor: pointer;
+        background: linear-gradient(var(--ae-ink), var(--ae-ink)) no-repeat 1px
+          50% / 12px 12px;
+        transition:
+          background-position var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .n-swt:checked {
+        background-position: calc(100% - 1px) 50%;
+        border-color: var(--ae-ink);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · TEXT 2 — the mono idiom, refined ════════════════════════ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">A · TEXT 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-accent">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="va-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="va-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <div class="fg">
+                <span class="ae-label" id="va-region-l">Region</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn cl-line cl-mono"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="va-region-l"
+                  >
+                    <span class="cl-val">us-east-1</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel cl-mono"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                  >
+                    <li class="cl-opt" role="option" aria-selected="true">
+                      us-east-1
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      us-west-2
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      eu-central-1
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      ap-southeast-2
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="fg">
+                <span class="ae-label" id="va-tz-l">Timezone</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn cl-line cl-mono"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="va-tz-l"
+                  >
+                    <span class="cl-val">UTC−05 · New York</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel cl-mono"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                    data-tz
+                  ></ul>
+                </div>
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <div class="a-rows">
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Deploy succeeded
+                  </label>
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Deploy failed
+                  </label>
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Weekly digest
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <div class="a-rows">
+                  <label class="a-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="va-vis"
+                      value="public"
+                    />
+                    <span class="a-box a-rad" aria-hidden="true"></span>
+                    Public
+                  </label>
+                  <label class="a-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="va-vis"
+                      value="internal"
+                      checked
+                    />
+                    <span class="a-box a-rad" aria-hidden="true"></span>
+                    Internal
+                  </label>
+                  <label class="a-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="va-vis"
+                      value="private"
+                    />
+                    <span class="a-box a-rad" aria-hidden="true"></span>
+                    Private
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg a-rows">
+                <label class="a-opt">
+                  <input class="vh" type="checkbox" role="switch" checked />
+                  <span class="a-sw" aria-hidden="true"
+                    ><span class="a-off">off</span
+                    ><span class="a-on">on</span></span
+                  >
+                  Auto-deploy on push
+                </label>
+              </div>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            A · TEXT 2 — lowercase off / on, square mono boxes, mono panel
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · UNDERLINE 2 — words for few, a panel for many ═══════════ -->
+    <section class="proto-variant" id="vb">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">B · UNDERLINE 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-accent">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="vb-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="vb-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Region</legend>
+                <div class="u-row">
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-region"
+                      value="us-east-1"
+                      checked
+                    />
+                    <span class="u-word">us-east-1</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-region"
+                      value="us-west-2"
+                    />
+                    <span class="u-word">us-west-2</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-region"
+                      value="eu-central-1"
+                    />
+                    <span class="u-word">eu-central-1</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-region"
+                      value="ap-southeast-2"
+                    />
+                    <span class="u-word">ap-southeast-2</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg">
+                <span class="ae-label" id="vb-tz-l">Timezone</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn u-trigger"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="vb-tz-l"
+                  >
+                    <span class="cl-val">UTC−05 · New York</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                    data-tz
+                  ></ul>
+                </div>
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <div class="u-row">
+                  <label class="u-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="u-word">Deploy succeeded</span>
+                  </label>
+                  <label class="u-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="u-word">Deploy failed</span>
+                  </label>
+                  <label class="u-opt">
+                    <input class="vh" type="checkbox" />
+                    <span class="u-word">Weekly digest</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <div class="u-row">
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-vis"
+                      value="public"
+                    />
+                    <span class="u-word">Public</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-vis"
+                      value="internal"
+                      checked
+                    />
+                    <span class="u-word">Internal</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vb-vis"
+                      value="private"
+                    />
+                    <span class="u-word">Private</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Auto-deploy on push</legend>
+                <label class="u-opt">
+                  <input class="vh" type="checkbox" role="switch" checked />
+                  <span class="u-sw" aria-hidden="true"
+                    ><span class="u-word u-off">off</span
+                    ><span class="u-word u-on">on</span></span
+                  >
+                </label>
+              </fieldset>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            B · UNDERLINE 2 — inked words for four or fewer, a panel for many
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · ON THE LINE — every control lives on the hairline ═══════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">C · ON THE LINE</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-accent">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="vc-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="vc-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Region</legend>
+                <div class="o-rads">
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-region"
+                      value="us-east-1"
+                      checked
+                    />
+                    <span class="o-word">us-east-1</span>
+                  </label>
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-region"
+                      value="us-west-2"
+                    />
+                    <span class="o-word">us-west-2</span>
+                  </label>
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-region"
+                      value="eu-central-1"
+                    />
+                    <span class="o-word">eu-central-1</span>
+                  </label>
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-region"
+                      value="ap-southeast-2"
+                    />
+                    <span class="o-word">ap-southeast-2</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg">
+                <span class="ae-label" id="vc-tz-l">Timezone</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn cl-line"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="vc-tz-l"
+                  >
+                    <span class="cl-val">UTC−05 · New York</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                    data-tz
+                  ></ul>
+                </div>
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <label class="o-opt">
+                  <input class="vh" type="checkbox" checked />
+                  <span class="o-tick" aria-hidden="true"></span>
+                  Deploy succeeded
+                </label>
+                <label class="o-opt">
+                  <input class="vh" type="checkbox" checked />
+                  <span class="o-tick" aria-hidden="true"></span>
+                  Deploy failed
+                </label>
+                <label class="o-opt">
+                  <input class="vh" type="checkbox" />
+                  <span class="o-tick" aria-hidden="true"></span>
+                  Weekly digest
+                </label>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <div class="o-rads">
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-vis"
+                      value="public"
+                    />
+                    <span class="o-word">Public</span>
+                  </label>
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-vis"
+                      value="internal"
+                      checked
+                    />
+                    <span class="o-word">Internal</span>
+                  </label>
+                  <label class="o-ropt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vc-vis"
+                      value="private"
+                    />
+                    <span class="o-word">Private</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg">
+                <label class="o-opt">
+                  <input class="vh" type="checkbox" role="switch" checked />
+                  <span class="o-track" aria-hidden="true"
+                    ><span class="o-dot"></span
+                  ></span>
+                  Auto-deploy on push
+                </label>
+              </div>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            C · ON THE LINE — ticks, dots, and inked segments on hairlines
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · HYBRID — words for choices, mono for metadata ═══════════ -->
+    <section class="proto-variant" id="vd">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">D · HYBRID</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-accent">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="vd-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="vd-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Region</legend>
+                <div class="u-row">
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-region"
+                      value="us-east-1"
+                      checked
+                    />
+                    <span class="u-word">us-east-1</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-region"
+                      value="us-west-2"
+                    />
+                    <span class="u-word">us-west-2</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-region"
+                      value="eu-central-1"
+                    />
+                    <span class="u-word">eu-central-1</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-region"
+                      value="ap-southeast-2"
+                    />
+                    <span class="u-word">ap-southeast-2</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg">
+                <span class="ae-label" id="vd-tz-l">Timezone</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn u-trigger"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="vd-tz-l"
+                  >
+                    <span class="cl-val">UTC−05 · New York</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                    data-tz
+                  ></ul>
+                </div>
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <div class="u-row">
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-vis"
+                      value="public"
+                    />
+                    <span class="u-word">Public</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-vis"
+                      value="internal"
+                      checked
+                    />
+                    <span class="u-word">Internal</span>
+                  </label>
+                  <label class="u-opt">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="vd-vis"
+                      value="private"
+                    />
+                    <span class="u-word">Private</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <div class="a-rows">
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Deploy succeeded
+                  </label>
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Deploy failed
+                  </label>
+                  <label class="a-opt">
+                    <input class="vh" type="checkbox" />
+                    <span class="a-box" aria-hidden="true"></span>
+                    Weekly digest
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg a-rows">
+                <label class="a-opt">
+                  <input class="vh" type="checkbox" role="switch" checked />
+                  <span class="a-sw" aria-hidden="true"
+                    ><span class="a-off">off</span
+                    ><span class="a-on">on</span></span
+                  >
+                  Auto-deploy on push
+                </label>
+              </div>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            D · HYBRID — underlined words decide, mono toggles annotate
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · BALLOT — the print idiom: numbered hairline list ════════ -->
+    <section class="proto-variant" id="ve">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">E · BALLOT</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-item">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="ve-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="ve-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Region</legend>
+                <div class="e-list">
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-region"
+                      value="us-east-1"
+                      checked
+                    />
+                    <span class="e-no">01</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">us-east-1</span>
+                  </label>
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-region"
+                      value="us-west-2"
+                    />
+                    <span class="e-no">02</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">us-west-2</span>
+                  </label>
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-region"
+                      value="eu-central-1"
+                    />
+                    <span class="e-no">03</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">eu-central-1</span>
+                  </label>
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-region"
+                      value="ap-southeast-2"
+                    />
+                    <span class="e-no">04</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">ap-southeast-2</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Timezone</legend>
+                <div
+                  class="e-list e-scroll"
+                  data-tz-ballot
+                  data-name="ve-tz"
+                ></div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <div class="e-list">
+                  <label class="e-row">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="e-no">01</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Deploy succeeded</span>
+                  </label>
+                  <label class="e-row">
+                    <input class="vh" type="checkbox" checked />
+                    <span class="e-no">02</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Deploy failed</span>
+                  </label>
+                  <label class="e-row">
+                    <input class="vh" type="checkbox" />
+                    <span class="e-no">03</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Weekly digest</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <div class="e-list">
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-vis"
+                      value="public"
+                    />
+                    <span class="e-no">01</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Public</span>
+                  </label>
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-vis"
+                      value="internal"
+                      checked
+                    />
+                    <span class="e-no">02</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Internal</span>
+                  </label>
+                  <label class="e-row">
+                    <input
+                      class="vh"
+                      type="radio"
+                      name="ve-vis"
+                      value="private"
+                    />
+                    <span class="e-no">03</span>
+                    <span class="e-box" aria-hidden="true"></span>
+                    <span class="e-lab">Private</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="fg e-list">
+                <label class="e-row">
+                  <input class="vh" type="checkbox" role="switch" checked />
+                  <span class="e-no">01</span>
+                  <span class="e-box" aria-hidden="true"></span>
+                  <span class="e-lab">Auto-deploy on push</span>
+                </label>
+              </div>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            E · BALLOT — numbered rows, solid ink in the chosen box, long lists
+            scroll in bounds
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · NATIVE+ — real inputs restyled hard ═════════════════════ -->
+    <section class="proto-variant" id="vf">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">F · NATIVE+</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h1 class="ae-h">PROJECT SETTINGS</h1>
+            <p class="lede-accent">
+              Settings for <span class="ae-accent">misty-step/relay</span> —
+              changes apply on save.
+            </p>
+            <form class="js-form">
+              <div class="fg">
+                <label class="ae-label" for="vf-name">Project name</label>
+                <input
+                  class="ae-input"
+                  id="vf-name"
+                  type="text"
+                  value="relay"
+                />
+              </div>
+              <div class="fg">
+                <span class="ae-label" id="vf-region-l">Region</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn cl-line"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="vf-region-l"
+                  >
+                    <span class="cl-val">us-east-1</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul class="cl-panel" role="listbox" tabindex="-1" hidden>
+                    <li class="cl-opt" role="option" aria-selected="true">
+                      us-east-1
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      us-west-2
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      eu-central-1
+                    </li>
+                    <li class="cl-opt" role="option" aria-selected="false">
+                      ap-southeast-2
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="fg">
+                <span class="ae-label" id="vf-tz-l">Timezone</span>
+                <div class="cl">
+                  <button
+                    class="cl-btn cl-line"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-labelledby="vf-tz-l"
+                  >
+                    <span class="cl-val">UTC−05 · New York</span>
+                    <span class="cl-chev" aria-hidden="true"></span>
+                  </button>
+                  <ul
+                    class="cl-panel"
+                    role="listbox"
+                    tabindex="-1"
+                    hidden
+                    data-tz
+                  ></ul>
+                </div>
+              </div>
+              <fieldset class="fg">
+                <legend class="ae-label">Notifications</legend>
+                <label class="n-choice">
+                  <input class="n-check" type="checkbox" checked />
+                  Deploy succeeded
+                </label>
+                <label class="n-choice">
+                  <input class="n-check" type="checkbox" checked />
+                  Deploy failed
+                </label>
+                <label class="n-choice">
+                  <input class="n-check" type="checkbox" />
+                  Weekly digest
+                </label>
+              </fieldset>
+              <fieldset class="fg">
+                <legend class="ae-label">Visibility</legend>
+                <label class="n-choice">
+                  <input
+                    class="n-radio"
+                    type="radio"
+                    name="vf-vis"
+                    value="public"
+                  />
+                  Public
+                </label>
+                <label class="n-choice">
+                  <input
+                    class="n-radio"
+                    type="radio"
+                    name="vf-vis"
+                    value="internal"
+                    checked
+                  />
+                  Internal
+                </label>
+                <label class="n-choice">
+                  <input
+                    class="n-radio"
+                    type="radio"
+                    name="vf-vis"
+                    value="private"
+                  />
+                  Private
+                </label>
+              </fieldset>
+              <div class="fg">
+                <label class="n-choice">
+                  <input class="n-swt" type="checkbox" role="switch" checked />
+                  Auto-deploy on push
+                </label>
+              </div>
+              <button class="ae-button" type="submit">Save settings</button>
+            </form>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            F · NATIVE+ — real inputs, appearance off, square marks, one panel
+          </p>
+          <p class="ae-chrome">LAB · choice controls · round 2</p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A text 2</button>
+      <button data-v="vb">B underline 2</button>
+      <button data-v="vc">C on the line</button>
+      <button data-v="vd">D hybrid</button>
+      <button data-v="ve">E ballot</button>
+      <button data-v="vf">F native+</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      document.querySelectorAll('.js-form').forEach((form) => {
+        form.addEventListener('submit', (e) => e.preventDefault());
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+        });
+      });
+
+      /* ── the twelve timezones: every variant answers the long select ── */
+      const TZ = [
+        'UTC−08 · Los Angeles',
+        'UTC−07 · Denver',
+        'UTC−06 · Chicago',
+        'UTC−05 · New York',
+        'UTC−03 · São Paulo',
+        'UTC±00 · London',
+        'UTC+01 · Berlin',
+        'UTC+02 · Helsinki',
+        'UTC+05:30 · Mumbai',
+        'UTC+08 · Singapore',
+        'UTC+09 · Tokyo',
+        'UTC+11 · Sydney',
+      ];
+      const TZ_DEFAULT = 'UTC−05 · New York';
+
+      document.querySelectorAll('[data-tz]').forEach((panel) => {
+        panel.innerHTML = TZ.map(
+          (t) =>
+            `<li class="cl-opt" role="option" aria-selected="${
+              t === TZ_DEFAULT
+            }">${t}</li>`,
+        ).join('');
+      });
+
+      document.querySelectorAll('[data-tz-ballot]').forEach((list) => {
+        const name = list.dataset.name;
+        list.innerHTML = TZ.map(
+          (t, i) =>
+            `<label class="e-row">
+              <input class="vh" type="radio" name="${name}" value="${t}" ${
+                t === TZ_DEFAULT ? 'checked' : ''
+              } />
+              <span class="e-no">${String(i + 1).padStart(2, '0')}</span>
+              <span class="e-box" aria-hidden="true"></span>
+              <span class="e-lab">${t}</span>
+            </label>`,
+        ).join('');
+      });
+
+      /* ── the listbox: trigger + panel, arrows / Enter / Escape ──────── */
+      document.querySelectorAll('.cl').forEach((cl) => {
+        const btn = cl.querySelector('.cl-btn');
+        const panel = cl.querySelector('.cl-panel');
+        const val = cl.querySelector('.cl-val');
+        const opts = [...panel.querySelectorAll('[role="option"]')];
+        let active = 0;
+
+        function paint() {
+          opts.forEach((o, i) => o.classList.toggle('is-active', i === active));
+          opts[active].scrollIntoView({ block: 'nearest' });
+        }
+        function open() {
+          panel.hidden = false;
+          btn.setAttribute('aria-expanded', 'true');
+          active = opts.findIndex(
+            (o) => o.getAttribute('aria-selected') === 'true',
+          );
+          if (active < 0) active = 0;
+          paint();
+          panel.focus();
+        }
+        function close(refocus) {
+          panel.hidden = true;
+          btn.setAttribute('aria-expanded', 'false');
+          if (refocus) btn.focus();
+        }
+        function choose(i) {
+          opts.forEach((o, j) =>
+            o.setAttribute('aria-selected', j === i ? 'true' : 'false'),
+          );
+          val.textContent = opts[i].textContent.trim();
+          close(true);
+        }
+
+        btn.addEventListener('click', () =>
+          panel.hidden ? open() : close(false),
+        );
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            open();
+          }
+        });
+        panel.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            active = Math.min(active + 1, opts.length - 1);
+            paint();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            active = Math.max(active - 1, 0);
+            paint();
+          } else if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            choose(active);
+          } else if (e.key === 'Escape') {
+            e.preventDefault();
+            close(true);
+          } else if (e.key === 'Tab') {
+            close(false);
+          }
+        });
+        opts.forEach((o, i) => {
+          o.addEventListener('click', () => choose(i));
+          o.addEventListener('mousemove', () => {
+            if (active !== i) {
+              active = i;
+              paint();
+            }
+          });
+        });
+        document.addEventListener('pointerdown', (e) => {
+          if (!panel.hidden && !cl.contains(e.target)) close(false);
+        });
+      });
+    </script>
+  </body>
+</html>

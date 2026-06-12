@@ -1,0 +1,1959 @@
+<!--
+  LAB overlays · round 2 — after operator review of overlays-fan.html.
+  Panel won, hairline fine, command kept if de-teched, inline killed for
+  confirms, sheet wrong for confirms but fine elsewhere, ink dead, no
+  resting accent on table rows. Six refinements: A panel 2 (winner plus a
+  whisper of paper dim), B command 2 (lowercase, real buttons, deeper fade
+  and shadow), C in row (confirm replaces the row at identical height),
+  D recede (no scrim; the page eases toward faint), E margin (notes beside
+  the table, hairline leaders), F sheet placed right (row opens a detail
+  sheet; the decision stays in-row inside it).
+  VERDICT: (pending operator review)
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB overlays · round 2</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+      .bar-links {
+        display: inline-flex;
+        gap: 1.5em;
+      }
+
+      /* ── the deploys screen, shared by every variant ──────────────── */
+      .dep-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        margin-bottom: 1.2em;
+      }
+      .dep-title {
+        font-weight: var(--ae-w-black);
+      }
+      .dep-head,
+      .dep-row {
+        display: grid;
+        grid-template-columns: 6.5em minmax(0, 1fr) 7em 3em max-content;
+        gap: 0 1.2em;
+        align-items: baseline;
+      }
+      .dep-head {
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-row {
+        padding: 0.55em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-acts {
+        display: inline-flex;
+        gap: 0.5em;
+        justify-content: flex-end;
+      }
+      .proto-cap {
+        margin-top: 2em;
+      }
+
+      /* a compact contained button: the quiet costume at row scale */
+      .row-btn {
+        font-family: var(--ae-font);
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid var(--ae-line);
+        border-radius: 0;
+        color: var(--ae-ink-muted);
+        padding: 0.2em 0.7em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .row-btn:hover {
+        color: var(--ae-ink);
+        border-color: var(--ae-ink);
+      }
+      .rc-acts {
+        display: inline-flex;
+        gap: 0.5em;
+        flex: none;
+      }
+      .rc-confirm {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+        border-color: var(--ae-ink);
+      }
+      .rc-confirm:hover {
+        color: var(--ae-surface);
+        opacity: 0.9;
+      }
+
+      /* ── overlay skins ─────────────────────────────────────────────── */
+      .ov-hairline {
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        border: 1px solid var(--ae-line);
+        box-shadow: none;
+      }
+
+      /* ── dialogs ───────────────────────────────────────────────────── */
+      dialog.ov {
+        border: 0;
+        border-radius: 0;
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        width: min(26em, calc(100vw - 3em));
+        box-sizing: border-box;
+        padding: 2em;
+      }
+      dialog.ov[open] {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      dialog.ov::backdrop {
+        background: transparent;
+      }
+      .ov-title {
+        font-weight: var(--ae-w-black);
+        margin-bottom: 0.5em;
+      }
+      .ov-acts {
+        display: flex;
+        gap: 1em;
+        justify-content: flex-end;
+        margin-top: 1.8em;
+      }
+
+      /* scrims: the page dims to paper. A whisper behind the panel,
+         a stronger fade behind the command panel. */
+      dialog.scrim-whisper::backdrop {
+        background: rgba(252, 252, 252, 0.4);
+      }
+      dialog.scrim-strong::backdrop {
+        background: rgba(252, 252, 252, 0.78);
+      }
+      .dark dialog.scrim-whisper::backdrop {
+        background: rgba(18, 18, 18, 0.4);
+      }
+      .dark dialog.scrim-strong::backdrop {
+        background: rgba(18, 18, 18, 0.78);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light):not([data-ae-mode='light'])
+          dialog.scrim-whisper::backdrop {
+          background: rgba(18, 18, 18, 0.4);
+        }
+        :root:not(.light):not([data-ae-mode='light'])
+          dialog.scrim-strong::backdrop {
+          background: rgba(18, 18, 18, 0.78);
+        }
+      }
+
+      /* ── dropdown popovers ─────────────────────────────────────────── */
+      [popover].dd {
+        position: fixed;
+        inset: auto;
+        margin: 0;
+        width: max-content;
+        min-width: 10em;
+        padding: 0.4em 0;
+      }
+      [popover].dd:popover-open {
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+      .dd-opt {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: 0;
+        font-family: var(--ae-font);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.45em 1.1em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          background-color var(--ae-quick) var(--ae-ease);
+      }
+      .dd-opt:hover {
+        background: var(--ae-wash);
+        color: var(--ae-ink);
+      }
+      .dd-opt.is-sel {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* ── tooltips ──────────────────────────────────────────────────── */
+      .tip {
+        position: relative;
+        display: inline-block;
+      }
+      .tip-trigger {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        letter-spacing: inherit;
+        cursor: help;
+        border-bottom: 1px dotted var(--ae-ink-faint);
+      }
+      .tip-bubble {
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 0.5em);
+        width: max-content;
+        max-width: 17em;
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 0.45em 0.8em;
+        z-index: 5;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity var(--ae-quick) var(--ae-ease),
+          visibility 0s var(--ae-quick);
+      }
+      .tip-trigger:hover + .tip-bubble,
+      .tip-trigger:focus-visible + .tip-bubble {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity var(--ae-quick) var(--ae-ease);
+      }
+      .tip-bubble.ae-panel {
+        padding: 0.45em 0.8em;
+      }
+
+      /* ── toasts ────────────────────────────────────────────────────── */
+      .toast {
+        display: none;
+        transition: opacity var(--ae-gentle) var(--ae-ease);
+      }
+      .toast.is-on {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      .toast.is-fading {
+        opacity: 0;
+      }
+      .toast-float {
+        position: fixed;
+        right: 1.4em;
+        bottom: 4.6em;
+        z-index: 9;
+        font-size: 13px;
+        padding: 0.7em 1.1em;
+      }
+      .toast-float.is-on {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+      .toast-float.ae-panel {
+        padding: 0.7em 1.1em;
+      }
+
+      /* a fade with no travel: for swaps that must not imply movement */
+      @keyframes ov-fade {
+        from {
+          opacity: 0;
+        }
+      }
+
+      /* ── B · COMMAND 2: the centered quiet panel, de-teched ────────── */
+      dialog.b-skin {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        width: min(22em, calc(100vw - 3em));
+        background: var(--ae-surface);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.05),
+          0 16px 48px rgba(0, 0, 0, 0.14);
+      }
+      .dark dialog.b-skin {
+        background: var(--ae-wash);
+        box-shadow: none;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light):not([data-ae-mode='light']) dialog.b-skin {
+          background: var(--ae-wash);
+          box-shadow: none;
+        }
+      }
+      .b-head {
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.08em;
+        margin-bottom: 0.5em;
+      }
+      #b-confirm {
+        padding: 1.6em 1.8em;
+      }
+      #b-filter {
+        padding: 1.1em 0 0.6em;
+      }
+      #b-filter .b-head {
+        padding: 0 1.4em;
+      }
+      #b-filter .dd-opt {
+        padding: 0.45em 1.4em;
+      }
+
+      /* ── C · IN ROW: the confirm replaces the row's own content ────── */
+      .row-swap {
+        display: none;
+      }
+      .dep-row.is-confirming > :not(.row-swap) {
+        display: none;
+      }
+      .dep-row.is-confirming > .row-swap {
+        display: flex;
+        grid-column: 1 / -1;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        animation: ov-fade var(--ae-quick) var(--ae-ease) both;
+      }
+
+      /* ── D · RECEDE: the page eases its ink toward faint ───────────── */
+      #vd .ae-screen {
+        transition: opacity var(--ae-gentle) var(--ae-ease);
+      }
+      #vd .ae-screen.is-receded {
+        opacity: 0.3;
+      }
+      dialog.d-skin {
+        border: 1px solid var(--ae-line);
+        box-shadow: none;
+      }
+
+      /* ── E · MARGIN: notes beside the table, hairline leaders ──────── */
+      .e-body {
+        position: relative;
+        max-width: 38rem;
+      }
+      .e-note {
+        display: none;
+        position: absolute;
+        left: calc(100% + 2.4em);
+        width: 12em;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ae-ink-muted);
+      }
+      .e-note::before {
+        content: '';
+        position: absolute;
+        top: 0.75em;
+        right: 100%;
+        width: 1.9em;
+        border-top: 1px solid var(--ae-line);
+      }
+      .e-note.is-open {
+        display: block;
+        animation: ov-fade var(--ae-quick) var(--ae-ease) both;
+      }
+      .e-note-tip.is-on {
+        display: block;
+        animation: ov-fade var(--ae-quick) var(--ae-ease) both;
+      }
+      .e-note-toast.is-on {
+        display: block;
+      }
+      .e-note p {
+        margin: 0;
+      }
+      .e-note-acts {
+        margin-top: 0.5em;
+        display: flex;
+        gap: 0.5em;
+      }
+      .e-note-h {
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.08em;
+        margin-bottom: 0.3em;
+      }
+      .e-note .dd-opt {
+        padding: 0.2em 0;
+      }
+      @media (max-width: 999.98px) {
+        .e-note {
+          display: none !important;
+        }
+      }
+      @media (min-width: 1000px) {
+        #ve .tip-bubble {
+          display: none;
+        }
+      }
+
+      /* ── F · SHEET, PLACED RIGHT: inspection docks, decision stays ─── */
+      #vf .dep-row {
+        cursor: pointer;
+        transition: background-color var(--ae-quick) var(--ae-ease);
+      }
+      #vf .dep-row:hover {
+        background: var(--ae-wash);
+      }
+      dialog.f-sheet {
+        position: fixed;
+        inset: 0 0 0 auto;
+        height: 100dvh;
+        max-height: 100dvh;
+        width: min(24em, 85vw);
+        margin: 0;
+        box-sizing: border-box;
+        padding: 2.2em 2em;
+        border: 0;
+        border-left: 1px solid var(--ae-line);
+        border-radius: 0;
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+      }
+      dialog.f-sheet[open] {
+        animation: ov-slide var(--ae-soft) var(--ae-ease) both;
+      }
+      dialog.f-sheet::backdrop {
+        background: transparent;
+      }
+      @keyframes ov-slide {
+        from {
+          opacity: 0;
+          transform: translateX(24px);
+        }
+      }
+      .sheet-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+      }
+      .sheet-meta {
+        display: grid;
+        grid-template-columns: 8em 1fr;
+        gap: 0.15em 1em;
+        align-items: baseline;
+        margin: 1.6em 0 2em;
+      }
+      .sheet-meta dt {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+      .sheet-acts {
+        border-top: 1px solid var(--ae-line);
+        padding-top: 1.2em;
+      }
+      .sa-rest {
+        display: flex;
+        gap: 0.5em;
+      }
+      .sa-confirm {
+        display: none;
+      }
+      .sheet-acts.is-confirming .sa-rest {
+        display: none;
+      }
+      .sheet-acts.is-confirming .sa-confirm {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        animation: ov-fade var(--ae-quick) var(--ae-ease) both;
+      }
+      .sheet-status {
+        margin-top: 1em;
+      }
+      .sheet-status.is-on {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · PANEL 2 — the winner, with a whisper of paper dim ══════ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="a-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="a-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ae-panel" role="tooltip" id="a-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              A · PANEL 2 — the winner, refined. The panel's soft depth, plus a
+              whisper of paper dim behind it.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · A panel 2</p>
+        </footer>
+      </div>
+
+      <dialog class="ov ae-panel scrim-whisper" id="a-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ae-panel" id="a-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ B · COMMAND 2 — lowercase, real buttons, deeper fade ═══════ -->
+    <section class="proto-variant" id="vb">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="b-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ae-panel" role="tooltip" id="b-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              B · COMMAND 2 — the centered panel, de-teched. Lowercase words,
+              real buttons, a deeper fade behind.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · B command 2</p>
+        </footer>
+      </div>
+
+      <dialog class="ov b-skin scrim-strong" id="b-confirm">
+        <p class="b-head">delete deploy</p>
+        <p>
+          delete <code class="js-ref">·</code> from history? this cannot be
+          undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            cancel
+          </button>
+          <button class="ae-button js-confirm">delete</button>
+        </div>
+      </dialog>
+
+      <dialog class="ov b-skin scrim-strong" id="b-filter">
+        <p class="b-head">filter</p>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </dialog>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ C · IN ROW — the confirm takes over the row itself ═════════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="c-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="c-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ae-panel" role="tooltip" id="c-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+                <div class="row-swap">
+                  <span class="ae-dim"
+                    >delete <code>a3f9c12</code>? this cannot be undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      confirm
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+                <div class="row-swap">
+                  <span class="ae-dim"
+                    >delete <code>8be4d07</code>? this cannot be undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      confirm
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+                <div class="row-swap">
+                  <span class="ae-dim"
+                    >delete <code>f217aa9</code>? this cannot be undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      confirm
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+                <div class="row-swap">
+                  <span class="ae-dim"
+                    >delete <code>c90e3b1</code>? this cannot be undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      confirm
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              C · IN ROW — the confirm takes over the row itself at the same
+              height. Nothing floats, nothing moves.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · C in row</p>
+        </footer>
+      </div>
+
+      <div class="dd ae-panel" id="c-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ D · RECEDE — no scrim; the page eases toward faint ═════════ -->
+    <section class="proto-variant" id="vd">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="d-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="d-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ov-hairline" role="tooltip" id="d-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              D · RECEDE — no scrim. The page eases toward faint while the
+              question keeps full ink, and returns on close.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · D recede</p>
+        </footer>
+      </div>
+
+      <dialog class="ov d-skin" id="d-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ov-hairline" id="d-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ov-hairline js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ E · MARGIN — notes beside the table, hairline leaders ══════ -->
+    <section class="proto-variant" id="ve">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="e-body">
+              <div class="dep-top">
+                <h1 class="dep-title">Deploys</h1>
+                <button class="row-btn js-filter-btn">
+                  filter: <span class="js-filter-label">all</span>
+                </button>
+              </div>
+              <div class="dep-list">
+                <div class="dep-head ae-chrome">
+                  <span>ref</span><span>service</span><span>status</span>
+                  <span class="tip">
+                    <button class="tip-trigger" aria-describedby="e-tip">
+                      age
+                    </button>
+                    <span class="tip-bubble ae-panel" role="tooltip" id="e-tip"
+                      >Time since the deploy went live, not since the build
+                      started.</span
+                    >
+                  </span>
+                  <span></span>
+                </div>
+                <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                  <code>a3f9c12</code>
+                  <span class="ae-item">misty-step/web</span>
+                  <span class="ae-dim">live</span>
+                  <span class="ae-dim">2m</span>
+                  <span class="dep-acts">
+                    <button class="row-btn js-copy" data-ref="a3f9c12">
+                      copy
+                    </button>
+                    <button class="row-btn js-del" data-ref="a3f9c12">
+                      delete
+                    </button>
+                  </span>
+                </div>
+                <div class="dep-row" data-ref="8be4d07" data-status="live">
+                  <code>8be4d07</code>
+                  <span class="ae-item">misty-step/vanity</span>
+                  <span class="ae-dim">live</span>
+                  <span class="ae-dim">1h</span>
+                  <span class="dep-acts">
+                    <button class="row-btn js-copy" data-ref="8be4d07">
+                      copy
+                    </button>
+                    <button class="row-btn js-del" data-ref="8be4d07">
+                      delete
+                    </button>
+                  </span>
+                </div>
+                <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                  <code>f217aa9</code>
+                  <span class="ae-item">misty-step/aesthetic</span>
+                  <span class="ae-dim">rolled back</span>
+                  <span class="ae-dim">3h</span>
+                  <span class="dep-acts">
+                    <button class="row-btn js-copy" data-ref="f217aa9">
+                      copy
+                    </button>
+                    <button class="row-btn js-del" data-ref="f217aa9">
+                      delete
+                    </button>
+                  </span>
+                </div>
+                <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                  <code>c90e3b1</code>
+                  <span class="ae-item">misty-step/api</span>
+                  <span class="ae-dim">live</span>
+                  <span class="ae-dim">9h</span>
+                  <span class="dep-acts">
+                    <button class="row-btn js-copy" data-ref="c90e3b1">
+                      copy
+                    </button>
+                    <button class="row-btn js-del" data-ref="c90e3b1">
+                      delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <p class="ae-dim proto-cap">
+                E · MARGIN — confirms, tips, and filters are notes in the
+                margin, tied to their row by a hairline. Narrow screens fall
+                back to the panel.
+              </p>
+
+              <div class="e-note e-note-confirm js-closeable">
+                <p>
+                  delete <code class="js-ref">·</code>? this cannot be undone.
+                </p>
+                <p class="e-note-acts">
+                  <button class="row-btn js-cancel">cancel</button>
+                  <button class="row-btn rc-confirm js-confirm">delete</button>
+                </p>
+              </div>
+
+              <div class="e-note e-note-filter js-closeable">
+                <p class="e-note-h">filter</p>
+                <button
+                  class="dd-opt js-opt is-sel"
+                  data-f="all"
+                  data-label="all"
+                >
+                  all
+                </button>
+                <button class="dd-opt js-opt" data-f="live" data-label="live">
+                  live
+                </button>
+                <button
+                  class="dd-opt js-opt"
+                  data-f="rolled"
+                  data-label="rolled back"
+                >
+                  rolled back
+                </button>
+              </div>
+
+              <div class="e-note e-note-tip" role="tooltip">
+                time since the deploy went live, not since the build started.
+              </div>
+
+              <div class="toast e-note e-note-toast">
+                copied <code class="js-tref"></code>
+                <svg class="ae-icon"><use href="#i-check" /></svg>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · E margin</p>
+        </footer>
+      </div>
+
+      <dialog class="ov ae-panel scrim-whisper" id="e-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ae-panel" id="e-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ F · SHEET, PLACED RIGHT — inspect in the sheet, decide
+         in-row inside it ══════════════════════════════════════════════ -->
+    <section class="proto-variant" id="vf">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="f-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="f-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ae-panel" role="tooltip" id="f-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              F · SHEET, PLACED RIGHT — a row opens its detail sheet; the
+              decision stays in-row inside it. Sheet for inspection, panel for
+              decision.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab 2 · F sheet placed right</p>
+        </footer>
+      </div>
+
+      <dialog class="f-sheet" id="f-sheet">
+        <div class="sheet-top">
+          <p class="ov-title"><code class="js-ref">·</code></p>
+          <button class="row-btn js-close">close</button>
+        </div>
+        <dl class="sheet-meta">
+          <dt>service</dt>
+          <dd class="js-m-service">·</dd>
+          <dt>status</dt>
+          <dd class="js-m-status">·</dd>
+          <dt>age</dt>
+          <dd class="js-m-age">·</dd>
+          <dt>deployed by</dt>
+          <dd class="js-m-by">·</dd>
+          <dt>branch</dt>
+          <dd class="js-m-branch">·</dd>
+          <dt>build time</dt>
+          <dd class="js-m-build">·</dd>
+        </dl>
+        <div class="sheet-acts">
+          <div class="sa-rest">
+            <button class="row-btn js-sheet-copy">copy ref</button>
+            <button class="row-btn js-arm">delete</button>
+          </div>
+          <div class="sa-confirm">
+            <span class="ae-dim"
+              >delete <code class="js-ref">·</code>? this cannot be
+              undone.</span
+            >
+            <span class="rc-acts">
+              <button class="row-btn js-cancel">cancel</button>
+              <button class="row-btn rc-confirm js-confirm">confirm</button>
+            </span>
+          </div>
+        </div>
+        <p class="toast sheet-status ae-chrome">
+          copied <code class="js-tref"></code>
+          <svg class="ae-icon"><use href="#i-check" /></svg>
+        </p>
+      </dialog>
+
+      <div class="dd ae-panel" id="f-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A panel 2</button>
+      <button data-v="vb">B command 2</button>
+      <button data-v="vc">C in row</button>
+      <button data-v="vd">D recede</button>
+      <button data-v="ve">E margin</button>
+      <button data-v="vf">F sheet</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+        });
+      });
+
+      /* filter: hide rows that do not match, relabel the trigger */
+      function applyFilter(sec, f) {
+        sec.querySelectorAll('.dep-row').forEach((r) => {
+          r.style.display = f === 'all' || r.dataset.status === f ? '' : 'none';
+        });
+      }
+      function chooseOpt(sec, scope, opt) {
+        scope
+          .querySelectorAll('.js-opt')
+          .forEach((o) => o.classList.remove('is-sel'));
+        opt.classList.add('is-sel');
+        applyFilter(sec, opt.dataset.f);
+        const lab = sec.querySelector('.js-filter-label');
+        if (lab) lab.textContent = opt.dataset.label;
+      }
+
+      /* toast: enters once, persists, then resolves away gently at 4s */
+      function toastShower(el) {
+        let t1, t2;
+        return (ref) => {
+          const tr = el.querySelector('.js-tref');
+          if (tr) tr.textContent = ref;
+          clearTimeout(t1);
+          clearTimeout(t2);
+          el.classList.remove('is-on', 'is-fading');
+          void el.offsetWidth;
+          el.classList.add('is-on');
+          t1 = setTimeout(() => {
+            el.classList.add('is-fading');
+            t2 = setTimeout(() => {
+              el.classList.remove('is-on', 'is-fading');
+            }, 520);
+          }, 4000);
+        };
+      }
+
+      function clip(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText)
+          navigator.clipboard.writeText(text).catch(() => {});
+      }
+
+      function wireCopy(sec, show) {
+        sec.querySelectorAll('.js-copy').forEach((b) =>
+          b.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clip(b.dataset.ref);
+            show(b.dataset.ref);
+          }),
+        );
+      }
+
+      /* native <dialog>: Escape and focus return come free */
+      function wireDialog(sec, dlg, opts) {
+        opts = opts || {};
+        let opener = null;
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', () => {
+            opener = b;
+            dlg
+              .querySelectorAll('.js-ref')
+              .forEach((s) => (s.textContent = b.dataset.ref));
+            dlg.dataset.ref = b.dataset.ref;
+            if (opts.onOpen) opts.onOpen();
+            dlg.showModal();
+          }),
+        );
+        dlg.querySelector('.js-confirm').addEventListener('click', () => {
+          const row = sec.querySelector(
+            '.dep-row[data-ref="' + dlg.dataset.ref + '"]',
+          );
+          if (row) row.remove();
+          dlg.close();
+        });
+        dlg
+          .querySelector('.js-cancel')
+          .addEventListener('click', () => dlg.close());
+        dlg.addEventListener('close', () => {
+          if (opts.onClose) opts.onClose();
+          if (opener && opener.isConnected) opener.focus();
+        });
+      }
+
+      /* popover dropdowns: anchored under the trigger on open */
+      function placeDD(btn, dd) {
+        const r = btn.getBoundingClientRect();
+        dd.style.left =
+          Math.max(8, Math.min(r.left, innerWidth - dd.offsetWidth - 8)) + 'px';
+        dd.style.top = Math.round(r.bottom + 6) + 'px';
+      }
+      function wirePopFilter(sec, dd) {
+        const btn = sec.querySelector('.js-filter-btn');
+        dd.addEventListener('toggle', (e) => {
+          if (e.newState === 'open') placeDD(btn, dd);
+        });
+        dd.querySelectorAll('.js-opt').forEach((o) =>
+          o.addEventListener('click', () => {
+            chooseOpt(sec, dd, o);
+            dd.hidePopover();
+            btn.focus();
+          }),
+        );
+      }
+
+      /* A · PANEL 2 */
+      (() => {
+        const sec = document.getElementById('va');
+        wireCopy(sec, toastShower(sec.querySelector('.js-toast')));
+        wireDialog(sec, document.getElementById('a-dialog'));
+        wirePopFilter(sec, document.getElementById('a-dd'));
+      })();
+
+      /* B · COMMAND 2 */
+      (() => {
+        const sec = document.getElementById('vb');
+        wireCopy(sec, toastShower(sec.querySelector('.js-toast')));
+        wireDialog(sec, document.getElementById('b-confirm'));
+        const pal = document.getElementById('b-filter');
+        const btn = sec.querySelector('.js-filter-btn');
+        btn.addEventListener('click', () => pal.showModal());
+        pal.querySelectorAll('.js-opt').forEach((o) =>
+          o.addEventListener('click', () => {
+            chooseOpt(sec, pal, o);
+            pal.close();
+          }),
+        );
+        pal.addEventListener('close', () => {
+          if (btn.isConnected) btn.focus();
+        });
+      })();
+
+      /* C · IN ROW */
+      (() => {
+        const sec = document.getElementById('vc');
+        wireCopy(sec, toastShower(sec.querySelector('.js-toast')));
+        wirePopFilter(sec, document.getElementById('c-dd'));
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', () => {
+            const row = b.closest('.dep-row');
+            sec.querySelectorAll('.dep-row.is-confirming').forEach((r) => {
+              if (r !== row) r.classList.remove('is-confirming');
+            });
+            row._opener = b;
+            row.classList.add('is-confirming');
+            row.querySelector('.js-cancel').focus();
+          }),
+        );
+        sec.querySelectorAll('.row-swap .js-cancel').forEach((b) =>
+          b.addEventListener('click', () => {
+            const row = b.closest('.dep-row');
+            row.classList.remove('is-confirming');
+            if (row._opener && row._opener.isConnected) row._opener.focus();
+          }),
+        );
+        sec.querySelectorAll('.row-swap .js-confirm').forEach((b) =>
+          b.addEventListener('click', () => {
+            b.closest('.dep-row').remove();
+          }),
+        );
+      })();
+
+      /* D · RECEDE */
+      (() => {
+        const sec = document.getElementById('vd');
+        const scr = sec.querySelector('.ae-screen');
+        wireCopy(sec, toastShower(sec.querySelector('.js-toast')));
+        wireDialog(sec, document.getElementById('d-dialog'), {
+          onOpen: () => scr.classList.add('is-receded'),
+          onClose: () => scr.classList.remove('is-receded'),
+        });
+        const dd = document.getElementById('d-dd');
+        wirePopFilter(sec, dd);
+        dd.addEventListener('toggle', (e) => {
+          scr.classList.toggle('is-receded', e.newState === 'open');
+        });
+      })();
+
+      /* E · MARGIN */
+      (() => {
+        const sec = document.getElementById('ve');
+        const body = sec.querySelector('.e-body');
+        const wide = () => matchMedia('(min-width: 1000px)').matches;
+        const topOf = (el) =>
+          Math.round(
+            el.getBoundingClientRect().top - body.getBoundingClientRect().top,
+          );
+
+        const noteConfirm = sec.querySelector('.e-note-confirm');
+        const noteFilter = sec.querySelector('.e-note-filter');
+        const noteTip = sec.querySelector('.e-note-tip');
+        const noteToast = sec.querySelector('.e-note-toast');
+        const dlg = document.getElementById('e-dialog');
+        const dd = document.getElementById('e-dd');
+        const btn = sec.querySelector('.js-filter-btn');
+
+        const showFloat = toastShower(sec.querySelector('.js-toast'));
+        const showNote = toastShower(noteToast);
+
+        /* copy → a note beside the copied row, or the float fallback */
+        sec.querySelectorAll('.js-copy').forEach((b) =>
+          b.addEventListener('click', () => {
+            clip(b.dataset.ref);
+            if (wide()) {
+              noteToast.style.top = topOf(b.closest('.dep-row')) + 'px';
+              showNote(b.dataset.ref);
+            } else {
+              showFloat(b.dataset.ref);
+            }
+          }),
+        );
+
+        /* delete → a margin confirm with a leader, or the panel fallback */
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', () => {
+            const row = b.closest('.dep-row');
+            if (wide()) {
+              noteFilter.classList.remove('is-open');
+              noteConfirm
+                .querySelectorAll('.js-ref')
+                .forEach((s) => (s.textContent = row.dataset.ref));
+              noteConfirm.dataset.ref = row.dataset.ref;
+              noteConfirm.style.top = topOf(row) + 'px';
+              noteConfirm._opener = b;
+              noteConfirm.classList.add('is-open');
+              noteConfirm.querySelector('.js-cancel').focus();
+            } else {
+              dlg
+                .querySelectorAll('.js-ref')
+                .forEach((s) => (s.textContent = row.dataset.ref));
+              dlg.dataset.ref = row.dataset.ref;
+              dlg._opener = b;
+              dlg.showModal();
+            }
+          }),
+        );
+        noteConfirm
+          .querySelector('.js-cancel')
+          .addEventListener('click', () => {
+            noteConfirm.classList.remove('is-open');
+            if (noteConfirm._opener && noteConfirm._opener.isConnected)
+              noteConfirm._opener.focus();
+          });
+        noteConfirm
+          .querySelector('.js-confirm')
+          .addEventListener('click', () => {
+            const row = sec.querySelector(
+              '.dep-row[data-ref="' + noteConfirm.dataset.ref + '"]',
+            );
+            if (row) row.remove();
+            noteConfirm.classList.remove('is-open');
+          });
+        dlg
+          .querySelector('.js-cancel')
+          .addEventListener('click', () => dlg.close());
+        dlg.querySelector('.js-confirm').addEventListener('click', () => {
+          const row = sec.querySelector(
+            '.dep-row[data-ref="' + dlg.dataset.ref + '"]',
+          );
+          if (row) row.remove();
+          dlg.close();
+        });
+        dlg.addEventListener('close', () => {
+          if (dlg._opener && dlg._opener.isConnected) dlg._opener.focus();
+        });
+
+        /* filter → a margin list, or the panel popover fallback */
+        function chooseE(opt) {
+          applyFilter(sec, opt.dataset.f);
+          sec
+            .querySelectorAll('.js-opt')
+            .forEach((o) =>
+              o.classList.toggle('is-sel', o.dataset.f === opt.dataset.f),
+            );
+          sec.querySelector('.js-filter-label').textContent = opt.dataset.label;
+        }
+        btn.addEventListener('click', () => {
+          if (wide()) {
+            noteConfirm.classList.remove('is-open');
+            noteFilter.style.top = topOf(btn) + 'px';
+            noteFilter._opener = btn;
+            noteFilter.classList.toggle('is-open');
+          } else {
+            dd.togglePopover();
+          }
+        });
+        dd.addEventListener('toggle', (e) => {
+          if (e.newState === 'open') placeDD(btn, dd);
+        });
+        sec
+          .querySelectorAll('.e-note-filter .js-opt, #e-dd .js-opt')
+          .forEach((o) =>
+            o.addEventListener('click', () => {
+              chooseE(o);
+              noteFilter.classList.remove('is-open');
+              if (dd.matches(':popover-open')) dd.hidePopover();
+              btn.focus();
+            }),
+          );
+
+        /* tooltip → a margin note when wide; CSS bubble handles narrow */
+        const trig = sec.querySelector('.tip-trigger');
+        const head = sec.querySelector('.dep-head');
+        const showTip = () => {
+          if (!wide()) return;
+          noteTip.style.top = topOf(head) + 'px';
+          noteTip.classList.add('is-on');
+        };
+        const hideTip = () => noteTip.classList.remove('is-on');
+        trig.addEventListener('mouseenter', showTip);
+        trig.addEventListener('mouseleave', hideTip);
+        trig.addEventListener('focus', showTip);
+        trig.addEventListener('blur', hideTip);
+      })();
+
+      /* F · SHEET, PLACED RIGHT */
+      (() => {
+        const sec = document.getElementById('vf');
+        const showFloat = toastShower(sec.querySelector('.js-toast'));
+        wireCopy(sec, showFloat);
+        wirePopFilter(sec, document.getElementById('f-dd'));
+
+        const dlg = document.getElementById('f-sheet');
+        const acts = dlg.querySelector('.sheet-acts');
+        const showStatus = toastShower(dlg.querySelector('.sheet-status'));
+        const meta = {
+          a3f9c12: {
+            service: 'misty-step/web',
+            status: 'live',
+            age: '2m',
+            by: 'phaedrus',
+            branch: 'master',
+            build: '48s',
+          },
+          '8be4d07': {
+            service: 'misty-step/vanity',
+            status: 'live',
+            age: '1h',
+            by: 'phaedrus',
+            branch: 'master',
+            build: '31s',
+          },
+          f217aa9: {
+            service: 'misty-step/aesthetic',
+            status: 'rolled back',
+            age: '3h',
+            by: 'ci',
+            branch: 'master',
+            build: '22s',
+          },
+          c90e3b1: {
+            service: 'misty-step/api',
+            status: 'live',
+            age: '9h',
+            by: 'phaedrus',
+            branch: 'release',
+            build: '1m 04s',
+          },
+        };
+        let opener = null;
+
+        function openSheet(ref, armed, by) {
+          const m = meta[ref];
+          opener = by;
+          dlg.dataset.ref = ref;
+          dlg.querySelectorAll('.js-ref').forEach((s) => (s.textContent = ref));
+          dlg.querySelector('.js-m-service').textContent = m.service;
+          dlg.querySelector('.js-m-status').textContent = m.status;
+          dlg.querySelector('.js-m-age').textContent = m.age;
+          dlg.querySelector('.js-m-by').textContent = m.by;
+          dlg.querySelector('.js-m-branch').textContent = m.branch;
+          dlg.querySelector('.js-m-build').textContent = m.build;
+          acts.classList.toggle('is-confirming', armed);
+          dlg.showModal();
+          if (armed) dlg.querySelector('.js-cancel').focus();
+        }
+
+        sec
+          .querySelectorAll('.dep-row')
+          .forEach((row) =>
+            row.addEventListener('click', () =>
+              openSheet(row.dataset.ref, false, row),
+            ),
+          );
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSheet(b.dataset.ref, true, b);
+          }),
+        );
+
+        dlg.querySelector('.js-arm').addEventListener('click', () => {
+          acts.classList.add('is-confirming');
+          dlg.querySelector('.js-cancel').focus();
+        });
+        dlg.querySelector('.js-cancel').addEventListener('click', () => {
+          acts.classList.remove('is-confirming');
+          dlg.querySelector('.js-arm').focus();
+        });
+        dlg.querySelector('.js-confirm').addEventListener('click', () => {
+          const row = sec.querySelector(
+            '.dep-row[data-ref="' + dlg.dataset.ref + '"]',
+          );
+          if (row) row.remove();
+          dlg.close();
+        });
+        dlg
+          .querySelector('.js-close')
+          .addEventListener('click', () => dlg.close());
+        dlg.querySelector('.js-sheet-copy').addEventListener('click', () => {
+          clip(dlg.dataset.ref);
+          showStatus(dlg.dataset.ref);
+        });
+        dlg.addEventListener('close', () => {
+          acts.classList.remove('is-confirming');
+          if (opener && opener.isConnected) opener.focus();
+        });
+      })();
+
+      /* Escape for the class-based overlays: margin notes and row swaps */
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.js-closeable.is-open').forEach((el) => {
+          el.classList.remove('is-open');
+          if (el._opener && el._opener.isConnected) el._opener.focus();
+        });
+        document.querySelectorAll('.dep-row.is-confirming').forEach((row) => {
+          row.classList.remove('is-confirming');
+          if (row._opener && row._opener.isConnected) row._opener.focus();
+        });
+      });
+      /* light dismiss for the class-based overlays */
+      document.addEventListener('click', (e) => {
+        document.querySelectorAll('.js-closeable.is-open').forEach((el) => {
+          if (el.contains(e.target)) return;
+          if (
+            el._opener &&
+            (el._opener === e.target || el._opener.contains(e.target))
+          )
+            return;
+          el.classList.remove('is-open');
+        });
+      });
+    </script>
+  </body>
+</html>

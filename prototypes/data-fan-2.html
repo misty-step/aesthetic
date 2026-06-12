@@ -1,0 +1,1256 @@
+<!doctype html>
+<!--
+  LAB data & structure · round 2 — six tables refined after the round-1
+  review. Terminal led but loses the brackets and the caps; ledger keeps
+  its air but obeys the rule that a header always shares its column's
+  alignment; the ink header trades its button costume for a wash band.
+  Mono in moderation, captions in plain words, no arbitrary resting
+  accent on a row.
+  VERDICT: (pending operator review)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · data &amp; structure, round 2</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      .js-tabs {
+        margin-bottom: 1.8em;
+      }
+      .proto-cap {
+        margin-top: 2.4em;
+      }
+      .proto-load {
+        margin-top: 1.8em;
+      }
+
+      /* arrival: revealed content fades in exactly once, then persists.
+         Ghost rows get the same one-shot fade when they appear — they
+         never shimmer, never loop. */
+      .is-in {
+        animation: proto-in var(--ae-gentle) var(--ae-ease) both;
+      }
+      .js-pending:not([hidden]) {
+        animation: proto-in var(--ae-gentle) var(--ae-ease) both;
+      }
+      @keyframes proto-in {
+        from {
+          opacity: 0;
+        }
+      }
+
+      /* the alignment rule: a column header always shares its column's
+         alignment — .num applies to th and td alike */
+      .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* a hairline placeholder stroke for ghost rows */
+      .ph {
+        display: inline-block;
+        height: 1px;
+        background: var(--ae-line);
+        vertical-align: middle;
+      }
+
+      /* ── A · TERMINAL 2 ───────────────────────────────────────────── */
+      #va .a-tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      #va th {
+        text-align: left;
+        font-weight: var(--ae-w-regular);
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+        padding: 0 1.4em 0.35em 0;
+      }
+      #va td {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.32em 1.4em 0.32em 0;
+      }
+      #va th:last-child,
+      #va td:last-child {
+        padding-right: 0;
+      }
+      #va .a-nm {
+        font-weight: var(--ae-w-medium);
+      }
+      #va .a-dim {
+        color: var(--ae-ink-muted);
+      }
+      #va .a-faint {
+        color: var(--ae-ink-faint);
+      }
+      /* quiet status hues: plain lowercase words, no pills, no caps.
+         live is a desaturated green, the one build in motion takes the
+         ultramarine, paused recedes to faint. */
+      #va .s-live {
+        color: light-dark(#4a7a5a, #7da98a);
+      }
+      #va .s-building {
+        color: var(--ae-accent);
+      }
+      #va .s-paused {
+        color: var(--ae-ink-faint);
+      }
+      #va .ae-nav button {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+      #va .a-line {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.6em 0;
+      }
+
+      /* ── B · LEDGER 2 ─────────────────────────────────────────────── */
+      #vb table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #vb th {
+        text-align: left;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        padding: 0 1.5em 0.55em 0;
+        border-bottom: 3px double var(--ae-line);
+      }
+      #vb td {
+        padding: 0.85em 1.5em 0.85em 0;
+      }
+      #vb tbody tr + tr td {
+        border-top: 1px solid var(--ae-line);
+      }
+      #vb th:last-child,
+      #vb td:last-child {
+        padding-right: 0;
+      }
+      #vb .b-empty {
+        text-align: center;
+        padding: 3.2em 0;
+      }
+      #vb .b-empty p + p {
+        margin-top: 1.4em;
+      }
+
+      /* ── C · WASH HEAD ────────────────────────────────────────────── */
+      #vc table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #vc th {
+        background: var(--ae-wash);
+        text-align: left;
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-muted);
+        padding: 0.55em 1.3em 0.55em 0;
+      }
+      #vc td {
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.7em 1.3em 0.7em 0;
+      }
+      #vc th:first-child,
+      #vc td:first-child {
+        padding-left: 0.9em;
+      }
+      #vc th:last-child,
+      #vc td:last-child {
+        padding-right: 0.9em;
+      }
+      #vc .c-none {
+        text-align: center;
+        padding: 1.6em 0.9em;
+      }
+
+      /* ── D · FIGURE ───────────────────────────────────────────────── */
+      #vd .d-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-muted);
+        margin-bottom: 0.9em;
+      }
+      #vd .d-frame {
+        border: 1px solid var(--ae-line);
+        padding: 0.3em 1.4em;
+      }
+      #vd table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #vd th {
+        text-align: left;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.5em 0.55em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      #vd td {
+        padding: 0.8em 1.5em 0.8em 0;
+      }
+      #vd tbody tr + tr td {
+        border-top: 1px solid var(--ae-line);
+      }
+      #vd th:last-child,
+      #vd td:last-child {
+        padding-right: 0;
+      }
+      #vd .d-note {
+        font-size: 13px;
+        color: var(--ae-ink-faint);
+        margin-top: 0.8em;
+      }
+      #vd .d-none {
+        text-align: center;
+        padding: 2.4em 0;
+      }
+
+      /* ── E · TWO REGISTERS ────────────────────────────────────────── */
+      #ve table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #ve th,
+      #ve td {
+        vertical-align: baseline;
+      }
+      #ve th {
+        text-align: left;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        font-weight: var(--ae-w-regular);
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+        padding: 0 1.5em 0.6em 0;
+      }
+      #ve td {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.75em 1.5em 0.75em 0;
+      }
+      #ve th:last-child,
+      #ve td:last-child {
+        padding-right: 0;
+      }
+      #ve .e-nm {
+        font-weight: var(--ae-w-medium);
+      }
+      #ve .e-meta {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+      /* hierarchy by ink, not color: the one build in motion */
+      #ve .e-on {
+        color: var(--ae-ink);
+      }
+      #ve .e-empty {
+        text-align: center;
+        padding: 3.2em 0;
+      }
+      #ve .e-empty .e-meta {
+        display: block;
+        margin-top: 0.3em;
+      }
+
+      /* ── F · RAIL ─────────────────────────────────────────────────── */
+      #vf .f-list {
+        border-left: 1px solid var(--ae-line);
+        padding-left: 1.8em;
+      }
+      #vf .f-rec {
+        padding: 0.8em 0;
+      }
+      #vf .f-meta {
+        display: block;
+      }
+      #vf .f-dot {
+        display: inline-block;
+        width: 0.55em;
+        height: 0.55em;
+        margin-right: 0.45em;
+        background: var(--ae-ink);
+        vertical-align: 0.02em;
+      }
+      #vf .f-dot.is-building {
+        background: var(--ae-accent);
+      }
+      #vf .f-dot.is-paused {
+        box-sizing: border-box;
+        background: transparent;
+        border: 1px solid var(--ae-ink-faint);
+      }
+      #vf .f-ghost .ph {
+        display: block;
+        background: var(--ae-ink-faint);
+      }
+      #vf .f-ghost .ph + .ph {
+        margin-top: 1.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · TERMINAL 2 — the lead, de-teched ═══════════════════════ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">active</button>
+              <button data-tab="archived">archived</button>
+              <button data-tab="all">all</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table class="a-tbl">
+                <thead>
+                  <tr>
+                    <th>name</th>
+                    <th>status</th>
+                    <th>deployed</th>
+                    <th class="num">size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="a-nm">aesthetic</td>
+                    <td class="s-live">live</td>
+                    <td class="a-dim">2h ago</td>
+                    <td class="num a-faint">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="a-nm">misty-step.com</td>
+                    <td class="s-live">live</td>
+                    <td class="a-dim">yesterday</td>
+                    <td class="num a-faint">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="a-nm">scry</td>
+                    <td class="s-building">building</td>
+                    <td class="a-dim">4m ago</td>
+                    <td class="num a-faint">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="a-nm">vanity</td>
+                    <td class="s-live">live</td>
+                    <td class="a-dim">3d ago</td>
+                    <td class="num a-faint">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="a-nm">phrazzld.com</td>
+                    <td class="s-live">live</td>
+                    <td class="a-dim">5d ago</td>
+                    <td class="num a-faint">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="a-nm">brand</td>
+                    <td class="s-paused">paused</td>
+                    <td class="a-dim">May 28</td>
+                    <td class="num a-faint">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="a-nm">chrondle</td>
+                    <td class="s-live">live</td>
+                    <td class="a-dim">12d ago</td>
+                    <td class="num a-faint">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="a-nm">studymode</td>
+                    <td class="s-paused">paused</td>
+                    <td class="a-dim">Apr 30</td>
+                    <td class="num a-faint">188 kB</td>
+                  </tr>
+                </tbody>
+                <tbody class="js-pending" hidden>
+                  <tr>
+                    <td><i class="ph" style="width: 58%"></i></td>
+                    <td><i class="ph" style="width: 40%"></i></td>
+                    <td><i class="ph" style="width: 48%"></i></td>
+                    <td class="num"><i class="ph" style="width: 36%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 66%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 38%"></i></td>
+                    <td class="num"><i class="ph" style="width: 42%"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <p class="a-line">no archived projects</p>
+            </div>
+            <p class="ae-dim proto-cap">
+              A · TERMINAL 2 — the round-1 lead with the costume off: the same
+              13px mono density, but status is a plain lowercase word and every
+              header sits aligned over its column. Look at the quiet status hues
+              — green for live, ultramarine for the one build in motion — and
+              judge whether color this quiet earns its place.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · LEDGER 2 — the airy ledger, corrected ══════════════════ -->
+    <section class="proto-variant" id="vb">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last deploy</th>
+                    <th class="num">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">aesthetic</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">2h ago</td>
+                    <td class="num ae-dim">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">misty-step.com</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">yesterday</td>
+                    <td class="num ae-dim">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">scry</td>
+                    <td><span class="ae-item">building</span></td>
+                    <td class="ae-dim">4m ago</td>
+                    <td class="num ae-dim">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">vanity</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">3d ago</td>
+                    <td class="num ae-dim">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">phrazzld.com</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">5d ago</td>
+                    <td class="num ae-dim">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">brand</td>
+                    <td><span class="ae-item">paused</span></td>
+                    <td class="ae-dim">May 28</td>
+                    <td class="num ae-dim">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">chrondle</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">12d ago</td>
+                    <td class="num ae-dim">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">studymode</td>
+                    <td><span class="ae-item">paused</span></td>
+                    <td class="ae-dim">Apr 30</td>
+                    <td class="num ae-dim">188 kB</td>
+                  </tr>
+                </tbody>
+                <tbody class="js-pending" hidden>
+                  <tr>
+                    <td><i class="ph" style="width: 62%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 52%"></i></td>
+                    <td class="num"><i class="ph" style="width: 38%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 48%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 36%"></i></td>
+                    <td class="num"><i class="ph" style="width: 46%"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty b-empty" hidden>
+              <p class="ae-dim">
+                Nothing archived. Retired projects rest here.
+              </p>
+              <p>
+                <button class="ae-button ae-button-quiet js-back">
+                  View active
+                </button>
+              </p>
+            </div>
+            <p class="ae-dim proto-cap">
+              B · LEDGER 2 — the airy 16px ledger, corrected: every header now
+              shares its column's alignment and a double hairline closes the
+              header row, the classic ledger rule. Status is just a
+              medium-weight word; nothing on a resting row asks for attention.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · WASH HEAD — the header band, de-aggroed ════════════════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>NAME</th>
+                    <th>STATUS</th>
+                    <th>LAST DEPLOY</th>
+                    <th class="num">SIZE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">aesthetic</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">2h ago</td>
+                    <td class="num ae-dim">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">misty-step.com</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">yesterday</td>
+                    <td class="num ae-dim">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">scry</td>
+                    <td class="ae-dim">building</td>
+                    <td class="ae-dim">4m ago</td>
+                    <td class="num ae-dim">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">vanity</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">3d ago</td>
+                    <td class="num ae-dim">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">phrazzld.com</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">5d ago</td>
+                    <td class="num ae-dim">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">brand</td>
+                    <td class="ae-dim">paused</td>
+                    <td class="ae-dim">May 28</td>
+                    <td class="num ae-dim">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">chrondle</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">12d ago</td>
+                    <td class="num ae-dim">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">studymode</td>
+                    <td class="ae-dim">paused</td>
+                    <td class="ae-dim">Apr 30</td>
+                    <td class="num ae-dim">188 kB</td>
+                  </tr>
+                </tbody>
+                <tbody class="js-pending" hidden>
+                  <tr>
+                    <td><i class="ph" style="width: 58%"></i></td>
+                    <td><i class="ph" style="width: 42%"></i></td>
+                    <td><i class="ph" style="width: 50%"></i></td>
+                    <td class="num"><i class="ph" style="width: 36%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 66%"></i></td>
+                    <td><i class="ph" style="width: 42%"></i></td>
+                    <td><i class="ph" style="width: 40%"></i></td>
+                    <td class="num"><i class="ph" style="width: 44%"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <table>
+                <thead>
+                  <tr>
+                    <th>NAME</th>
+                    <th>STATUS</th>
+                    <th>LAST DEPLOY</th>
+                    <th class="num">SIZE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="4" class="ae-dim c-none">
+                      No archived projects.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ae-dim proto-cap">
+              C · WASH HEAD — the header is a wash band carrying 13px muted
+              caps: the structure of round 1's ink head without the button
+              costume. Look at whether the band reads as quiet furniture that
+              organizes the columns or as one more box.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · FIGURE — the table as a numbered plate ═════════════════ -->
+    <section class="proto-variant" id="vd">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <p class="d-cap">TABLE 1 · ACTIVE PROJECTS</p>
+              <div class="d-frame">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Status</th>
+                      <th>Last deploy</th>
+                      <th class="num">Size</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">aesthetic</td>
+                      <td class="ae-dim">live</td>
+                      <td class="ae-dim">2h ago</td>
+                      <td class="num ae-dim">24 kB</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">misty-step.com</td>
+                      <td class="ae-dim">live</td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="num ae-dim">318 kB</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">scry</td>
+                      <td class="ae-dim">building</td>
+                      <td class="ae-dim">4m ago</td>
+                      <td class="num ae-dim">1.2 MB</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">vanity</td>
+                      <td class="ae-dim">live</td>
+                      <td class="ae-dim">3d ago</td>
+                      <td class="num ae-dim">96 kB</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">phrazzld.com</td>
+                      <td class="ae-dim">live</td>
+                      <td class="ae-dim">5d ago</td>
+                      <td class="num ae-dim">412 kB</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">brand</td>
+                      <td class="ae-dim">paused</td>
+                      <td class="ae-dim">May 28</td>
+                      <td class="num ae-dim">2.1 MB</td>
+                    </tr>
+                    <tr class="js-more" hidden>
+                      <td class="ae-item">chrondle</td>
+                      <td class="ae-dim">live</td>
+                      <td class="ae-dim">12d ago</td>
+                      <td class="num ae-dim">640 kB</td>
+                    </tr>
+                    <tr class="js-more" hidden>
+                      <td class="ae-item">studymode</td>
+                      <td class="ae-dim">paused</td>
+                      <td class="ae-dim">Apr 30</td>
+                      <td class="num ae-dim">188 kB</td>
+                    </tr>
+                  </tbody>
+                  <tbody class="js-pending" hidden>
+                    <tr>
+                      <td><i class="ph" style="width: 60%"></i></td>
+                      <td><i class="ph" style="width: 42%"></i></td>
+                      <td><i class="ph" style="width: 50%"></i></td>
+                      <td class="num"><i class="ph" style="width: 38%"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph" style="width: 50%"></i></td>
+                      <td><i class="ph" style="width: 42%"></i></td>
+                      <td><i class="ph" style="width: 38%"></i></td>
+                      <td class="num"><i class="ph" style="width: 44%"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="d-note">
+                Sizes are compressed transfer weight at last deploy.
+              </p>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <p class="d-cap">TABLE 2 · ARCHIVED PROJECTS</p>
+              <div class="d-frame">
+                <p class="ae-dim d-none">No rows.</p>
+              </div>
+              <p class="d-note">Nothing has been archived.</p>
+            </div>
+            <p class="ae-dim proto-cap">
+              D · FIGURE — the table as a numbered plate: a mono caption above,
+              a hairline frame around, a footnote below, calm ledger rows
+              inside. Look at whether the frame lends the data the gravity of a
+              printed figure or merely draws a box around it.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · TWO REGISTERS — ledger air, terminal instruments ═══════ -->
+    <section class="proto-variant" id="ve">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>name</th>
+                    <th>status</th>
+                    <th>deployed</th>
+                    <th class="num">size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="e-nm">aesthetic</td>
+                    <td class="e-meta">live</td>
+                    <td class="e-meta">2h ago</td>
+                    <td class="num e-meta">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="e-nm">misty-step.com</td>
+                    <td class="e-meta">live</td>
+                    <td class="e-meta">yesterday</td>
+                    <td class="num e-meta">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="e-nm">scry</td>
+                    <td class="e-meta e-on">building</td>
+                    <td class="e-meta">4m ago</td>
+                    <td class="num e-meta">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="e-nm">vanity</td>
+                    <td class="e-meta">live</td>
+                    <td class="e-meta">3d ago</td>
+                    <td class="num e-meta">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="e-nm">phrazzld.com</td>
+                    <td class="e-meta">live</td>
+                    <td class="e-meta">5d ago</td>
+                    <td class="num e-meta">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="e-nm">brand</td>
+                    <td class="e-meta">paused</td>
+                    <td class="e-meta">May 28</td>
+                    <td class="num e-meta">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="e-nm">chrondle</td>
+                    <td class="e-meta">live</td>
+                    <td class="e-meta">12d ago</td>
+                    <td class="num e-meta">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="e-nm">studymode</td>
+                    <td class="e-meta">paused</td>
+                    <td class="e-meta">Apr 30</td>
+                    <td class="num e-meta">188 kB</td>
+                  </tr>
+                </tbody>
+                <tbody class="js-pending" hidden>
+                  <tr>
+                    <td><i class="ph" style="width: 64%"></i></td>
+                    <td><i class="ph" style="width: 40%"></i></td>
+                    <td><i class="ph" style="width: 48%"></i></td>
+                    <td class="num"><i class="ph" style="width: 34%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 52%"></i></td>
+                    <td><i class="ph" style="width: 40%"></i></td>
+                    <td><i class="ph" style="width: 36%"></i></td>
+                    <td class="num"><i class="ph" style="width: 42%"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty e-empty" hidden>
+              <p>
+                No archived projects.
+                <span class="e-meta">0 records</span>
+              </p>
+            </div>
+            <p class="ae-dim proto-cap">
+              E · TWO REGISTERS — each row sets the name in 16px ink and its
+              facts in 13px mono muted on the same baseline: ledger air carrying
+              terminal instruments, the one build in motion lifted by ink alone.
+              Look at the seam between the two registers — if the row reads as
+              one voice, this is the keeper.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · RAIL — the anti-table ══════════════════════════════════ -->
+    <section class="proto-variant" id="vf">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure · round 2</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <div class="f-list">
+                <div class="f-rec">
+                  <p class="ae-item">aesthetic</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot" aria-hidden="true"></i>live · 2h ago · 24
+                    kB
+                  </p>
+                </div>
+                <div class="f-rec">
+                  <p class="ae-item">misty-step.com</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot" aria-hidden="true"></i>live · yesterday ·
+                    318 kB
+                  </p>
+                </div>
+                <div class="f-rec">
+                  <p class="ae-item">scry</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot is-building" aria-hidden="true"></i>building
+                    · 4m ago · 1.2 MB
+                  </p>
+                </div>
+                <div class="f-rec">
+                  <p class="ae-item">vanity</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot" aria-hidden="true"></i>live · 3d ago · 96
+                    kB
+                  </p>
+                </div>
+                <div class="f-rec">
+                  <p class="ae-item">phrazzld.com</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot" aria-hidden="true"></i>live · 5d ago · 412
+                    kB
+                  </p>
+                </div>
+                <div class="f-rec">
+                  <p class="ae-item">brand</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot is-paused" aria-hidden="true"></i>paused ·
+                    May 28 · 2.1 MB
+                  </p>
+                </div>
+                <div class="f-rec js-more" hidden>
+                  <p class="ae-item">chrondle</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot" aria-hidden="true"></i>live · 12d ago · 640
+                    kB
+                  </p>
+                </div>
+                <div class="f-rec js-more" hidden>
+                  <p class="ae-item">studymode</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot is-paused" aria-hidden="true"></i>paused ·
+                    Apr 30 · 188 kB
+                  </p>
+                </div>
+                <div class="js-pending" hidden>
+                  <div class="f-rec f-ghost">
+                    <i class="ph" style="width: 34%"></i>
+                    <i class="ph" style="width: 52%"></i>
+                  </div>
+                  <div class="f-rec f-ghost">
+                    <i class="ph" style="width: 42%"></i>
+                    <i class="ph" style="width: 46%"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <div class="f-list">
+                <div class="f-rec">
+                  <p class="ae-dim">Nothing archived yet.</p>
+                  <p class="ae-chrome f-meta">
+                    <i class="f-dot is-paused" aria-hidden="true"></i>0 projects
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              F · RAIL — the anti-table: no horizontal rules at all, records
+              hang off one left hairline with generous air, and status is a
+              small square dot beside a plain word. Look at whether the
+              whitespace rhythm alone holds the rows in order — and whether the
+              ultramarine square on the one build in motion is earned.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A terminal 2</button>
+      <button data-v="vb">B ledger 2</button>
+      <button data-v="vc">C wash head</button>
+      <button data-v="vd">D figure</button>
+      <button data-v="ve">E two registers</button>
+      <button data-v="vf">F rail</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+
+      /* tabs: Active and All show the data (zero projects are archived);
+         Archived shows the variant's empty state */
+      function applyTab(v) {
+        const empty = (v.dataset.tab || 'active') === 'archived';
+        v.querySelectorAll('.js-data').forEach((el) => (el.hidden = empty));
+        const lw = v.querySelector('.js-loadwrap');
+        if (lw) lw.hidden = empty || v.classList.contains('is-loaded');
+        const em = v.querySelector('.js-empty');
+        if (em) em.hidden = !empty;
+      }
+
+      document.querySelectorAll('.js-nav').forEach((nav) => {
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            placeInd(nav);
+            if (btn.dataset.tab) {
+              const v = nav.closest('.proto-variant');
+              v.dataset.tab = btn.dataset.tab;
+              applyTab(v);
+            }
+          });
+        });
+      });
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      /* load more: ghost rows appear (one fade, no shimmer) for ~1.2s,
+         then resolve once — the two new rows fade in and persist, the
+         button retires. No loop anywhere. */
+      document.querySelectorAll('.js-loadmore').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const v = btn.closest('.proto-variant');
+          btn.disabled = true;
+          const pending = v.querySelector('.js-pending');
+          if (pending) pending.hidden = false;
+          setTimeout(() => {
+            if (pending) pending.hidden = true;
+            v.querySelectorAll('.js-more').forEach((r) => {
+              r.hidden = false;
+              r.classList.add('is-in');
+            });
+            v.classList.add('is-loaded');
+            const lw = v.querySelector('.js-loadwrap');
+            if (lw) lw.hidden = true;
+          }, 1200);
+        });
+      });
+
+      /* the empty state's quiet button acts: back to the active tab */
+      document.querySelectorAll('.js-back').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const v = btn.closest('.proto-variant');
+          const target = v.querySelector('.js-nav [data-tab="active"]');
+          if (target) target.click();
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>
