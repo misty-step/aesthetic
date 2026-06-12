@@ -234,14 +234,6 @@ footer.ae-bar a:hover {
   color: var(--ae-ink);
 }
 
-/* hash-routed views: one visible at a time, entrance replays on swap */
-[data-route] {
-  display: none;
-}
-[data-route].is-on {
-  display: block;
-}
-
 .back-link {
   margin-bottom: 1.6em;
 }

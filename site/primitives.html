@@ -74,11 +74,18 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Twenty-one primitives.</span>
+              <span class="ae-item">Thirty-eight primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
               >
+            </p>
+            <p class="ae-chrome">
+              archetypes in the wild:
+              <a href="gauntlet/dashboard.html">dashboard</a> ·
+              <a href="gauntlet/docs.html">docs</a> ·
+              <a href="gauntlet/settings.html">settings</a> · steering:
+              <a href="steering.html">the volume knob</a>
             </p>
           </div>
           <table class="idx ae-chrome">
@@ -212,6 +219,113 @@
                 </td>
                 <td class="role">quiet rows that fold open into choosers</td>
                 <td class="since">2.4</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#choice">.ae-choice / .ae-check / .ae-radio</a>
+                </td>
+                <td class="role">choice marks: squares, since radius is 0</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#choice">.ae-switch</a></td>
+                <td class="role">a hairline channel and an ink slide</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#validation">.ae-field-note + [aria-invalid]</a>
+                </td>
+                <td class="role">
+                  validation: the line confesses, glyph speaks
+                </td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#buttons">.ae-button-compact</a></td>
+                <td class="role">the chrome-register button scale</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#tabs">.ae-tabs</a></td>
+                <td class="role">the nav instrument pointed at panels</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#tag">.ae-tag</a></td>
+                <td class="role">the badge, refused: a mono word, no pill</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#tip">[data-ae-tip]</a></td>
+                <td class="role">the tip: a whisper that answers hover</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#pop">.ae-pop</a></td>
+                <td class="role">the popover slip, placed by its invoker</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#toast">.ae-toasts / .ae-toast</a></td>
+                <td class="role">news arrives at the edge and waits</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#fold">.ae-fold</a></td>
+                <td class="role">
+                  disclosure as a hairline row, native details
+                </td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#crumbs">.ae-crumbs</a></td>
+                <td class="role">the path: here is ink, the way back muted</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#waiting">.ae-skeleton / .ae-empty</a>
+                </td>
+                <td class="role">waiting without a shimmer; honest absence</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#meter">.ae-meter / .ae-meter-mark</a>
+                </td>
+                <td class="role">the gauge as a ruled line, never a pill</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#figures"
+                    >.ae-num / .ae-strong / .ae-delta / .ae-spark</a
+                  >
+                </td>
+                <td class="role">figures, deltas, and pen-stroke trends</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#shellapp">.ae-shell / .ae-rail / .ae-desk</a>
+                </td>
+                <td class="role">
+                  the app shell: a chrome rail beside the desk
+                </td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#doc">.ae-doc</a></td>
+                <td class="role">the document: markdown drops in unclassed</td>
+                <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#sr">.ae-sr</a></td>
+                <td class="role">
+                  present to assistive tech, invisible on paper
+                </td>
+                <td class="since">2.5</td>
               </tr>
             </tbody>
           </table>
@@ -504,6 +618,9 @@
                 <button class="ae-button ae-button-quiet" type="button">
                   Quiet
                 </button>
+                <button class="ae-button ae-button-compact" type="button">
+                  Compact
+                </button>
               </p>
               <button class="ae-button ae-send" type="submit">
                 <span class="ae-send-label">Send message</span>
@@ -729,6 +846,582 @@
 <span class="t">// and the written value</span></code></pre>
           </div>
         </div>
+
+        <div class="ae-view" data-route="choice">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">
+              .AE-CHOICE / .AE-CHECK / .AE-RADIO / .AE-SWITCH
+            </h2>
+            <p class="ae-dim">
+              Choice marks are squares — a circle would be the only curve in the
+              system, so there isn't one. The checkbox fills with ink and draws
+              its check in surface; the radio holds an ink core; the switch
+              slides an ink thumb along a hairline channel. State reads from
+              position and fill, never from a green pill.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <label class="ae-choice"
+                ><input class="ae-check" type="checkbox" checked /> Email me on
+                deploy</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-check" type="checkbox" /> Email me on failure
+                only</label
+              >
+              <p style="margin-top: 1.4em"></p>
+              <label class="ae-choice"
+                ><input class="ae-radio" type="radio" name="vis" checked />
+                Public</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-radio" type="radio" name="vis" />
+                Internal</label
+              >
+              <p style="margin-top: 1.4em"></p>
+              <label class="ae-choice"
+                ><input class="ae-switch" type="checkbox" checked />
+                Auto-deploy</label
+              >
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">label</span> class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-check</span>" type="checkbox" /&gt;
+  Email me on deploy
+&lt;/label&gt;
+
+&lt;label class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-radio</span>" type="radio" name="vis" /&gt;
+  Public
+&lt;/label&gt;
+
+&lt;label class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-switch</span>" type="checkbox" /&gt;
+  Auto-deploy
+&lt;/label&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="validation">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-FIELD-NOTE + [ARIA-INVALID]</h2>
+            <p class="ae-dim">
+              Validation keeps the status law: the field's own line confesses in
+              the status hue, the glyph carries it in the note, and the sentence
+              stays ink.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <label class="ae-label" for="v-email">Email</label>
+              <input
+                class="ae-input"
+                id="v-email"
+                type="email"
+                value="phaedrus@"
+                aria-invalid="true"
+                aria-describedby="v-email-note"
+              />
+              <p class="ae-field-note" id="v-email-note">
+                <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                Not a valid address.
+              </p>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">label</span> class="<span class="t">ae-label</span>" for="email"&gt;Email&lt;/label&gt;
+&lt;<span class="t">input</span> class="<span class="t">ae-input</span>" id="email" type="email"
+       <span class="t">aria-invalid</span>="true"
+       aria-describedby="email-note" /&gt;
+&lt;p class="<span class="t">ae-field-note</span>" id="email-note"&gt;
+  &lt;svg class="<span class="t">ae-icon ae-err</span>"&gt;…x…&lt;/svg&gt; Not a valid address.
+&lt;/p&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="tabs">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-TABS</h2>
+            <p class="ae-dim">
+              The nav instrument pointed at panels instead of views: the same
+              quiet words, the same sliding ink underline, aria-selected marking
+              the open one. Panels are views — remount to replay the entrance.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <div class="ae-tabs" role="tablist">
+                <button role="tab" aria-selected="true">readme</button>
+                <button role="tab" aria-selected="false">tokens</button>
+                <button role="tab" aria-selected="false">releases</button>
+                <span class="ae-nav-ind"></span>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-tabs</span>" role="tablist"&gt;
+  &lt;button role="tab" <span class="t">aria-selected</span>="true"&gt;readme&lt;/button&gt;
+  &lt;button role="tab" aria-selected="false"&gt;tokens&lt;/button&gt;
+  &lt;button role="tab" aria-selected="false"&gt;releases&lt;/button&gt;
+  &lt;span class="<span class="t">ae-nav-ind</span>"&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="<span class="t">ae-view</span>" role="tabpanel"&gt;…&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="tag">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-TAG</h2>
+            <p class="ae-dim">
+              The badge, refused. A tag is a word in the plate-caption voice —
+              mono, spaced, hairline at most, never a filled pill. If a tag
+              needs status, the glyph rides beside the word.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p>
+                <span class="ae-item">canary</span>
+                <span class="ae-tag">rust</span>
+                <span class="ae-tag">fly.io</span>
+                <span class="ae-tag-bare ae-tag">v1.18</span>
+              </p>
+              <p style="margin-top: 0.8em">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                <span class="ae-tag">deployed</span>
+              </p>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;span class="<span class="t">ae-tag</span>"&gt;rust&lt;/span&gt;
+&lt;span class="<span class="t">ae-tag ae-tag-bare</span>"&gt;v1.18&lt;/span&gt;
+
+<span class="t">// status joins as a glyph, never a fill:</span>
+&lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…check…&lt;/svg&gt;
+&lt;span class="<span class="t">ae-tag</span>"&gt;deployed&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="tip">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">[DATA-AE-TIP]</h2>
+            <p class="ae-dim">
+              A whisper that answers hover: chrome-register words in a hairline
+              slip, pure CSS. Patience built in — it waits a beat on hover and
+              answers focus at once. Keep the words short; anything longer
+              belongs in the prose.
+            </p>
+          </div>
+          <div class="src-split">
+            <p>
+              The
+              <a href="#tip" data-ae-tip="the one sanctioned 13px register"
+                >chrome register</a
+              >
+              explains itself on hover.
+            </p>
+            <pre
+              class="src-code"
+            ><code>&lt;a href="…" <span class="t">data-ae-tip</span>="the one sanctioned 13px register"&gt;
+  chrome register
+&lt;/a&gt;
+<span class="t">// pure CSS — no recipe required</span></code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="pop">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-POP</h2>
+            <p class="ae-dim">
+              The popover: a slip of surface anchored to its invoker, hairline
+              frame, soft depth, no dim. The native popover attribute owns the
+              top layer, light dismiss, and Escape; the recipe only does the
+              geometry.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <button
+                class="ae-button ae-button-quiet"
+                popovertarget="pop-demo"
+              >
+                Options
+              </button>
+              <div id="pop-demo" popover class="ae-pop">
+                <div class="ae-menu">
+                  <button type="button">rename</button>
+                  <button type="button">duplicate</button>
+                  <button type="button">archive</button>
+                </div>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">button</span> popovertarget="menu"&gt;Options&lt;/button&gt;
+&lt;<span class="t">div</span> id="menu" <span class="t">popover</span> class="<span class="t">ae-pop</span>"&gt;
+  &lt;div class="<span class="t">ae-menu</span>"&gt;
+    &lt;button&gt;rename&lt;/button&gt;
+    &lt;button&gt;duplicate&lt;/button&gt;
+    &lt;button&gt;archive&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+<span class="t">// recipes/pop.js places the open slip</span></code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="toast">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-TOASTS / .AE-TOAST</h2>
+            <p class="ae-dim">
+              News arrives at the edge and waits to be read: a slip with the
+              status on its glyph, stacked bottom-right. It persists until
+              dismissed or pushed out — never an anxious timer by default.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p style="display: flex; gap: 1em; flex-wrap: wrap">
+                <button
+                  class="ae-button ae-button-quiet"
+                  type="button"
+                  id="toast-ok"
+                >
+                  Toast success
+                </button>
+                <button
+                  class="ae-button ae-button-quiet"
+                  type="button"
+                  id="toast-err"
+                >
+                  Toast failure
+                </button>
+              </p>
+            </div>
+            <pre
+              class="src-code"
+            ><code><span class="t">// recipes/toast.js:</span>
+aeToast('Deploy 4121 resolved.', { status: '<span class="t">ok</span>' });
+aeToast('Build failed on preview.', { status: '<span class="t">err</span>' });
+<span class="t">// opt-in self-dismissal, never the default:</span>
+aeToast('Copied.', { timeout: 4000 });</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="fold">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-FOLD</h2>
+            <p class="ae-dim">
+              Disclosure as a hairline row — native details in the settings
+              costume. The mono plus quarter-turns into a close; that turn is
+              the feedback, once per action.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <details class="ae-fold">
+                <summary>What does the import cost?</summary>
+                <p class="ae-dim">
+                  One request, one file, no JavaScript required. The recipes are
+                  optional and dependency-free.
+                </p>
+              </details>
+              <details class="ae-fold">
+                <summary>Can I change the accent?</summary>
+                <p class="ae-dim">
+                  The accent is yours — define your scheme and use it with
+                  judgment.
+                </p>
+              </details>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">details</span> class="<span class="t">ae-fold</span>"&gt;
+  &lt;summary&gt;What does the import cost?&lt;/summary&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;One request, one file…&lt;/p&gt;
+&lt;/details&gt;
+&lt;details class="<span class="t">ae-fold</span>"&gt;…&lt;/details&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="crumbs">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-CRUMBS</h2>
+            <p class="ae-dim">
+              The path, in the chrome register: here is ink, the way back is
+              muted, the separators are faint.
+            </p>
+          </div>
+          <div class="src-split">
+            <nav class="ae-crumbs" aria-label="breadcrumb">
+              <ol>
+                <li><a href="#crumbs">projects</a></li>
+                <li><a href="#crumbs">canary</a></li>
+                <li><span aria-current="page">deploys</span></li>
+              </ol>
+            </nav>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">nav</span> class="<span class="t">ae-crumbs</span>" aria-label="breadcrumb"&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;a href="…"&gt;projects&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="…"&gt;canary&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span <span class="t">aria-current</span>="page"&gt;deploys&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="waiting">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-SKELETON / .AE-EMPTY</h2>
+            <p class="ae-dim">
+              Waiting is still wash, never a shimmer — motion is feedback and
+              waiting is not an action; the view's entrance acknowledges
+              arrival. Absence is an honest sentence with one quiet action, not
+              an illustration party.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-skeleton" style="max-width: 24em">loading title</p>
+              <p class="ae-skeleton" style="max-width: 18em">loading meta</p>
+              <p class="ae-chrome" role="status">loading projects…</p>
+              <div class="ae-empty" style="margin-top: 1.6em">
+                <p class="ae-item">No projects yet.</p>
+                <p class="ae-dim">The first one you archive lands here.</p>
+                <p>
+                  <button class="ae-button ae-button-quiet" type="button">
+                    New project
+                  </button>
+                </p>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code><span class="t">// waiting: blocks hold the layout, words go to a status line</span>
+&lt;p class="<span class="t">ae-skeleton</span>" style="max-width: 24em"&gt;loading title&lt;/p&gt;
+&lt;p class="<span class="t">ae-chrome</span>" role="status"&gt;loading projects…&lt;/p&gt;
+
+<span class="t">// absence: an honest sentence, one quiet action</span>
+&lt;div class="<span class="t">ae-empty</span>"&gt;
+  &lt;p class="<span class="t">ae-item</span>"&gt;No projects yet.&lt;/p&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;The first one you archive lands here.&lt;/p&gt;
+  &lt;p&gt;&lt;button class="<span class="t">ae-button ae-button-quiet</span>"&gt;New project&lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="meter">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-METER / .AE-METER-MARK</h2>
+            <p class="ae-dim">
+              The gauge is a ruled line, never a glowing pill: a wash channel,
+              an ink fill, hairline threshold ticks. The fill takes a status ink
+              only when the level is the signal. Width changes are state
+              resolutions — gentle, once.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.4em">
+                turn spend · <span class="ae-num">62%</span>
+              </p>
+              <div
+                class="ae-meter"
+                role="meter"
+                aria-valuenow="62"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="turn spend"
+              >
+                <span class="ae-meter-fill" style="width: 62%"></span>
+                <span class="ae-meter-mark" style="left: 80%"></span>
+              </div>
+              <p class="ae-chrome" style="margin: 1.6em 0 0.4em">
+                past the warn threshold
+              </p>
+              <div
+                class="ae-meter"
+                role="meter"
+                aria-valuenow="91"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="budget"
+              >
+                <span class="ae-meter-fill ae-warn" style="width: 91%"></span>
+                <span class="ae-meter-mark" style="left: 80%"></span>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-meter</span>" role="meter"
+     aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"&gt;
+  &lt;span class="<span class="t">ae-meter-fill</span>" style="width: 62%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-meter-mark</span>" style="left: 80%"&gt;&lt;/span&gt;
+&lt;/div&gt;
+<span class="t">// the fill takes a status ink only when</span>
+<span class="t">// the level IS the signal:</span>
+&lt;span class="<span class="t">ae-meter-fill ae-warn</span>" style="width: 91%"&gt;&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="figures">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-NUM / .AE-STRONG / .AE-DELTA / .AE-SPARK</h2>
+            <p class="ae-dim">
+              Figures are tabular numerals that tick without jitter. The hero
+              figure is 800 and isolated — never larger: the instrument reads
+              loud through weight, not scale. Deltas put the hue on the arrow;
+              trends are pen strokes, no axes, no area fill.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-chrome">requests · trailing hour</p>
+              <p>
+                <span class="ae-num ae-strong">48,211</span>
+                <span class="ae-delta ae-num ae-dim"
+                  ><svg
+                    class="ae-icon ae-ok"
+                    viewBox="0 0 24 24"
+                    style="width: 0.9em; height: 0.9em"
+                  >
+                    <path d="M12 19V5" />
+                    <path d="m5 12 7-7 7 7" /></svg
+                  >4.2%</span
+                >
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                  />
+                </svg>
+              </p>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;span class="<span class="t">ae-num ae-strong</span>"&gt;48,211&lt;/span&gt;
+&lt;span class="<span class="t">ae-delta ae-num ae-dim</span>"&gt;
+  &lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…arrow-up…&lt;/svg&gt;4.2%
+&lt;/span&gt;
+&lt;svg class="<span class="t">ae-spark</span>" viewBox="0 0 100 24"
+     preserveAspectRatio="none" aria-hidden="true"&gt;
+  &lt;polyline points="0,18 14,15 … 100,4" /&gt;
+&lt;/svg&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="shellapp">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-SHELL / .AE-RAIL / .AE-DESK</h2>
+            <p class="ae-dim">
+              The app shell: one viewport, hairline-divided — a 13px rail for
+              places, a desk for work. The desk scrolls inside itself; the page
+              never moves. See it composed:
+              <a href="gauntlet/dashboard.html">the dashboard gauntlet</a>.
+            </p>
+          </div>
+          <div class="src-split">
+            <div class="mini-shell">
+              <div style="display: grid; grid-template-columns: 7em 1fr">
+                <div
+                  style="
+                    border-right: 1px solid var(--ae-line);
+                    padding: 0.8em 1em;
+                  "
+                >
+                  rail<br />· places<br />· mode
+                </div>
+                <div style="padding: 0.8em 1em">
+                  the desk — meters, plates, work
+                </div>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-shell</span>"&gt;
+  &lt;<span class="t">aside</span> class="<span class="t">ae-rail</span>"&gt;
+    &lt;p class="<span class="t">ae-h</span>"&gt;PLACES&lt;/p&gt;
+    &lt;a aria-current="page" href="…"&gt;agents&lt;/a&gt;
+    &lt;a href="…"&gt;history&lt;/a&gt;
+    &lt;div class="<span class="t">ae-rail-foot</span>"&gt;…mode toggle…&lt;/div&gt;
+  &lt;/aside&gt;
+  &lt;<span class="t">main</span> class="<span class="t">ae-desk</span>"&gt;…the work…&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="doc">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-DOC</h2>
+            <p class="ae-dim">
+              The document archetype: rendered markdown drops in unclassed.
+              Headings are weight, never size; rules are hairlines; quotes are
+              inset. See it composed:
+              <a href="gauntlet/docs.html">the docs gauntlet</a>.
+            </p>
+          </div>
+          <div class="src-split">
+            <div class="ae-doc">
+              <h2>Install</h2>
+              <p>Pin the tag; upgrades are deliberate.</p>
+              <blockquote>One request, one file, no build step.</blockquote>
+              <pre><code>pnpm add github:misty-step/aesthetic</code></pre>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">article</span> class="<span class="t">ae-doc</span>"&gt;
+  &lt;h2&gt;Install&lt;/h2&gt;
+  &lt;p&gt;Pin the tag; upgrades are deliberate.&lt;/p&gt;
+  &lt;blockquote&gt;One request, one file…&lt;/blockquote&gt;
+  &lt;pre&gt;&lt;code&gt;pnpm add …&lt;/code&gt;&lt;/pre&gt;
+&lt;/article&gt;
+<span class="t">// markdown output needs no classes inside</span></code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="sr">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-SR</h2>
+            <p class="ae-dim">
+              Present to assistive tech, invisible on paper: live regions and
+              labels the layout has no room to speak. The send recipe uses one
+              to announce the resolved state.
+            </p>
+          </div>
+          <div class="src-split">
+            <p class="ae-dim">
+              There is an .ae-sr live region on this very page — you cannot see
+              it, and that is the point.
+            </p>
+            <pre
+              class="src-code"
+            ><code>&lt;span class="<span class="t">ae-sr</span>" role="status"&gt;&lt;/span&gt;
+<span class="t">// recipes/send.js writes "Sent" into it</span>
+<span class="t">// when the send moment resolves</span></code></pre>
+          </div>
+        </div>
       </main>
       <footer class="ae-bar">
         <p class="ae-chrome">
@@ -743,28 +1436,6 @@
 
     <script src="recipes.js"></script>
     <script>
-      /* hash routing: the catalog dogfoods the view swap — display toggle
-   remounts the view and replays its entrance */
-      (() => {
-        const views = document.querySelectorAll('[data-route]');
-        const show = () => {
-          const route = location.hash.slice(1) || 'index';
-          let hit = false;
-          views.forEach((v) => {
-            const on = v.dataset.route === route;
-            v.classList.toggle('is-on', on);
-            hit = hit || on;
-          });
-          if (!hit)
-            views.forEach((v) =>
-              v.classList.toggle('is-on', v.dataset.route === 'index'),
-            );
-          if (window.aePlaceInds) requestAnimationFrame(window.aePlaceInds);
-        };
-        addEventListener('hashchange', show);
-        show();
-      })();
-
       /* the dialog specimen: the quiet button asks, both actions close */
       (() => {
         const dlg = document.getElementById('dlg-demo');
@@ -778,6 +1449,19 @@
         document
           .getElementById('dlg-confirm')
           .addEventListener('click', () => dlg.close());
+      })();
+
+      /* the toast specimen: two buttons, two slips */
+      (() => {
+        const ok = document.getElementById('toast-ok');
+        const err = document.getElementById('toast-err');
+        if (!ok || !window.aeToast) return;
+        ok.addEventListener('click', () =>
+          aeToast('Deploy 4121 resolved.', { status: 'ok' }),
+        );
+        err.addEventListener('click', () =>
+          aeToast('Build failed on preview.', { status: 'err' }),
+        );
       })();
     </script>
   </body>

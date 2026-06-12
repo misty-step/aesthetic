@@ -6,7 +6,7 @@
     <title>aesthetic — the misty step design system, set as a manual</title>
     <meta
       name="description"
-      content="One stylesheet, read as its own manual: ten chapters — the law, nine registers, the accent, status on the glyph, controls, data plates, the dialog, motion as feedback — every demonstration rendered live by the file it documents."
+      content="One stylesheet, read as its own manual: eleven chapters — the law, nine registers, the accent, status on the glyph, controls, data instruments, the dialog, motion as feedback, steering — every demonstration rendered live by the file it documents."
     />
     <script>
       try {
@@ -84,7 +84,8 @@
               <a href="#data"><span class="no">06</span>data</a>
               <a href="#dialog"><span class="no">07</span>dialog</a>
               <a href="#motion"><span class="no">08</span>motion</a>
-              <a href="#colophon"><span class="no">09</span>colophon</a>
+              <a href="#steering"><span class="no">09</span>steering</a>
+              <a href="#colophon"><span class="no">10</span>colophon</a>
             </nav>
             <div class="man-body">
               <section class="ae-group man-ch" id="aesthetic">
@@ -94,9 +95,9 @@
                 <p class="ae-lede">
                   One stylesheet is the whole system: ink on paper, hairline
                   rules, hard corners, one font size on every surface. This page
-                  is its manual — ten chapters scrolling inside the stage, every
-                  demonstration rendered by the file it documents. View source;
-                  the markup is the documentation.
+                  is its manual — eleven chapters scrolling inside the stage,
+                  every demonstration rendered by the file it documents. View
+                  source; the markup is the documentation.
                 </p>
                 <p class="man-demo">
                   <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
@@ -275,6 +276,35 @@
                   </div>
                 </div>
                 <p class="man-gap">
+                  Choice marks are squares — a circle would be the only curve in
+                  the system, so there isn't one. The switch slides an ink thumb
+                  along a hairline channel; state reads from position and fill,
+                  never from a green pill.
+                </p>
+                <div class="man-demo">
+                  <label class="ae-choice"
+                    ><input class="ae-check" type="checkbox" checked /> Email me
+                    on deploy</label
+                  >
+                  <label class="ae-choice"
+                    ><input
+                      class="ae-radio"
+                      type="radio"
+                      name="man-vis"
+                      checked
+                    />
+                    Public</label
+                  >
+                  <label class="ae-choice"
+                    ><input class="ae-radio" type="radio" name="man-vis" />
+                    Internal</label
+                  >
+                  <label class="ae-choice"
+                    ><input class="ae-switch" type="checkbox" checked />
+                    Auto-deploy</label
+                  >
+                </div>
+                <p class="man-gap">
                   Forms are lines, not boxes. The nearest field warms as the
                   pointer approaches; sending resolves once and persists — it is
                   never rewound.
@@ -365,6 +395,49 @@
                     </p>
                   </div>
                 </div>
+                <p class="man-gap">
+                  Gauges are ruled lines, never glowing pills; figures are
+                  tabular numerals, loud by weight; trends are pen strokes.
+                </p>
+                <div class="man-demo">
+                  <p class="ae-chrome" style="margin-bottom: 0.4em">
+                    turn spend · <span class="ae-num">62%</span> · warn at 80
+                  </p>
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="62"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label="turn spend"
+                  >
+                    <span class="ae-meter-fill" style="width: 62%"></span>
+                    <span class="ae-meter-mark" style="left: 80%"></span>
+                  </div>
+                  <p style="margin-top: 1em">
+                    <span class="ae-num ae-strong">48,211</span>
+                    <span class="ae-delta ae-num ae-dim"
+                      ><svg
+                        class="ae-icon ae-ok"
+                        viewBox="0 0 24 24"
+                        style="width: 0.9em; height: 0.9em"
+                      >
+                        <path d="M12 19V5" />
+                        <path d="m5 12 7-7 7 7" /></svg
+                      >4.2%</span
+                    >
+                    <svg
+                      class="ae-spark"
+                      viewBox="0 0 100 24"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <polyline
+                        points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                      />
+                    </svg>
+                  </p>
+                </div>
               </section>
 
               <section class="ae-group man-ch" id="dialog">
@@ -408,8 +481,34 @@
                 </p>
               </section>
 
+              <section class="ae-group man-ch" id="steering">
+                <h2 class="ae-h"><span class="x-faint">09 · </span>STEERING</h2>
+                <p>
+                  Two strata. <span class="ae-item">Invariants</span> are never
+                  steered: one size, nine registers, hairlines, radius 0, motion
+                  as feedback, status on the glyph, buttons are not links.
+                  <span class="ae-item">Dials</span> are yours: the accent — one
+                  hue or several, named as project tokens — the status triplet,
+                  density, the mono ratio. A calm tool turns every dial down; a
+                  loud one turns up hue count and accent frequency — never
+                  radius, size scale, or ambient motion.
+                </p>
+                <p class="man-demo">
+                  <a href="steering.html"
+                    >Six consumers, one system — rendered side by side</a
+                  >
+                </p>
+                <p class="ae-dim man-cap">
+                  The worked steering blocks live in
+                  <a
+                    href="https://github.com/misty-step/aesthetic/blob/master/docs/ADOPTING.md"
+                    >docs/ADOPTING.md</a
+                  >.
+                </p>
+              </section>
+
               <section class="ae-group man-ch" id="colophon">
-                <h2 class="ae-h"><span class="x-faint">09 · </span>COLOPHON</h2>
+                <h2 class="ae-h"><span class="x-faint">10 · </span>COLOPHON</h2>
                 <div class="ae-foot">
                   <span>v2.4.0 · MIT</span>
                   <span class="ae-foot-links"
