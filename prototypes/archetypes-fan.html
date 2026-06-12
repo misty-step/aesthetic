@@ -1,0 +1,1369 @@
+<!doctype html>
+<!-- LAB archetypes — what does this system look like beyond the portfolio
+     screen: as an app shell, a document, a form flow, a dashboard? Today
+     only the 'screen' archetype exists (38rem centered stage, or 68rem
+     wide); six proposals for the others.
+     VERDICT: (pending operator review) -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — archetypes beyond the portfolio screen</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+      .bar-links {
+        display: inline-flex;
+        gap: 1.5em;
+      }
+
+      /* shared instrumentation: numbers and tables */
+      .big {
+        font-weight: var(--ae-w-black);
+        font-variant-numeric: tabular-nums;
+      }
+      .t {
+        width: 100%;
+        border-collapse: collapse;
+        font-variant-numeric: tabular-nums;
+      }
+      .t th {
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink-muted);
+        text-align: left;
+        padding: 0 1.4em 0.5em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .t td {
+        padding: 0.45em 1.4em 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .t th:last-child,
+      .t td:last-child {
+        padding-right: 0;
+      }
+      .t tr:last-child td {
+        border-bottom: 0;
+      }
+      .stat-row {
+        display: flex;
+        gap: 3.5em;
+        flex-wrap: wrap;
+        margin-bottom: 2.2em;
+      }
+
+      /* ── A · sidebar shell ─────────────────────────────────────────── */
+      .shell {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+      }
+      .shell-side {
+        flex: none;
+        width: 13rem;
+        box-sizing: border-box;
+        border-right: 1px solid var(--ae-line);
+        padding: 1.6em 1.8em 1.4em;
+        display: flex;
+        flex-direction: column;
+      }
+      .side-nav {
+        margin-top: 2.6em;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15em;
+      }
+      .side-nav button {
+        font: inherit;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        font-weight: var(--ae-w-medium);
+        background: transparent;
+        border: 0;
+        padding: 0.35em 0;
+        margin: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .side-nav button:hover {
+        color: var(--ae-ink);
+      }
+      .side-nav button.is-active {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-black);
+      }
+      .side-foot {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1em;
+      }
+      .shell-main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .shell-head {
+        flex: none;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1em 2em;
+        padding: 1.5em 2.6em 0.8em;
+      }
+      .shell-stage {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0.8em 2.6em 1.4em;
+      }
+      .shell-foot {
+        flex: none;
+        padding: 1em 2.6em 1.2em;
+      }
+      @media (max-width: 760px) {
+        .shell-side {
+          width: 10rem;
+          padding: 1.4em 1.2em 1.2em;
+        }
+        .shell-head,
+        .shell-stage,
+        .shell-foot {
+          padding-inline: 1.4em;
+        }
+      }
+
+      /* ── B · toprail shell ─────────────────────────────────────────── */
+      .rail {
+        flex: none;
+        width: min(var(--ae-measure-wide), 100% - 5rem);
+        margin-inline: auto;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .rail .ae-nav button {
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        padding-bottom: 0.8em;
+      }
+      .duo {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2.6em 4.5em;
+        align-items: start;
+      }
+      @media (max-width: 700px) {
+        .duo {
+          grid-template-columns: 1fr;
+        }
+        .rail {
+          width: calc(100% - 2.4rem);
+        }
+      }
+
+      /* ── C · document ──────────────────────────────────────────────── */
+      .doc-grid {
+        display: grid;
+        grid-template-columns: 10rem minmax(0, 1fr);
+        gap: 0 3.5em;
+        align-items: start;
+      }
+      .doc-toc {
+        position: sticky;
+        top: 0;
+        border-left: 1px solid var(--ae-line);
+        padding-left: 1.3em;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .doc-toc a {
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-muted);
+        text-decoration: none;
+        padding: 0.25em 0;
+        margin: 0;
+      }
+      .doc-toc a:hover {
+        color: var(--ae-ink);
+      }
+      .doc-toc a.is-active {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .doc-body {
+        max-width: 36em;
+      }
+      .doc-sec {
+        position: relative;
+        margin-bottom: 3.2em;
+      }
+      .doc-sec p {
+        margin-bottom: 0.6em;
+      }
+      .doc-note {
+        position: absolute;
+        top: 2.1em;
+        left: calc(100% + 3em);
+        width: 12rem;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--ae-ink-muted);
+        border-top: 1px solid var(--ae-line);
+        padding-top: 0.8em;
+      }
+      .doc-code {
+        background: var(--ae-wash);
+        padding: 1em 1.3em;
+        margin: 1em 0;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+      @media (max-width: 1100px) {
+        .doc-note {
+          display: none;
+        }
+      }
+      @media (max-width: 760px) {
+        .doc-grid {
+          grid-template-columns: 1fr;
+        }
+        .doc-toc {
+          display: none;
+        }
+      }
+
+      /* ── D · form flow ─────────────────────────────────────────────── */
+      .flow-head {
+        margin-bottom: 2.6em;
+      }
+      .flow-track {
+        height: 2px;
+        background: var(--ae-line);
+        margin-top: 0.8em;
+      }
+      .flow-fill {
+        height: 100%;
+        width: 33.34%;
+        background: var(--ae-ink);
+        transition: width var(--ae-gentle) var(--ae-ease);
+      }
+      .plan-row {
+        display: flex;
+        align-items: baseline;
+        gap: 1.1em;
+        padding: 0.8em 0;
+        border-bottom: 1px solid var(--ae-line);
+        cursor: pointer;
+      }
+      .plan-rows .plan-row:first-child {
+        border-top: 1px solid var(--ae-line);
+      }
+      .plan-radio {
+        position: absolute;
+        appearance: none;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+        opacity: 0;
+      }
+      .plan-mark {
+        flex: none;
+        width: 0.55em;
+        height: 0.55em;
+        border: 1px solid var(--ae-ink-muted);
+        align-self: center;
+        transition:
+          background-color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .plan-radio:checked ~ .plan-mark {
+        background: var(--ae-ink);
+        border-color: var(--ae-ink);
+      }
+      .plan-radio:focus-visible ~ .plan-mark {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: 3px;
+      }
+      .plan-name {
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink-muted);
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .plan-radio:checked ~ .plan-name {
+        color: var(--ae-ink);
+      }
+      .plan-price {
+        margin-left: auto;
+        color: var(--ae-ink-muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .flow-actions {
+        display: flex;
+        gap: 1em;
+        margin-top: 2.2em;
+      }
+      .confirm-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 2em;
+        padding: 0.65em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .confirm-lines .confirm-line:first-child {
+        border-top: 1px solid var(--ae-line);
+      }
+
+      /* ── E · dashboard (pure hairlines) ────────────────────────────── */
+      .gauges {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--ae-line);
+      }
+      .gauge {
+        background: var(--ae-surface);
+        padding: 1.3em 1.6em 1.2em;
+      }
+      .gauge .ae-chrome {
+        display: block;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.1em;
+      }
+      .dash-table {
+        margin-top: 2.6em;
+      }
+      @media (max-width: 700px) {
+        .gauges {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      /* ── F · paneled dashboard ─────────────────────────────────────── */
+      .panels {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.6em;
+        align-items: stretch;
+      }
+      .panels .ae-panel {
+        padding: 1.6em 1.8em;
+      }
+      .panel-span {
+        grid-column: 1 / -1;
+      }
+      .panel-pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1em 1.5em;
+      }
+      @media (max-width: 700px) {
+        .panels {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · SIDEBAR SHELL — chrome moves to a hairline-right rail ═══ -->
+    <section class="proto-variant is-on" id="a">
+      <div class="ae-screen">
+        <div class="shell js-shell">
+          <aside class="shell-side">
+            <span class="ae-name">OPS</span>
+            <span class="ae-chrome">misty step console</span>
+            <nav class="side-nav" aria-label="console sections">
+              <button data-view="a-deploys" class="is-active">DEPLOYS</button>
+              <button data-view="a-projects">PROJECTS</button>
+            </nav>
+            <div class="side-foot ae-chrome">
+              <span>v2.3.1</span>
+              <button class="ae-mode js-mode" aria-label="toggle color mode">
+                <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+                <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+              </button>
+            </div>
+          </aside>
+          <section class="shell-main">
+            <header class="shell-head">
+              <span class="ae-item">Deploy activity</span>
+              <span class="ae-chrome">production · github pages</span>
+            </header>
+            <div class="shell-stage">
+              <div class="ae-view" data-view-id="a-deploys">
+                <div class="stat-row">
+                  <p>
+                    <span class="big">14</span><br /><span class="ae-chrome"
+                      >DEPLOYS THIS WEEK</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">41s</span><br /><span class="ae-chrome"
+                      >P95 BUILD</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">0</span><br /><span class="ae-chrome"
+                      >FAILED, 30 DAYS</span
+                    >
+                  </p>
+                </div>
+                <table class="t">
+                  <thead>
+                    <tr>
+                      <th>COMMIT</th>
+                      <th>MESSAGE</th>
+                      <th>BUILD</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>243d24f</code></td>
+                      <td>docs: mark the send done layer aria-hidden</td>
+                      <td class="ae-dim">38s</td>
+                      <td><span class="ae-accent">live</span></td>
+                    </tr>
+                    <tr>
+                      <td><code>0ff3883</code></td>
+                      <td>feat: v2.2.0 — buttons are not links</td>
+                      <td class="ae-dim">41s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>f1e6a44</code></td>
+                      <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                      <td class="ae-dim">39s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>c914f3c</code></td>
+                      <td>chore(backlog): seed the post-v2 groom</td>
+                      <td class="ae-dim">36s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>6aa5b10</code></td>
+                      <td>fix: overflow-safe view centering</td>
+                      <td class="ae-dim">44s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="ae-view" data-view-id="a-projects" hidden>
+                <div class="stat-row">
+                  <p>
+                    <span class="big">3</span><br /><span class="ae-chrome"
+                      >PROJECTS</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">2</span><br /><span class="ae-chrome"
+                      >PINNED CONSUMERS</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">v2.3.1</span><br /><span class="ae-chrome"
+                      >LATEST TAG</span
+                    >
+                  </p>
+                </div>
+                <table class="t">
+                  <thead>
+                    <tr>
+                      <th>PROJECT</th>
+                      <th>AESTHETIC PIN</th>
+                      <th>DEPLOY</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">aesthetic site</td>
+                      <td><span class="ae-accent">rides HEAD</span></td>
+                      <td class="ae-dim">pages, on push</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">vanity</td>
+                      <td><code>#v2.2.0</code></td>
+                      <td class="ae-dim">pages, manual</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">misty-step</td>
+                      <td><code>#v2.0.0</code></td>
+                      <td class="ae-dim">pages, manual</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <footer class="shell-foot">
+              <p class="ae-dim ae-chrome">
+                ARCHETYPE A · SIDEBAR SHELL — chrome becomes a hairline-right
+                rail; the stage turns dense instrument, and nav swaps whole
+                views with the entrance.
+              </p>
+            </footer>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ B · TOPRAIL SHELL — can an app live in pure top chrome? ═════ -->
+    <section class="proto-variant" id="b">
+      <div class="ae-screen ae-wide js-shell">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">status</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <div class="rail">
+          <nav class="ae-nav js-nav" aria-label="console sections">
+            <button data-view="b-overview" class="is-active">overview</button>
+            <button data-view="b-deploys">deploys</button>
+            <button data-view="b-consumers">consumers</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+        </div>
+        <main class="ae-stage">
+          <div class="ae-view" data-view-id="b-overview">
+            <div class="duo">
+              <div class="ae-group">
+                <h2 class="ae-h">SERVICE</h2>
+                <p>
+                  <span class="big ae-accent">99.98%</span>
+                  <span class="ae-dim">uptime, 90 days</span>
+                </p>
+                <p>
+                  <span class="big">0.02%</span>
+                  <span class="ae-dim">error rate</span>
+                </p>
+                <p>
+                  <span class="big">38ms</span>
+                  <span class="ae-dim">median response</span>
+                </p>
+              </div>
+              <div class="ae-group">
+                <h2 class="ae-h">DELIVERY</h2>
+                <p>
+                  <span class="big">14</span>
+                  <span class="ae-dim">deploys this week</span>
+                </p>
+                <p>
+                  <span class="big">41s</span>
+                  <span class="ae-dim">p95 build</span>
+                </p>
+                <p>
+                  <span class="big">0</span>
+                  <span class="ae-dim">failed, 30 days</span>
+                </p>
+              </div>
+              <div class="ae-group">
+                <h2 class="ae-h">RELEASE</h2>
+                <p>
+                  <span class="big">v2.3.1</span>
+                  <span class="ae-dim">latest tag, 6 days ago</span>
+                </p>
+                <p>
+                  <span class="big">243d24f</span>
+                  <span class="ae-dim">HEAD of master</span>
+                </p>
+              </div>
+              <div class="ae-group">
+                <h2 class="ae-h">ADOPTION</h2>
+                <p>
+                  <span class="big">3</span>
+                  <span class="ae-dim">consuming projects</span>
+                </p>
+                <p>
+                  <span class="big">2</span>
+                  <span class="ae-dim">pinned behind HEAD</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="ae-view" data-view-id="b-deploys" hidden>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th>COMMIT</th>
+                  <th>MESSAGE</th>
+                  <th>BUILD</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>243d24f</code></td>
+                  <td>docs: mark the send done layer aria-hidden</td>
+                  <td class="ae-dim">38s</td>
+                  <td><span class="ae-accent">live</span></td>
+                </tr>
+                <tr>
+                  <td><code>0ff3883</code></td>
+                  <td>feat: v2.2.0 — buttons are not links</td>
+                  <td class="ae-dim">41s</td>
+                  <td class="ae-dim">superseded</td>
+                </tr>
+                <tr>
+                  <td><code>f1e6a44</code></td>
+                  <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                  <td class="ae-dim">39s</td>
+                  <td class="ae-dim">superseded</td>
+                </tr>
+                <tr>
+                  <td><code>6aa5b10</code></td>
+                  <td>fix: overflow-safe view centering</td>
+                  <td class="ae-dim">44s</td>
+                  <td class="ae-dim">superseded</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ae-view" data-view-id="b-consumers" hidden>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th>PROJECT</th>
+                  <th>AESTHETIC PIN</th>
+                  <th>UPGRADE PATH</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ae-item">aesthetic site</td>
+                  <td><span class="ae-accent">rides HEAD</span></td>
+                  <td class="ae-dim">deploys on push</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">vanity</td>
+                  <td><code>#v2.2.0</code></td>
+                  <td class="ae-dim">one tag behind, deliberate</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">misty-step</td>
+                  <td><code>#v2.0.0</code></td>
+                  <td class="ae-dim">three tags behind, deliberate</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ARCHETYPE B · TOPRAIL SHELL — no sidebar: the bar grows one hairline
+            rail of app nav, and the whole app lives in pure top chrome.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · DOCUMENT — long-form scrolls inside the stage ═══════════ -->
+    <section class="proto-variant" id="c">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage ae-stage-scroll js-doc">
+          <div class="ae-view">
+            <div class="doc-grid">
+              <nav class="doc-toc" aria-label="contents">
+                <a href="#c-feel" data-sec="c-feel" class="is-active"
+                  >THE FEEL</a
+                >
+                <a href="#c-law" data-sec="c-law">THE LAW</a>
+                <a href="#c-registers" data-sec="c-registers">REGISTERS</a>
+                <a href="#c-screens" data-sec="c-screens">SCREENS</a>
+                <a href="#c-motion" data-sec="c-motion">MOTION</a>
+                <a href="#c-adoption" data-sec="c-adoption">ADOPTION</a>
+              </nav>
+              <div class="doc-body">
+                <section class="doc-sec" id="c-feel">
+                  <h2 class="ae-h">THE FEEL</h2>
+                  <p>
+                    Instrument-panel restraint. Ink on paper: near-black text on
+                    paper-white, hairline rules, hard 90° corners, generous
+                    negative space, a Swiss-typographic grid. The page reads
+                    like a beautifully set technical document, never like a
+                    brochure.
+                  </p>
+                  <p>
+                    Nothing glows, nothing floats, nothing bounces. One
+                    saturated ultramarine appears where it matters and nowhere
+                    else.
+                  </p>
+                  <aside class="doc-note">
+                    Margin notes ride in the chrome register at wide widths and
+                    fold away below 1100px.
+                  </aside>
+                </section>
+                <section class="doc-sec" id="c-law">
+                  <h2 class="ae-h">THE LAW</h2>
+                  <p>
+                    One font size per surface; the 13px chrome register is the
+                    only exception. Hierarchy comes from ink and weight, never
+                    from scale. Nine registers: three inks by three weights.
+                  </p>
+                  <p>
+                    The accent is rationed:
+                    <span class="ae-accent">exactly one instance per view</span>
+                    — this document just spent its. Accents are never spent on
+                    buttons.
+                  </p>
+                  <aside class="doc-note">
+                    The law lives verbatim in the header of aesthetic.css and in
+                    tokens.json.
+                  </aside>
+                </section>
+                <section class="doc-sec" id="c-registers">
+                  <h2 class="ae-h">REGISTERS</h2>
+                  <p>
+                    Every line of text picks one of nine registers. The headline
+                    is heavier and blacker, not larger; support is muted;
+                    whispers are faint.
+                  </p>
+                  <pre class="doc-code"><code>--ae-ink:        #151515;
+--ae-ink-muted:  #737373;
+--ae-ink-faint:  #a3a3a3;
+--ae-w-regular:  400;
+--ae-w-medium:   550;
+--ae-w-black:    800;</code></pre>
+                  <p>
+                    Code blocks sit in the wash — the only background a block of
+                    content is allowed to carry.
+                  </p>
+                </section>
+                <section class="doc-sec" id="c-screens">
+                  <h2 class="ae-h">SCREENS</h2>
+                  <p>
+                    Screens, not pages: every view fits the viewport. This
+                    document is the sanctioned exception — long-form content
+                    scrolls inside the stage while the chrome never moves.
+                  </p>
+                  <p>
+                    The bars above and below this text are fixed by the screen
+                    itself, not by position: fixed. Scroll and watch them hold.
+                  </p>
+                  <aside class="doc-note">
+                    The table of contents is sticky inside the scrolling stage
+                    and highlights as you pass each section.
+                  </aside>
+                </section>
+                <section class="doc-sec" id="c-motion">
+                  <h2 class="ae-h">MOTION</h2>
+                  <p>
+                    Motion is feedback, never decoration: small, brief, eased.
+                    State resolutions are gentler and resolve exactly once —
+                    success persists, it is never rewound. Nothing changes size
+                    while it animates, and reduced motion makes everything
+                    instant.
+                  </p>
+                </section>
+                <section class="doc-sec" id="c-adoption">
+                  <h2 class="ae-h">ADOPTION</h2>
+                  <p>
+                    One stylesheet, no build step. Pin a tag and upgrade
+                    deliberately:
+                  </p>
+                  <pre
+                    class="doc-code"
+                  ><code>pnpm add github:misty-step/aesthetic#v2.3.1</code></pre>
+                  <p>
+                    Downstream projects may override exactly one token pair —
+                    the accent. Everything else is the shared identity.
+                  </p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ARCHETYPE C · DOCUMENT — long-form scrolls inside the stage under
+            fixed chrome, with a sticky hairline-left contents rail and margin
+            notes.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · FORM FLOW — one decision per screen ═════════════════════ -->
+    <section class="proto-variant" id="d">
+      <div class="ae-screen js-flow">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div>
+            <div class="flow-head">
+              <p class="ae-chrome js-step-label">STEP 1 OF 3</p>
+              <div class="flow-track">
+                <div class="flow-fill js-step-fill"></div>
+              </div>
+            </div>
+            <div class="ae-view" data-step="1">
+              <h2 class="ae-h">CHOOSE A PLAN</h2>
+              <div class="plan-rows">
+                <label class="plan-row">
+                  <input
+                    class="plan-radio"
+                    type="radio"
+                    name="d-plan"
+                    value="Solo"
+                    data-price="$0/mo"
+                  />
+                  <span class="plan-mark"></span>
+                  <span class="plan-name">Solo</span>
+                  <span class="ae-dim">one project, community support</span>
+                  <span class="plan-price">$0/mo</span>
+                </label>
+                <label class="plan-row">
+                  <input
+                    class="plan-radio"
+                    type="radio"
+                    name="d-plan"
+                    value="Studio"
+                    data-price="$24/mo"
+                    checked
+                  />
+                  <span class="plan-mark"></span>
+                  <span class="plan-name">Studio</span>
+                  <span class="ae-accent">recommended</span>
+                  <span class="plan-price">$24/mo</span>
+                </label>
+                <label class="plan-row">
+                  <input
+                    class="plan-radio"
+                    type="radio"
+                    name="d-plan"
+                    value="Fleet"
+                    data-price="$96/mo"
+                  />
+                  <span class="plan-mark"></span>
+                  <span class="plan-name">Fleet</span>
+                  <span class="ae-dim">unlimited projects, SSO</span>
+                  <span class="plan-price">$96/mo</span>
+                </label>
+              </div>
+              <div class="flow-actions">
+                <button class="ae-button" data-go="2">Continue</button>
+              </div>
+            </div>
+            <div class="ae-view" data-step="2" hidden>
+              <h2 class="ae-h">BILLING DETAILS</h2>
+              <p class="ae-dim" style="margin-bottom: 1.6em">
+                The <span class="ae-accent js-plan-name">Studio</span> plan,
+                billed monthly at <span class="js-plan-price">$24/mo</span>.
+              </p>
+              <div style="margin-bottom: 1.4em">
+                <label class="ae-label" for="d-org">Organization</label>
+                <input
+                  class="ae-input"
+                  id="d-org"
+                  type="text"
+                  placeholder="Misty Step"
+                />
+              </div>
+              <div>
+                <label class="ae-label" for="d-email">Billing email</label>
+                <input
+                  class="ae-input"
+                  id="d-email"
+                  type="email"
+                  placeholder="ops@misty-step.com"
+                />
+              </div>
+              <div class="flow-actions">
+                <button class="ae-button ae-button-quiet" data-go="1">
+                  Back
+                </button>
+                <button class="ae-button" data-go="3">Continue</button>
+              </div>
+            </div>
+            <div class="ae-view" data-step="3" hidden>
+              <h2 class="ae-h">CONFIRM</h2>
+              <div class="confirm-lines">
+                <p class="confirm-line">
+                  <span class="ae-dim">Plan</span>
+                  <span class="ae-item js-plan-name">Studio</span>
+                </p>
+                <p class="confirm-line">
+                  <span class="ae-dim">Billing</span>
+                  <span class="js-plan-price">$24/mo</span>
+                </p>
+                <p class="confirm-line">
+                  <span class="ae-dim">Due today</span>
+                  <span class="ae-accent js-plan-price">$24/mo</span>
+                </p>
+              </div>
+              <form class="js-form">
+                <div class="flow-actions">
+                  <button class="ae-button ae-button-quiet" data-go="2">
+                    Back
+                  </button>
+                  <button class="ae-button ae-send" type="submit">
+                    <span class="ae-send-label">Confirm order</span>
+                    <span class="ae-send-done" aria-hidden="true"
+                      >Confirmed
+                      <svg class="ae-icon"><use href="#i-check" /></svg
+                    ></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ARCHETYPE D · FORM FLOW — one decision per screen: each step is a
+            view that replays the entrance, the hairline bar advances, and the
+            end is a send moment.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · DASHBOARD — the wide screen as instrument panel ═════════ -->
+    <section class="proto-variant" id="e">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="gauges">
+              <div class="gauge">
+                <span class="ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="big ae-accent">99.98%</span>
+              </div>
+              <div class="gauge">
+                <span class="ae-chrome">ERROR RATE</span>
+                <span class="big">0.02%</span>
+              </div>
+              <div class="gauge">
+                <span class="ae-chrome">MEDIAN RESPONSE</span>
+                <span class="big">38ms</span>
+              </div>
+              <div class="gauge">
+                <span class="ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="big">14</span>
+              </div>
+              <div class="gauge">
+                <span class="ae-chrome">P95 BUILD</span>
+                <span class="big">41s</span>
+              </div>
+              <div class="gauge">
+                <span class="ae-chrome">CONSUMERS PINNED</span>
+                <span class="big">2 of 3</span>
+              </div>
+            </div>
+            <div class="dash-table">
+              <table class="t">
+                <thead>
+                  <tr>
+                    <th>COMMIT</th>
+                    <th>MESSAGE</th>
+                    <th>BUILD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>243d24f</code></td>
+                    <td>docs: mark the send done layer aria-hidden</td>
+                    <td class="ae-dim">38s</td>
+                    <td class="ae-item">live</td>
+                  </tr>
+                  <tr>
+                    <td><code>0ff3883</code></td>
+                    <td>feat: v2.2.0 — buttons are not links</td>
+                    <td class="ae-dim">41s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>f1e6a44</code></td>
+                    <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                    <td class="ae-dim">39s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>6aa5b10</code></td>
+                    <td>fix: overflow-safe view centering</td>
+                    <td class="ae-dim">44s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ARCHETYPE E · DASHBOARD — the wide screen as instrument panel:
+            hairline-separated gauges, weight-800 numbers, one accent on the
+            metric that matters.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · PANELED — the same dashboard, composed with depth ═══════ -->
+    <section class="proto-variant" id="f">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="panels">
+              <div class="ae-panel">
+                <h2 class="ae-h">SERVICE</h2>
+                <div class="panel-pair">
+                  <p>
+                    <span class="big ae-accent">99.98%</span><br /><span
+                      class="ae-chrome"
+                      >UPTIME, 90 DAYS</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">0.02%</span><br /><span class="ae-chrome"
+                      >ERROR RATE</span
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="ae-panel">
+                <h2 class="ae-h">DELIVERY</h2>
+                <div class="panel-pair">
+                  <p>
+                    <span class="big">14</span><br /><span class="ae-chrome"
+                      >DEPLOYS THIS WEEK</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">41s</span><br /><span class="ae-chrome"
+                      >P95 BUILD</span
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="ae-panel">
+                <h2 class="ae-h">ADOPTION</h2>
+                <div class="panel-pair">
+                  <p>
+                    <span class="big">38ms</span><br /><span class="ae-chrome"
+                      >MEDIAN RESPONSE</span
+                    >
+                  </p>
+                  <p>
+                    <span class="big">2 of 3</span><br /><span class="ae-chrome"
+                      >CONSUMERS PINNED</span
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="ae-panel panel-span">
+                <h2 class="ae-h">RECENT DEPLOYS</h2>
+                <table class="t">
+                  <thead>
+                    <tr>
+                      <th>COMMIT</th>
+                      <th>MESSAGE</th>
+                      <th>BUILD</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>243d24f</code></td>
+                      <td>docs: mark the send done layer aria-hidden</td>
+                      <td class="ae-dim">38s</td>
+                      <td class="ae-item">live</td>
+                    </tr>
+                    <tr>
+                      <td><code>0ff3883</code></td>
+                      <td>feat: v2.2.0 — buttons are not links</td>
+                      <td class="ae-dim">41s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>f1e6a44</code></td>
+                      <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                      <td class="ae-dim">39s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ARCHETYPE F · PANELED — the same instruments composed with the
+            sanctioned panel depth; pick a doctrine: hairlines (E) or panels (F)
+            for dense apps.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="a" class="is-active">A sidebar</button>
+      <button data-v="b">B toprail</button>
+      <button data-v="c">C document</button>
+      <button data-v="d">D flow</button>
+      <button data-v="e">E dashboard</button>
+      <button data-v="f">F paneled</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      // the entrance replays: remount the animation, never loop it
+      function replay(view) {
+        view.classList.remove('ae-view');
+        void view.offsetWidth;
+        view.classList.add('ae-view');
+      }
+
+      // shells (A, B): nav swaps whole views
+      document.querySelectorAll('.js-shell').forEach((shell) => {
+        const btns = shell.querySelectorAll('[data-view]');
+        const views = shell.querySelectorAll('[data-view-id]');
+        btns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            btns.forEach((b) => b.classList.toggle('is-active', b === btn));
+            views.forEach((v) => {
+              const on = v.dataset.viewId === btn.dataset.view;
+              v.hidden = !on;
+              if (on) replay(v);
+            });
+            const nav = btn.closest('.js-nav');
+            if (nav) placeInd(nav);
+          });
+        });
+      });
+
+      // form flow (D): one decision per screen
+      document.querySelectorAll('.js-flow').forEach((flow) => {
+        const steps = [...flow.querySelectorAll('[data-step]')];
+        const label = flow.querySelector('.js-step-label');
+        const fill = flow.querySelector('.js-step-fill');
+        function syncPlan() {
+          const picked = flow.querySelector('input[name="d-plan"]:checked');
+          if (!picked) return;
+          flow
+            .querySelectorAll('.js-plan-name')
+            .forEach((el) => (el.textContent = picked.value));
+          flow
+            .querySelectorAll('.js-plan-price')
+            .forEach((el) => (el.textContent = picked.dataset.price));
+        }
+        function go(n) {
+          syncPlan();
+          steps.forEach((s) => {
+            const on = +s.dataset.step === n;
+            s.hidden = !on;
+            if (on) replay(s);
+          });
+          label.textContent = 'STEP ' + n + ' OF 3';
+          fill.style.width = (n / 3) * 100 + '%';
+        }
+        flow.querySelectorAll('[data-go]').forEach((btn) => {
+          btn.addEventListener('click', () => go(+btn.dataset.go));
+        });
+      });
+
+      // the send moment: resolves once, persists
+      document.querySelectorAll('.js-form').forEach((form) => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('.ae-send');
+          btn.classList.add('is-sent');
+          btn.disabled = true;
+        });
+      });
+
+      // document (C): scroll-spy inside the stage
+      document.querySelectorAll('.js-doc').forEach((stage) => {
+        const links = [...stage.querySelectorAll('.doc-toc a[data-sec]')];
+        const secs = links.map((a) => stage.querySelector('#' + a.dataset.sec));
+        function spy() {
+          const top = stage.getBoundingClientRect().top;
+          let current = secs[0];
+          secs.forEach((s) => {
+            if (s.getBoundingClientRect().top - top <= 100) current = s;
+          });
+          links.forEach((a) =>
+            a.classList.toggle('is-active', a.dataset.sec === current.id),
+          );
+        }
+        links.forEach((a) => {
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sec = stage.querySelector('#' + a.dataset.sec);
+            stage.scrollTop +=
+              sec.getBoundingClientRect().top -
+              stage.getBoundingClientRect().top -
+              16;
+            spy();
+          });
+        });
+        stage.addEventListener('scroll', spy, { passive: true });
+        spy();
+      });
+
+      // the fan picker
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>

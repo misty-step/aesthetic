@@ -1,0 +1,1238 @@
+<!doctype html>
+<!--
+  LAB data & structure — what are table, tabs, badge, skeleton/progress,
+  and empty state in this system? The skeleton question is sharp: the law
+  says motion is feedback that resolves once, so an infinite shimmer is
+  unlawful — each variant proposes a lawful loading treatment that
+  resolves exactly once.
+  VERDICT: (pending operator review)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · data &amp; structure, six variants</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      .js-tabs {
+        margin-bottom: 1.8em;
+      }
+      .proto-cap {
+        margin-top: 2.4em;
+      }
+      .proto-load {
+        margin-top: 1.8em;
+      }
+
+      /* arrival: revealed content fades in exactly once, then persists */
+      .is-in,
+      .d-row.is-in > span {
+        animation: proto-in var(--ae-gentle) var(--ae-ease) both;
+      }
+      @keyframes proto-in {
+        from {
+          opacity: 0;
+        }
+      }
+
+      .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* a hairline placeholder stroke */
+      .ph {
+        display: inline-block;
+        height: 1px;
+        background: var(--ae-line);
+        vertical-align: middle;
+      }
+
+      /* a determinate hairline progress track: the fill transitions to
+         100% only while loading; when the class drops, it snaps back
+         with no transition — the fill never visibly rewinds */
+      .proto-track {
+        display: block;
+        height: 1px;
+        background: var(--ae-line);
+        overflow: hidden;
+      }
+      .proto-track i {
+        display: block;
+        height: 1px;
+        width: 0;
+        background: var(--ae-ink);
+      }
+      .is-loading .proto-track i {
+        width: 100%;
+        transition: width 1.2s linear;
+      }
+
+      /* ── A · LEDGER ───────────────────────────────────────────────── */
+      #va table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #va th {
+        text-align: left;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        padding: 0 1.5em 0.7em 0;
+      }
+      #va td {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.85em 1.5em 0.85em 0;
+      }
+      #va th:last-child,
+      #va td:last-child {
+        padding-right: 0;
+      }
+      #va .a-acc {
+        color: var(--ae-accent);
+        font-weight: var(--ae-w-medium);
+      }
+      #va .a-empty {
+        text-align: center;
+        padding: 3.2em 0;
+      }
+      #va .a-empty p + p {
+        margin-top: 1.4em;
+      }
+
+      /* ── B · TERMINAL ─────────────────────────────────────────────── */
+      #vb .b-tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      #vb .b-tbl th {
+        text-align: left;
+        font-weight: var(--ae-w-regular);
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+        padding: 0 1.4em 0.35em 0;
+      }
+      #vb .b-tbl td {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.32em 1.4em 0.32em 0;
+      }
+      #vb .b-tbl th:last-child,
+      #vb .b-tbl td:last-child {
+        padding-right: 0;
+      }
+      #vb .b-nm,
+      #vb .b-badge {
+        font-weight: var(--ae-w-medium);
+      }
+      #vb .b-dim {
+        color: var(--ae-ink-muted);
+      }
+      #vb .b-faint {
+        color: var(--ae-ink-faint);
+      }
+      #vb .b-line {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.6em 0;
+      }
+      #vb .ae-nav button {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+
+      /* ── C · ROWS ─────────────────────────────────────────────────── */
+      #vc .c-row {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.85em 0;
+      }
+      #vc .c-meta {
+        display: block;
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+      #vc .c-ghost {
+        border-top: 1px solid var(--ae-line);
+        padding: 1.3em 0 1.5em;
+      }
+      #vc .c-ghost .ph {
+        display: block;
+        background: var(--ae-ink-faint);
+      }
+      #vc .c-ghost .ph + .ph {
+        margin-top: 1.15em;
+      }
+      #vc .c-empty {
+        text-align: center;
+        padding: 3.2em 0;
+      }
+      #vc .c-glyph {
+        width: 3.4em;
+        height: 3.4em;
+        stroke: var(--ae-ink-faint);
+        stroke-width: 1;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        display: block;
+        margin: 0 auto 1.2em;
+      }
+
+      /* ── D · GRID ─────────────────────────────────────────────────── */
+      #vd .js-tabs {
+        margin-bottom: 0;
+      }
+      #vd .d-track {
+        margin-bottom: 1.7em;
+      }
+      #vd .d-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.1fr 0.8fr;
+      }
+      #vd .d-grid > span,
+      #vd .d-row > span {
+        padding: 0.6em 1.3em 0.6em 0;
+      }
+      #vd .rule {
+        border-left: 1px solid var(--ae-line);
+        padding-left: 1.3em;
+      }
+      #vd .gh {
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+      }
+      #vd .d-row {
+        display: contents;
+      }
+      #vd .num {
+        padding-right: 0;
+      }
+      #vd .x-f {
+        color: var(--ae-ink-faint);
+      }
+
+      /* ── E · INK-HEAD ─────────────────────────────────────────────── */
+      #ve table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #ve th {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+        text-align: left;
+        font-weight: var(--ae-w-medium);
+        padding: 0.5em 1.3em 0.5em 0;
+      }
+      #ve td {
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.7em 1.3em 0.7em 0;
+      }
+      #ve th:first-child,
+      #ve td:first-child {
+        padding-left: 0.9em;
+      }
+      #ve th:last-child,
+      #ve td:last-child {
+        padding-right: 0.9em;
+      }
+      #ve .e-inv {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+        font-weight: var(--ae-w-medium);
+        padding: 0.05em 0.5em;
+      }
+      #ve .e-none {
+        text-align: center;
+        padding: 1.6em 0.9em;
+      }
+
+      /* ── F · DOSSIER ──────────────────────────────────────────────── */
+      #vf .f-doss {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 4em;
+      }
+      @media (max-width: 640px) {
+        #vf .f-doss {
+          grid-template-columns: 1fr;
+        }
+      }
+      #vf .f-rec {
+        border-top: 1px solid var(--ae-line);
+        padding: 1.5em 0 1.9em;
+      }
+      #vf .f-par {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+      #vf .f-kv {
+        display: grid;
+        grid-template-columns: 7em 1fr;
+        gap: 0.1em 1.5em;
+        margin-top: 0.55em;
+        font-size: 13px;
+      }
+      #vf .f-kv dt {
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.1em;
+      }
+      #vf .f-kv dd {
+        color: var(--ae-ink-muted);
+      }
+      #vf .f-prog {
+        margin-top: 1.6em;
+      }
+      #vf .f-track {
+        display: inline-block;
+        width: 9em;
+        vertical-align: middle;
+        margin-left: 0.4em;
+      }
+      #vf .f-empty {
+        text-align: center;
+        padding: 3em 0;
+      }
+      #vf .f-fig {
+        position: relative;
+        width: 6.5em;
+        height: 6.5em;
+        margin: 0 auto 1.7em;
+      }
+      #vf .f-fig i {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        background: var(--ae-line);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-archive" viewBox="0 0 24 24">
+        <rect x="2" y="3" width="20" height="5" />
+        <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
+        <path d="M10 12h4" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · LEDGER — an airy 16px ledger under hairline rules ══════ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last deploy</th>
+                    <th class="num">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">aesthetic</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">2h ago</td>
+                    <td class="num ae-dim">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">misty-step.com</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">yesterday</td>
+                    <td class="num ae-dim">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">scry</td>
+                    <td><span class="a-acc">building</span></td>
+                    <td class="ae-dim">4m ago</td>
+                    <td class="num ae-dim">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">vanity</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">3d ago</td>
+                    <td class="num ae-dim">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">phrazzld.com</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">5d ago</td>
+                    <td class="num ae-dim">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">brand</td>
+                    <td><span class="ae-item">paused</span></td>
+                    <td class="ae-dim">May 28</td>
+                    <td class="num ae-dim">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">chrondle</td>
+                    <td><span class="ae-item">live</span></td>
+                    <td class="ae-dim">12d ago</td>
+                    <td class="num ae-dim">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">studymode</td>
+                    <td><span class="ae-item">paused</span></td>
+                    <td class="ae-dim">Apr 30</td>
+                    <td class="num ae-dim">188 kB</td>
+                  </tr>
+                </tbody>
+                <tbody class="js-pending" hidden>
+                  <tr>
+                    <td><i class="ph" style="width: 62%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 52%"></i></td>
+                    <td class="num"><i class="ph" style="width: 38%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 48%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 36%"></i></td>
+                    <td class="num"><i class="ph" style="width: 46%"></i></td>
+                  </tr>
+                  <tr>
+                    <td><i class="ph" style="width: 70%"></i></td>
+                    <td><i class="ph" style="width: 44%"></i></td>
+                    <td><i class="ph" style="width: 58%"></i></td>
+                    <td class="num"><i class="ph" style="width: 30%"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty a-empty" hidden>
+              <p class="ae-dim">
+                Nothing archived. Retired projects rest here.
+              </p>
+              <p>
+                <button class="ae-button ae-button-quiet js-back">
+                  View active
+                </button>
+              </p>
+            </div>
+            <p class="ae-dim proto-cap">
+              A · LEDGER — airy 16px rows under hairline rules, no header
+              background; the badge is a 550 word, the accent marks the row in
+              motion, and loading is three hairline ghosts that fade once to
+              content.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · TERMINAL — the chrome/mono register, dense ═════════════ -->
+    <section class="proto-variant" id="vb">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">active</button>
+              <button data-tab="archived">archived</button>
+              <button data-tab="all">all</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table class="b-tbl">
+                <thead>
+                  <tr>
+                    <th>NAME</th>
+                    <th>STATUS</th>
+                    <th>DEPLOYED</th>
+                    <th class="num">SIZE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="b-nm">aesthetic</td>
+                    <td><span class="b-badge">[LIVE]</span></td>
+                    <td class="b-dim">2h ago</td>
+                    <td class="num b-faint">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="b-nm">misty-step.com</td>
+                    <td><span class="b-badge">[LIVE]</span></td>
+                    <td class="b-dim">yesterday</td>
+                    <td class="num b-faint">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="b-nm">scry</td>
+                    <td><span class="b-badge">[BUILDING]</span></td>
+                    <td class="b-dim">4m ago</td>
+                    <td class="num b-faint">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="b-nm">vanity</td>
+                    <td><span class="b-badge">[LIVE]</span></td>
+                    <td class="b-dim">3d ago</td>
+                    <td class="num b-faint">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="b-nm">phrazzld.com</td>
+                    <td><span class="b-badge">[LIVE]</span></td>
+                    <td class="b-dim">5d ago</td>
+                    <td class="num b-faint">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="b-nm">brand</td>
+                    <td><span class="b-badge">[PAUSED]</span></td>
+                    <td class="b-dim">May 28</td>
+                    <td class="num b-faint">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="b-nm">chrondle</td>
+                    <td><span class="b-badge">[LIVE]</span></td>
+                    <td class="b-dim">12d ago</td>
+                    <td class="num b-faint">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="b-nm">studymode</td>
+                    <td><span class="b-badge">[PAUSED]</span></td>
+                    <td class="b-dim">Apr 30</td>
+                    <td class="num b-faint">188 kB</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="b-line js-pending" hidden>fetching 2 more…</p>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <p class="b-line">0 archived · nothing to show</p>
+            </div>
+            <p class="ae-dim proto-cap">
+              B · TERMINAL — the 13px mono register, dense like the site
+              catalog; badges are bracketed tokens, tabs are mono words, and
+              loading is one fetching line that resolves once into rows.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · ROWS — no table at all: each record is a row-link ══════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <div class="c-list">
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">aesthetic</span>
+                  <span class="ae-chrome">· live</span>
+                  <span class="c-meta">2h ago · 24 kB</span>
+                </a>
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">misty-step.com</span>
+                  <span class="ae-chrome">· live</span>
+                  <span class="c-meta">yesterday · 318 kB</span>
+                </a>
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">scry</span>
+                  <span class="ae-chrome">· building</span>
+                  <span class="c-meta">4m ago · 1.2 MB</span>
+                </a>
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">vanity</span>
+                  <span class="ae-chrome">· live</span>
+                  <span class="c-meta">3d ago · 96 kB</span>
+                </a>
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">phrazzld.com</span>
+                  <span class="ae-chrome">· live</span>
+                  <span class="c-meta">5d ago · 412 kB</span>
+                </a>
+                <a class="ae-row-link c-row" href="#">
+                  <span class="ae-item">brand</span>
+                  <span class="ae-chrome">· paused</span>
+                  <span class="c-meta">May 28 · 2.1 MB</span>
+                </a>
+                <a class="ae-row-link c-row js-more" href="#" hidden>
+                  <span class="ae-item">chrondle</span>
+                  <span class="ae-chrome">· live</span>
+                  <span class="c-meta">12d ago · 640 kB</span>
+                </a>
+                <a class="ae-row-link c-row js-more" href="#" hidden>
+                  <span class="ae-item">studymode</span>
+                  <span class="ae-chrome">· paused</span>
+                  <span class="c-meta">Apr 30 · 188 kB</span>
+                </a>
+                <div class="js-pending" hidden>
+                  <div class="c-ghost">
+                    <i class="ph" style="width: 34%"></i>
+                    <i class="ph" style="width: 52%"></i>
+                  </div>
+                  <div class="c-ghost">
+                    <i class="ph" style="width: 42%"></i>
+                    <i class="ph" style="width: 46%"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty c-empty" hidden>
+              <svg class="c-glyph" aria-hidden="true">
+                <use href="#i-archive" />
+              </svg>
+              <p class="ae-dim">No archived projects yet.</p>
+            </div>
+            <p class="ae-dim proto-cap">
+              C · ROWS — no table: each record is a row-link, the badge rides
+              the name as a chrome suffix, metadata sits below; two faint ghost
+              rows resolve once, and the empty state is a faint glyph.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · GRID — vertical hairlines only, the engraving idiom ════ -->
+    <section class="proto-variant" id="vd">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="proto-track d-track"><i></i></div>
+            <div class="js-data">
+              <div class="d-grid">
+                <span class="gh">NAME</span>
+                <span class="gh rule">STATUS</span>
+                <span class="gh rule">LAST DEPLOY</span>
+                <span class="gh rule num">SIZE</span>
+                <span class="ae-item">aesthetic</span>
+                <span class="rule">● live</span>
+                <span class="rule ae-dim">2h ago</span>
+                <span class="rule num ae-dim">24 kB</span>
+                <span class="ae-item">misty-step.com</span>
+                <span class="rule">● live</span>
+                <span class="rule ae-dim">yesterday</span>
+                <span class="rule num ae-dim">318 kB</span>
+                <span class="ae-item">scry</span>
+                <span class="rule">◐ building</span>
+                <span class="rule ae-dim">4m ago</span>
+                <span class="rule num ae-dim">1.2 MB</span>
+                <span class="ae-item">vanity</span>
+                <span class="rule">● live</span>
+                <span class="rule ae-dim">3d ago</span>
+                <span class="rule num ae-dim">96 kB</span>
+                <span class="ae-item">phrazzld.com</span>
+                <span class="rule">● live</span>
+                <span class="rule ae-dim">5d ago</span>
+                <span class="rule num ae-dim">412 kB</span>
+                <span class="ae-item">brand</span>
+                <span class="rule">○ paused</span>
+                <span class="rule ae-dim">May 28</span>
+                <span class="rule num ae-dim">2.1 MB</span>
+                <div class="d-row js-more" hidden>
+                  <span class="ae-item">chrondle</span>
+                  <span class="rule">● live</span>
+                  <span class="rule ae-dim">12d ago</span>
+                  <span class="rule num ae-dim">640 kB</span>
+                </div>
+                <div class="d-row js-more" hidden>
+                  <span class="ae-item">studymode</span>
+                  <span class="rule">○ paused</span>
+                  <span class="rule ae-dim">Apr 30</span>
+                  <span class="rule num ae-dim">188 kB</span>
+                </div>
+              </div>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <div class="d-grid">
+                <span class="gh">NAME</span>
+                <span class="gh rule">STATUS</span>
+                <span class="gh rule">LAST DEPLOY</span>
+                <span class="gh rule num">SIZE</span>
+                <span class="x-f">—</span>
+                <span class="rule x-f">—</span>
+                <span class="rule x-f">—</span>
+                <span class="rule num x-f">—</span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              D · GRID — vertical hairline column rules, no row rules, the
+              engraving idiom; status is glyph + word, a determinate hairline
+              under the tab bar fills once before content lands, and empty keeps
+              the hairlines with a row of em-dashes.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · INK-HEAD — the header wears the button costume ═════════ -->
+    <section class="proto-variant" id="ve">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last deploy</th>
+                    <th class="num">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">aesthetic</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">2h ago</td>
+                    <td class="num ae-dim">24 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">misty-step.com</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">yesterday</td>
+                    <td class="num ae-dim">318 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">scry</td>
+                    <td><span class="e-inv">building</span></td>
+                    <td class="ae-dim">4m ago</td>
+                    <td class="num ae-dim">1.2 MB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">vanity</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">3d ago</td>
+                    <td class="num ae-dim">96 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">phrazzld.com</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">5d ago</td>
+                    <td class="num ae-dim">412 kB</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">brand</td>
+                    <td class="ae-dim">paused</td>
+                    <td class="ae-dim">May 28</td>
+                    <td class="num ae-dim">2.1 MB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">chrondle</td>
+                    <td class="ae-dim">live</td>
+                    <td class="ae-dim">12d ago</td>
+                    <td class="num ae-dim">640 kB</td>
+                  </tr>
+                  <tr class="js-more" hidden>
+                    <td class="ae-item">studymode</td>
+                    <td class="ae-dim">paused</td>
+                    <td class="ae-dim">Apr 30</td>
+                    <td class="num ae-dim">188 kB</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="js-loadwrap proto-load">
+                <button
+                  class="ae-button ae-button-quiet js-loadmore"
+                  data-busy="Loading…"
+                >
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty" hidden>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last deploy</th>
+                    <th class="num">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="4" class="ae-dim e-none">
+                      No archived projects.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ae-dim proto-cap">
+              E · INK-HEAD — the header row wears the button costume (surface
+              text on solid ink), body rows stay hairline; one inverted badge
+              for the row that matters poses the accent question, and the header
+              stays put while the body fades in once.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · DOSSIER — records as labeled clusters, generous air ════ -->
+    <section class="proto-variant" id="vf">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · data &amp; structure</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">PROJECTS</h2>
+            <nav class="ae-nav js-nav js-tabs" aria-label="project filter">
+              <button class="is-active" data-tab="active">Active</button>
+              <button data-tab="archived">Archived</button>
+              <button data-tab="all">All</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <div class="js-data">
+              <div class="f-doss">
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">aesthetic</span>
+                    <span class="f-par">(live)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>2h ago</dd>
+                    <dt>SIZE</dt>
+                    <dd>24 kB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">misty-step.com</span>
+                    <span class="f-par">(live)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>yesterday</dd>
+                    <dt>SIZE</dt>
+                    <dd>318 kB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">scry</span>
+                    <span class="f-par">(building)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>4m ago</dd>
+                    <dt>SIZE</dt>
+                    <dd>1.2 MB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">vanity</span>
+                    <span class="f-par">(live)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>3d ago</dd>
+                    <dt>SIZE</dt>
+                    <dd>96 kB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">phrazzld.com</span>
+                    <span class="f-par">(live)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>5d ago</dd>
+                    <dt>SIZE</dt>
+                    <dd>412 kB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec">
+                  <p>
+                    <span class="ae-item">brand</span>
+                    <span class="f-par">(paused)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>May 28</dd>
+                    <dt>SIZE</dt>
+                    <dd>2.1 MB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec js-more" hidden>
+                  <p>
+                    <span class="ae-item">chrondle</span>
+                    <span class="f-par">(live)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>12d ago</dd>
+                    <dt>SIZE</dt>
+                    <dd>640 kB</dd>
+                  </dl>
+                </article>
+                <article class="f-rec js-more" hidden>
+                  <p>
+                    <span class="ae-item">studymode</span>
+                    <span class="f-par">(paused)</span>
+                  </p>
+                  <dl class="f-kv">
+                    <dt>DEPLOYED</dt>
+                    <dd>Apr 30</dd>
+                    <dt>SIZE</dt>
+                    <dd>188 kB</dd>
+                  </dl>
+                </article>
+              </div>
+              <p class="js-pending f-prog ae-chrome" hidden>
+                6 of 8 loaded —
+                <span class="proto-track f-track"><i></i></span>
+              </p>
+              <p class="js-loadwrap proto-load">
+                <button class="ae-button ae-button-quiet js-loadmore">
+                  Load more
+                </button>
+              </p>
+            </div>
+            <div class="js-empty f-empty" hidden>
+              <div class="f-fig" aria-hidden="true">
+                <i style="transform: rotate(0deg)"></i>
+                <i style="transform: rotate(30deg)"></i>
+                <i style="transform: rotate(60deg)"></i>
+                <i style="transform: rotate(90deg)"></i>
+                <i style="transform: rotate(120deg)"></i>
+                <i style="transform: rotate(150deg)"></i>
+              </div>
+              <p class="ae-dim">The archive is empty — nothing retired yet.</p>
+            </div>
+            <p class="ae-dim proto-cap">
+              F · DOSSIER — editorial clusters with hairlines between records
+              and generous air; the badge is parenthetical chrome, loading is “6
+              of 8 loaded” with a thin determinate bar, and the empty state is
+              an engraving figure of hairline rays.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">prototype — never ships</p>
+          <p class="ae-chrome">aesthetic v2.3.1</p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A ledger</button>
+      <button data-v="vb">B terminal</button>
+      <button data-v="vc">C rows</button>
+      <button data-v="vd">D grid</button>
+      <button data-v="ve">E ink-head</button>
+      <button data-v="vf">F dossier</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+
+      /* tabs: Active and All show the data (zero projects are archived);
+         Archived shows the variant's empty state */
+      function applyTab(v) {
+        const empty = (v.dataset.tab || 'active') === 'archived';
+        v.querySelectorAll('.js-data').forEach((el) => (el.hidden = empty));
+        const lw = v.querySelector('.js-loadwrap');
+        if (lw) lw.hidden = empty || v.classList.contains('is-loaded');
+        const em = v.querySelector('.js-empty');
+        if (em) em.hidden = !empty;
+      }
+
+      document.querySelectorAll('.js-nav').forEach((nav) => {
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            placeInd(nav);
+            if (btn.dataset.tab) {
+              const v = nav.closest('.proto-variant');
+              v.dataset.tab = btn.dataset.tab;
+              applyTab(v);
+            }
+          });
+        });
+      });
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      /* load more: show the variant's loading treatment for ~1.2s, then
+         resolve once — the two new rows fade in and persist, the button
+         retires. No loop anywhere. */
+      document.querySelectorAll('.js-loadmore').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const v = btn.closest('.proto-variant');
+          btn.disabled = true;
+          if (btn.dataset.busy) btn.textContent = btn.dataset.busy;
+          const pending = v.querySelector('.js-pending');
+          if (pending) {
+            pending.hidden = false;
+            void pending.offsetWidth; /* commit layout before the fill */
+          }
+          v.classList.add('is-loading');
+          setTimeout(() => {
+            v.classList.remove('is-loading');
+            if (pending) pending.hidden = true;
+            v.querySelectorAll('.js-more').forEach((r) => {
+              r.hidden = false;
+              r.classList.add('is-in');
+            });
+            v.classList.add('is-loaded');
+            const lw = v.querySelector('.js-loadwrap');
+            if (lw) lw.hidden = true;
+          }, 1200);
+        });
+      });
+
+      /* the empty state's quiet button acts: back to the active tab */
+      document.querySelectorAll('.js-back').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const v = btn.closest('.proto-variant');
+          const target = v.querySelector('.js-nav [data-tab="active"]');
+          if (target) target.click();
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1071 @@
+<!--
+  LAB marketing landing — when the homepage becomes a real marketing page
+  (the catalog moves to its own page), what is its shape? Six structurally
+  divergent successors to the specimen sheet, for a developer or founder
+  deciding whether to adopt the system.
+  VERDICT: (pending operator review)
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · the marketing landing, six shapes</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+      .bar-links {
+        display: inline-flex;
+        gap: 1.5em;
+      }
+
+      /* shared register helpers (lifted from the live specimen) */
+      .reg-grid {
+        display: grid;
+        grid-template-columns: auto repeat(3, minmax(0, 1fr));
+        gap: 0.1em 1.6em;
+        align-items: baseline;
+      }
+      .reg-grid .rh {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+      .x-faint {
+        color: var(--ae-ink-faint);
+      }
+      .w4 {
+        font-weight: var(--ae-w-regular);
+      }
+      .w5 {
+        font-weight: var(--ae-w-medium);
+      }
+      .w8 {
+        font-weight: var(--ae-w-black);
+      }
+      .law-cap {
+        margin-top: 0.8em;
+      }
+
+      /* ── A · ARGUMENT ─────────────────────────────────────────────── */
+      .va-laws {
+        list-style: none;
+        margin: 0 0 2.4em;
+        padding: 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .va-laws li {
+        border-top: 1px solid var(--ae-line);
+        padding: 0.5em 0;
+        display: flex;
+        gap: 1.3em;
+        align-items: baseline;
+      }
+      .va-no {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+
+      /* ── B · SPECIMEN+ ────────────────────────────────────────────── */
+      .vb-top {
+        border-bottom: 1px solid var(--ae-line);
+        padding-bottom: 1.8em;
+        margin-bottom: 2.2em;
+      }
+      .vb-top .ae-lede {
+        margin-bottom: 0.8em;
+      }
+      .vb-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2em 2.8em;
+        align-items: start;
+      }
+      .vb-grid > * {
+        min-width: 0;
+      }
+      @media (max-width: 900px) {
+        .vb-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .vb-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── C · PLATE ────────────────────────────────────────────────── */
+      .vc-split {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        gap: 3.5em;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .vc-split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .vc-split .ae-lede {
+        margin: 0.8em 0 1.8em;
+      }
+      .vc-plate {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .vc-plate line {
+        stroke: var(--ae-ink-faint);
+        stroke-opacity: 0.55;
+        stroke-width: 1;
+      }
+      .vc-plate circle {
+        fill: var(--ae-ink-muted);
+      }
+      .vc-plate .vc-faint {
+        fill: var(--ae-ink-faint);
+      }
+      .vc-plate .vc-acc {
+        fill: var(--ae-accent);
+      }
+      /* plate drift: an IMAGES.md plate, not interface motion — 20s+,
+         barely perceptible, frozen by the global reduced-motion rule */
+      .vc-g1 {
+        animation: vc-d1 32s ease-in-out infinite alternate;
+      }
+      .vc-g2 {
+        animation: vc-d2 40s ease-in-out infinite alternate;
+      }
+      .vc-g3 {
+        animation: vc-d3 36s ease-in-out infinite alternate;
+      }
+      @keyframes vc-d1 {
+        to {
+          transform: translate(8px, -6px);
+        }
+      }
+      @keyframes vc-d2 {
+        to {
+          transform: translate(-7px, 5px);
+        }
+      }
+      @keyframes vc-d3 {
+        to {
+          transform: translate(5px, 7px);
+        }
+      }
+
+      /* ── D · GAUNTLET ─────────────────────────────────────────────── */
+      .vd-row {
+        display: flex;
+        gap: 2.2em;
+        flex-wrap: wrap;
+        margin: 2.2em 0;
+      }
+      .vd-frame {
+        border: 1px solid var(--ae-line);
+        width: 264px;
+        height: 176px;
+        overflow: hidden;
+      }
+      .vd-scale {
+        width: 480px;
+        height: 320px;
+        transform: scale(0.55);
+        transform-origin: 0 0;
+        padding: 1.3em 1.6em;
+        box-sizing: border-box;
+      }
+      .vd-figlab {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        margin-top: 0.7em;
+      }
+      .vd-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.2em;
+        margin-bottom: 0.8em;
+      }
+      .vd-rowline {
+        border-top: 1px solid var(--ae-line);
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 0.35em 0;
+      }
+      .vd-scale .ae-input {
+        margin-bottom: 0.6em;
+      }
+
+      /* ── E · SOURCE ───────────────────────────────────────────────── */
+      .ve-split {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        gap: 3.5em;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .ve-split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ve-split .ae-lede {
+        margin-bottom: 1.4em;
+      }
+      .ve-install {
+        margin-bottom: 1em;
+      }
+      .ve-src {
+        background: var(--ae-wash);
+        padding: 1.6em;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.75;
+        overflow-x: auto;
+        color: var(--ae-ink-muted);
+      }
+      .ve-src .t {
+        color: var(--ae-ink);
+      }
+
+      /* ── F · LEDGER ───────────────────────────────────────────────── */
+      #f .ae-stage > .ae-view {
+        margin-block: 0;
+        flex: 1;
+        display: flex;
+        min-height: 0;
+      }
+      .vf-frame {
+        flex: 1;
+        position: relative;
+        border: 1px solid var(--ae-line);
+        min-height: 0;
+        display: flex;
+      }
+      .vf-inner {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 3em 3.5em;
+      }
+      .vf-c {
+        position: absolute;
+        font-family: var(--ae-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+      }
+      .vf-tl {
+        top: 0.8em;
+        left: 1.1em;
+      }
+      .vf-tr {
+        top: 0.8em;
+        right: 1.1em;
+      }
+      .vf-bl {
+        bottom: 0.8em;
+        left: 1.1em;
+      }
+      .vf-figno {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin-bottom: 1.1em;
+      }
+      .vf-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 5.2em) auto;
+      }
+      .vf-cell {
+        border: 1px solid var(--ae-line);
+        margin: 0 -1px -1px 0;
+        text-align: center;
+        padding: 0.45em 0;
+      }
+      .vf-leadwrap {
+        display: flex;
+        align-items: center;
+        font-family: var(--ae-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+      }
+      .vf-lead {
+        width: 2.4em;
+        border-top: 1px solid var(--ae-line);
+        margin: 0 0.7em 0 1.1em;
+      }
+      .vf-colrow {
+        display: grid;
+        grid-template-columns: repeat(3, 5.2em) auto;
+        font-family: var(--ae-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        text-align: center;
+        padding-top: 0.6em;
+      }
+      .vf-fig2 {
+        margin: 1.8em 0 0;
+      }
+      .vf-chip {
+        display: inline-block;
+        width: 0.65em;
+        height: 0.65em;
+        background: var(--ae-accent);
+        margin-right: 0.7em;
+      }
+      .vf-title {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: min(26em, 72%);
+        border-top: 1px solid var(--ae-line);
+        border-left: 1px solid var(--ae-line);
+        background: var(--ae-surface);
+      }
+      .vf-trow {
+        padding: 0.5em 1.1em;
+      }
+      .vf-trow + .vf-trow {
+        border-top: 1px solid var(--ae-line);
+      }
+      .vf-meta {
+        font-family: var(--ae-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · ARGUMENT — pure manifesto, conversion by conviction ═══ -->
+    <section class="proto-variant is-on" id="a">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-chrome">misty-step / aesthetic</span>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="ae-group">
+              <p class="ae-name">AESTHETIC</p>
+              <p class="ae-lede">
+                Most design systems are a component library and a thousand
+                decisions left open. This is one CSS file and seven laws —
+                import it, and the decisions are already made.
+              </p>
+            </div>
+            <ol class="va-laws">
+              <li>
+                <span class="va-no">01</span>
+                <span
+                  ><span class="ae-item">One font size.</span>
+                  <span class="ae-dim"
+                    >Hierarchy is ink and weight, never scale.</span
+                  ></span
+                >
+              </li>
+              <li>
+                <span class="va-no">02</span>
+                <span
+                  ><span class="ae-item">Nine registers.</span>
+                  <span class="ae-dim"
+                    >Three inks by three weights, nothing else.</span
+                  ></span
+                >
+              </li>
+              <li>
+                <span class="va-no">03</span>
+                <span
+                  ><span class="ae-item">One accent per view.</span>
+                  <span class="ae-dim"
+                    >The single thing that matters now.</span
+                  ></span
+                >
+              </li>
+              <li>
+                <span class="va-no">04</span>
+                <span
+                  ><span class="ae-item">Screens, not pages.</span>
+                  <span class="ae-dim"
+                    >Every view fits the viewport; documents scroll inside the
+                    stage.</span
+                  ></span
+                >
+              </li>
+              <li>
+                <span class="va-no">05</span>
+                <span
+                  ><span class="ae-item">Motion is feedback.</span>
+                  <span class="ae-dim"
+                    >It resolves once and persists, never decorates.</span
+                  ></span
+                >
+              </li>
+              <li>
+                <span class="va-no">06</span>
+                <span
+                  ><span class="ae-item">Buttons are not links.</span>
+                  <span class="ae-dim">They never share a costume.</span></span
+                >
+              </li>
+              <li>
+                <span class="va-no">07</span>
+                <span
+                  ><span class="ae-item">Light and dark are equals.</span>
+                  <span class="ae-dim"
+                    >The system decides; the user overrules.</span
+                  ></span
+                >
+              </li>
+            </ol>
+            <p>
+              <span class="ae-accent"
+                ><code>pnpm add github:misty-step/aesthetic#v2.3.1</code></span
+              >
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            A · ARGUMENT — the manifesto: seven laws, an install line,
+            conversion by conviction.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · SPECIMEN+ — marketing on top, living proof below ══════ -->
+    <section class="proto-variant" id="b">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="vb-top">
+              <p class="ae-lede">
+                One stylesheet with the whole identity in it: nine registers,
+                hairline structure, screens that never scroll. Everything below
+                is rendered by the file you would install — the proof and the
+                product are the same file.
+              </p>
+              <p>
+                <code>pnpm add github:misty-step/aesthetic#v2.3.1</code>
+              </p>
+            </div>
+            <div class="vb-grid">
+              <div>
+                <h2 class="ae-h">NINE REGISTERS</h2>
+                <div class="reg-grid">
+                  <span class="rh"></span><span class="rh">400</span
+                  ><span class="rh">550</span><span class="rh">800</span>
+                  <span class="rh">ink</span><span class="w4">quiet</span
+                  ><span class="w5">steady</span><span class="w8">loud</span>
+                  <span class="rh">muted</span
+                  ><span class="ae-dim w4">quiet</span
+                  ><span class="ae-dim w5">steady</span
+                  ><span class="ae-dim w8">loud</span>
+                  <span class="rh">faint</span
+                  ><span class="x-faint w4">quiet</span
+                  ><span class="x-faint w5">steady</span
+                  ><span class="x-faint w8">loud</span>
+                </div>
+                <p class="ae-dim law-cap">
+                  One font size — heavier and blacker, never larger.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">MOTION IS FEEDBACK</h2>
+                <form class="js-form">
+                  <label class="ae-label" for="b-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="b-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                    style="margin-bottom: 1.2em"
+                  />
+                  <button class="ae-button ae-send" type="submit">
+                    <span class="ae-send-label">Send message</span>
+                    <span class="ae-send-done" aria-hidden="true"
+                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                    ></span>
+                  </button>
+                </form>
+                <p class="ae-dim law-cap">
+                  Success resolves once and persists — send it and see.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SCREENS, NOT PAGES</h2>
+                <nav class="ae-nav js-nav">
+                  <button class="is-active">work</button>
+                  <button>writing</button>
+                  <button>contact</button>
+                  <span class="ae-nav-ind"></span>
+                </nav>
+                <p class="ae-dim law-cap">
+                  The underline slides; nothing scrolls.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">ONE ACCENT</h2>
+                <p>
+                  The <span class="ae-accent">single instance</span> per view —
+                  this page just spent its.
+                </p>
+                <p class="ae-dim law-cap">
+                  A link rests in ink and <a href="#">warms on hover</a>.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">BUTTONS ARE NOT LINKS</h2>
+                <p style="display: flex; gap: 1em; flex-wrap: wrap">
+                  <button class="ae-button">Primary</button>
+                  <button class="ae-button ae-button-quiet">Quiet</button>
+                </p>
+                <p class="ae-dim law-cap">
+                  Links navigate, buttons act — never the same costume.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">LIGHT AND DARK</h2>
+                <div class="ae-foot">
+                  <span>v2.3.1 · MIT</span>
+                  <span class="ae-foot-links"
+                    ><a href="#">github</a><a href="#">primitives</a></span
+                  >
+                </div>
+                <p class="ae-dim law-cap">
+                  Your system decides; the toggle above overrules.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            B · SPECIMEN+ — the evolution: marketing up top, the living proof
+            below it, one screen.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · PLATE — the code-rendered artwork sells the aesthetic ═ -->
+    <section class="proto-variant" id="c">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-chrome">misty-step / aesthetic</span>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="vc-split">
+              <div>
+                <p class="ae-name">AESTHETIC</p>
+                <p class="ae-lede">
+                  Hairlines, ink, and one ultramarine point of attention. The
+                  restraint of an engineering manual, shipped as a single CSS
+                  file with no build step.
+                </p>
+                <p>
+                  <code>pnpm add github:misty-step/aesthetic#v2.3.1</code>
+                </p>
+              </div>
+              <svg
+                class="vc-plate"
+                viewBox="0 0 560 440"
+                role="img"
+                aria-label="constellation plate: drifting points joined by hairlines, one accent node"
+              >
+                <circle class="vc-faint" cx="260" cy="40" r="1.8" />
+                <circle class="vc-faint" cx="520" cy="64" r="1.8" />
+                <circle class="vc-faint" cx="40" cy="262" r="1.8" />
+                <circle class="vc-faint" cx="208" cy="244" r="1.8" />
+                <circle class="vc-faint" cx="538" cy="396" r="1.8" />
+                <circle class="vc-faint" cx="476" cy="44" r="1.8" />
+                <g class="vc-g1">
+                  <line x1="96" y1="96" x2="176" y2="64" />
+                  <line x1="176" y1="64" x2="216" y2="140" />
+                  <line x1="216" y1="140" x2="128" y2="188" />
+                  <line x1="128" y1="188" x2="96" y2="96" />
+                  <line x1="96" y1="96" x2="60" y2="150" />
+                  <circle cx="96" cy="96" r="2.5" />
+                  <circle cx="176" cy="64" r="2.5" />
+                  <circle cx="216" cy="140" r="2.5" />
+                  <circle cx="128" cy="188" r="2.5" />
+                  <circle class="vc-faint" cx="60" cy="150" r="1.8" />
+                </g>
+                <g class="vc-g2">
+                  <line x1="340" y1="84" x2="430" y2="120" />
+                  <line x1="430" y1="120" x2="470" y2="210" />
+                  <line x1="470" y1="210" x2="372" y2="196" />
+                  <line x1="372" y1="196" x2="300" y2="150" />
+                  <line x1="300" y1="150" x2="340" y2="84" />
+                  <line x1="372" y1="196" x2="340" y2="84" />
+                  <circle cx="340" cy="84" r="2.5" />
+                  <circle class="vc-acc" cx="430" cy="120" r="4.5" />
+                  <circle cx="470" cy="210" r="2.5" />
+                  <circle cx="372" cy="196" r="2.5" />
+                  <circle class="vc-faint" cx="300" cy="150" r="1.8" />
+                </g>
+                <g class="vc-g3">
+                  <line x1="140" y1="320" x2="230" y2="356" />
+                  <line x1="230" y1="356" x2="330" y2="322" />
+                  <line x1="330" y1="322" x2="420" y2="352" />
+                  <line x1="420" y1="352" x2="496" y2="300" />
+                  <circle cx="140" cy="320" r="2.5" />
+                  <circle class="vc-faint" cx="230" cy="356" r="1.8" />
+                  <circle cx="330" cy="322" r="2.5" />
+                  <circle class="vc-faint" cx="420" cy="352" r="1.8" />
+                  <circle cx="496" cy="300" r="2.5" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            C · PLATE — the image language: a code-rendered constellation sells
+            the aesthetic.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · GAUNTLET — proof by range: three framed mini screens ══ -->
+    <section class="proto-variant" id="d">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="ae-lede">
+              <span class="w8">One stylesheet, any application.</span>
+              <span class="ae-dim"
+                >A dashboard, a document, a form — the same nine registers, the
+                same hairlines, not one line of per-project CSS.</span
+              >
+            </p>
+            <div class="vd-row">
+              <div>
+                <div class="vd-frame">
+                  <div class="vd-scale">
+                    <h3 class="ae-h">OPERATIONS</h3>
+                    <div class="vd-stats">
+                      <div>
+                        <p class="w8">1,284</p>
+                        <p class="ae-dim">requests</p>
+                      </div>
+                      <div>
+                        <p class="w8">99.98%</p>
+                        <p class="ae-dim">uptime</p>
+                      </div>
+                      <div>
+                        <p class="w8">214ms</p>
+                        <p class="ae-dim">p95</p>
+                      </div>
+                    </div>
+                    <p class="vd-rowline">
+                      <span class="ae-item">deploy 4121</span>
+                      <span class="ae-dim">resolved</span>
+                    </p>
+                    <p class="vd-rowline">
+                      <span class="ae-item">deploy 4120</span>
+                      <span class="ae-dim">resolved</span>
+                    </p>
+                  </div>
+                </div>
+                <p class="vd-figlab">FIG. A — DASHBOARD</p>
+              </div>
+              <div>
+                <div class="vd-frame">
+                  <div class="vd-scale">
+                    <h3 class="ae-h">RFC-014 · DRAFT</h3>
+                    <p class="w8">Naming the registers</p>
+                    <p class="ae-dim">
+                      Hierarchy needs only ink and weight. Scale is the loudest
+                      tool, and the first one surrendered.
+                    </p>
+                    <p class="ae-dim">
+                      Three inks by three weights gives nine registers — enough
+                      for any document.
+                    </p>
+                  </div>
+                </div>
+                <p class="vd-figlab">FIG. B — DOCUMENT</p>
+              </div>
+              <div>
+                <div class="vd-frame">
+                  <div class="vd-scale">
+                    <h3 class="ae-h">NEW ACCOUNT</h3>
+                    <label class="ae-label" for="d-name">Name</label>
+                    <input class="ae-input" id="d-name" type="text" />
+                    <label class="ae-label" for="d-email">Email</label>
+                    <input class="ae-input" id="d-email" type="email" />
+                    <button class="ae-button" type="button">
+                      Create account
+                    </button>
+                  </div>
+                </div>
+                <p class="vd-figlab">FIG. C — FORM</p>
+              </div>
+            </div>
+            <p>
+              <span class="ae-accent"
+                ><code>pnpm add github:misty-step/aesthetic#v2.3.1</code></span
+              >
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            D · GAUNTLET — the product shot: one stylesheet shown across three
+            applications.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · SOURCE — view-source as hero, conversion by transparency -->
+    <section class="proto-variant" id="e">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="ve-split">
+              <div>
+                <p class="ae-lede">
+                  View source is the documentation. A screen is three elements —
+                  a bar, a stage, a bar — and the stylesheet does everything
+                  else. What you see here is the entire integration.
+                </p>
+                <p class="ve-install">
+                  <span class="ae-accent"
+                    ><code
+                      >pnpm add github:misty-step/aesthetic#v2.3.1</code
+                    ></span
+                  >
+                </p>
+                <p class="ae-dim">No theme object, no plugin, no build step.</p>
+              </div>
+              <pre
+                class="ve-src"
+              ><code>&lt;link rel="stylesheet" href="aesthetic.css" /&gt;
+
+&lt;div class="<span class="t">ae-screen</span>"&gt;
+  &lt;header class="<span class="t">ae-bar</span>"&gt;
+    &lt;a class="<span class="t">ae-name</span>" href="/"&gt;AESTHETIC&lt;/a&gt;
+  &lt;/header&gt;
+
+  &lt;main class="<span class="t">ae-stage</span>"&gt;
+    &lt;div class="<span class="t">ae-view</span>"&gt;
+      &lt;p class="<span class="t">ae-lede</span>"&gt;Your page, in nine registers.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;footer class="<span class="t">ae-bar</span>"&gt;
+    &lt;p class="<span class="t">ae-chrome</span>"&gt;v2.3.1 · MIT&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            E · SOURCE — the transparency play: the whole truth of a screen,
+            beside the pitch.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · LEDGER — the engineering-manual cover, most brand-forward -->
+    <section class="proto-variant" id="f">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-chrome">misty-step / aesthetic</span>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">primitives</a><a href="#">github</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="vf-frame">
+              <span class="vf-c vf-tl">MISTY STEP · DESIGN SYSTEMS DIV.</span>
+              <span class="vf-c vf-tr">DWG NO. AE-2026-01</span>
+              <span class="vf-c vf-bl">SCALE 1:1 · DO NOT ENLARGE TYPE</span>
+              <div class="vf-inner">
+                <div>
+                  <p class="vf-figno">
+                    FIG. 1 — THE NINE REGISTERS: THREE INKS × THREE WEIGHTS
+                  </p>
+                  <div class="vf-grid">
+                    <span class="vf-cell w4">Aa</span>
+                    <span class="vf-cell w5">Aa</span>
+                    <span class="vf-cell w8">Aa</span>
+                    <span class="vf-leadwrap"
+                      ><span class="vf-lead"></span>INK</span
+                    >
+                    <span class="vf-cell ae-dim w4">Aa</span>
+                    <span class="vf-cell ae-dim w5">Aa</span>
+                    <span class="vf-cell ae-dim w8">Aa</span>
+                    <span class="vf-leadwrap"
+                      ><span class="vf-lead"></span>MUTED</span
+                    >
+                    <span class="vf-cell x-faint w4">Aa</span>
+                    <span class="vf-cell x-faint w5">Aa</span>
+                    <span class="vf-cell x-faint w8">Aa</span>
+                    <span class="vf-leadwrap"
+                      ><span class="vf-lead"></span>FAINT</span
+                    >
+                  </div>
+                  <div class="vf-colrow">
+                    <span>400</span><span>550</span><span>800</span
+                    ><span></span>
+                  </div>
+                  <p class="vf-figno vf-fig2">
+                    <span class="vf-chip"></span>FIG. 2 — THE ACCENT, RATIONED:
+                    ONE INSTANCE PER VIEW
+                  </p>
+                </div>
+              </div>
+              <div class="vf-title">
+                <p class="vf-trow"><span class="ae-name">AESTHETIC</span></p>
+                <p class="vf-trow ae-dim">
+                  the misty step design system — one file, seven laws
+                </p>
+                <p class="vf-trow">
+                  <code>pnpm add github:misty-step/aesthetic#v2.3.1</code>
+                </p>
+                <p class="vf-trow vf-meta">
+                  REV 2.3.1 · MIT · NO BUILD STEP · SHEET 1 OF 1
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome ae-dim">
+            F · LEDGER — the manual cover: the brand presented as an engineering
+            drawing.
+          </p>
+          <p class="ae-chrome">v2.3.1 · MIT</p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="a" class="is-active">A argument</button>
+      <button data-v="b">B specimen+</button>
+      <button data-v="c">C plate</button>
+      <button data-v="d">D gauntlet</button>
+      <button data-v="e">E source</button>
+      <button data-v="f">F ledger</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+      document.querySelectorAll('.js-nav').forEach((nav) => {
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            placeInd(nav);
+          });
+        });
+      });
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      document.querySelectorAll('.js-form').forEach((form) => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('.ae-send');
+          btn.classList.add('is-sent');
+          btn.disabled = true;
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>

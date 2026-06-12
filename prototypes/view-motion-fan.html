@@ -1,0 +1,935 @@
+<!-- LAB view choreography — when a quiet nav swaps views, what is the
+     exit/enter choreography? Today the old view vanishes instantly and the
+     new one plays ae-enter (6px rise, 240ms). Six proposals, A–F, each on
+     the same small portfolio screen.
+     VERDICT: (pending operator review) -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · view choreography, six proposals</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ───────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      /* the replay affordance: chrome register, contained, not a link */
+      .js-replay {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: transparent;
+        border: 1px solid var(--ae-line);
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.4em 0.9em;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .js-replay:hover {
+        color: var(--ae-ink);
+        border-color: var(--ae-ink);
+      }
+
+      /* ── the swapping region: views stack in one grid cell so nothing
+            changes size while animating ──────────────────────────────── */
+      .stage-views {
+        display: grid;
+      }
+      .stage-views > .view {
+        grid-area: 1 / 1;
+        visibility: hidden;
+      }
+      .stage-views > .view.is-on,
+      .stage-views > .view.is-exiting {
+        visibility: visible;
+      }
+      .stage-views > .view.is-on {
+        z-index: 1;
+      }
+
+      /* shared keyframes: opacity only, plus the ae-enter vocabulary */
+      @keyframes fan-out {
+        to {
+          opacity: 0;
+        }
+      }
+      @keyframes fan-in {
+        from {
+          opacity: 0;
+        }
+      }
+
+      /* ── A · CUT+ENTER (control): instant exit, ae-enter on the new ── */
+      [data-choreo='cut'] .view.is-entering {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+
+      /* ── B · FADE-THROUGH: quick fade out, THEN a quick rise in —
+            sequenced, never overlapped; 160 + 160 = 320ms ─────────────── */
+      [data-choreo='fade'] .view.is-exiting {
+        animation: fan-out var(--ae-quick) var(--ae-ease) both;
+      }
+      [data-choreo='fade'] .view.is-entering {
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+
+      /* ── C · CROSSFADE: both views share the cell, opacity only, no
+            vertical motion; the calmest proposal ──────────────────────── */
+      [data-choreo='cross'] .view.is-exiting {
+        animation: fan-out var(--ae-soft) var(--ae-ease) both;
+      }
+      [data-choreo='cross'] .view.is-entering {
+        animation: fan-in var(--ae-soft) var(--ae-ease) both;
+      }
+
+      /* ── D · DIRECTIONAL: direction follows nav order — moving right in
+            the nav, content drifts left; moving left, it drifts right ── */
+      @keyframes fan-exit-fwd {
+        to {
+          opacity: 0;
+          transform: translateX(-6px);
+        }
+      }
+      @keyframes fan-enter-fwd {
+        from {
+          opacity: 0;
+          transform: translateX(6px);
+        }
+      }
+      @keyframes fan-exit-back {
+        to {
+          opacity: 0;
+          transform: translateX(6px);
+        }
+      }
+      @keyframes fan-enter-back {
+        from {
+          opacity: 0;
+          transform: translateX(-6px);
+        }
+      }
+      [data-choreo='dir'] .view.is-exiting.go-fwd {
+        animation: fan-exit-fwd var(--ae-soft) var(--ae-ease) both;
+      }
+      [data-choreo='dir'] .view.is-entering.go-fwd {
+        animation: fan-enter-fwd var(--ae-soft) var(--ae-ease) both;
+      }
+      [data-choreo='dir'] .view.is-exiting.go-back {
+        animation: fan-exit-back var(--ae-soft) var(--ae-ease) both;
+      }
+      [data-choreo='dir'] .view.is-entering.go-back {
+        animation: fan-enter-back var(--ae-soft) var(--ae-ease) both;
+      }
+
+      /* ── E · STAGGER: plain quick fade out, then the new view's children
+            cascade in at 40ms steps (max 5; cascade spans 400ms) ──────── */
+      [data-choreo='stagger'] .view.is-exiting {
+        animation: fan-out var(--ae-quick) var(--ae-ease) both;
+      }
+      [data-choreo='stagger'] .view.is-entering > * {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      [data-choreo='stagger'] .view.is-entering > :nth-child(2) {
+        animation-delay: 40ms;
+      }
+      [data-choreo='stagger'] .view.is-entering > :nth-child(3) {
+        animation-delay: 80ms;
+      }
+      [data-choreo='stagger'] .view.is-entering > :nth-child(4) {
+        animation-delay: 120ms;
+      }
+      [data-choreo='stagger'] .view.is-entering > :nth-child(n + 5) {
+        animation-delay: 160ms;
+      }
+
+      /* ── F · INK-RULE: a 1px hairline sweeps under the swapping region,
+            like the nav indicator traveling; content cuts behind it —
+            motion lives in chrome, not content ────────────────────────── */
+      [data-choreo='wipe'] .stage-views {
+        position: relative;
+        overflow-x: clip;
+      }
+      [data-choreo='wipe'] .wipe-rule {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: var(--ae-ink);
+        visibility: hidden;
+      }
+      [data-choreo='wipe'] .wipe-rule.is-sweeping {
+        visibility: visible;
+        animation: fan-sweep var(--ae-soft) var(--ae-ease) both;
+      }
+      @keyframes fan-sweep {
+        from {
+          transform: translateX(-101%);
+        }
+        to {
+          transform: translateX(101%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · CUT+ENTER — the current behavior, as control ═══════════ -->
+    <section class="proto-variant is-on" id="a" data-choreo="cut">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            A · CUT+ENTER — instant exit, the new view plays ae-enter · 240ms
+            (control)
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · FADE-THROUGH — out quick, then in quick, sequenced ═════ -->
+    <section class="proto-variant" id="b" data-choreo="fade">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            B · FADE-THROUGH — quick fade out, then a quick rise in · 320ms,
+            sequenced
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · CROSSFADE — opacity only, in place; the calmest ════════ -->
+    <section class="proto-variant" id="c" data-choreo="cross">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            C · CROSSFADE — opacity-only crossfade in place, no vertical motion
+            · 240ms
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · DIRECTIONAL — drift follows nav order ═══════════════════ -->
+    <section class="proto-variant" id="d" data-choreo="dir">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            D · DIRECTIONAL — content drifts with the nav: moving right, it
+            exits left · 240ms
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · STAGGER — children cascade in; feedback or decoration? ═ -->
+    <section class="proto-variant" id="e" data-choreo="stagger">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            E · STAGGER — quick fade out, children cascade at 40ms steps · 160ms
+            + 400ms
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · INK-RULE — a hairline sweeps; content cuts behind it ═══ -->
+    <section class="proto-variant" id="f" data-choreo="wipe">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <nav class="ae-nav js-nav">
+              <button class="is-active" data-view="work">work</button>
+              <button data-view="writing">writing</button>
+              <button data-view="contact">contact</button>
+              <span class="ae-nav-ind"></span>
+            </nav>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="stage-views">
+            <div class="view is-on" data-view="work">
+              <h2 class="ae-h">SELECTED WORK</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">aesthetic</span>
+                <span class="ae-dim">— one stylesheet, the whole identity</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">misty step</span>
+                <span class="ae-dim">— the studio site, one screen</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">field notes</span>
+                <span class="ae-dim">— a quiet reading instrument</span>
+              </a>
+              <p class="ae-dim">
+                In the lab now:
+                <span class="ae-accent">view choreography</span>.
+              </p>
+            </div>
+            <div class="view" data-view="writing">
+              <h2 class="ae-h">WRITING</h2>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">One font size is enough</span>
+                <span class="ae-dim">— hierarchy from ink and weight</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Screens, not pages</span>
+                <span class="ae-dim">— why the chrome never moves</span>
+              </a>
+              <a class="ae-row-link" href="#"
+                ><span class="ae-item">Motion is feedback</span>
+                <span class="ae-dim">— resolve once, persist</span>
+              </a>
+              <p class="ae-dim">
+                Next up:
+                <span class="ae-accent">the choreography of a view swap</span>.
+              </p>
+            </div>
+            <div class="view" data-view="contact">
+              <h2 class="ae-h">CONTACT</h2>
+              <p class="ae-lede">
+                One studio, small on purpose. Say hello about work, writing, or
+                the stylesheet.
+              </p>
+              <p>
+                Email
+                <a class="ae-accent" href="mailto:hello@mistystep.io"
+                  >hello@mistystep.io</a
+                >
+                — replies within a day.
+              </p>
+            </div>
+            <span class="wipe-rule" aria-hidden="true"></span>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            F · INK-RULE — a hairline sweeps under the region; content cuts
+            behind it · 240ms
+          </p>
+          <button class="js-replay" type="button">replay</button>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="a" class="is-active">A cut</button>
+      <button data-v="b">B fade</button>
+      <button data-v="c">C cross</button>
+      <button data-v="d">D direction</button>
+      <button data-v="e">E stagger</button>
+      <button data-v="f">F ink-rule</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      const QUICK = 160; /* --ae-quick */
+      const SOFT = 240; /* --ae-soft */
+      const STEP = 40; /* stagger step; last of 5 children starts at 160ms */
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* mode toggle: one per variant bar */
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      /* nav indicator: the existing sliding-underline pattern */
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      /* choreography engine: one controller per variant.
+         Every animation runs exactly once per user action; reduced motion
+         takes the instant path (the CSS gate kills animation regardless). */
+      document.querySelectorAll('.proto-variant').forEach((section) => {
+        const choreo = section.dataset.choreo;
+        const nav = section.querySelector('.js-nav');
+        const wrap = section.querySelector('.stage-views');
+        const views = [...wrap.querySelectorAll('.view')];
+        const names = views.map((v) => v.dataset.view);
+        const rule = wrap.querySelector('.wipe-rule');
+        const viewOf = (name) => views[names.indexOf(name)];
+        let timers = [];
+        let current = 'work';
+        let last = { from: 'writing', to: 'work', fwd: false };
+
+        const after = (ms, fn) => timers.push(setTimeout(fn, ms));
+        const tidy = () => {
+          timers.forEach(clearTimeout);
+          timers = [];
+          views.forEach((v) =>
+            v.classList.remove(
+              'is-exiting',
+              'is-entering',
+              'go-fwd',
+              'go-back',
+            ),
+          );
+          if (rule) rule.classList.remove('is-sweeping');
+        };
+        const enter = (el, dirCls) => {
+          el.classList.add('is-on');
+          el.classList.remove('is-entering');
+          void el.offsetWidth; /* restart the entrance */
+          if (dirCls) el.classList.add(dirCls);
+          el.classList.add('is-entering');
+        };
+        const exit = (el, dirCls) => {
+          el.classList.remove('is-on');
+          if (dirCls) el.classList.add(dirCls);
+          el.classList.add('is-exiting');
+        };
+
+        function run(from, to, fwd) {
+          tidy();
+          views.forEach((v) => v.classList.toggle('is-on', v === from));
+          if (reduced.matches) {
+            /* reduced motion: the swap is instant, full stop */
+            from.classList.remove('is-on');
+            to.classList.add('is-on');
+            return;
+          }
+          switch (choreo) {
+            case 'cut':
+              /* A: instant exit, ae-enter on the new view — 240ms */
+              from.classList.remove('is-on');
+              enter(to);
+              after(SOFT, tidy);
+              break;
+            case 'fade':
+              /* B: 160ms fade out, THEN 160ms rise in — 320ms sequenced */
+              exit(from);
+              after(QUICK, () => {
+                from.classList.remove('is-exiting');
+                enter(to);
+                after(QUICK, tidy);
+              });
+              break;
+            case 'cross':
+              /* C: both share the cell, opacity crossfade — 240ms */
+              exit(from);
+              enter(to);
+              after(SOFT, tidy);
+              break;
+            case 'dir':
+              /* D: drift follows nav order — 240ms, concurrent */
+              exit(from, fwd ? 'go-fwd' : 'go-back');
+              enter(to, fwd ? 'go-fwd' : 'go-back');
+              after(SOFT, tidy);
+              break;
+            case 'stagger':
+              /* E: 160ms fade out, then children cascade (400ms) */
+              exit(from);
+              after(QUICK, () => {
+                from.classList.remove('is-exiting');
+                enter(to);
+                after(4 * STEP + SOFT, tidy);
+              });
+              break;
+            case 'wipe':
+              /* F: the hairline sweeps 240ms; content cuts at midpoint */
+              rule.classList.remove('is-sweeping');
+              void rule.offsetWidth;
+              rule.classList.add('is-sweeping');
+              after(SOFT / 2, () => {
+                from.classList.remove('is-on');
+                to.classList.add('is-on');
+              });
+              after(SOFT, tidy);
+              break;
+          }
+        }
+
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const toName = btn.dataset.view;
+            if (toName === current) return;
+            const fwd = names.indexOf(toName) > names.indexOf(current);
+            run(viewOf(current), viewOf(toName), fwd);
+            last = { from: current, to: toName, fwd };
+            current = toName;
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.toggle('is-active', b === btn));
+            placeInd(nav);
+          });
+        });
+
+        /* replay: re-run the most recent swap (writing → work at first) */
+        section.querySelector('.js-replay').addEventListener('click', () => {
+          run(viewOf(last.from), viewOf(last.to), last.fwd);
+        });
+      });
+
+      /* variant picker */
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>

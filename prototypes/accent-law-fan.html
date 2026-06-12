@@ -1,0 +1,1076 @@
+<!doctype html>
+<!-- LAB accent law — the operator doubts "exactly one accent instance per
+     view". The same Misty Step ops screen rendered under six accent
+     POLICIES — one per view, one per region, rationed, state-only,
+     ambient, none — so the law can be judged by eye, not argument.
+     VERDICT: (pending operator review) -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — the accent law, six policies</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      /* ── the constant screen: identical in all six variants ────────── */
+      .pol-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        line-height: 2;
+        margin-bottom: 2.4em;
+      }
+      .ops-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+        gap: 3em 4.5em;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .ops-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 3em;
+        margin-bottom: 2.2em;
+      }
+      .stat {
+        line-height: 1.5;
+      }
+      .stat-n {
+        display: block;
+        font-weight: var(--ae-w-black);
+      }
+      .dep-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .dep-table th {
+        text-align: left;
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink-muted);
+        padding: 0 1.2em 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-table td {
+        padding: 0.5em 1.2em 0.5em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-table th:last-child,
+      .dep-table td:last-child {
+        padding-right: 0;
+      }
+      /* the ink baseline for status: weight carries it (this IS policy F) */
+      .st-ok {
+        color: var(--ae-ink-muted);
+      }
+      .st-prog {
+        font-weight: var(--ae-w-medium);
+      }
+      .st-fail {
+        font-weight: var(--ae-w-black);
+      }
+      .btn-row {
+        display: flex;
+        gap: 1em;
+        flex-wrap: wrap;
+        margin-top: 0.2em;
+      }
+      .foot-links {
+        display: inline-flex;
+        gap: 1.5em;
+      }
+
+      /* ── the six policies: ONLY accent application differs ─────────── */
+
+      /* A · one per view: the failing deploy is the single instance */
+      .pol-a .st-fail {
+        color: var(--ae-accent);
+      }
+
+      /* B · one per region: bar → active-nav underline, stage → failing
+         row, footer → abstains */
+      .pol-b .ae-nav-ind {
+        background: var(--ae-accent);
+      }
+      .pol-b .st-fail {
+        color: var(--ae-accent);
+      }
+
+      /* C · rationed: the affordance class warms — link hovers (system
+         default) and the active nav item — plus one resting instance */
+      .pol-c .ae-nav .is-active {
+        color: var(--ae-accent);
+      }
+      .pol-c .st-fail {
+        color: var(--ae-accent);
+      }
+
+      /* D · state only: focus + live state; never navigation, never
+         rest — link hover stays ink */
+      .pol-d a:hover {
+        color: var(--ae-ink);
+        text-decoration-color: var(--ae-ink);
+      }
+      .pol-d :focus-visible {
+        outline-color: var(--ae-accent);
+      }
+      .pol-d .ae-input:focus-visible {
+        border-bottom-color: var(--ae-accent);
+      }
+      .pol-d .st-fail,
+      .pol-d .st-prog {
+        color: var(--ae-accent);
+      }
+
+      /* E · ambient: the conventional design-system policy — buttons,
+         links at rest, active nav, focus, the failing badge */
+      .pol-e a:not(.ae-name) {
+        color: var(--ae-accent);
+        text-decoration-color: currentColor;
+      }
+      .pol-e .ae-nav .is-active {
+        color: var(--ae-accent);
+      }
+      .pol-e .ae-nav-ind {
+        background: var(--ae-accent);
+      }
+      .pol-e .ae-button {
+        background: var(--ae-accent);
+        border-color: var(--ae-accent);
+        color: var(--ae-surface);
+      }
+      .pol-e .ae-button-quiet {
+        background: transparent;
+        color: var(--ae-accent);
+      }
+      .pol-e :focus-visible {
+        outline-color: var(--ae-accent);
+      }
+      .pol-e .ae-input:focus-visible {
+        border-bottom-color: var(--ae-accent);
+      }
+      .pol-e .st-fail {
+        color: var(--ae-accent);
+      }
+
+      /* F · none: the ink baseline stands; even hover stays ink */
+      .pol-f a:hover {
+        color: var(--ae-ink);
+        text-decoration-color: var(--ae-ink);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · ONE PER VIEW — the current law ═══ -->
+    <section class="proto-variant is-on pol-a" id="va">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              A · ONE PER VIEW — the law as written. The failing deploy is the
+              view's single accent; nav, links, and buttons all rest in ink.
+              accent instances at rest: 1
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-a">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-a"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+    <!-- ═══ B · ONE PER REGION — the stratification proposal ═══ -->
+    <section class="proto-variant pol-b" id="vb">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              B · ONE PER REGION — stratified. The bar spends its instance on
+              the active-nav underline, the stage on the failing deploy; the
+              footer abstains. accent instances at rest: 2
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-b">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-b"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+    <!-- ═══ C · RATIONED — accent as the affordance class ═══ -->
+    <section class="proto-variant pol-c" id="vc">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              C · RATIONED — accent as affordance. Link hovers and the active
+              nav item warm to it, plus one resting instance. Is hover + one
+              already the law? accent instances at rest: 2
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-c">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-c"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+    <!-- ═══ D · STATE ONLY — accent is live state ═══ -->
+    <section class="proto-variant pol-d" id="vd">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              D · STATE ONLY — accent marks live state. Focus rings, the failing
+              deploy, the one in flight; never navigation, never rest. accent
+              instances at rest: 2
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-d">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-d"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+    <!-- ═══ E · AMBIENT — the Material strawman ═══ -->
+    <section class="proto-variant pol-e" id="ve">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              E · AMBIENT — the conventional policy, rendered honestly. Buttons,
+              links, active nav, focus, and the failure all warm. accent
+              instances at rest: 9
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-e">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-e"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+    <!-- ═══ F · NONE — zero accent ═══ -->
+    <section class="proto-variant pol-f" id="vf">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <nav class="ae-nav js-nav" aria-label="ops sections">
+            <button type="button">overview</button>
+            <button type="button" class="is-active">deploys</button>
+            <button type="button">settings</button>
+            <span class="ae-nav-ind"></span>
+          </nav>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <p class="pol-cap ae-dim">
+              F · NONE — zero ultramarine. Ink, muted, faint, and weight carry
+              everything. Does the system need the accent at all? accent
+              instances at rest: 0
+            </p>
+            <div class="ops-grid">
+              <div>
+                <div class="stat-row">
+                  <div class="stat">
+                    <span class="stat-n">14</span
+                    ><span class="ae-chrome">deploys today</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">99.98%</span
+                    ><span class="ae-chrome">uptime, 30d</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">41 ms</span
+                    ><span class="ae-chrome">p50 latency</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-n">1</span
+                    ><span class="ae-chrome">open incident</span>
+                  </div>
+                </div>
+                <table class="dep-table">
+                  <thead>
+                    <tr>
+                      <th>service</th>
+                      <th>commit</th>
+                      <th>when</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">api-gateway</td>
+                      <td><code>9f31c2e</code></td>
+                      <td class="ae-dim">just now</td>
+                      <td class="st st-prog">deploying</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">checkout</td>
+                      <td><code>b8204da</code></td>
+                      <td class="ae-dim">4 min ago</td>
+                      <td class="st st-fail">failed</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">web</td>
+                      <td><code>52e09b7</code></td>
+                      <td class="ae-dim">1 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">billing</td>
+                      <td><code>c47f180</code></td>
+                      <td class="ae-dim">3 hr ago</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">search</td>
+                      <td><code>ab9135d</code></td>
+                      <td class="ae-dim">yesterday</td>
+                      <td class="st st-ok">live</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <aside>
+                <section class="ae-group">
+                  <h2 class="ae-h">RUNBOOK</h2>
+                  <p>
+                    Checkout is failing on migration 0142.
+                    <a href="#">Roll back the deploy</a>,
+                    <a href="#">page the on-call</a>, or follow the
+                    <a href="#">incident doc</a>.
+                  </p>
+                </section>
+                <section class="ae-group">
+                  <h2 class="ae-h">RESPOND</h2>
+                  <form class="js-ack">
+                    <label class="ae-label" for="note-f">Annotation</label>
+                    <input
+                      class="ae-input"
+                      id="note-f"
+                      type="text"
+                      placeholder="What happened, in one line"
+                      style="margin-bottom: 1.2em"
+                    />
+                    <p class="btn-row">
+                      <button class="ae-button" type="submit">
+                        Acknowledge
+                      </button>
+                      <button class="ae-button ae-button-quiet" type="button">
+                        Mute alerts
+                      </button>
+                    </p>
+                  </form>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step ops · build 4f2c9a1 · us-east</p>
+          <p class="ae-chrome foot-links">
+            <a href="#">status</a><a href="#">docs</a>
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="policy picker">
+      <button data-v="va" class="is-active">A one/view</button>
+      <button data-v="vb">B one/region</button>
+      <button data-v="vc">C rationed</button>
+      <button data-v="vd">D state</button>
+      <button data-v="ve">E ambient</button>
+      <button data-v="vf">F none</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      function placeInd(nav) {
+        const active = nav.querySelector('.is-active');
+        const ind = nav.querySelector('.ae-nav-ind');
+        if (!active || !ind || !nav.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+      function placeAllInds() {
+        document.querySelectorAll('.js-nav').forEach(placeInd);
+      }
+      document.querySelectorAll('.js-nav').forEach((nav) => {
+        nav.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            nav
+              .querySelectorAll('button')
+              .forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            placeInd(nav);
+          });
+        });
+      });
+      addEventListener('resize', placeAllInds);
+      if (document.fonts) document.fonts.ready.then(placeAllInds);
+
+      /* the form is a prop: swallow the submit, no state change */
+      document.querySelectorAll('.js-ack').forEach((form) => {
+        form.addEventListener('submit', (e) => e.preventDefault());
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          requestAnimationFrame(placeAllInds);
+        });
+      });
+      placeAllInds();
+    </script>
+  </body>
+</html>

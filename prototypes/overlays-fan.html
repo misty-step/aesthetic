@@ -1,0 +1,1699 @@
+<!--
+  LAB overlays — what are dialog, popover/dropdown, tooltip, and toast in a
+  hairline ink system where motion is feedback and screens never scroll?
+  Six containment languages: A hairline, B panel, C inline, D sheet,
+  E command, F ink. Every variant is a working Misty Step "deploys" screen:
+  delete a deploy (confirm dialog), filter the list (dropdown), hover the
+  age header (tooltip), copy a ref (toast).
+  VERDICT: (pending operator review)
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB overlays, six containment languages</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+      .bar-links {
+        display: inline-flex;
+        gap: 1.5em;
+      }
+
+      /* ── the deploys screen, shared by every variant ──────────────── */
+      .dep-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        margin-bottom: 1.2em;
+      }
+      .dep-title {
+        font-weight: var(--ae-w-black);
+      }
+      .dep-head,
+      .dep-row {
+        display: grid;
+        grid-template-columns: 6.5em minmax(0, 1fr) 7em 3em max-content;
+        gap: 0 1.2em;
+        align-items: baseline;
+      }
+      .dep-head {
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-row {
+        padding: 0.55em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-acts {
+        display: inline-flex;
+        gap: 0.5em;
+        justify-content: flex-end;
+      }
+      .proto-cap {
+        margin-top: 2em;
+      }
+
+      /* a compact contained button: the quiet costume at row scale */
+      .row-btn {
+        font-family: var(--ae-font);
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid var(--ae-line);
+        border-radius: 0;
+        color: var(--ae-ink-muted);
+        padding: 0.2em 0.7em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          border-color var(--ae-quick) var(--ae-ease);
+      }
+      .row-btn:hover {
+        color: var(--ae-ink);
+        border-color: var(--ae-ink);
+      }
+      .mono {
+        font-family: var(--ae-font-mono);
+        letter-spacing: 0.04em;
+      }
+
+      /* ── overlay skins ─────────────────────────────────────────────── */
+      .ov-hairline {
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        border: 1px solid var(--ae-line);
+        box-shadow: none;
+      }
+      .ov-ink {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+        border: 0;
+      }
+      .ov-ink :focus-visible {
+        outline-color: var(--ae-surface);
+      }
+
+      /* ── dialogs ───────────────────────────────────────────────────── */
+      dialog.ov {
+        border: 0;
+        border-radius: 0;
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        width: min(26em, calc(100vw - 3em));
+        box-sizing: border-box;
+        padding: 2em;
+      }
+      dialog.ov[open] {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      dialog.ov::backdrop {
+        background: transparent;
+      }
+      .ov-title {
+        font-weight: var(--ae-w-black);
+        margin-bottom: 0.5em;
+      }
+      .ov-acts {
+        display: flex;
+        gap: 1em;
+        justify-content: flex-end;
+        margin-top: 1.8em;
+      }
+
+      /* the surface scrim: the page dims to paper, 60% */
+      dialog.scrim-surface::backdrop {
+        background: rgba(252, 252, 252, 0.6);
+      }
+      .dark dialog.scrim-surface::backdrop {
+        background: rgba(18, 18, 18, 0.6);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light):not([data-ae-mode='light'])
+          dialog.scrim-surface::backdrop {
+          background: rgba(18, 18, 18, 0.6);
+        }
+      }
+
+      dialog.a-skin {
+        border: 1px solid var(--ae-line);
+        box-shadow: none;
+      }
+
+      /* ── dropdown popovers (A, B, F) ───────────────────────────────── */
+      [popover].dd {
+        position: fixed;
+        inset: auto;
+        margin: 0;
+        width: max-content;
+        min-width: 10em;
+        padding: 0.4em 0;
+      }
+      [popover].dd:popover-open {
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+      .dd-opt {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: 0;
+        font-family: var(--ae-font);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.45em 1.1em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          background-color var(--ae-quick) var(--ae-ease);
+      }
+      .dd-opt:hover {
+        background: var(--ae-wash);
+        color: var(--ae-ink);
+      }
+      .dd-opt.is-sel {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .ov-ink .dd-opt {
+        color: var(--ae-surface);
+        opacity: 0.78;
+      }
+      .ov-ink .dd-opt:hover {
+        background: color-mix(in srgb, var(--ae-surface) 12%, transparent);
+        color: var(--ae-surface);
+        opacity: 1;
+      }
+      .ov-ink .dd-opt.is-sel {
+        color: var(--ae-surface);
+        opacity: 1;
+      }
+
+      /* ── tooltips ──────────────────────────────────────────────────── */
+      .tip {
+        position: relative;
+        display: inline-block;
+      }
+      .tip-trigger {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        letter-spacing: inherit;
+        cursor: help;
+        border-bottom: 1px dotted var(--ae-ink-faint);
+      }
+      .tip-bubble {
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 0.5em);
+        width: max-content;
+        max-width: 17em;
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 0.45em 0.8em;
+        z-index: 5;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity var(--ae-quick) var(--ae-ease),
+          visibility 0s var(--ae-quick);
+      }
+      .tip-trigger:hover + .tip-bubble,
+      .tip-trigger:focus-visible + .tip-bubble {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity var(--ae-quick) var(--ae-ease);
+      }
+      .tip-bubble.ae-panel {
+        padding: 0.45em 0.8em;
+      }
+
+      /* ── toasts ────────────────────────────────────────────────────── */
+      .toast {
+        display: none;
+        transition: opacity var(--ae-gentle) var(--ae-ease);
+      }
+      .toast.is-on {
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      .toast.is-fading {
+        opacity: 0;
+      }
+      .toast-float {
+        position: fixed;
+        right: 1.4em;
+        bottom: 4.6em;
+        z-index: 9;
+        font-size: 13px;
+        padding: 0.7em 1.1em;
+      }
+      .toast-float.is-on,
+      .bar-toast.is-on {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+      .toast-float.ae-panel {
+        padding: 0.7em 1.1em;
+      }
+
+      /* ── C · INLINE: nothing floats ────────────────────────────────── */
+      .row-confirm {
+        display: none;
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--ae-line);
+        margin-top: 0.55em;
+        padding-top: 0.6em;
+      }
+      .row-confirm.is-open {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      .rc-acts {
+        display: inline-flex;
+        gap: 0.5em;
+        flex: none;
+      }
+      .rc-confirm {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+        border-color: var(--ae-ink);
+      }
+      .rc-confirm:hover {
+        color: var(--ae-surface);
+        opacity: 0.9;
+      }
+      .c-dd {
+        display: none;
+      }
+      .c-dd.is-open {
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+        gap: 0.4em;
+        padding: 0 0 0.8em;
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+      .c-dd .dd-opt,
+      .d-band .dd-opt {
+        display: inline-block;
+        width: auto;
+        padding: 0.25em 0.6em;
+      }
+      .c-tipline {
+        display: none;
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .dep-head:has(.tip-trigger:hover) + .c-tipline,
+      .dep-head:has(.tip-trigger:focus-visible) + .c-tipline {
+        display: block;
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+
+      /* ── D · SHEET: overlays dock like extra chrome ────────────────── */
+      dialog.d-sheet {
+        position: fixed;
+        inset: 0 0 0 auto;
+        height: 100dvh;
+        max-height: 100dvh;
+        width: min(24em, 85vw);
+        margin: 0;
+        padding: 2.4em 2em;
+        border-left: 1px solid var(--ae-line);
+      }
+      dialog.d-sheet[open] {
+        animation: ov-slide var(--ae-soft) var(--ae-ease) both;
+      }
+      @keyframes ov-slide {
+        from {
+          opacity: 0;
+          transform: translateX(24px);
+        }
+      }
+      .d-band {
+        display: none;
+        flex: none;
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .d-band.is-open {
+        display: block;
+      }
+      .d-band .inner,
+      .band-toast .inner {
+        width: min(var(--ae-measure), 100% - 5rem);
+        margin-inline: auto;
+        display: flex;
+        align-items: baseline;
+        gap: 0.8em;
+        padding: 0.6em 0;
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+      }
+      .band-toast {
+        flex: none;
+        border-top: 1px solid var(--ae-line);
+      }
+      .band-toast.is-on {
+        display: block;
+      }
+      .band-toast .inner {
+        align-items: center;
+        gap: 0.5em;
+        color: var(--ae-ink);
+      }
+
+      /* ── E · COMMAND: the palette idiom ────────────────────────────── */
+      dialog.e-pal {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        border: 1px solid var(--ae-line);
+        width: min(30em, calc(100vw - 3em));
+        padding: 0;
+      }
+      .e-head {
+        padding: 0.8em 1.1em;
+        color: var(--ae-ink-muted);
+        letter-spacing: 0.08em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .e-line {
+        padding: 0.8em 1.1em;
+      }
+      .e-acts {
+        display: flex;
+        border-top: 1px solid var(--ae-line);
+      }
+      .e-btn {
+        flex: 1;
+        font-family: inherit;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-align: left;
+        background: transparent;
+        border: 0;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          background-color var(--ae-quick) var(--ae-ease);
+      }
+      .e-btn:hover {
+        background: var(--ae-wash);
+        color: var(--ae-ink);
+      }
+      .e-btn + .e-btn {
+        border-left: 1px solid var(--ae-line);
+      }
+      .e-opt {
+        display: block;
+        width: 100%;
+        text-align: left;
+        font-family: inherit;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        background: transparent;
+        border: 0;
+        color: var(--ae-ink-muted);
+        padding: 0.7em 1.1em;
+        cursor: pointer;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          background-color var(--ae-quick) var(--ae-ease);
+      }
+      .e-opt:hover {
+        background: var(--ae-wash);
+        color: var(--ae-ink);
+      }
+      .e-opt.is-sel {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .e-opt + .e-opt {
+        border-top: 1px solid var(--ae-line);
+      }
+      .e-status {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-muted);
+      }
+
+      /* ── F · INK: the button costume at panel scale ────────────────── */
+      .f-dim {
+        color: color-mix(in srgb, var(--ae-surface) 70%, transparent);
+      }
+      .f-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+        background: var(--ae-surface);
+        color: var(--ae-ink);
+        border: 1px solid var(--ae-surface);
+        border-radius: 0;
+        font-weight: var(--ae-w-medium);
+        padding: 0.55em 1.5em;
+        min-height: 44px;
+        cursor: pointer;
+        transition: opacity var(--ae-quick) var(--ae-ease);
+      }
+      .f-btn:hover {
+        opacity: 0.9;
+      }
+      .f-btn-quiet {
+        background: transparent;
+        color: var(--ae-surface);
+        border-color: var(--ae-ink-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · HAIRLINE — the line contains; the page dims to paper ═══ -->
+    <section class="proto-variant is-on" id="va">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="a-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="a-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ov-hairline" role="tooltip" id="a-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              A · HAIRLINE — overlays are bordered surface panels; the line
+              contains, and the page dims to paper.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab · A hairline</p>
+        </footer>
+      </div>
+
+      <dialog class="ov a-skin scrim-surface" id="a-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ov-hairline" id="a-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ov-hairline js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ B · PANEL — the one sanctioned shadow; nothing dims ════════ -->
+    <section class="proto-variant" id="vb">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="b-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="b-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ae-panel" role="tooltip" id="b-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              B · PANEL — the one sanctioned shadow does the separating; nothing
+              dims, depth carries it alone.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab · B panel</p>
+        </footer>
+      </div>
+
+      <dialog class="ov ae-panel" id="b-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ae-panel" id="b-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ae-panel js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <!-- ═══ C · INLINE — nothing floats; the page makes room ═══════════ -->
+    <section class="proto-variant" id="vc">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="c-dd js-closeable">
+              <button
+                class="dd-opt js-opt is-sel"
+                data-f="all"
+                data-label="all"
+              >
+                all
+              </button>
+              <button class="dd-opt js-opt" data-f="live" data-label="live">
+                live
+              </button>
+              <button
+                class="dd-opt js-opt"
+                data-f="rolled"
+                data-label="rolled back"
+              >
+                rolled back
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="c-tip">
+                    age
+                  </button>
+                </span>
+                <span></span>
+              </div>
+              <p class="c-tipline" role="tooltip" id="c-tip">
+                age — time since the deploy went live, not since the build
+                started.
+              </p>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+                <div class="row-confirm js-closeable">
+                  <span class="ae-dim"
+                    >Delete <code>a3f9c12</code> from history? This cannot be
+                    undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+                <div class="row-confirm js-closeable">
+                  <span class="ae-dim"
+                    >Delete <code>8be4d07</code> from history? This cannot be
+                    undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+                <div class="row-confirm js-closeable">
+                  <span class="ae-dim"
+                    >Delete <code>f217aa9</code> from history? This cannot be
+                    undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+                <div class="row-confirm js-closeable">
+                  <span class="ae-dim"
+                    >Delete <code>c90e3b1</code> from history? This cannot be
+                    undone.</span
+                  >
+                  <span class="rc-acts">
+                    <button class="row-btn js-cancel">cancel</button>
+                    <button class="row-btn rc-confirm js-confirm">
+                      delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              C · INLINE — nothing floats; every overlay is the page making room
+              in its own flow.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <span class="toast bar-toast ae-chrome js-toast">
+            Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+          </span>
+          <p class="ae-chrome">overlays lab · C inline</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · SHEET — overlays dock to the edges like chrome ═════════ -->
+    <section class="proto-variant" id="vd">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <div class="d-band js-closeable">
+          <div class="inner">
+            <span>filter</span>
+            <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+              all
+            </button>
+            <button class="dd-opt js-opt" data-f="live" data-label="live">
+              live
+            </button>
+            <button
+              class="dd-opt js-opt"
+              data-f="rolled"
+              data-label="rolled back"
+            >
+              rolled back
+            </button>
+          </div>
+        </div>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="d-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ov-hairline" role="tooltip" id="d-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              D · SHEET — overlays dock to the screen edges like extra chrome;
+              the viewport gains a wall, never a cloud.
+            </p>
+          </div>
+        </main>
+        <div class="toast band-toast js-toast">
+          <div class="inner">
+            Copied <code class="js-tref"></code>
+            <svg class="ae-icon"><use href="#i-check" /></svg>
+          </div>
+        </div>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab · D sheet</p>
+        </footer>
+      </div>
+
+      <dialog class="ov d-sheet" id="d-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="ae-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="ae-button ae-button-quiet js-cancel" autofocus>
+            Cancel
+          </button>
+          <button class="ae-button js-confirm">Delete</button>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- ═══ E · COMMAND — every overlay is the palette ═════════════════ -->
+    <section class="proto-variant" id="ve">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="toast bar-toast e-status js-toast">
+            ref copied <svg class="ae-icon"><use href="#i-check" /></svg>
+          </span>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn mono js-filter-btn">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="e-tip">
+                    age
+                  </button>
+                  <span
+                    class="tip-bubble ov-hairline mono"
+                    role="tooltip"
+                    id="e-tip"
+                    >time since live, not since build start</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn mono js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn mono js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn mono js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn mono js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn mono js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn mono js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn mono js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn mono js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              E · COMMAND — every overlay is the palette; the chrome register
+              does the talking, keys answer.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab · E command</p>
+        </footer>
+      </div>
+
+      <dialog class="ov e-pal scrim-surface" id="e-del">
+        <p class="e-head">confirm · delete deploy</p>
+        <p class="e-line">
+          delete <code class="js-ref">·</code> from history? this cannot be
+          undone.
+        </p>
+        <div class="e-acts">
+          <button class="e-btn js-cancel" autofocus>[n] cancel</button>
+          <button class="e-btn js-confirm">[y] confirm</button>
+        </div>
+      </dialog>
+
+      <dialog class="ov e-pal scrim-surface" id="e-filter">
+        <p class="e-head">filter · deploys</p>
+        <button class="e-opt js-opt is-sel" data-f="all" data-label="all">
+          [1] all
+        </button>
+        <button class="e-opt js-opt" data-f="live" data-label="live">
+          [2] live
+        </button>
+        <button class="e-opt js-opt" data-f="rolled" data-label="rolled back">
+          [3] rolled back
+        </button>
+      </dialog>
+    </section>
+
+    <!-- ═══ F · INK — solid ink overlays, the costume at panel scale ═══ -->
+    <section class="proto-variant" id="vf">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">MISTY STEP</a>
+          <span class="bar-end">
+            <span class="ae-chrome bar-links"
+              ><a href="#">deploys</a><a href="#">services</a
+              ><a href="#">logs</a></span
+            >
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="dep-top">
+              <h1 class="dep-title">Deploys</h1>
+              <button class="row-btn js-filter-btn" popovertarget="f-dd">
+                filter: <span class="js-filter-label">all</span>
+              </button>
+            </div>
+            <div class="dep-list">
+              <div class="dep-head ae-chrome">
+                <span>ref</span><span>service</span><span>status</span>
+                <span class="tip">
+                  <button class="tip-trigger" aria-describedby="f-tip">
+                    age
+                  </button>
+                  <span class="tip-bubble ov-ink" role="tooltip" id="f-tip"
+                    >Time since the deploy went live, not since the build
+                    started.</span
+                  >
+                </span>
+                <span></span>
+              </div>
+              <div class="dep-row" data-ref="a3f9c12" data-status="live">
+                <code>a3f9c12</code>
+                <span class="ae-item">misty-step/web</span>
+                <span><span class="ae-accent">live</span></span>
+                <span class="ae-dim">2m</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="a3f9c12">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="a3f9c12">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="8be4d07" data-status="live">
+                <code>8be4d07</code>
+                <span class="ae-item">misty-step/vanity</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">1h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="8be4d07">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="8be4d07">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="f217aa9" data-status="rolled">
+                <code>f217aa9</code>
+                <span class="ae-item">misty-step/aesthetic</span>
+                <span class="ae-dim">rolled back</span>
+                <span class="ae-dim">3h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="f217aa9">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="f217aa9">
+                    delete
+                  </button>
+                </span>
+              </div>
+              <div class="dep-row" data-ref="c90e3b1" data-status="live">
+                <code>c90e3b1</code>
+                <span class="ae-item">misty-step/api</span>
+                <span class="ae-dim">live</span>
+                <span class="ae-dim">9h</span>
+                <span class="dep-acts">
+                  <button class="row-btn js-copy" data-ref="c90e3b1">
+                    copy
+                  </button>
+                  <button class="row-btn js-del" data-ref="c90e3b1">
+                    delete
+                  </button>
+                </span>
+              </div>
+            </div>
+            <p class="ae-dim proto-cap">
+              F · INK — overlays invert to solid ink, the button costume at
+              panel scale; does it stay lawful or start shouting?
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">misty step · deploys</p>
+          <p class="ae-chrome">overlays lab · F ink</p>
+        </footer>
+      </div>
+
+      <dialog class="ov ov-ink" id="f-dialog">
+        <p class="ov-title">Delete deploy</p>
+        <p class="f-dim">
+          This removes <code class="js-ref">·</code> from the deploy history. It
+          cannot be undone.
+        </p>
+        <div class="ov-acts">
+          <button class="f-btn f-btn-quiet js-cancel" autofocus>Cancel</button>
+          <button class="f-btn js-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <div class="dd ov-ink" id="f-dd" popover>
+        <button class="dd-opt js-opt is-sel" data-f="all" data-label="all">
+          all
+        </button>
+        <button class="dd-opt js-opt" data-f="live" data-label="live">
+          live
+        </button>
+        <button class="dd-opt js-opt" data-f="rolled" data-label="rolled back">
+          rolled back
+        </button>
+      </div>
+
+      <div class="toast toast-float ov-ink js-toast">
+        Copied <svg class="ae-icon"><use href="#i-check" /></svg>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A hairline</button>
+      <button data-v="vb">B panel</button>
+      <button data-v="vc">C inline</button>
+      <button data-v="vd">D sheet</button>
+      <button data-v="ve">E command</button>
+      <button data-v="vf">F ink</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+        });
+      });
+
+      /* filter: hide rows that do not match, relabel the trigger */
+      function applyFilter(sec, f) {
+        sec.querySelectorAll('.dep-row').forEach((r) => {
+          r.style.display = f === 'all' || r.dataset.status === f ? '' : 'none';
+        });
+      }
+      function chooseOpt(sec, scope, opt) {
+        scope
+          .querySelectorAll('.js-opt')
+          .forEach((o) => o.classList.remove('is-sel'));
+        opt.classList.add('is-sel');
+        applyFilter(sec, opt.dataset.f);
+        const lab = sec.querySelector('.js-filter-label');
+        if (lab) lab.textContent = opt.dataset.label;
+      }
+
+      /* toast: enters once, persists, then resolves away gently at 4s */
+      function toastShower(sec) {
+        const el = sec.querySelector('.js-toast');
+        let t1, t2;
+        return (ref) => {
+          const tr = el.querySelector('.js-tref');
+          if (tr) tr.textContent = ref;
+          clearTimeout(t1);
+          clearTimeout(t2);
+          el.classList.remove('is-on', 'is-fading');
+          void el.offsetWidth;
+          el.classList.add('is-on');
+          t1 = setTimeout(() => {
+            el.classList.add('is-fading');
+            t2 = setTimeout(() => {
+              el.classList.remove('is-on', 'is-fading');
+            }, 520);
+          }, 4000);
+        };
+      }
+
+      function wireCopy(sec, show) {
+        sec.querySelectorAll('.js-copy').forEach((b) =>
+          b.addEventListener('click', () => {
+            if (navigator.clipboard && navigator.clipboard.writeText)
+              navigator.clipboard.writeText(b.dataset.ref).catch(() => {});
+            show(b.dataset.ref);
+          }),
+        );
+      }
+
+      /* native <dialog>: Escape and focus return come free */
+      function wireDialog(sec, dlg, opts) {
+        opts = opts || {};
+        let opener = null;
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', () => {
+            opener = b;
+            dlg
+              .querySelectorAll('.js-ref')
+              .forEach((s) => (s.textContent = b.dataset.ref));
+            dlg.dataset.ref = b.dataset.ref;
+            dlg.showModal();
+          }),
+        );
+        const confirm = () => {
+          const row = sec.querySelector(
+            '.dep-row[data-ref="' + dlg.dataset.ref + '"]',
+          );
+          if (row) row.remove();
+          dlg.close();
+        };
+        dlg.querySelector('.js-confirm').addEventListener('click', confirm);
+        dlg
+          .querySelector('.js-cancel')
+          .addEventListener('click', () => dlg.close());
+        dlg.addEventListener('close', () => {
+          if (opener && opener.isConnected) opener.focus();
+        });
+        if (opts.yn)
+          dlg.addEventListener('keydown', (e) => {
+            if (e.key === 'y') {
+              e.preventDefault();
+              confirm();
+            } else if (e.key === 'n') {
+              e.preventDefault();
+              dlg.close();
+            }
+          });
+      }
+
+      /* popover dropdowns: anchored under the trigger on open */
+      function wirePopFilter(sec, dd) {
+        const btn = sec.querySelector('.js-filter-btn');
+        dd.addEventListener('toggle', (e) => {
+          if (e.newState !== 'open') return;
+          const r = btn.getBoundingClientRect();
+          dd.style.left =
+            Math.max(8, Math.min(r.left, innerWidth - dd.offsetWidth - 8)) +
+            'px';
+          dd.style.top = Math.round(r.bottom + 6) + 'px';
+        });
+        dd.querySelectorAll('.js-opt').forEach((o) =>
+          o.addEventListener('click', () => {
+            chooseOpt(sec, dd, o);
+            dd.hidePopover();
+            btn.focus();
+          }),
+        );
+      }
+
+      /* in-flow dropdowns (C, D): toggled panels that push content */
+      function wireInlineFilter(sec, panel) {
+        const btn = sec.querySelector('.js-filter-btn');
+        btn.addEventListener('click', () => {
+          panel._opener = btn;
+          panel.classList.toggle('is-open');
+        });
+        panel.querySelectorAll('.js-opt').forEach((o) =>
+          o.addEventListener('click', () => {
+            chooseOpt(sec, panel, o);
+            panel.classList.remove('is-open');
+            btn.focus();
+          }),
+        );
+      }
+
+      /* A · HAIRLINE */
+      (() => {
+        const sec = document.getElementById('va');
+        wireCopy(sec, toastShower(sec));
+        wireDialog(sec, document.getElementById('a-dialog'));
+        wirePopFilter(sec, document.getElementById('a-dd'));
+      })();
+
+      /* B · PANEL */
+      (() => {
+        const sec = document.getElementById('vb');
+        wireCopy(sec, toastShower(sec));
+        wireDialog(sec, document.getElementById('b-dialog'));
+        wirePopFilter(sec, document.getElementById('b-dd'));
+      })();
+
+      /* C · INLINE */
+      (() => {
+        const sec = document.getElementById('vc');
+        wireCopy(sec, toastShower(sec));
+        wireInlineFilter(sec, sec.querySelector('.c-dd'));
+        sec.querySelectorAll('.js-del').forEach((b) =>
+          b.addEventListener('click', () => {
+            const conf = b.closest('.dep-row').querySelector('.row-confirm');
+            sec.querySelectorAll('.row-confirm.is-open').forEach((c) => {
+              if (c !== conf) c.classList.remove('is-open');
+            });
+            conf._opener = b;
+            conf.classList.add('is-open');
+            conf.querySelector('.js-cancel').focus();
+          }),
+        );
+        sec.querySelectorAll('.row-confirm .js-cancel').forEach((b) =>
+          b.addEventListener('click', () => {
+            const conf = b.closest('.row-confirm');
+            conf.classList.remove('is-open');
+            if (conf._opener && conf._opener.isConnected) conf._opener.focus();
+          }),
+        );
+        sec.querySelectorAll('.row-confirm .js-confirm').forEach((b) =>
+          b.addEventListener('click', () => {
+            b.closest('.dep-row').remove();
+          }),
+        );
+      })();
+
+      /* D · SHEET */
+      (() => {
+        const sec = document.getElementById('vd');
+        wireCopy(sec, toastShower(sec));
+        wireDialog(sec, document.getElementById('d-dialog'));
+        wireInlineFilter(sec, sec.querySelector('.d-band'));
+      })();
+
+      /* E · COMMAND */
+      (() => {
+        const sec = document.getElementById('ve');
+        wireCopy(sec, toastShower(sec));
+        wireDialog(sec, document.getElementById('e-del'), { yn: true });
+        const pal = document.getElementById('e-filter');
+        const btn = sec.querySelector('.js-filter-btn');
+        btn.addEventListener('click', () => pal.showModal());
+        pal.querySelectorAll('.js-opt').forEach((o) =>
+          o.addEventListener('click', () => {
+            chooseOpt(sec, pal, o);
+            pal.close();
+          }),
+        );
+        pal.addEventListener('close', () => {
+          if (btn.isConnected) btn.focus();
+        });
+        pal.addEventListener('keydown', (e) => {
+          const i = { 1: 0, 2: 1, 3: 2 }[e.key];
+          if (i == null) return;
+          e.preventDefault();
+          const o = pal.querySelectorAll('.js-opt')[i];
+          chooseOpt(sec, pal, o);
+          pal.close();
+        });
+      })();
+
+      /* F · INK */
+      (() => {
+        const sec = document.getElementById('vf');
+        wireCopy(sec, toastShower(sec));
+        wireDialog(sec, document.getElementById('f-dialog'));
+        wirePopFilter(sec, document.getElementById('f-dd'));
+      })();
+
+      /* Escape and light-dismiss for the class-based overlays (C, D) */
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.js-closeable.is-open').forEach((el) => {
+          el.classList.remove('is-open');
+          if (el._opener && el._opener.isConnected) el._opener.focus();
+        });
+      });
+      document.addEventListener('click', (e) => {
+        document.querySelectorAll('.js-closeable.is-open').forEach((el) => {
+          if (el.contains(e.target)) return;
+          if (
+            el._opener &&
+            (el._opener === e.target || el._opener.contains(e.target))
+          )
+            return;
+          el.classList.remove('is-open');
+        });
+      });
+    </script>
+  </body>
+</html>

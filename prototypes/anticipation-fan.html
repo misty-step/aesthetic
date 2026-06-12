@@ -1,0 +1,913 @@
+<!doctype html>
+<!--
+  LAB input anticipation — backlog 001 child 5.
+  Question: the UI ramps an affordance as the pointer approaches
+  (intent = max(0, 1 - d/180)^2). Is anticipation feedback about
+  intent, or decoration? As written the pattern breaks the motion law
+  twice — it precedes the interaction and it never resolves — so this
+  fan walks the lawfulness spectrum (RING → COMMIT) for an operator
+  ruling.
+  VERDICT: (pending operator review)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · input anticipation, six variants</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      /* the HUD: chrome-register readout of the machinery */
+      .proto-hud {
+        position: fixed;
+        bottom: 1.45em;
+        left: 1.5em;
+        z-index: 10;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-muted);
+        font-variant-numeric: tabular-nums;
+        pointer-events: none;
+      }
+
+      /* ── shared lab layout ─────────────────────────────────────────────── */
+      .lab-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5em 3em;
+        align-items: start;
+      }
+      @media (max-width: 640px) {
+        .lab-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .lab-field {
+        margin-bottom: 1.4em;
+      }
+      .lab-list .ae-row-link {
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .lab-cap {
+        margin-top: 2.4em;
+        max-width: 36em;
+        text-wrap: pretty;
+      }
+      .lab-verdict {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink);
+      }
+
+      /* ── A · RING: border + faint ring ramp, capped below committed ───── */
+      #va .ae-input {
+        border-bottom-color: color-mix(
+          in srgb,
+          var(--ae-ink) calc(var(--intent, 0) * 60%),
+          var(--ae-line)
+        );
+      }
+      #va .ae-input:not(:focus-visible) {
+        outline: 1px solid
+          color-mix(
+            in srgb,
+            var(--ae-ink) calc(var(--intent, 0) * 15%),
+            transparent
+          );
+        outline-offset: 4px;
+      }
+      /* contact snaps to the full committed state; :focus-visible untouched */
+      #va .ae-input:hover,
+      #va .ae-input:focus-visible {
+        border-bottom-color: var(--ae-ink);
+        outline-color: transparent;
+      }
+
+      /* ── B · LABEL: ink warms from muted toward ink, color only ───────── */
+      #vb .ae-label {
+        color: color-mix(
+          in srgb,
+          var(--ae-ink) calc(var(--intent, 0) * 80%),
+          var(--ae-ink-muted)
+        );
+      }
+      #vb .lab-field:focus-within .ae-label {
+        color: var(--ae-ink);
+      }
+
+      /* ── C · HAIRLINE: the nearest row's rule darkens before contact ──── */
+      #vc .ae-row-link {
+        border-bottom-color: color-mix(
+          in srgb,
+          var(--ae-ink) calc(var(--intent, 0) * 55%),
+          var(--ae-line)
+        );
+      }
+      #vc .ae-row-link:hover {
+        border-bottom-color: var(--ae-ink);
+      }
+
+      /* ── D · MAGNETIC: the button translates toward the pointer ───────── */
+      #vd .ae-send {
+        transform: translate(
+          calc(var(--mx, 0) * 1px),
+          calc(var(--my, 0) * 1px)
+        );
+      }
+      #vd .ae-send:active {
+        transform: translate(
+            calc(var(--mx, 0) * 1px),
+            calc(var(--my, 0) * 1px + 1px)
+          )
+          scale(0.99);
+      }
+
+      /* ── E · GLOW: a radial wash follows the pointer in the button ────── */
+      #ve .ae-send::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: var(--intent, 0);
+        background: radial-gradient(
+          5em circle at calc(var(--gx, 50) * 1%) calc(var(--gy, 50) * 1%),
+          color-mix(in srgb, var(--ae-surface) 38%, transparent),
+          transparent 72%
+        );
+      }
+
+      /* ── F · COMMIT: nothing ramps; intent ≥ 0.8 resolves once ────────── */
+      #vf .f-key {
+        opacity: 0; /* space reserved: the button never changes size */
+      }
+      #vf.is-armed .f-key {
+        opacity: 1; /* discrete, no transition: a resolved state, not a ramp */
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · RING — the original proposal ═════════════════════════════ -->
+    <section class="proto-variant is-on" id="va" data-anticipate="ring">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">A · RING</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="a-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="a-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="a-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="a-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label">Send</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              The field's bottom border and a faint outline ring ramp toward ink
+              as the pointer approaches; real focus or hover snaps to the full
+              committed state.<br />
+              <span class="lab-verdict">BORDERLINE</span> — feedback about
+              intent, but it moves before any interaction and rewinds when you
+              withdraw.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · LABEL — the subtlest proposal ════════════════════════════ -->
+    <section class="proto-variant" id="vb" data-anticipate="label">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">B · LABEL</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="b-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="b-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="b-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="b-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label">Send</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              The field's label warms from muted toward ink with intent — color
+              only, nothing moves or resizes; focus commits it to full ink.<br />
+              <span class="lab-verdict">BORDERLINE</span> — the subtlest
+              proposal, yet still a continuous ramp that precedes interaction
+              and never resolves.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · HAIRLINE — proximity on the list ═════════════════════════ -->
+    <section class="proto-variant" id="vc" data-anticipate="hairline">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">C · HAIRLINE</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="c-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="c-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="c-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="c-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label">Send</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              The nearest row's hairline darkens with proximity before contact —
+              one row at a time, winner-take-all — then real hover takes over at
+              full ink.<br />
+              <span class="lab-verdict">BORDERLINE</span> — reads as the hover
+              state arriving early; the ramp rewinds on retreat, so it never
+              resolves.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · MAGNETIC — spatial motion, included to feel the breach ═══ -->
+    <section class="proto-variant" id="vd" data-anticipate="magnetic">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">D · MAGNETIC</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="d-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="d-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="d-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="d-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label">Send</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              The send button translates up to 4px toward the pointer as it
+              approaches — spatial motion ahead of any action.<br />
+              <span class="lab-verdict">UNLAWFUL</span> — translate is
+              decoration: nothing was acknowledged. Included so you can feel why
+              the opacity-only constraint exists.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · GLOW — the marketing-site spotlight, the strawman ════════ -->
+    <section class="proto-variant" id="ve" data-anticipate="glow">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">E · GLOW</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="e-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="e-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="e-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="e-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label">Send</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              A radial wash follows the pointer across the button face,
+              brightening as intent rises.<br />
+              <span class="lab-verdict">UNLAWFUL</span> — the marketing-site
+              spotlight: ambient, decorative, never resolving. The strawman.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · COMMIT — the lawful inversion: invisible readiness ═══════ -->
+    <section class="proto-variant" id="vf" data-anticipate="commit">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <a class="ae-name" href="#">AESTHETIC</a>
+          <span class="ae-chrome">LAB · input anticipation</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <h2 class="ae-h">F · COMMIT</h2>
+            <div class="lab-grid">
+              <form class="js-form">
+                <div class="lab-field" data-target="name">
+                  <label class="ae-label" for="f-name">Name</label>
+                  <input
+                    class="ae-input"
+                    id="f-name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                  />
+                </div>
+                <div class="lab-field" data-target="email">
+                  <label class="ae-label" for="f-email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="f-email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                </div>
+                <button
+                  class="ae-button ae-send"
+                  type="submit"
+                  data-target="send"
+                >
+                  <span class="ae-send-label"
+                    >Send<span class="f-key" aria-hidden="true"
+                      >&nbsp;↵</span
+                    ></span
+                  >
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <div class="lab-list">
+                <a class="ae-row-link" href="#" data-target="specimen"
+                  ><span class="ae-item">Specimen</span>
+                  <span class="ae-dim">— the landing sheet</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="primitives"
+                  ><span class="ae-item">Primitives</span>
+                  <span class="ae-dim">— the catalog</span></a
+                >
+                <a class="ae-row-link" href="#" data-target="recipes"
+                  ><span class="ae-item">Recipes</span>
+                  <span class="ae-dim">— behavior glue</span></a
+                >
+              </div>
+            </div>
+            <p class="ae-dim lab-cap">
+              Nothing ramps. Approach only prepares: when intent crosses 0.80 at
+              the send button, the label resolves once from “Send” to
+              “Send&nbsp;↵” and stays — a real system would prefetch here.<br />
+              <span class="lab-verdict">LAWFUL</span> — anticipation as
+              invisible readiness: a discrete state change that resolves once
+              and persists.
+            </p>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">
+            LAB · input anticipation — backlog 001 child 5
+          </p>
+          <p class="ae-chrome">prototypes never ship · verdict pending</p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="va" class="is-active">A ring</button>
+      <button data-v="vb">B label</button>
+      <button data-v="vc">C hairline</button>
+      <button data-v="vd">D magnet</button>
+      <button data-v="ve">E glow</button>
+      <button data-v="vf">F commit</button>
+    </nav>
+
+    <p class="proto-hud" aria-hidden="true">intent 0.00 · target: —</p>
+
+    <script>
+      /* ── mode + form glue (specimen convention) ──────────────────────── */
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      document.querySelectorAll('.js-form').forEach((form) => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('.ae-send');
+          btn.classList.add('is-sent');
+          btn.disabled = true;
+        });
+      });
+
+      /* ── the anticipation engine: written once, parameterized ─────────
+         intent = max(0, 1 - d/180)^2, d = distance to nearest rect edge.
+         Nearest-target winner-take-all: exactly one target gets --intent.
+         One passive pointermove per active variant, rAF-coalesced writes,
+         rect cache invalidated on resize/scroll, attached only under
+         (hover: hover) and (pointer: fine), everything off under
+         prefers-reduced-motion. :focus-visible is never touched. */
+      const RANGE = 180;
+      const MAGNET = 4; /* px, variant D only */
+      const COMMIT_AT = 0.8; /* variant F threshold */
+      const FINE = matchMedia('(hover: hover) and (pointer: fine)');
+      const REDUCE = matchMedia('(prefers-reduced-motion: reduce)');
+      const hud = document.querySelector('.proto-hud');
+
+      const CONFIGS = {
+        ring: {},
+        label: {},
+        hairline: {},
+        magnetic: { vec: true },
+        glow: { pos: true },
+        commit: { commit: true },
+      };
+
+      let act = null;
+
+      function edgeDist(r, x, y) {
+        const dx = Math.max(r.left - x, 0, x - r.right);
+        const dy = Math.max(r.top - y, 0, y - r.bottom);
+        return Math.hypot(dx, dy);
+      }
+
+      function schedule() {
+        if (act && !act.raf) act.raf = requestAnimationFrame(frame);
+      }
+
+      function frame() {
+        if (!act) return;
+        act.raf = 0;
+        if (!act.rects)
+          act.rects = act.targets.map((el) => el.getBoundingClientRect());
+        let win = -1;
+        let best = Infinity;
+        act.rects.forEach((r, i) => {
+          const d = edgeDist(r, act.px, act.py);
+          if (d < best) {
+            best = d;
+            win = i;
+          }
+        });
+        const intent = Math.max(0, 1 - best / RANGE) ** 2;
+        if (intent === 0) win = -1;
+
+        act.targets.forEach((el, i) => {
+          const won = i === win;
+          el.style.setProperty('--intent', won ? intent.toFixed(3) : '0');
+          if (act.cfg.vec && !won) {
+            el.style.setProperty('--mx', '0');
+            el.style.setProperty('--my', '0');
+          }
+        });
+
+        if (win >= 0 && act.cfg.vec) {
+          const r = act.rects[win];
+          const cx = (r.left + r.right) / 2;
+          const cy = (r.top + r.bottom) / 2;
+          const len = Math.hypot(act.px - cx, act.py - cy) || 1;
+          const el = act.targets[win];
+          el.style.setProperty(
+            '--mx',
+            (((act.px - cx) / len) * MAGNET * intent).toFixed(2),
+          );
+          el.style.setProperty(
+            '--my',
+            (((act.py - cy) / len) * MAGNET * intent).toFixed(2),
+          );
+        }
+
+        if (win >= 0 && act.cfg.pos) {
+          const r = act.rects[win];
+          const el = act.targets[win];
+          const pc = (v) => Math.min(100, Math.max(0, v)).toFixed(1);
+          el.style.setProperty('--gx', pc(((act.px - r.left) / r.width) * 100));
+          el.style.setProperty('--gy', pc(((act.py - r.top) / r.height) * 100));
+        }
+
+        if (
+          act.cfg.commit &&
+          win >= 0 &&
+          intent >= COMMIT_AT &&
+          act.targets[win].dataset.target === 'send'
+        ) {
+          act.section.classList.add('is-armed'); /* resolves once, persists */
+        }
+
+        let line = `intent ${intent.toFixed(2)} · target: ${
+          win >= 0 ? act.targets[win].dataset.target : '—'
+        }`;
+        if (act.cfg.commit) {
+          line += act.section.classList.contains('is-armed')
+            ? ' · armed — a real system would have prefetched'
+            : ' · arms at 0.80 — the prefetch point';
+        }
+        hud.textContent = line;
+      }
+
+      function stop() {
+        if (!act) return;
+        act.section.removeEventListener('pointermove', act.move);
+        act.section.removeEventListener('pointerleave', act.leave);
+        if (act.raf) cancelAnimationFrame(act.raf);
+        act.targets.forEach((el) => {
+          ['--intent', '--mx', '--my', '--gx', '--gy'].forEach((p) =>
+            el.style.removeProperty(p),
+          );
+        });
+        act = null;
+      }
+
+      function start(section) {
+        stop();
+        if (REDUCE.matches) {
+          hud.textContent = 'anticipation off · prefers-reduced-motion';
+          return;
+        }
+        if (!FINE.matches) {
+          hud.textContent = 'anticipation off · needs hover + fine pointer';
+          return;
+        }
+        act = {
+          section,
+          cfg: CONFIGS[section.dataset.anticipate],
+          targets: [...section.querySelectorAll('[data-target]')],
+          rects: null,
+          raf: 0,
+          px: -1e4,
+          py: -1e4,
+        };
+        act.move = (e) => {
+          act.px = e.clientX;
+          act.py = e.clientY;
+          schedule();
+        };
+        act.leave = () => {
+          act.px = -1e4;
+          act.py = -1e4;
+          schedule();
+        };
+        section.addEventListener('pointermove', act.move, { passive: true });
+        section.addEventListener('pointerleave', act.leave, { passive: true });
+        hud.textContent = 'intent 0.00 · target: —';
+      }
+
+      function invalidate() {
+        if (act) {
+          act.rects = null;
+          schedule();
+        }
+      }
+      addEventListener('resize', invalidate, { passive: true });
+      addEventListener('scroll', invalidate, { capture: true, passive: true });
+
+      function currentSection() {
+        return document.querySelector('.proto-variant.is-on');
+      }
+      FINE.addEventListener('change', () => start(currentSection()));
+      REDUCE.addEventListener('change', () => start(currentSection()));
+
+      /* ── variant picker ───────────────────────────────────────────────── */
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          start(currentSection());
+        });
+      });
+
+      start(currentSection());
+    </script>
+  </body>
+</html>

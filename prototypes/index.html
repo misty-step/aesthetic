@@ -1,0 +1,263 @@
+<!doctype html>
+<!-- LAB index — the variation-fan hub. Local only, never deployed.
+     Serve the repo root (python3 -m http.server 8123) and open
+     http://localhost:8123/prototypes/ -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic · LAB index</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* lab glue: sketch only, never ships */
+      .lab-row {
+        display: grid;
+        grid-template-columns: 11em minmax(0, 1fr) 6.5em;
+        gap: 0 1.6em;
+        align-items: baseline;
+        border-top: 1px solid var(--ae-line);
+        padding: 0.55em 0;
+      }
+      .lab-row:last-child {
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .lab-row .file {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .lab-row .file a {
+        color: var(--ae-ink);
+        text-decoration: none;
+      }
+      .lab-row .file a:hover {
+        color: var(--ae-accent);
+      }
+      .lab-row .ticket {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+        text-align: right;
+      }
+      @media (max-width: 700px) {
+        .lab-row {
+          grid-template-columns: 1fr;
+        }
+        .lab-row .ticket {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <span class="ae-name">AESTHETIC · LAB</span>
+        <button class="ae-mode js-mode" aria-label="toggle color mode">
+          <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+          <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+        </button>
+      </header>
+      <main class="ae-stage ae-stage-scroll">
+        <div class="ae-view">
+          <div class="ae-group">
+            <p class="ae-lede">
+              Every open design question in the backlog, rendered as a variation
+              fan: six-plus structurally divergent proposals per question, side
+              by side, playable. Pick winners; the locked direction gets rebuilt
+              properly in <code>site/</code> — these files never ship.
+            </p>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">THE SYSTEM GROWS · 007</h2>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="status-inks-fan.html">status-inks-fan</a></span
+              >
+              <span class="ae-dim"
+                >Danger, success, warning — seven answers for where status color
+                may live, from glyph-only to wash.</span
+              >
+              <span class="ticket">007.2</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="choice-controls-fan.html"
+                  >choice-controls-fan</a
+                ></span
+              >
+              <span class="ae-dim"
+                >Select, checkbox, radio, switch — six readings of "a line, not
+                a box" for choice controls.</span
+              >
+              <span class="ticket">007.3</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="overlays-fan.html">overlays-fan</a></span
+              >
+              <span class="ae-dim"
+                >Dialog, popover, tooltip, toast — six containment languages,
+                hairline to solid ink, including the no-overlay inversion.</span
+              >
+              <span class="ticket">007.4</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"><a href="data-fan.html">data-fan</a></span>
+              <span class="ae-dim"
+                >Table, tabs, badge, loading, empty — six data-display idioms;
+                every loading treatment resolves once, nothing shimmers
+                forever.</span
+              >
+              <span class="ticket">007.5</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="archetypes-fan.html">archetypes-fan</a></span
+              >
+              <span class="ae-dim"
+                >Beyond the portfolio screen: app shells, document, form flow,
+                dashboards — six archetype proposals.</span
+              >
+              <span class="ticket">007.6</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="site-split-fan.html">site-split-fan</a></span
+              >
+              <span class="ae-dim"
+                >The marketing homepage, six ways: manifesto, specimen, plate,
+                gauntlet, source, ledger.</span
+              >
+              <span class="ticket">007.7</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="accent-law-fan.html">accent-law-fan</a></span
+              >
+              <span class="ae-dim"
+                >The accent law on trial: one identical screen under six accent
+                policies, one-per-view to ambient to none.</span
+              >
+              <span class="ticket">007.1</span>
+            </div>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">MOTION · 001</h2>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="view-motion-fan.html">view-motion-fan</a></span
+              >
+              <span class="ae-dim"
+                >Exit/enter choreography for view swaps — six sequences from
+                hard cut to stagger.</span
+              >
+              <span class="ticket">001.1</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="mode-crossfade-fan.html">mode-crossfade-fan</a></span
+              >
+              <span class="ae-dim"
+                >The light/dark change itself — six treatments from hard cut to
+                view-transition to wipe.</span
+              >
+              <span class="ticket">001.2</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="anticipation-fan.html">anticipation-fan</a></span
+              >
+              <span class="ae-dim"
+                >Input anticipation on trial: six points on the lawfulness
+                spectrum, each labeled, with a live intent HUD.</span
+              >
+              <span class="ticket">001.5</span>
+            </div>
+          </div>
+
+          <div class="ae-group">
+            <h2 class="ae-h">SETTLED EARLIER</h2>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="landing-fan.html">landing-fan</a></span
+              >
+              <span class="ae-dim"
+                >Round 1 of the site: five structural directions. Verdict: B ·
+                specimen.</span
+              >
+              <span class="ticket">003</span>
+            </div>
+            <div class="lab-row">
+              <span class="file"
+                ><a href="specimen-fan.html">specimen-fan</a></span
+              >
+              <span class="ae-dim"
+                >Round 2: three specimen refinements. Verdict: B3 · lawful —
+                shipped as the live landing.</span
+              >
+              <span class="ticket">003</span>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          prototypes are committed for history, never deployed
+        </p>
+        <p class="ae-chrome">the lab stays local</p>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark =
+            root.classList.contains('dark') ||
+            (matchMedia('(prefers-color-scheme: dark)').matches &&
+              !root.classList.contains('light'));
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        });
+      });
+    </script>
+  </body>
+</html>

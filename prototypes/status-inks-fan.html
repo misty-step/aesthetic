@@ -1,0 +1,986 @@
+<!doctype html>
+<!-- LAB status inks — how does this design system say danger / success /
+     warning without becoming Material? Seven proposals for WHERE status
+     lives: glyph, ink, hairline, weight, wash, prefix, accent-only.
+     VERDICT: (pending operator review) -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — status inks, seven proposals</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .proto-wide .ae-bar,
+      .proto-wide .ae-stage {
+        width: min(68em, 100% - 5em);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      /* ── status inks: the designed triplet, both modes ────────────── */
+      /* calibrated for AA contrast on #fcfcfc / #121212; ink-forward,
+         desaturated — never the saturated traffic light */
+      :root {
+        --st-danger: #b3392e;
+        --st-ok: #0e7a4d;
+        --st-warn: #92600a;
+        --st-danger-wash: rgba(179, 57, 46, 0.08);
+        --st-ok-wash: rgba(14, 122, 77, 0.08);
+        --st-warn-wash: rgba(146, 96, 10, 0.1);
+      }
+      .dark,
+      [data-ae-mode='dark'] {
+        --st-danger: #e58379;
+        --st-ok: #6fd2a8;
+        --st-warn: #d9a45b;
+        --st-danger-wash: rgba(229, 131, 121, 0.13);
+        --st-ok-wash: rgba(111, 210, 168, 0.12);
+        --st-warn-wash: rgba(217, 164, 91, 0.13);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light):not([data-ae-mode='light']) {
+          --st-danger: #e58379;
+          --st-ok: #6fd2a8;
+          --st-warn: #d9a45b;
+          --st-danger-wash: rgba(229, 131, 121, 0.13);
+          --st-ok-wash: rgba(111, 210, 168, 0.12);
+          --st-warn-wash: rgba(217, 164, 91, 0.13);
+        }
+      }
+
+      /* ── shared specimen scaffolding ──────────────────────────────── */
+      .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 3em 3.5em;
+        align-items: start;
+      }
+      .spec-grid > * {
+        min-width: 0;
+      }
+      @media (max-width: 900px) {
+        .spec-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .spec-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .field-msg {
+        margin-top: 0.35em;
+      }
+
+      .notice {
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.6em 0;
+      }
+
+      .status-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .status-table th {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        font-weight: var(--ae-w-regular);
+        color: var(--ae-ink-faint);
+        text-align: left;
+        padding: 0 1em 0.4em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .status-table td {
+        padding: 0.45em 1em 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 1.6em;
+        flex-wrap: wrap;
+        align-items: baseline;
+      }
+
+      .w5 {
+        font-weight: var(--ae-w-medium);
+      }
+      .w8 {
+        font-weight: var(--ae-w-black);
+      }
+
+      /* ── the devices the variants choose between ──────────────────── */
+      /* color utilities: status hue on text */
+      .c-err {
+        color: var(--st-danger);
+      }
+      .c-ok {
+        color: var(--st-ok);
+      }
+      .c-warn {
+        color: var(--st-warn);
+      }
+
+      /* a glyph riding before ink text (A, D) */
+      .g {
+        font-family: var(--ae-font-mono);
+        font-weight: var(--ae-w-medium);
+        margin-right: 0.45em;
+      }
+
+      /* a mono prefix word in the chrome register (F) */
+      .px {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        letter-spacing: 0.08em;
+        margin-right: 0.6em;
+      }
+
+      /* status-colored hairlines (C) */
+      .u-err {
+        border-bottom: 1px solid var(--st-danger);
+        padding-bottom: 1px;
+      }
+      .u-ok {
+        border-bottom: 1px solid var(--st-ok);
+        padding-bottom: 1px;
+      }
+      .u-warn {
+        border-bottom: 1px solid var(--st-warn);
+        padding-bottom: 1px;
+      }
+      .bl-ok {
+        border-left: 2px solid var(--st-ok);
+        padding-left: 1.1em;
+      }
+      .bl-warn {
+        border-left: 2px solid var(--st-warn);
+        padding-left: 1.1em;
+      }
+      .ae-input.input-err {
+        border-bottom-color: var(--st-danger);
+      }
+
+      /* low-alpha washes behind ink text (E) */
+      .wash-err {
+        background: var(--st-danger-wash);
+      }
+      .wash-ok {
+        background: var(--st-ok-wash);
+      }
+      .wash-warn {
+        background: var(--st-warn-wash);
+      }
+      .wash-block {
+        padding: 0.6em 1em;
+      }
+      .chiplet {
+        padding: 0.05em 0.45em;
+      }
+
+      /* accent-as-attention (G) */
+      .att {
+        color: var(--ae-accent);
+        font-weight: var(--ae-w-medium);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · GLYPH — text stays ink; only the glyph carries the hue ═══ -->
+    <section class="proto-variant is-on proto-wide" id="v1">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — A · GLYPH</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v1-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v1-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v1-email-msg"
+                />
+                <p class="field-msg" id="v1-email-msg">
+                  <span class="g c-err">✕</span>Not a valid address — missing a
+                  domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p class="w5"><span class="g c-ok">✓</span>Deploy complete.</p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p>
+                    <span class="g c-warn">!</span>Certificate for
+                    api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="g c-ok">✓</span>ok</td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="g c-err">✕</span>failing</td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="g c-warn">!</span>expiring</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span><span class="g c-ok">✓</span>ok</span>
+                  <span><span class="g c-err">✕</span>failing</span>
+                  <span><span class="g c-warn">!</span>expiring</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            A — status lives in the glyph; every word stays ink
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · INK — full status-colored text, no fills ═════════════════ -->
+    <section class="proto-variant proto-wide" id="v2">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — B · INK</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v2-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v2-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v2-email-msg"
+                />
+                <p class="field-msg c-err" id="v2-email-msg">
+                  Not a valid address — missing a domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p class="w5 c-ok">Deploy complete.</p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p class="c-warn">
+                    Certificate for api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="w5 c-ok">ok</span></td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="w5 c-err">failing</span></td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="w5 c-warn">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span class="w5 c-ok">ok</span>
+                  <span class="w5 c-err">failing</span>
+                  <span class="w5 c-warn">expiring</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            B — status lives in the ink itself; designed triplet, never a fill
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · HAIRLINE — text stays ink; the rule carries the hue ══════ -->
+    <section class="proto-variant proto-wide" id="v3">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — C · HAIRLINE</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v3-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input input-err"
+                  id="v3-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v3-email-msg"
+                />
+                <p class="field-msg" id="v3-email-msg">
+                  Not a valid address — missing a domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <div class="bl-ok">
+                  <p class="w5">Deploy complete.</p>
+                  <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="bl-warn">
+                  <p>Certificate for api.misty-step.com expires in 9 days.</p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="u-ok">ok</span></td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="u-err">failing</span></td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="u-warn">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span class="u-ok">ok</span>
+                  <span class="u-err">failing</span>
+                  <span class="u-warn">expiring</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            C — status lives in a colored hairline; the words stay ink
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · WEIGHT — zero new color; registers and glyphs only ═══════ -->
+    <section class="proto-variant proto-wide" id="v4">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — D · WEIGHT</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v4-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v4-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v4-email-msg"
+                />
+                <p class="field-msg w5" id="v4-email-msg">
+                  <span class="g">✕</span>Not a valid address — missing a
+                  domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p class="w8"><span class="g">✓</span>Deploy complete.</p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p class="w5">
+                    <span class="g">!</span>Certificate for api.misty-step.com
+                    expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td class="ae-dim"><span class="g">✓</span>ok</td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td class="w8"><span class="g">✕</span>failing</td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td class="w5"><span class="g">!</span>expiring</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span class="ae-dim"><span class="g">✓</span>ok</span>
+                  <span class="w8"><span class="g">✕</span>failing</span>
+                  <span class="w5"><span class="g">!</span>expiring</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            D — zero new color; weight, glyphs, and muted/ink contrast only
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · WASH — low-alpha status hue behind ink text ══════════════ -->
+    <section class="proto-variant proto-wide" id="v5">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — E · WASH</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v5-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v5-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v5-email-msg"
+                />
+                <p class="field-msg" id="v5-email-msg">
+                  <span class="wash-err chiplet"
+                    >Not a valid address — missing a domain.</span
+                  >
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <div class="wash-ok wash-block">
+                  <p class="w5">Deploy complete.</p>
+                  <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="wash-warn wash-block">
+                  <p>Certificate for api.misty-step.com expires in 9 days.</p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="wash-ok chiplet">ok</span></td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="wash-err chiplet">failing</span></td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="wash-warn chiplet">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span class="wash-ok chiplet">ok</span>
+                  <span class="wash-err chiplet">failing</span>
+                  <span class="wash-warn chiplet">expiring</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            E — status as a low-alpha wash behind ink text; radius stays 0
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · PREFIX — colored mono prefix words, the log idiom ════════ -->
+    <section class="proto-variant proto-wide" id="v6">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — F · PREFIX</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v6-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v6-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v6-email-msg"
+                />
+                <p class="field-msg" id="v6-email-msg">
+                  <span class="px c-err">ERR</span>Not a valid address — missing
+                  a domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p>
+                  <span class="px c-ok">OK</span
+                  ><span class="w5">Deploy complete.</span>
+                </p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p>
+                    <span class="px c-warn">WARN</span>Certificate for
+                    api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="px c-ok">OK</span>live</td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="px c-err">ERR</span>failing</td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="px c-warn">WARN</span>expiring</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span class="px c-ok">OK</span>
+                  <span class="px c-err">ERR</span>
+                  <span class="px c-warn">WARN</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            F — colored mono prefix in the chrome register; the terminal idiom
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ G · ACCENT-ONLY — attention is ultramarine; red is rationed ══ -->
+    <section class="proto-variant proto-wide" id="v7">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS — G · ACCENT-ONLY</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v7-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v7-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v7-email-msg"
+                />
+                <p class="field-msg att" id="v7-email-msg">
+                  Not a valid address — missing a domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p class="w5">Deploy complete.</p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p class="att">
+                    Certificate for api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td class="ae-dim">ok</td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="att">failing</span></td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="att">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES · AND THE ONE RED</h2>
+                <p class="badge-row">
+                  <span class="ae-dim">ok</span>
+                  <span class="att">needs attention</span>
+                </p>
+                <p class="w5 c-err" style="margin-top: 0.8em">
+                  Revoke all deploy keys — irreversible.
+                </p>
+                <p class="ae-dim">Red is spent on destruction alone.</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">
+            G — attention reuses the accent; only the irreversible earns red
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="v1" class="is-active">A · GLYPH</button>
+      <button data-v="v2">B · INK</button>
+      <button data-v="v3">C · HAIRLINE</button>
+      <button data-v="v4">D · WEIGHT</button>
+      <button data-v="v5">E · WASH</button>
+      <button data-v="v6">F · PREFIX</button>
+      <button data-v="v7">G · ACCENT-ONLY</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+        });
+      });
+    </script>
+  </body>
+</html>
