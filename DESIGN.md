@@ -23,12 +23,11 @@ glows, nothing floats, nothing bounces.
   comes from ink and weight, never from scale.
 - Nine registers: three inks (ink, muted, faint) by three weights
   (400, 550, 800). The headline is heavier and blacker, not larger.
-- The accent is scarce, role-justified, and never decorative: when
-  ultramarine appears it must mean something nameable — the active
-  place, the live thing, the primary action — applied consistently to
-  that role, never coloring for its own sake. (The exact doctrine is
-  being settled in the LAB; the old "exactly one instance per view"
-  rule is retired.)
+- The accent is the consumer's: define your accent (your color
+  scheme) and use it with judgment. The system carries any hue
+  without losing its identity — ink, hairlines, type, and motion do
+  the identifying. There is no counting rule; there is taste: color
+  earns its place, it is never ambient filler.
 - Screens, not pages: every view fits the viewport. Long documents
   scroll inside the stage; the chrome never moves.
 - Motion is feedback, never decoration: small, brief, eased. State
@@ -44,7 +43,8 @@ glows, nothing floats, nothing bounces.
 - No drop shadows as decoration (the panel's soft depth is the lone
   sanctioned use), no gradients-as-paint, no glassmorphism.
 - No rounded corners. Radius is 0 everywhere.
-- No second accent, no colored badges, no traffic-light pills.
+- No filled colored pills or badges: status color rides glyphs and
+  words, never boxes.
 - No font-size hierarchy, no oversized hero type.
 - No ambient or looping animation; nothing moves unprompted.
 - No link-styled buttons or button-styled links.
@@ -54,9 +54,8 @@ glows, nothing floats, nothing bounces.
 
 ## Composing a view
 
-1. Decide what the accent means on this surface (the live thing, the
-   primary action, wayfinding) and spend it only on that role;
-   everything else is ink.
+1. Decide how this surface uses its accent and apply it consistently;
+   the hierarchy itself is built from ink, not color.
 2. Build hierarchy with registers: 800 ink for the one loud thing,
    550 for items that matter, 400 for prose; muted for support, faint
    for whispers.

@@ -25,15 +25,19 @@ without one.
 
 1. Exit/enter view choreography — the easing vocabulary lives here;
    the canonical `data-leaving` hook consumers wire up belongs to the
-   recipes layer (backlog 005). LAB: round-1 fan was unjudgeable
-   (variants rendered identically); view-motion-fan-2.html reruns it
-   with slower timings and a speed control. Operator taste on motion:
-   slow and soft, never rushed.
-2. Mode-change crossfade (transition on color/background scoped to the
-   change, without transitioning everything always). LAB verdict
-   (2026-06-12): view-transition "nice and soft"; wipe only if slowed
-   to a page-turn; uniform/cut harsh — mode-crossfade-fan-2.html
-   explores the slow end.
+   recipes layer (backlog 005). LAB round 2 (2026-06-12): breathe
+   solid at 1×, crossfade strong at half speed, cascade maybe at
+   half; drift killed (scrollbar mid-swap), page turn killed (goofy
+   swipe). view-motion-fan-3.html offers the tuned tempos
+   (breathe 560/640, crossfade 800, cascade 1200). Operator taste:
+   slow and soft, never rushed — but breathe was already almost too
+   slow at 1×, so there is a floor.
+2. Mode-change crossfade — LOCKED (2026-06-12 round 2):
+   document.startViewTransition at 700ms with --ae-ease (VT400 the
+   close second), falling back to a 480ms uniform color transition
+   where unsupported; both page turns died (fuzzy edge). Ready to
+   implement as the canonical mode-change recipe (recipes layer,
+   backlog 005) and the site's own toggle.
 3. ~~Form feedback choreography~~ — shipped as the send moment, v2.2.0.
 4. Demo page exercising all of it (see backlog 003).
 5. LAB: input anticipation. A focus affordance that ramps in as the

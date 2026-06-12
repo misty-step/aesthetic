@@ -1,20 +1,23 @@
 <!doctype html>
 <!--
-  LAB input anticipation · round 2 — warming only — VERDICT (2026-06-12, round 2): warm, accent, line, slow all okay — verdict: combine slow + line + warm. Round 3 builds the combination: anticipation-fan-3.html
-  Round 1 ruling: LABEL warming is the one keeper ("I do actually like
-  the label one where the label starts to warm up… kind of nice").
-  RING looked bad, HAIRLINE-on-links unloved, MAGNETIC and GLOW hokey,
-  COMMIT disliked. Round 2 holds the engine constant — passive
-  pointermove, nearest-edge winner-take-all --intent, hover+fine-pointer
-  gate, reduced-motion off, focus-visible untouched — and fans six
-  refinements of warming only: the control, the accent spend, label+line,
-  a slower capped ramp, a whole-field whisper, and nearest-vs-all.
+  LAB input anticipation · round 3 — the slow+line+warm combination — VERDICT: (pending operator review)
+  Round 2 ruling: warm okay, accent okay, line fine, slow okay —
+  "probably some combination of slow, line, and warm is fine here."
+  Round 3 builds that combination — slow-lagged warming of the label
+  AND its field line together — at a few calibrations so the operator
+  locks one. Engine unchanged: passive pointermove, rAF nearest-edge
+  winner-take-all --intent, hover+fine-pointer gate, reduced-motion
+  off, :focus-visible untouched, HUD readout. Four cards: the
+  recommended blend, the same blend at the threshold of perception,
+  the same blend spent in ultramarine, and the no-anticipation control.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — LAB · input anticipation, round 2: warming</title>
+    <title>
+      aesthetic — LAB · input anticipation, round 3: the combination
+    </title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
@@ -107,59 +110,9 @@
         font-weight: var(--ae-w-medium);
         color: var(--ae-ink);
       }
-      .lab-side-tag {
-        margin: 0 0 1.2em;
-      }
 
-      /* ── A · WARM: round 1's label warming, unchanged — the control ───── */
+      /* ── A · COMBINED: label + line warm together, 60% cap, 120ms lag ── */
       #va .ae-label {
-        color: color-mix(
-          in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 80%),
-          var(--ae-ink-muted)
-        );
-      }
-      #va .lab-field:focus-within .ae-label {
-        color: var(--ae-ink);
-      }
-
-      /* ── B · WARM TO ACCENT: same ramp, toward ultramarine ────────────── */
-      #vb .ae-label {
-        color: color-mix(
-          in srgb,
-          var(--ae-accent) calc(var(--intent, 0) * 80%),
-          var(--ae-ink-muted)
-        );
-      }
-      #vb .lab-field:focus-within .ae-label {
-        color: var(--ae-accent);
-      }
-
-      /* ── C · LABEL + LINE: label and bottom hairline warm in step ─────── */
-      #vc .ae-label {
-        color: color-mix(
-          in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 80%),
-          var(--ae-ink-muted)
-        );
-      }
-      #vc .ae-input {
-        border-bottom-color: color-mix(
-          in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 60%),
-          var(--ae-line)
-        );
-      }
-      #vc .lab-field:focus-within .ae-label {
-        color: var(--ae-ink);
-      }
-      #vc .ae-input:hover,
-      #vc .ae-input:focus-visible {
-        border-bottom-color: var(--ae-ink);
-      }
-
-      /* ── D · SLOW WARM: capped at 60%, 120ms lag on the consumer ──────── */
-      #vd .ae-label {
         color: color-mix(
           in srgb,
           var(--ae-ink) calc(var(--intent, 0) * 60%),
@@ -167,51 +120,73 @@
         );
         transition: color 120ms ease-out;
       }
-      #vd .lab-field:focus-within .ae-label {
-        color: var(--ae-ink);
-      }
-
-      /* ── E · WHOLE FIELD: label + placeholder + line at 1/3 strength ──── */
-      #ve .ae-label {
-        color: color-mix(
-          in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 27%),
-          var(--ae-ink-muted)
-        );
-      }
-      #ve .ae-input::placeholder {
-        color: color-mix(
-          in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 27%),
-          var(--ae-ink-faint)
-        );
-      }
-      #ve .ae-input {
+      #va .ae-input {
         border-bottom-color: color-mix(
           in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 27%),
+          var(--ae-ink) calc(var(--intent, 0) * 60%),
           var(--ae-line)
         );
+        transition: border-bottom-color 120ms ease-out;
       }
-      #ve .lab-field:focus-within .ae-label {
+      #va .lab-field:focus-within .ae-label {
         color: var(--ae-ink);
       }
-      #ve .ae-input:hover,
-      #ve .ae-input:focus-visible {
+      #va .ae-input:hover,
+      #va .ae-input:focus-visible {
         border-bottom-color: var(--ae-ink);
       }
 
-      /* ── F · NEAREST ONLY vs ALL: A's warming, two multi-target rules ─── */
-      #vf .ae-label {
+      /* ── B · COMBINED, QUIETER: identical blend, capped at 40% ────────── */
+      #vb .ae-label {
         color: color-mix(
           in srgb,
-          var(--ae-ink) calc(var(--intent, 0) * 80%),
+          var(--ae-ink) calc(var(--intent, 0) * 40%),
           var(--ae-ink-muted)
         );
+        transition: color 120ms ease-out;
       }
-      #vf .lab-field:focus-within .ae-label {
+      #vb .ae-input {
+        border-bottom-color: color-mix(
+          in srgb,
+          var(--ae-ink) calc(var(--intent, 0) * 40%),
+          var(--ae-line)
+        );
+        transition: border-bottom-color 120ms ease-out;
+      }
+      #vb .lab-field:focus-within .ae-label {
         color: var(--ae-ink);
       }
+      #vb .ae-input:hover,
+      #vb .ae-input:focus-visible {
+        border-bottom-color: var(--ae-ink);
+      }
+
+      /* ── C · COMBINED, ACCENT: A's blend, warming toward ultramarine ──── */
+      #vc .ae-label {
+        color: color-mix(
+          in srgb,
+          var(--ae-accent) calc(var(--intent, 0) * 60%),
+          var(--ae-ink-muted)
+        );
+        transition: color 120ms ease-out;
+      }
+      #vc .ae-input {
+        border-bottom-color: color-mix(
+          in srgb,
+          var(--ae-accent) calc(var(--intent, 0) * 60%),
+          var(--ae-line)
+        );
+        transition: border-bottom-color 120ms ease-out;
+      }
+      #vc .lab-field:focus-within .ae-label {
+        color: var(--ae-accent);
+      }
+      #vc .ae-input:hover,
+      #vc .ae-input:focus-visible {
+        border-bottom-color: var(--ae-accent);
+      }
+
+      /* ── D · OFF: no anticipation rules at all — stock aesthetic.css ──── */
     </style>
   </head>
   <body>
@@ -235,12 +210,12 @@
       </symbol>
     </svg>
 
-    <!-- ═══ A · WARM — the control: round 1's keeper, unchanged ══════════ -->
-    <section class="proto-variant is-on" id="va" data-anticipate="warm">
+    <!-- ═══ A · COMBINED — the round-2 verdict, built as one thing ═══════ -->
+    <section class="proto-variant is-on" id="va" data-anticipate="combined">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
+          <span class="ae-chrome">LAB · input anticipation · round 3</span>
           <button class="ae-mode js-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -248,7 +223,7 @@
         </header>
         <main class="ae-stage">
           <div class="ae-view">
-            <h2 class="ae-h">A · WARM</h2>
+            <h2 class="ae-h">A · COMBINED</h2>
             <div class="lab-grid">
               <form class="js-form">
                 <div class="lab-field" data-target="name">
@@ -296,28 +271,32 @@
               </div>
             </div>
             <p class="ae-dim lab-cap">
-              The nearest field's label warms from muted toward ink as the
-              pointer approaches — up to 80% ink at contact range — and snaps to
-              full ink the moment the field takes focus. Color only; nothing
-              moves or resizes.<br />
-              <span class="lab-verdict">THE CONTROL</span> — round 1's keeper,
-              byte-for-byte. Every other variant is judged against this.
+              The nearest field's label and bottom hairline warm toward ink
+              together as the pointer approaches — at most 60% of the way — and
+              the color trails the pointer by 120ms, so the field reads as
+              warming up, not as a cursor sensor. Hover or focus snaps it to
+              committed ink.<br />
+              <span class="lab-verdict">THE RECOMMENDATION</span> — slow + line
+              + warm, the combination round 2 pointed at. Feel for one quiet
+              motion: the whole field waking as one.
             </p>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
+          <p class="ae-chrome">
+            LAB · input anticipation · round 3 — the combination
+          </p>
           <p class="ae-chrome">prototypes never ship · verdict pending</p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ B · WARM TO ACCENT — may anticipation spend the accent? ══════ -->
-    <section class="proto-variant" id="vb" data-anticipate="accent">
+    <!-- ═══ B · COMBINED, QUIETER — the threshold of perception ══════════ -->
+    <section class="proto-variant" id="vb" data-anticipate="quieter">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
+          <span class="ae-chrome">LAB · input anticipation · round 3</span>
           <button class="ae-mode js-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -325,7 +304,7 @@
         </header>
         <main class="ae-stage">
           <div class="ae-view">
-            <h2 class="ae-h">B · WARM TO ACCENT</h2>
+            <h2 class="ae-h">B · COMBINED, QUIETER</h2>
             <div class="lab-grid">
               <form class="js-form">
                 <div class="lab-field" data-target="name">
@@ -373,29 +352,31 @@
               </div>
             </div>
             <p class="ae-dim lab-cap">
-              Same ramp, different destination: the label warms from muted
-              toward ultramarine — 80% accent at contact range, full accent once
-              focused. Winner-take-all keeps it to one warm label at a time, so
-              the view never holds two accent instances.<br />
-              <span class="lab-verdict">ACCENT SPEND</span> — does anticipation
-              get to spend the accent, or is ultramarine reserved for the
-              committed thing?
+              Exactly A — label and line together, 120ms trail, snap on commit —
+              but capped at 40% instead of 60%. The calibration question: this
+              should sit right at the threshold of perception, sensed before it
+              can be named.<br />
+              <span class="lab-verdict">THE WHISPER CAP</span> — if this still
+              reads, ship the quieter number; if it vanishes, A's 60% is the
+              floor.
             </p>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
+          <p class="ae-chrome">
+            LAB · input anticipation · round 3 — the combination
+          </p>
           <p class="ae-chrome">prototypes never ship · verdict pending</p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ C · LABEL + LINE — the whole field wakes as one ══════════════ -->
-    <section class="proto-variant" id="vc" data-anticipate="line">
+    <!-- ═══ C · COMBINED, ACCENT — the same blend, spent in ultramarine ══ -->
+    <section class="proto-variant" id="vc" data-anticipate="accent">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
+          <span class="ae-chrome">LAB · input anticipation · round 3</span>
           <button class="ae-mode js-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -403,7 +384,7 @@
         </header>
         <main class="ae-stage">
           <div class="ae-view">
-            <h2 class="ae-h">C · LABEL + LINE</h2>
+            <h2 class="ae-h">C · COMBINED, ACCENT</h2>
             <div class="lab-grid">
               <form class="js-form">
                 <div class="lab-field" data-target="name">
@@ -451,29 +432,32 @@
               </div>
             </div>
             <p class="ae-dim lab-cap">
-              The label warms toward ink (80% at contact) and the field's bottom
-              hairline darkens in step (60% toward ink) — label and line move
-              together, so the whole field wakes as one. Hover or focus commits
-              the line to full ink.<br />
-              <span class="lab-verdict">FIELD WAKES AS ONE</span> — more surface
-              than A, same single target; the question is whether the line adds
-              presence or noise.
+              A's blend with one change: the destination is ultramarine, not
+              ink. Label and line warm toward the accent — 60% at contact, 120ms
+              trail — and commit to full accent on focus. Winner-take-all keeps
+              it to one warm field, so the view never holds two accent
+              instances.<br />
+              <span class="lab-verdict">ACCENT SPEND</span> — round 2 said
+              accent is okay; the question is whether anticipation gets to spend
+              color, or color stays reserved for the committed thing.
             </p>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
+          <p class="ae-chrome">
+            LAB · input anticipation · round 3 — the combination
+          </p>
           <p class="ae-chrome">prototypes never ship · verdict pending</p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ D · SLOW WARM — warmth, not tracking ═════════════════════════ -->
-    <section class="proto-variant" id="vd" data-anticipate="slow">
+    <!-- ═══ D · OFF — no anticipation: the control ═══════════════════════ -->
+    <section class="proto-variant" id="vd" data-anticipate="off">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
+          <span class="ae-chrome">LAB · input anticipation · round 3</span>
           <button class="ae-mode js-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -481,7 +465,7 @@
         </header>
         <main class="ae-stage">
           <div class="ae-view">
-            <h2 class="ae-h">D · SLOW WARM</h2>
+            <h2 class="ae-h">D · OFF</h2>
             <div class="lab-grid">
               <form class="js-form">
                 <div class="lab-field" data-target="name">
@@ -529,198 +513,29 @@
               </div>
             </div>
             <p class="ae-dim lab-cap">
-              Same label warming as A, but gentler: the distance-eased ramp tops
-              out at 60% ink, and the label's color carries a 120ms transition,
-              so the warmth trails the pointer instead of tracking it
-              frame-for-frame. Focus still commits to full ink.<br />
-              <span class="lab-verdict">WARMTH, NOT TRACKING</span> — the lag is
-              the point: it should read as a field warming up, not a cursor
-              sensor.
+              No anticipation at all: stock aesthetic.css, nothing tracks the
+              pointer. Labels stay muted and lines stay hairline until hover or
+              focus commits them — the system exactly as it ships today.<br />
+              <span class="lab-verdict">THE CONTROL</span> — a reminder of what
+              the form feels like without any of it. If D feels complete, the
+              whole arc is optional polish.
             </p>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
-          <p class="ae-chrome">prototypes never ship · verdict pending</p>
-        </footer>
-      </div>
-    </section>
-
-    <!-- ═══ E · WHOLE FIELD — the subtlest possible reading ══════════════ -->
-    <section class="proto-variant" id="ve" data-anticipate="field">
-      <div class="ae-screen">
-        <header class="ae-bar">
-          <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
-          <button class="ae-mode js-mode" aria-label="toggle color mode">
-            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
-            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
-          </button>
-        </header>
-        <main class="ae-stage">
-          <div class="ae-view">
-            <h2 class="ae-h">E · WHOLE FIELD</h2>
-            <div class="lab-grid">
-              <form class="js-form">
-                <div class="lab-field" data-target="name">
-                  <label class="ae-label" for="e-name">Name</label>
-                  <input
-                    class="ae-input"
-                    id="e-name"
-                    type="text"
-                    placeholder="Ada Lovelace"
-                  />
-                </div>
-                <div class="lab-field" data-target="email">
-                  <label class="ae-label" for="e-email">Email</label>
-                  <input
-                    class="ae-input"
-                    id="e-email"
-                    type="email"
-                    placeholder="you@misty-step.com"
-                  />
-                </div>
-                <button
-                  class="ae-button ae-send"
-                  type="submit"
-                  data-target="send"
-                >
-                  <span class="ae-send-label">Send</span>
-                  <span class="ae-send-done" aria-hidden="true"
-                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
-                  ></span>
-                </button>
-              </form>
-              <div class="lab-list">
-                <a class="ae-row-link" href="#" data-target="specimen"
-                  ><span class="ae-item">Specimen</span>
-                  <span class="ae-dim">— the landing sheet</span></a
-                >
-                <a class="ae-row-link" href="#" data-target="primitives"
-                  ><span class="ae-item">Primitives</span>
-                  <span class="ae-dim">— the catalog</span></a
-                >
-                <a class="ae-row-link" href="#" data-target="recipes"
-                  ><span class="ae-item">Recipes</span>
-                  <span class="ae-dim">— behavior glue</span></a
-                >
-              </div>
-            </div>
-            <p class="ae-dim lab-cap">
-              Label, placeholder, and underline all warm together — each at
-              one-third of A's strength, 27% toward ink at contact range. The
-              subtlest possible reading: you sense the field waking before you
-              can point at what changed.<br />
-              <span class="lab-verdict">THE WHISPER</span> — if this still
-              reads, anticipation needs far less ink than round 1 spent.
-            </p>
-          </div>
-        </main>
-        <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
-          <p class="ae-chrome">prototypes never ship · verdict pending</p>
-        </footer>
-      </div>
-    </section>
-
-    <!-- ═══ F · NEAREST ONLY vs ALL — pick the multi-target rule ═════════ -->
-    <section class="proto-variant" id="vf" data-anticipate="compare">
-      <div class="ae-screen">
-        <header class="ae-bar">
-          <a class="ae-name" href="#">AESTHETIC</a>
-          <span class="ae-chrome">LAB · input anticipation · round 2</span>
-          <button class="ae-mode js-mode" aria-label="toggle color mode">
-            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
-            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
-          </button>
-        </header>
-        <main class="ae-stage">
-          <div class="ae-view">
-            <h2 class="ae-h">F · NEAREST ONLY vs ALL</h2>
-            <div class="lab-grid">
-              <div>
-                <p class="ae-chrome lab-side-tag">NEAREST ONLY</p>
-                <form class="js-form">
-                  <div class="lab-field" data-target="name" data-group="near">
-                    <label class="ae-label" for="f1-name">Name</label>
-                    <input
-                      class="ae-input"
-                      id="f1-name"
-                      type="text"
-                      placeholder="Ada Lovelace"
-                    />
-                  </div>
-                  <div class="lab-field" data-target="email" data-group="near">
-                    <label class="ae-label" for="f1-email">Email</label>
-                    <input
-                      class="ae-input"
-                      id="f1-email"
-                      type="email"
-                      placeholder="you@misty-step.com"
-                    />
-                  </div>
-                  <button class="ae-button ae-send" type="submit">
-                    <span class="ae-send-label">Send</span>
-                    <span class="ae-send-done" aria-hidden="true"
-                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
-                    ></span>
-                  </button>
-                </form>
-              </div>
-              <div>
-                <p class="ae-chrome lab-side-tag">ALL BY DISTANCE</p>
-                <form class="js-form">
-                  <div class="lab-field" data-target="name" data-group="all">
-                    <label class="ae-label" for="f2-name">Name</label>
-                    <input
-                      class="ae-input"
-                      id="f2-name"
-                      type="text"
-                      placeholder="Ada Lovelace"
-                    />
-                  </div>
-                  <div class="lab-field" data-target="email" data-group="all">
-                    <label class="ae-label" for="f2-email">Email</label>
-                    <input
-                      class="ae-input"
-                      id="f2-email"
-                      type="email"
-                      placeholder="you@misty-step.com"
-                    />
-                  </div>
-                  <button class="ae-button ae-send" type="submit">
-                    <span class="ae-send-label">Send</span>
-                    <span class="ae-send-done" aria-hidden="true"
-                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
-                    ></span>
-                  </button>
-                </form>
-              </div>
-            </div>
-            <p class="ae-dim lab-cap">
-              Both forms warm exactly like A. Left: only the nearest field warms
-              — winner-take-all, one label at a time. Right: every field warms
-              by its own distance, so neighbors warm together and fade with
-              depth. Move between them.<br />
-              <span class="lab-verdict">PICK THE RULE</span> — one focused
-              candidate, or a gradient of likelihood across the whole form?
-            </p>
-          </div>
-        </main>
-        <footer class="ae-bar">
-          <p class="ae-chrome">LAB · input anticipation · round 2 — warming</p>
+          <p class="ae-chrome">
+            LAB · input anticipation · round 3 — the combination
+          </p>
           <p class="ae-chrome">prototypes never ship · verdict pending</p>
         </footer>
       </div>
     </section>
 
     <nav class="proto-picker" aria-label="variant picker">
-      <button data-v="va" class="is-active">A warm</button>
-      <button data-v="vb">B accent</button>
-      <button data-v="vc">C line</button>
-      <button data-v="vd">D slow</button>
-      <button data-v="ve">E field</button>
-      <button data-v="vf">F near·all</button>
+      <button data-v="va" class="is-active">A combined</button>
+      <button data-v="vb">B quieter</button>
+      <button data-v="vc">C accent</button>
+      <button data-v="vd">D off</button>
     </nav>
 
     <p class="proto-hud" aria-hidden="true">intent 0.00 · target: —</p>
@@ -751,18 +566,17 @@
         });
       });
 
-      /* ── the anticipation engine, round 2 ──────────────────────────────
-         Round 1's engine, kept verbatim where it matters:
+      /* ── the anticipation engine, round 3 ──────────────────────────────
+         Round 2's engine, kept verbatim where it matters:
          intent = max(0, 1 - d/180)^2, d = distance to nearest rect edge.
-         Default rule (A–E): nearest-target winner-take-all — exactly one
-         target gets --intent. Variant F splits its targets into two
-         groups: data-group="near" plays winner-take-all within the left
-         form, data-group="all" gives every right-form field its own
-         distance-based intent. One passive pointermove per active
-         variant, rAF-coalesced writes, rect cache invalidated on
-         resize/scroll, attached only under (hover: hover) and
-         (pointer: fine), everything off under prefers-reduced-motion.
-         :focus-visible is never touched. */
+         Nearest-target winner-take-all — exactly one target gets
+         --intent; the CSS per variant decides what that number buys
+         (60% ink, 40% ink, or 60% accent — always with a 120ms trail).
+         One passive pointermove per active variant, rAF-coalesced
+         writes, rect cache invalidated on resize/scroll, attached only
+         under (hover: hover) and (pointer: fine), everything off under
+         prefers-reduced-motion. :focus-visible is never touched.
+         Variant D never attaches: it is the control. */
       const RANGE = 180;
       const FINE = matchMedia('(hover: hover) and (pointer: fine)');
       const REDUCE = matchMedia('(prefers-reduced-motion: reduce)');
@@ -788,40 +602,6 @@
         const ints = act.rects.map(
           (r) => Math.max(0, 1 - edgeDist(r, act.px, act.py) / RANGE) ** 2,
         );
-
-        if (act.compare) {
-          /* left form: winner-take-all within the "near" group;
-             right form: every "all" target keeps its own intent. */
-          let nearWin = -1;
-          let nearBest = 0;
-          let allWin = -1;
-          let allBest = 0;
-          act.targets.forEach((el, i) => {
-            if (el.dataset.group === 'near' && ints[i] > nearBest) {
-              nearBest = ints[i];
-              nearWin = i;
-            }
-            if (el.dataset.group === 'all' && ints[i] > allBest) {
-              allBest = ints[i];
-              allWin = i;
-            }
-          });
-          act.targets.forEach((el, i) => {
-            const v =
-              el.dataset.group === 'all'
-                ? ints[i]
-                : i === nearWin
-                  ? ints[i]
-                  : 0;
-            el.style.setProperty('--intent', v.toFixed(3));
-          });
-          const tag = (w, b) =>
-            w >= 0 && b > 0
-              ? `${act.targets[w].dataset.target} ${b.toFixed(2)}`
-              : '—';
-          hud.textContent = `left nearest: ${tag(nearWin, nearBest)} · right max: ${tag(allWin, allBest)}`;
-          return;
-        }
 
         let win = -1;
         let best = 0;
@@ -850,6 +630,10 @@
 
       function start(section) {
         stop();
+        if (section.dataset.anticipate === 'off') {
+          hud.textContent = 'anticipation off · D is the control';
+          return;
+        }
         if (REDUCE.matches) {
           hud.textContent = 'anticipation off · prefers-reduced-motion';
           return;
@@ -860,7 +644,6 @@
         }
         act = {
           section,
-          compare: section.dataset.anticipate === 'compare',
           targets: [...section.querySelectorAll('[data-target]')],
           rects: null,
           raf: 0,
@@ -879,9 +662,7 @@
         };
         section.addEventListener('pointermove', act.move, { passive: true });
         section.addEventListener('pointerleave', act.leave, { passive: true });
-        hud.textContent = act.compare
-          ? 'left nearest: — · right max: —'
-          : 'intent 0.00 · target: —';
+        hud.textContent = 'intent 0.00 · target: —';
       }
 
       function invalidate() {

@@ -1,18 +1,23 @@
-<!-- LAB view choreography · round 2 — round 1 was bugged and too fast to
-     judge — VERDICT (2026-06-12, round 2): breathe at 1x decent-solid (slower is too slow); crossfade pretty strong at half speed; cascade maybe, at half; drift KILLED (spawns a scrollbar mid-swap); page turn KILLED (goofy swipe). Round 3 tunes the three: view-motion-fan-3.html
-     Round-1 fixes engineered in: every animation restarts via a forced
-     reflow (void el.offsetWidth) between class remove and re-add, with
-     distinct keyframe names per variant; a global speed control
-     (1× / ½× / ¼×) scales every duration through one CSS custom property
-     so differences are unmistakable; each variant has a replay button.
-     Timings are slower and sequenced — the operator's taste: nothing
-     rushed, a wipe more like turning a page than a shockwave. -->
+<!-- LAB view choreography · round 3 — tuned tempos; drift and page turn
+     are dead — VERDICT: (pending operator review)
+     Round-2 verdicts engineered in: BREATHE was solid at 1× and almost
+     too slow, so it is offered as-liked (640ms) and tightened ~12%
+     (560ms), never slower. CROSSFADE was pretty strong at half speed,
+     so it ships at that tempo: 800ms. CASCADE flirted with ½× (1600ms);
+     that is likely extreme, so it ships between: 1200ms. DRIFT spawned
+     a horizontal scrollbar mid-swap, so it is dead — and structurally,
+     the stage wrapper is now overflow:hidden, so no movement can ever
+     spawn a scrollbar again. PAGE TURN ("a goofy swipe") is dead.
+     No speed control this round: each variant IS a tempo proposal,
+     played at its fixed timing, once per action, with a replay button.
+     The reflow-forcing animate helper (void el.offsetWidth) and
+     distinct keyframe names carry over from round 2. -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — LAB · view choreography, round 2</title>
+    <title>aesthetic — LAB · view choreography, round 3</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
@@ -20,10 +25,6 @@
     <link rel="stylesheet" href="../aesthetic.css" />
     <style>
       /* ── prototype glue: sketch only, never ships ───────────────────── */
-      :root {
-        --r2-slow: 1; /* the speed control: 1 = 1×, 2 = ½×, 4 = ¼× */
-      }
-
       .proto-variant {
         display: none;
       }
@@ -64,10 +65,6 @@
         color: var(--ae-surface);
         background: var(--ae-ink);
       }
-      .proto-sep {
-        width: 1px;
-        background: var(--ae-line);
-      }
 
       .bar-end {
         display: inline-flex;
@@ -97,9 +94,13 @@
       /* ── the swapping region: views stack in one grid cell so nothing
             changes size while animating. is-on is the settled state; the
             engine drives is-exiting / is-entering for one run, then
-            settles. The entering view rides above the exiting one. ────── */
+            settles. THE ROUND-2 FIX: the stage is a hard wall —
+            overflow:hidden — so no movement inside a swap can ever spawn
+            a scrollbar. Drift died for that crime; the wall is
+            structural now, not a per-variant promise. ─────────────────── */
       .stage-views {
         display: grid;
+        overflow: hidden;
       }
       .stage-views > .view {
         grid-area: 1 / 1;
@@ -116,139 +117,75 @@
 
       /* keyframes: distinct names per role so a restart can never be
          confused with a continuation */
-      @keyframes r2-fade-out {
+      @keyframes r3-fade-out {
         to {
           opacity: 0;
         }
       }
-      @keyframes r2-fade-in {
+      @keyframes r3-fade-in {
         from {
           opacity: 0;
         }
       }
-      @keyframes r2-rise-in {
+      @keyframes r3-rise-in {
         from {
           opacity: 0;
           transform: translateY(10px);
-        }
-      }
-      @keyframes r2-drift-exit-fwd {
-        to {
-          opacity: 0;
-          transform: translateX(-12px);
-        }
-      }
-      @keyframes r2-drift-enter-fwd {
-        from {
-          opacity: 0;
-          transform: translateX(12px);
-        }
-      }
-      @keyframes r2-drift-exit-back {
-        to {
-          opacity: 0;
-          transform: translateX(12px);
-        }
-      }
-      @keyframes r2-drift-enter-back {
-        from {
-          opacity: 0;
-          transform: translateX(-12px);
-        }
-      }
-      @keyframes r2-turn-fwd {
-        from {
-          clip-path: inset(0 0 0 100%);
-        }
-        to {
-          clip-path: inset(0 0 0 0);
-        }
-      }
-      @keyframes r2-turn-back {
-        from {
-          clip-path: inset(0 100% 0 0);
-        }
-        to {
-          clip-path: inset(0 0 0 0);
         }
       }
 
       /* ── A · CUT (control): no animation at all; the engine swaps
             is-on instantly so the baseline is honest ──────────────────── */
 
-      /* ── B · BREATHE: exit fades 240ms, a beat of 80ms stillness, the
-            enter rises 320ms — sequenced by the engine, ~640ms total ──── */
-      [data-choreo='breathe'] .view.is-exiting {
-        animation: r2-fade-out calc(240ms * var(--r2-slow)) var(--ae-ease) both;
+      /* ── B · BREATHE 560: round 2's breathe tightened ~12% — exit
+            fades 200ms, a 60ms beat of stillness, the enter rises
+            300ms — 560ms total ────────────────────────────────────────── */
+      [data-choreo='breathe-560'] .view.is-exiting {
+        animation: r3-fade-out 200ms var(--ae-ease) both;
       }
-      [data-choreo='breathe'] .view.is-entering {
-        animation: r2-rise-in calc(320ms * var(--r2-slow)) var(--ae-ease) both;
+      [data-choreo='breathe-560'] .view.is-entering {
+        animation: r3-rise-in 300ms var(--ae-ease) both;
       }
 
-      /* ── C · CROSSFADE: both views share the cell and trade opacity
-            over 400ms; no movement at all — the calmest ───────────────── */
+      /* ── C · BREATHE 640: round 2's breathe exactly as liked — exit
+            fades 240ms, an 80ms beat, the enter rises 320ms — 640ms ───── */
+      [data-choreo='breathe-640'] .view.is-exiting {
+        animation: r3-fade-out 240ms var(--ae-ease) both;
+      }
+      [data-choreo='breathe-640'] .view.is-entering {
+        animation: r3-rise-in 320ms var(--ae-ease) both;
+      }
+
+      /* ── D · CROSSFADE 800: the overlap crossfade at the half-speed
+            tempo the operator called pretty strong — both views trade
+            opacity over 800ms; nothing moves ──────────────────────────── */
       [data-choreo='cross'] .view.is-exiting {
-        animation: r2-fade-out calc(400ms * var(--r2-slow)) var(--ae-ease) both;
+        animation: r3-fade-out 800ms var(--ae-ease) both;
       }
       [data-choreo='cross'] .view.is-entering {
-        animation: r2-fade-in calc(400ms * var(--r2-slow)) var(--ae-ease) both;
+        animation: r3-fade-in 800ms var(--ae-ease) both;
       }
 
-      /* ── D · DRIFT: the exit drifts 12px opposite to travel while
-            fading (320ms); the enter arrives from the travel direction
-            (320ms, starting at the exit's midpoint) — ~480ms total ────── */
-      [data-choreo='drift'] .view.is-exiting.go-fwd {
-        animation: r2-drift-exit-fwd calc(320ms * var(--r2-slow)) var(--ae-ease)
-          both;
-      }
-      [data-choreo='drift'] .view.is-entering.go-fwd {
-        animation: r2-drift-enter-fwd calc(320ms * var(--r2-slow))
-          var(--ae-ease) both;
-      }
-      [data-choreo='drift'] .view.is-exiting.go-back {
-        animation: r2-drift-exit-back calc(320ms * var(--r2-slow))
-          var(--ae-ease) both;
-      }
-      [data-choreo='drift'] .view.is-entering.go-back {
-        animation: r2-drift-enter-back calc(320ms * var(--r2-slow))
-          var(--ae-ease) both;
-      }
-
-      /* ── E · PAGE TURN: the new view, on an opaque sheet, is revealed
-            by a soft clip-path sweep from the travel side over 700ms; the
-            old view sits still beneath. No rule line — just the turn. ─── */
-      [data-choreo='turn'] .view.is-entering {
-        background: var(--ae-surface);
-      }
-      [data-choreo='turn'] .view.is-entering.go-fwd {
-        animation: r2-turn-fwd calc(700ms * var(--r2-slow))
-          cubic-bezier(0.37, 0, 0.63, 1) both;
-      }
-      [data-choreo='turn'] .view.is-entering.go-back {
-        animation: r2-turn-back calc(700ms * var(--r2-slow))
-          cubic-bezier(0.37, 0, 0.63, 1) both;
-      }
-
-      /* ── F · CASCADE: exit fades 240ms, then the new view's children
-            rise in sequence — 60ms steps, 320ms each, capped at five —
-            ~800ms total; the richest ──────────────────────────────────── */
+      /* ── E · CASCADE 1200: exit fades 360ms, then the new view's
+            children rise in sequence — 90ms steps, 480ms each, capped at
+            five — 1200ms total, between 1× and the ½× he flirted with ─── */
       [data-choreo='cascade'] .view.is-exiting {
-        animation: r2-fade-out calc(240ms * var(--r2-slow)) var(--ae-ease) both;
+        animation: r3-fade-out 360ms var(--ae-ease) both;
       }
       [data-choreo='cascade'] .view.is-entering > * {
-        animation: r2-rise-in calc(320ms * var(--r2-slow)) var(--ae-ease) both;
+        animation: r3-rise-in 480ms var(--ae-ease) both;
       }
       [data-choreo='cascade'] .view.is-entering > :nth-child(2) {
-        animation-delay: calc(60ms * var(--r2-slow));
+        animation-delay: 90ms;
       }
       [data-choreo='cascade'] .view.is-entering > :nth-child(3) {
-        animation-delay: calc(120ms * var(--r2-slow));
+        animation-delay: 180ms;
       }
       [data-choreo='cascade'] .view.is-entering > :nth-child(4) {
-        animation-delay: calc(180ms * var(--r2-slow));
+        animation-delay: 270ms;
       }
       [data-choreo='cascade'] .view.is-entering > :nth-child(n + 5) {
-        animation-delay: calc(240ms * var(--r2-slow));
+        animation-delay: 360ms;
       }
     </style>
   </head>
@@ -270,7 +207,7 @@
       </symbol>
     </svg>
 
-    <!-- ═══ A · CUT — instant swap, no animation; the true baseline ════ -->
+    <!-- ═══ A · CUT — instant swap, no animation; the true control ═════ -->
     <section class="proto-variant is-on" id="a" data-choreo="cut">
       <div class="ae-screen">
         <header class="ae-bar">
@@ -306,7 +243,7 @@
               </a>
               <p class="ae-dim">
                 In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
+                <span class="ae-accent">view choreography, round three</span>.
               </p>
             </div>
             <div class="view" data-view="writing">
@@ -346,16 +283,15 @@
         </main>
         <footer class="ae-bar">
           <p class="ae-dim ae-chrome">
-            A · CUT — 0ms · the true baseline: an instant swap, no animation at
-            all
+            A · CUT — 0ms · the control: an instant swap, no animation at all
           </p>
           <button class="js-replay" type="button">replay</button>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ B · BREATHE — fade out, a beat of stillness, rise in ═══════ -->
-    <section class="proto-variant" id="b" data-choreo="breathe">
+    <!-- ═══ B · BREATHE 560 — round 2's breathe, tightened ~12% ════════ -->
+    <section class="proto-variant" id="b" data-choreo="breathe-560">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -390,7 +326,7 @@
               </a>
               <p class="ae-dim">
                 In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
+                <span class="ae-accent">view choreography, round three</span>.
               </p>
             </div>
             <div class="view" data-view="writing">
@@ -430,16 +366,16 @@
         </main>
         <footer class="ae-bar">
           <p class="ae-dim ae-chrome">
-            B · BREATHE — 640ms at 1× · the old view fades, a beat of stillness,
-            then the new view rises
+            B · BREATHE 560 — 560ms · round 2's breathe tightened ~12%: a 200ms
+            fade, a 60ms beat of stillness, a 300ms rise
           </p>
           <button class="js-replay" type="button">replay</button>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ C · CROSSFADE — pure opacity, in place; the calmest ════════ -->
-    <section class="proto-variant" id="c" data-choreo="cross">
+    <!-- ═══ C · BREATHE 640 — round 2's breathe, exactly as liked ══════ -->
+    <section class="proto-variant" id="c" data-choreo="breathe-640">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -474,7 +410,7 @@
               </a>
               <p class="ae-dim">
                 In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
+                <span class="ae-accent">view choreography, round three</span>.
               </p>
             </div>
             <div class="view" data-view="writing">
@@ -514,16 +450,16 @@
         </main>
         <footer class="ae-bar">
           <p class="ae-dim ae-chrome">
-            C · CROSSFADE — 400ms at 1× · old and new trade places in pure
-            opacity; nothing moves
+            C · BREATHE 640 — 640ms · round 2's breathe exactly as liked: a
+            240ms fade, an 80ms beat of stillness, a 320ms rise
           </p>
           <button class="js-replay" type="button">replay</button>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ D · DRIFT — directional: content travels with the nav ══════ -->
-    <section class="proto-variant" id="d" data-choreo="drift">
+    <!-- ═══ D · CROSSFADE 800 — the half-speed tempo he called strong ══ -->
+    <section class="proto-variant" id="d" data-choreo="cross">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -558,7 +494,7 @@
               </a>
               <p class="ae-dim">
                 In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
+                <span class="ae-accent">view choreography, round three</span>.
               </p>
             </div>
             <div class="view" data-view="writing">
@@ -598,16 +534,16 @@
         </main>
         <footer class="ae-bar">
           <p class="ae-dim ae-chrome">
-            D · DRIFT — 480ms at 1× · the old slips opposite your travel; the
-            new arrives from where you are heading
+            D · CROSSFADE 800 — 800ms · the overlap crossfade at the half-speed
+            tempo: old and new trade places in pure opacity, nothing moves
           </p>
           <button class="js-replay" type="button">replay</button>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ E · PAGE TURN — a soft sweep, the operator's phrase ════════ -->
-    <section class="proto-variant" id="e" data-choreo="turn">
+    <!-- ═══ E · CASCADE 1200 — between 1× and the ½× he flirted with ═══ -->
+    <section class="proto-variant" id="e" data-choreo="cascade">
       <div class="ae-screen">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -642,7 +578,7 @@
               </a>
               <p class="ae-dim">
                 In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
+                <span class="ae-accent">view choreography, round three</span>.
               </p>
             </div>
             <div class="view" data-view="writing">
@@ -682,118 +618,25 @@
         </main>
         <footer class="ae-bar">
           <p class="ae-dim ae-chrome">
-            E · PAGE TURN — 700ms at 1× · the new view sweeps softly over the
-            old from the travel side, like turning a page
+            E · CASCADE 1200 — 1200ms · the old view fades over 360ms, then the
+            new view's lines arrive one after another
           </p>
           <button class="js-replay" type="button">replay</button>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ F · CASCADE — the new view's lines arrive one by one ═══════ -->
-    <section class="proto-variant" id="f" data-choreo="cascade">
-      <div class="ae-screen">
-        <header class="ae-bar">
-          <a class="ae-name" href="#">MISTY STEP</a>
-          <span class="bar-end">
-            <nav class="ae-nav js-nav">
-              <button class="is-active" data-view="work">work</button>
-              <button data-view="writing">writing</button>
-              <button data-view="contact">contact</button>
-              <span class="ae-nav-ind"></span>
-            </nav>
-            <button class="ae-mode js-mode" aria-label="toggle color mode">
-              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
-              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
-            </button>
-          </span>
-        </header>
-        <main class="ae-stage">
-          <div class="stage-views">
-            <div class="view is-on" data-view="work">
-              <h2 class="ae-h">SELECTED WORK</h2>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">aesthetic</span>
-                <span class="ae-dim">— one stylesheet, the whole identity</span>
-              </a>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">misty step</span>
-                <span class="ae-dim">— the studio site, one screen</span>
-              </a>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">field notes</span>
-                <span class="ae-dim">— a quiet reading instrument</span>
-              </a>
-              <p class="ae-dim">
-                In the lab now:
-                <span class="ae-accent">view choreography, round two</span>.
-              </p>
-            </div>
-            <div class="view" data-view="writing">
-              <h2 class="ae-h">WRITING</h2>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">One font size is enough</span>
-                <span class="ae-dim">— hierarchy from ink and weight</span>
-              </a>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">Screens, not pages</span>
-                <span class="ae-dim">— why the chrome never moves</span>
-              </a>
-              <a class="ae-row-link" href="#"
-                ><span class="ae-item">Motion is feedback</span>
-                <span class="ae-dim">— resolve once, persist</span>
-              </a>
-              <p class="ae-dim">
-                Next up:
-                <span class="ae-accent">the choreography of a view swap</span>.
-              </p>
-            </div>
-            <div class="view" data-view="contact">
-              <h2 class="ae-h">CONTACT</h2>
-              <p class="ae-lede">
-                One studio, small on purpose. Say hello about work, writing, or
-                the stylesheet.
-              </p>
-              <p>
-                Email
-                <a class="ae-accent" href="mailto:hello@mistystep.io"
-                  >hello@mistystep.io</a
-                >
-                — replies within a day.
-              </p>
-            </div>
-          </div>
-        </main>
-        <footer class="ae-bar">
-          <p class="ae-dim ae-chrome">
-            F · CASCADE — 800ms at 1× · the old view fades, then the new view's
-            lines arrive one after another
-          </p>
-          <button class="js-replay" type="button">replay</button>
-        </footer>
-      </div>
-    </section>
-
-    <nav class="proto-picker" aria-label="variant picker and speed">
+    <nav class="proto-picker" aria-label="variant picker">
       <button data-v="a" class="is-active">A cut</button>
-      <button data-v="b">B breathe</button>
-      <button data-v="c">C crossfade</button>
-      <button data-v="d">D drift</button>
-      <button data-v="e">E page turn</button>
-      <button data-v="f">F cascade</button>
-      <span class="proto-sep" aria-hidden="true"></span>
-      <button data-speed="1" class="is-active">1×</button>
-      <button data-speed="2">½×</button>
-      <button data-speed="4">¼×</button>
+      <button data-v="b">B breathe 560</button>
+      <button data-v="c">C breathe 640</button>
+      <button data-v="d">D crossfade 800</button>
+      <button data-v="e">E cascade 1200</button>
     </nav>
 
     <script>
       const root = document.documentElement;
       const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-
-      /* the speed control: one multiplier scales every CSS duration (via
-         --r2-slow) and every JS timer, so ½× and ¼× stay in sync */
-      let slow = 1;
 
       /* mode toggle: one per variant bar */
       function isDark() {
@@ -825,11 +668,11 @@
       if (document.fonts) document.fonts.ready.then(placeAllInds);
 
       /* choreography engine: one controller per variant. Every run starts
-         from a settled state, plays exactly once, then settles again.
-         THE ROUND-1 FIX: animate() removes the animation classes, forces a
-         reflow (void el.offsetWidth), and only then re-adds them — without
-         the reflow, a remove+add in the same frame never restarts the
-         animation, which is why round 1 looked dead on replay. */
+         from a settled state, plays exactly once at its fixed tempo, then
+         settles again. THE ROUND-1 FIX carries over: animate() removes
+         the animation classes, forces a reflow (void el.offsetWidth), and
+         only then re-adds them — without the reflow, a remove+add in the
+         same frame never restarts the animation. */
       document.querySelectorAll('.proto-variant').forEach((section) => {
         const choreo = section.dataset.choreo;
         const nav = section.querySelector('.js-nav');
@@ -839,30 +682,24 @@
         const viewOf = (name) => views[names.indexOf(name)];
         let timers = [];
         let current = 'work';
-        let last = { from: 'writing', to: 'work', fwd: false };
+        let last = { from: 'writing', to: 'work' };
 
-        const after = (ms, fn) => timers.push(setTimeout(fn, ms * slow));
+        const after = (ms, fn) => timers.push(setTimeout(fn, ms));
         const settle = (onName) => {
           timers.forEach(clearTimeout);
           timers = [];
           views.forEach((v) => {
-            v.classList.remove(
-              'is-exiting',
-              'is-entering',
-              'go-fwd',
-              'go-back',
-            );
+            v.classList.remove('is-exiting', 'is-entering');
             v.classList.toggle('is-on', v.dataset.view === onName);
           });
         };
-        const animate = (el, role, dirCls) => {
-          el.classList.remove('is-exiting', 'is-entering', 'go-fwd', 'go-back');
+        const animate = (el, role) => {
+          el.classList.remove('is-exiting', 'is-entering');
           void el.offsetWidth; /* force a reflow so the animation restarts */
-          if (dirCls) el.classList.add(dirCls);
           el.classList.add(role);
         };
 
-        function run(fromName, toName, fwd) {
+        function run(fromName, toName) {
           const from = viewOf(fromName);
           const to = viewOf(toName);
           settle(fromName);
@@ -871,10 +708,16 @@
             settle(toName);
             return;
           }
-          const dir = fwd ? 'go-fwd' : 'go-back';
           const finish = () => settle(toName);
           switch (choreo) {
-            case 'breathe':
+            case 'breathe-560':
+              /* fade 200 · stillness 60 · rise 300 — 560ms sequenced */
+              animate(from, 'is-exiting');
+              after(200, () => from.classList.remove('is-on', 'is-exiting'));
+              after(260, () => animate(to, 'is-entering'));
+              after(560, finish);
+              break;
+            case 'breathe-640':
               /* fade 240 · stillness 80 · rise 320 — 640ms sequenced */
               animate(from, 'is-exiting');
               after(240, () => from.classList.remove('is-on', 'is-exiting'));
@@ -882,30 +725,19 @@
               after(640, finish);
               break;
             case 'cross':
-              /* both at once, opacity only — 400ms */
+              /* both at once, opacity only — 800ms */
               animate(from, 'is-exiting');
               animate(to, 'is-entering');
-              after(400, finish);
-              break;
-            case 'drift':
-              /* exit 0–320, enter 160–480 — overlapped 50% */
-              animate(from, 'is-exiting', dir);
-              after(160, () => animate(to, 'is-entering', dir));
-              after(480, finish);
-              break;
-            case 'turn':
-              /* the old view sits still beneath; the new sweeps over it */
-              animate(to, 'is-entering', dir);
-              after(700, finish);
+              after(800, finish);
               break;
             case 'cascade':
-              /* fade 240, then children rise at 60ms steps — 800ms */
+              /* fade 360, then children rise at 90ms steps — 1200ms */
               animate(from, 'is-exiting');
-              after(240, () => {
+              after(360, () => {
                 from.classList.remove('is-on', 'is-exiting');
                 animate(to, 'is-entering');
               });
-              after(800, finish);
+              after(1200, finish);
               break;
           }
         }
@@ -914,9 +746,8 @@
           btn.addEventListener('click', () => {
             const toName = btn.dataset.view;
             if (toName === current) return;
-            const fwd = names.indexOf(toName) > names.indexOf(current);
-            run(current, toName, fwd);
-            last = { from: current, to: toName, fwd };
+            run(current, toName);
+            last = { from: current, to: toName };
             current = toName;
             nav
               .querySelectorAll('button')
@@ -927,11 +758,11 @@
 
         /* replay: re-run the most recent swap (writing → work at first) */
         section.querySelector('.js-replay').addEventListener('click', () => {
-          run(last.from, last.to, last.fwd);
+          run(last.from, last.to);
         });
       });
 
-      /* the picker: variants on the left, the speed control on the right */
+      /* the picker: one variant on screen at a time */
       const picker = document.querySelector('.proto-picker');
       const variants = document.querySelectorAll('.proto-variant');
       picker.querySelectorAll('[data-v]').forEach((btn) => {
@@ -943,15 +774,6 @@
             .querySelectorAll('[data-v]')
             .forEach((b) => b.classList.toggle('is-active', b === btn));
           requestAnimationFrame(placeAllInds);
-        });
-      });
-      picker.querySelectorAll('[data-speed]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          slow = Number(btn.dataset.speed);
-          root.style.setProperty('--r2-slow', slow);
-          picker
-            .querySelectorAll('[data-speed]')
-            .forEach((b) => b.classList.toggle('is-active', b === btn));
         });
       });
       placeAllInds();
