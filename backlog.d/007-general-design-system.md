@@ -121,21 +121,19 @@ is the next taste-critical session and wants the operator's eyes; 8
 parallel as feeders. 004 folds into child 2; 002 folds into child 8
 (both pending ratification — see those tickets).
 
-**LAB state (2026-06-12, after round 2):** verdicts live in every
-prototype's header comment. LOCKED: status inks = glyph (Lucide
-x/check/yield, hue on the glyph, words ink — child 2 is
-implementation-ready); the overlay dialog = panel (two rounds
-running); accent = deprescribed steering (child 1 ready). PARKED:
-dashboard presence, until a real data-viz vocabulary exists
-(paneled+ is the provisional baseline). ROUND 3 OPEN:
-choice-controls-fan-3 (rebuilt around progressive disclosure — the
-operator named its absence as round 2's root failure; squares
-softened, round radios on trial), data-fan-3 (terminal convergence:
-wash-head/figure/ink-name dressings on the liked terminal body),
-specimen-site-fan-3 (chapters lead; never-scrolls preferred; all
-one-accent copy purged), steering-fan-3 (six consumer schemes over
-one screen). New catalog gap found by the operator: a compact
-button scale for 13px chrome contexts. Rules codified: a column
-header shares its column's alignment; mono in moderation; controls
-keep progressive disclosure; no preemptive layout accommodation for
-overlays.
+**LAB state (2026-06-12, all three rounds closed — v2.4.0 shipped):**
+every verdict lives in its fan's header comment. Shipped in v2.4.0:
+child 1 (law rewrite — accent deprescribed to steering, status law
+added), child 2 (status inks = glyph: --ae-ok/warn/err +
+.ae-ok/.ae-warn/.ae-err), child 3's direction (settings rows that
+open: .ae-settings/.ae-menu — full form completeness still open),
+child 4's dialog (.ae-dialog panel costume — popover/tooltip/toast
+still open), child 5's table (.ae-table figure+wash, .ae-plate —
+tabs/badge/skeleton/empty still open), child 7's homepage (the
+manual organization). Still open: rest of 3/4/5, 6 (archetypes),
+8 (registry). PARKED: dashboard presence until a data-viz
+vocabulary exists. Known gaps found by the operator: a compact
+button scale for 13px contexts; a toggle that isn't grainy (rows
+sidestep it for now). Rules codified: a column header shares its
+column's alignment; mono in moderation; controls keep progressive
+disclosure; no preemptive layout accommodation for overlays.

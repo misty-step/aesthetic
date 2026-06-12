@@ -1,6 +1,11 @@
 # Grow the motion vocabulary into real delight
 
-Priority: P1 · Status: pending · Estimate: M
+Priority: P1 · Status: shipped · Estimate: M
+
+Shipped in v2.4.0 after three LAB rounds. View choreography resolved
+as a deliberate CUT ("keep it simple, loop back later" — the tuned
+tempos live in view-motion-fan-3.html for that day); everything else
+landed.
 
 ## Goal
 
@@ -10,16 +15,18 @@ without one.
 
 ## Oracle
 
-- [ ] View switches choreograph exit and entrance (old view eases out,
-      new one eases in), not just an entrance on remount.
+- [x] View switches: LOCKED as a simple cut (2026-06-12 round 3) —
+      choreography deliberately declined for now; revisit welcome.
 - [x] The nav's active state moves: `.ae-nav-ind` sliding underline
       shipped in v2.1.
-- [ ] Mode change cross-fades surface and ink over ~240ms instead of
-      flashing instantly (the toggle's own sun/moon crossfade shipped
-      in v2.2; the page-wide surface/ink flash remains).
+- [x] Mode change: one soft 700ms view-transition breath (480ms
+      uniform ease fallback), shipped v2.4.0 in recipes.js +
+      .ae-vt-mode/.ae-mode-easing CSS.
 - [x] Form submit has a success moment: `.ae-send` shipped in v2.2.0.
-- [ ] Under prefers-reduced-motion every one of the above is instant,
-      and a demo page proves both paths.
+- [x] Under prefers-reduced-motion all of the above are instant
+      (recipes.js gates VT and anticipation; the stylesheet's global
+      reduce rule kills the rest); the manual homepage demos the
+      moments live.
 
 ## Children
 
@@ -59,6 +66,9 @@ without one.
    carve-out. LAB verdict (2026-06-12): label warming is the lone
    keeper ("kind of nice"); ring, hairline, magnetic, glow, and
    commit all killed. anticipation-fan-2.html refines warming only.
+   FINAL (round 3): COMBINED locked — label + line warm together
+   toward ink, 60% cap, 120ms lag — shipped v2.4.0 as the opt-in
+   [data-ae-anticipate] recipe.
 
 ## Notes
 

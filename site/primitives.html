@@ -43,6 +43,17 @@
       <symbol id="i-check" viewBox="0 0 24 24">
         <path d="M20 6 9 17l-5-5" />
       </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
     </svg>
 
     <div class="ae-screen ae-wide">
@@ -63,7 +74,7 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Seventeen primitives.</span>
+              <span class="ae-item">Twenty-one primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
@@ -158,7 +169,7 @@
               </tr>
               <tr>
                 <td class="cls"><a href="#registers">.ae-accent</a></td>
-                <td class="role">THE accent: one per view</td>
+                <td class="role">the accent: yours to steer</td>
                 <td class="since">1.0</td>
               </tr>
               <tr>
@@ -177,6 +188,30 @@
                 <td class="cls"><a href="#buttons">.ae-send</a></td>
                 <td class="role">label resolves to “Sent ✓”, exactly once</td>
                 <td class="since">2.2</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#status">.ae-ok / .ae-warn / .ae-err</a>
+                </td>
+                <td class="role">status rides the glyph; words stay ink</td>
+                <td class="since">2.4</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#table">.ae-table / .ae-plate</a></td>
+                <td class="role">terminal-density data, framed as a plate</td>
+                <td class="since">2.4</td>
+              </tr>
+              <tr>
+                <td class="cls"><a href="#dialog">.ae-dialog</a></td>
+                <td class="role">the panel costume in the top layer</td>
+                <td class="since">2.4</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#settings">.ae-settings / .ae-menu</a>
+                </td>
+                <td class="role">quiet rows that fold open into choosers</td>
+                <td class="since">2.4</td>
               </tr>
             </tbody>
           </table>
@@ -309,7 +344,7 @@
           </div>
           <div class="src-split">
             <div class="ae-foot">
-              <span>v2.3.1 · MIT</span>
+              <span>v2.4.0 · MIT</span>
               <span class="ae-foot-links"
                 ><a href="#chrome">github</a><a href="#chrome">npm</a></span
               >
@@ -317,7 +352,7 @@
             <pre
               class="src-code"
             ><code>&lt;<span class="t">footer</span> class="<span class="t">ae-foot</span>"&gt;
-  &lt;span&gt;v2.3.1 · MIT&lt;/span&gt;
+  &lt;span&gt;v2.4.0 · MIT&lt;/span&gt;
   &lt;span class="<span class="t">ae-foot-links</span>"&gt;
     &lt;a href="…"&gt;github&lt;/a&gt;&lt;a href="…"&gt;npm&lt;/a&gt;
   &lt;/span&gt;
@@ -398,7 +433,7 @@
               </p>
               <p class="ae-item">An item that matters</p>
               <p class="ae-dim">supporting matter, muted</p>
-              <p>The <span class="ae-accent">one accent</span> per view.</p>
+              <p>The <span class="ae-accent">accent</span> — yours to steer.</p>
             </div>
             <pre
               class="src-code"
@@ -406,7 +441,7 @@
 &lt;p class="<span class="t">ae-lede</span>"&gt;The argument, plainly.&lt;/p&gt;
 &lt;p class="<span class="t">ae-item</span>"&gt;An item that matters&lt;/p&gt;
 &lt;p class="<span class="t">ae-dim</span>"&gt;supporting matter&lt;/p&gt;
-&lt;span class="<span class="t">ae-accent</span>"&gt;one accent&lt;/span&gt;</code></pre>
+&lt;span class="<span class="t">ae-accent</span>"&gt;accent&lt;/span&gt;</code></pre>
           </div>
         </div>
 
@@ -488,10 +523,216 @@
 <span class="t">// on success:</span> add .is-sent, set disabled</code></pre>
           </div>
         </div>
+
+        <div class="ae-view" data-route="status">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-OK / .AE-WARN / .AE-ERR</h2>
+            <p class="ae-dim">
+              Status rides the glyph: success, warning, and danger color the
+              icon — never the sentence, never a filled pill. The words stay
+              ink.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                Deploy succeeded.
+              </p>
+              <p>
+                <svg class="ae-icon ae-warn">
+                  <use href="#i-triangle-alert" />
+                </svg>
+                Certificate expires soon.
+              </p>
+              <p>
+                <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                Build failed.
+              </p>
+            </div>
+            <pre class="src-code"><code>&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…check…&lt;/svg&gt; Deploy succeeded.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-warn</span>"&gt;…triangle-alert…&lt;/svg&gt; Certificate expires soon.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-err</span>"&gt;…x…&lt;/svg&gt; Build failed.
+&lt;/p&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="table">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-TABLE / .AE-PLATE</h2>
+            <p class="ae-dim">
+              Terminal density: 13px mono, lowercase headers on a wash band,
+              hairline row rules — framed as a numbered plate. A column header
+              shares its column's alignment: put <code>.num</code> on the th AND
+              its tds.
+            </p>
+          </div>
+          <div class="src-split">
+            <div class="ae-plate">
+              <p class="ae-plate-cap">TABLE 1 · EXAMPLE</p>
+              <table class="ae-table">
+                <thead>
+                  <tr>
+                    <th>endpoint</th>
+                    <th>status</th>
+                    <th class="num">p99 ms</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">/send</td>
+                    <td>live</td>
+                    <td class="num">412</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">/verify</td>
+                    <td>live</td>
+                    <td class="num">88</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">/archive</td>
+                    <td>draining</td>
+                    <td class="num">1204</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="ae-plate-note">p99 over the trailing 24 hours.</p>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-plate</span>"&gt;
+  &lt;p class="<span class="t">ae-plate-cap</span>"&gt;TABLE 1 · EXAMPLE&lt;/p&gt;
+  &lt;<span class="t">table</span> class="<span class="t">ae-table</span>"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;endpoint&lt;/th&gt;&lt;th&gt;status&lt;/th&gt;
+          &lt;th class="<span class="t">num</span>"&gt;p99 ms&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td class="<span class="t">ae-item</span>"&gt;/send&lt;/td&gt;&lt;td&gt;live&lt;/td&gt;
+          &lt;td class="<span class="t">num</span>"&gt;412&lt;/td&gt;&lt;/tr&gt;
+      …
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;p class="<span class="t">ae-plate-note</span>"&gt;p99 over the trailing 24 hours.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="dialog">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-DIALOG</h2>
+            <p class="ae-dim">
+              The panel costume in the top layer: a decision asked in a
+              soft-depth panel over a whisper of paper dim. Escape and the quiet
+              button decline it. Pair with
+              <code>&lt;dialog&gt;</code> + <code>showModal()</code>.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <button
+                class="ae-button ae-button-quiet"
+                type="button"
+                id="dlg-open"
+              >
+                Archive project…
+              </button>
+              <dialog class="ae-dialog" id="dlg-demo">
+                <p class="ae-dialog-title">Archive this project?</p>
+                <p class="ae-dim">It leaves the index but keeps its history.</p>
+                <div class="ae-dialog-acts">
+                  <button
+                    class="ae-button ae-button-quiet"
+                    type="button"
+                    id="dlg-cancel"
+                  >
+                    Cancel
+                  </button>
+                  <button class="ae-button" type="button" id="dlg-confirm">
+                    Confirm
+                  </button>
+                </div>
+              </dialog>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">dialog</span> class="<span class="t">ae-dialog</span>"&gt;
+  &lt;p class="<span class="t">ae-dialog-title</span>"&gt;Archive this project?&lt;/p&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;It leaves the index but keeps its history.&lt;/p&gt;
+  &lt;div class="<span class="t">ae-dialog-acts</span>"&gt;
+    &lt;button class="<span class="t">ae-button ae-button-quiet</span>"&gt;Cancel&lt;/button&gt;
+    &lt;button class="<span class="t">ae-button</span>"&gt;Confirm&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+<span class="t">// open with dialog.showModal();</span>
+<span class="t">// both actions close()</span></code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="settings">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-SETTINGS / .AE-MENU</h2>
+            <p class="ae-dim">
+              A quiet hairline row — label left, current value right; activating
+              it folds a chooser open beneath. Choosing writes the value and
+              folds the menu; one row open at a time.
+            </p>
+          </div>
+          <div class="src-split">
+            <div class="ae-settings">
+              <button class="ae-setting" type="button">
+                Theme <span class="ae-setting-val">system</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">system</button>
+                  <button type="button">light</button>
+                  <button type="button">dark</button>
+                </div>
+              </div>
+              <button class="ae-setting" type="button">
+                Region <span class="ae-setting-val">us-east</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">us-east</button>
+                  <button type="button">eu-west</button>
+                  <button type="button">ap-south</button>
+                </div>
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-settings</span>"&gt;
+  &lt;button class="<span class="t">ae-setting</span>"&gt;
+    Theme &lt;span class="<span class="t">ae-setting-val</span>"&gt;system&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="<span class="t">ae-setting-panel</span>"&gt;
+    &lt;div class="<span class="t">ae-menu</span>"&gt;
+      &lt;button class="<span class="t">is-sel</span>"&gt;system&lt;/button&gt;
+      &lt;button&gt;light&lt;/button&gt;
+      &lt;button&gt;dark&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  …more rows…
+&lt;/div&gt;
+<span class="t">// recipes.js wires the fold, the choice,</span>
+<span class="t">// and the written value</span></code></pre>
+          </div>
+        </div>
       </main>
       <footer class="ae-bar">
         <p class="ae-chrome">
-          <code>pnpm add github:misty-step/aesthetic#v2.3.1</code>
+          <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
         </p>
         <p class="ae-chrome">
           the aesthetic powering
@@ -522,6 +763,21 @@
         };
         addEventListener('hashchange', show);
         show();
+      })();
+
+      /* the dialog specimen: the quiet button asks, both actions close */
+      (() => {
+        const dlg = document.getElementById('dlg-demo');
+        if (!dlg) return;
+        document
+          .getElementById('dlg-open')
+          .addEventListener('click', () => dlg.showModal());
+        document
+          .getElementById('dlg-cancel')
+          .addEventListener('click', () => dlg.close());
+        document
+          .getElementById('dlg-confirm')
+          .addEventListener('click', () => dlg.close());
       })();
     </script>
   </body>

@@ -26,33 +26,111 @@ footer.ae-bar a:hover {
   text-decoration-color: currentColor;
 }
 
-/* ── the specimen sheet (index) ───────────────────────────────────── */
+/* ── the manual (index) ───────────────────────────────────────────── */
 
-.spec-grid {
+/* the document: a sticky contents rail beside the chapters. The stage
+   is the scroller; the rail stands still against it. */
+.man-doc {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3em 3.5em;
+  grid-template-columns: 10em minmax(0, 1fr);
+  gap: 0 3.5em;
   align-items: start;
 }
 
-.spec-grid > * {
-  min-width: 0;
+.man-toc {
+  position: sticky;
+  top: 0;
+  border-right: 1px solid var(--ae-line);
+  padding: 0.2em 1.6em 0.6em 0;
+}
+
+.man-toc-h {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-faint);
+  margin-bottom: 0.8em;
+}
+
+.man-toc a {
+  display: block;
+  padding: 0.28em 0;
+  margin-block: 0;
+}
+
+.man-toc .no {
+  font-family: var(--ae-font-mono);
+  color: var(--ae-ink-faint);
+  margin-right: 0.9em;
+}
+
+.man-toc a[aria-current] {
+  color: var(--ae-ink);
+  font-weight: var(--ae-w-medium);
+}
+
+/* a chapter: hairline-topped, whitespace-padded; the rule replaces the
+   group margin */
+.man-ch {
+  border-top: 1px solid var(--ae-line);
+  padding: 2.2em 0 2.6em;
+  margin-bottom: 0;
+}
+
+.man-ch:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.man-ch:last-child {
+  padding-bottom: 0;
+}
+
+.man-ch p {
+  max-width: 36em;
+}
+
+/* a demonstration: narrower than the prose, set off by a breath */
+.man-demo {
+  max-width: 34em;
+  margin-top: 1.2em;
+}
+
+.man-cap {
+  margin-top: 0.8em;
+}
+
+/* a second movement within one chapter */
+.man-gap {
+  margin-top: 2em;
+}
+
+.man-form .ae-input {
+  margin-bottom: 1.2em;
+}
+
+/* the law, ruled */
+.law-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 36em;
+  border-bottom: 1px solid var(--ae-line);
+}
+
+.law-list li {
+  border-top: 1px solid var(--ae-line);
+  padding: 0.7em 0;
 }
 
 @media (max-width: 900px) {
-  .spec-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .spec-grid {
+  .man-doc {
     grid-template-columns: 1fr;
   }
-}
 
-.law-cap {
-  margin-top: 0.8em;
+  .man-toc {
+    display: none;
+  }
 }
 
 /* the register grid: three inks by three weights */

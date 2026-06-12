@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — the misty step design system</title>
+    <title>aesthetic — the misty step design system, set as a manual</title>
     <meta
       name="description"
-      content="One stylesheet: one font size, nine registers, one accent per view, screens that never scroll. The Misty Step design system, demonstrated live."
+      content="One stylesheet, read as its own manual: ten chapters — the law, nine registers, the accent, status on the glyph, controls, data plates, the dialog, motion as feedback — every demonstration rendered live by the file it documents."
     />
     <script>
       try {
@@ -43,6 +43,17 @@
       <symbol id="i-check" viewBox="0 0 24 24">
         <path d="M20 6 9 17l-5-5" />
       </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
     </svg>
 
     <div class="ae-screen ae-wide">
@@ -59,107 +70,361 @@
           </button>
         </span>
       </header>
-      <main class="ae-stage">
+      <main class="ae-stage ae-stage-scroll">
         <div class="ae-view">
-          <div class="spec-grid">
-            <div>
-              <h2 class="ae-h">NINE REGISTERS</h2>
-              <div class="reg-grid">
-                <span class="rh"></span><span class="rh">400</span
-                ><span class="rh">550</span><span class="rh">800</span>
-                <span class="rh">ink</span><span class="w4">quiet</span
-                ><span class="w5">steady</span><span class="w8">loud</span>
-                <span class="rh">muted</span><span class="ae-dim w4">quiet</span
-                ><span class="ae-dim w5">steady</span
-                ><span class="ae-dim w8">loud</span>
-                <span class="rh">faint</span
-                ><span class="x-faint w4">quiet</span
-                ><span class="x-faint w5">steady</span
-                ><span class="x-faint w8">loud</span>
-              </div>
-              <p class="ae-dim law-cap">
-                One font size. Three inks by three weights — heavier and
-                blacker, never larger.
-              </p>
-            </div>
-            <div>
-              <h2 class="ae-h">MOTION IS FEEDBACK</h2>
-              <form data-ae-demo>
-                <label class="ae-label" for="email">Email</label>
-                <input
-                  class="ae-input"
-                  id="email"
-                  type="email"
-                  placeholder="you@misty-step.com"
-                  style="margin-bottom: 1.2em"
-                />
-                <button class="ae-button ae-send" type="submit">
-                  <span class="ae-send-label">Send message</span>
-                  <span class="ae-send-done" aria-hidden="true"
-                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
-                  ></span>
-                </button>
-              </form>
-              <p class="ae-dim law-cap">
-                Never decoration. Success resolves once and persists — send it
-                and see.
-              </p>
-            </div>
-            <div>
-              <h2 class="ae-h">SCREENS, NOT PAGES</h2>
-              <nav class="ae-nav">
-                <button class="is-active">work</button>
-                <button>writing</button>
-                <button>contact</button>
-                <span class="ae-nav-ind"></span>
-              </nav>
-              <p class="ae-dim law-cap">
-                Every view fits the viewport; the underline slides, nothing
-                scrolls.
-              </p>
-            </div>
-            <div>
-              <h2 class="ae-h">ONE ACCENT</h2>
-              <p>
-                The <span class="ae-accent">single instance</span> per view —
-                this sheet just spent its.
-              </p>
-              <p class="ae-dim law-cap">
-                A link rests in ink and
-                <a href="primitives.html#registers">warms on hover</a>; the
-                accent is rationed.
-              </p>
-            </div>
-            <div>
-              <h2 class="ae-h">BUTTONS ARE NOT LINKS</h2>
-              <p style="display: flex; gap: 1em; flex-wrap: wrap">
-                <button class="ae-button">Primary</button>
-                <button class="ae-button ae-button-quiet">Quiet</button>
-              </p>
-              <p class="ae-dim law-cap">
-                Links navigate, buttons act — they never share a costume.
-              </p>
-            </div>
-            <div>
-              <h2 class="ae-h">LIGHT AND DARK</h2>
-              <div class="ae-foot">
-                <span>v2.3.1 · MIT</span>
-                <span class="ae-foot-links"
-                  ><a href="https://github.com/misty-step/aesthetic">github</a
-                  ><a href="primitives.html">primitives</a></span
-                >
-              </div>
-              <p class="ae-dim law-cap">
-                Defaulting to your system, overruled by the toggle above. Chrome
-                stays 13px.
-              </p>
+          <div class="man-doc">
+            <nav class="man-toc ae-chrome" aria-label="manual contents">
+              <p class="man-toc-h">CONTENTS</p>
+              <a href="#aesthetic"><span class="no">00</span>aesthetic</a>
+              <a href="#law"><span class="no">01</span>the law</a>
+              <a href="#registers"><span class="no">02</span>registers</a>
+              <a href="#accent"><span class="no">03</span>the accent</a>
+              <a href="#status"><span class="no">04</span>status</a>
+              <a href="#controls"><span class="no">05</span>controls</a>
+              <a href="#data"><span class="no">06</span>data</a>
+              <a href="#dialog"><span class="no">07</span>dialog</a>
+              <a href="#motion"><span class="no">08</span>motion</a>
+              <a href="#colophon"><span class="no">09</span>colophon</a>
+            </nav>
+            <div class="man-body">
+              <section class="ae-group man-ch" id="aesthetic">
+                <h2 class="ae-h">
+                  <span class="x-faint">00 · </span>AESTHETIC
+                </h2>
+                <p class="ae-lede">
+                  One stylesheet is the whole system: ink on paper, hairline
+                  rules, hard corners, one font size on every surface. This page
+                  is its manual — ten chapters scrolling inside the stage, every
+                  demonstration rendered by the file it documents. View source;
+                  the markup is the documentation.
+                </p>
+                <p class="man-demo">
+                  <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
+                </p>
+                <p class="ae-dim man-cap">
+                  Pin the tag. Upgrades are deliberate; the file never moves
+                  under you.
+                </p>
+              </section>
+
+              <section class="ae-group man-ch" id="law">
+                <h2 class="ae-h"><span class="x-faint">01 · </span>THE LAW</h2>
+                <ul class="law-list">
+                  <li>
+                    <span class="ae-item">One size.</span> Exactly one font size
+                    on every surface; the headline is heavier and blacker, never
+                    larger.
+                  </li>
+                  <li>
+                    <span class="ae-item">Nine registers.</span> Three inks by
+                    three weights (400 / 550 / 800).
+                  </li>
+                  <li>
+                    <span class="ae-item">The accent is yours.</span> Define
+                    your scheme and use it with judgment; identity comes from
+                    ink, hairlines, type, and motion. Color earns its place; it
+                    is not ambient.
+                  </li>
+                  <li>
+                    <span class="ae-item">Status rides the glyph.</span>
+                    Danger, success, and warning color the icon — never the
+                    sentence, never a filled pill.
+                  </li>
+                  <li>
+                    <span class="ae-item">Screens, not pages.</span> Every view
+                    fits the viewport; when content exceeds one screen, a quiet
+                    nav swaps views — or the document scrolls inside the stage,
+                    like this one.
+                  </li>
+                  <li>
+                    <span class="ae-item">Motion is feedback.</span> Never
+                    decoration: small, brief, eased. State resolutions are
+                    gentler and resolve once — success persists, it is never
+                    rewound. Nothing changes size while it animates.
+                  </li>
+                  <li>
+                    <span class="ae-item">Buttons are not links.</span>
+                    Contained ink shapes. Links navigate, buttons act.
+                  </li>
+                  <li>
+                    <span class="ae-item">Light and dark.</span> Defaulting to
+                    the system, with a user toggle.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="ae-group man-ch" id="registers">
+                <h2 class="ae-h">
+                  <span class="x-faint">02 · </span>REGISTERS
+                </h2>
+                <p>
+                  Hierarchy comes from ink and weight, never from scale. Three
+                  inks by three weights make nine registers; the headline is
+                  heavier and blacker, never larger.
+                </p>
+                <div class="man-demo">
+                  <div class="reg-grid">
+                    <span class="rh"></span><span class="rh">400</span
+                    ><span class="rh">550</span><span class="rh">800</span>
+                    <span class="rh">ink</span><span class="w4">quiet</span
+                    ><span class="w5">steady</span><span class="w8">loud</span>
+                    <span class="rh">muted</span
+                    ><span class="ae-dim w4">quiet</span
+                    ><span class="ae-dim w5">steady</span
+                    ><span class="ae-dim w8">loud</span>
+                    <span class="rh">faint</span
+                    ><span class="x-faint w4">quiet</span
+                    ><span class="x-faint w5">steady</span
+                    ><span class="x-faint w8">loud</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="ae-group man-ch" id="accent">
+                <h2 class="ae-h">
+                  <span class="x-faint">03 · </span>THE ACCENT
+                </h2>
+                <p>
+                  The accent is yours: define your scheme and use it with
+                  judgment. Identity comes from ink, hairlines, type, and motion
+                  — the system carries any hue without losing itself. Here it is
+                  under the house ultramarine:
+                </p>
+                <div class="man-demo">
+                  <p>
+                    <span class="ae-accent">running</span>
+                    <span class="ae-dim">· deploy 4121</span>
+                  </p>
+                  <p class="ae-dim">
+                    <a href="primitives.html#registers"
+                      >a link warms on hover</a
+                    >
+                  </p>
+                </div>
+                <p class="ae-dim man-cap">
+                  Steer it downstream: override <code>--ae-accent</code> /
+                  <code>--ae-accent-dark</code> and every surface follows.
+                </p>
+              </section>
+
+              <section class="ae-group man-ch" id="status">
+                <h2 class="ae-h"><span class="x-faint">04 · </span>STATUS</h2>
+                <p>
+                  Danger, success, and warning color the glyph — never the
+                  sentence, never a filled pill.
+                </p>
+                <div class="man-demo">
+                  <p>
+                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                    Deploy 4118 failed on preview.
+                  </p>
+                  <p>
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    Deploy 4120 resolved on production.
+                  </p>
+                  <p>
+                    <svg class="ae-icon ae-warn">
+                      <use href="#i-triangle-alert" />
+                    </svg>
+                    Certificate expires in 14 days.
+                  </p>
+                </div>
+                <p class="ae-dim man-cap">
+                  The hue rides the glyph; the sentence stays ink.
+                </p>
+              </section>
+
+              <section class="ae-group man-ch" id="controls">
+                <h2 class="ae-h"><span class="x-faint">05 · </span>CONTROLS</h2>
+                <p>
+                  Settings rest as quiet hairline rows — label left, current
+                  value right — and fold a chooser open when asked. One row open
+                  at a time.
+                </p>
+                <div class="man-demo">
+                  <div class="ae-settings">
+                    <button class="ae-setting" type="button">
+                      Region <span class="ae-setting-val">us-east-1</span>
+                    </button>
+                    <div class="ae-setting-panel">
+                      <div class="ae-menu">
+                        <button type="button" class="is-sel">us-east-1</button>
+                        <button type="button">eu-west-1</button>
+                        <button type="button">ap-south-1</button>
+                      </div>
+                    </div>
+                    <button class="ae-setting" type="button">
+                      Visibility <span class="ae-setting-val">internal</span>
+                    </button>
+                    <div class="ae-setting-panel">
+                      <div class="ae-menu">
+                        <button type="button">public</button>
+                        <button type="button" class="is-sel">internal</button>
+                        <button type="button">private</button>
+                      </div>
+                    </div>
+                    <button class="ae-setting" type="button">
+                      Auto-deploy <span class="ae-setting-val">on</span>
+                    </button>
+                    <div class="ae-setting-panel">
+                      <div class="ae-menu">
+                        <button type="button" class="is-sel">on</button>
+                        <button type="button">off</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="man-gap">
+                  Forms are lines, not boxes. The nearest field warms as the
+                  pointer approaches; sending resolves once and persists — it is
+                  never rewound.
+                </p>
+                <form class="man-demo man-form" data-ae-anticipate data-ae-demo>
+                  <label class="ae-label" for="email">Email</label>
+                  <input
+                    class="ae-input"
+                    id="email"
+                    type="email"
+                    placeholder="you@misty-step.com"
+                  />
+                  <button class="ae-button ae-send" type="submit">
+                    <span class="ae-send-label">Send message</span>
+                    <span class="ae-send-done" aria-hidden="true"
+                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                    ></span>
+                  </button>
+                </form>
+              </section>
+
+              <section class="ae-group man-ch" id="data">
+                <h2 class="ae-h"><span class="x-faint">06 · </span>DATA</h2>
+                <p>
+                  Tables are instruments: 13px mono, lowercase headers on a wash
+                  band, hairline row rules — framed as numbered plates.
+                </p>
+                <div class="man-demo">
+                  <div class="ae-plate">
+                    <p class="ae-plate-cap">
+                      TABLE 1 · CONSUMERS RIDING THE SYSTEM
+                    </p>
+                    <table class="ae-table">
+                      <thead>
+                        <tr>
+                          <th>consumer</th>
+                          <th class="num">pin</th>
+                          <th>status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="ae-item">misty-step.com</td>
+                          <td class="num">v2.4.0</td>
+                          <td>
+                            <svg class="ae-icon ae-ok">
+                              <use href="#i-check" />
+                            </svg>
+                            current
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="ae-item">phrazzld.com</td>
+                          <td class="num">v2.2.0</td>
+                          <td>
+                            <svg class="ae-icon ae-warn">
+                              <use href="#i-triangle-alert" />
+                            </svg>
+                            two tags behind
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="ae-item">aesthetic site</td>
+                          <td class="num">HEAD</td>
+                          <td>
+                            <svg class="ae-icon ae-ok">
+                              <use href="#i-check" />
+                            </svg>
+                            rides HEAD
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="ae-item">next</td>
+                          <td class="num">—</td>
+                          <td>
+                            <svg class="ae-icon ae-err">
+                              <use href="#i-x" />
+                            </svg>
+                            unpinned
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="ae-plate-note">
+                      The site is the only consumer on HEAD — view-source is
+                      documentation. Everyone else pins a tag and upgrades
+                      deliberately.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="ae-group man-ch" id="dialog">
+                <h2 class="ae-h"><span class="x-faint">07 · </span>DIALOG</h2>
+                <p>
+                  A decision is asked in the panel costume, in the top layer,
+                  over a whisper of paper dim. Escape and the quiet button
+                  decline it.
+                </p>
+                <div class="man-demo">
+                  <button
+                    class="ae-button ae-button-quiet"
+                    type="button"
+                    id="dlg-open"
+                  >
+                    Delete the example
+                  </button>
+                </div>
+                <dialog class="ae-dialog" id="dlg">
+                  <p class="ae-dialog-title">Delete example?</p>
+                  <p class="ae-dim">It only ever existed to be deleted.</p>
+                  <div class="ae-dialog-acts">
+                    <button class="ae-button ae-button-quiet" type="button">
+                      Cancel
+                    </button>
+                    <button class="ae-button" type="button">Delete</button>
+                  </div>
+                </dialog>
+              </section>
+
+              <section class="ae-group man-ch" id="motion">
+                <h2 class="ae-h"><span class="x-faint">08 · </span>MOTION</h2>
+                <p>
+                  Motion is feedback, never decoration. The send moment above
+                  resolved once and persists; the chooser folded open because
+                  you asked it to. The mode change is one soft 700ms breath —
+                  flip the toggle above and watch the page breathe.
+                </p>
+                <p class="ae-dim man-cap">
+                  Under reduced motion, everything is instant.
+                </p>
+              </section>
+
+              <section class="ae-group man-ch" id="colophon">
+                <h2 class="ae-h"><span class="x-faint">09 · </span>COLOPHON</h2>
+                <div class="ae-foot">
+                  <span>v2.4.0 · MIT</span>
+                  <span class="ae-foot-links"
+                    ><a href="https://github.com/misty-step/aesthetic">github</a
+                    ><a href="primitives.html">primitives</a></span
+                  >
+                </div>
+              </section>
             </div>
           </div>
         </div>
       </main>
       <footer class="ae-bar">
         <p class="ae-chrome">
-          <code>pnpm add github:misty-step/aesthetic#v2.3.1</code>
+          <code>pnpm add github:misty-step/aesthetic#v2.4.0</code>
         </p>
         <p class="ae-chrome">
           the aesthetic powering
@@ -169,5 +434,85 @@
     </div>
 
     <script src="recipes.js"></script>
+    <script>
+      /* page glue: the contents rail and the dialog. Everything else on
+         this page is wired by recipes.js. */
+      (() => {
+        const stage = document.querySelector('.ae-stage');
+        const toc = document.querySelectorAll('.man-toc a');
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+        /* scroll-spy: the rail tracks the chapter at the reading line —
+           the deepest chapter whose top has entered the upper stage */
+        const mark = (id) => {
+          toc.forEach((a) => {
+            if (a.hash === '#' + id) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+          });
+        };
+        const chapters = [...document.querySelectorAll('.man-ch')];
+        const last = chapters[chapters.length - 1];
+        const seen = new Map();
+        let atEnd = false;
+        const place = () => {
+          if (atEnd) return mark(last.id);
+          const here = chapters.filter((ch) => seen.get(ch));
+          if (here.length) mark(here[here.length - 1].id);
+        };
+        const spy = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => seen.set(en.target, en.isIntersecting));
+            place();
+          },
+          { root: stage, rootMargin: '0px 0px -72% 0px' },
+        );
+        chapters.forEach((ch) => spy.observe(ch));
+
+        /* the last chapter is short and never reaches the reading line;
+           while it is fully in view the document has ended — mark it */
+        const endSpy = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              atEnd = en.isIntersecting;
+            });
+            place();
+          },
+          { root: stage, threshold: 1 },
+        );
+        endSpy.observe(last);
+
+        /* clicking a chapter scrolls the stage — smoothly, except under
+           reduced motion, where everything is instant */
+        toc.forEach((a) => {
+          a.addEventListener('click', (e) => {
+            const ch = document.getElementById(a.hash.slice(1));
+            if (!ch) return;
+            e.preventDefault();
+            ch.scrollIntoView({
+              behavior: reduced.matches ? 'auto' : 'smooth',
+            });
+            history.replaceState(null, '', a.hash);
+            mark(ch.id);
+          });
+        });
+
+        /* the stage is the scroller: re-broadcast its scroll so the
+           anticipation recipe re-measures field positions */
+        stage.addEventListener(
+          'scroll',
+          () => dispatchEvent(new Event('scroll')),
+          { passive: true },
+        );
+
+        /* the dialog: open with showModal(); both actions close it */
+        const dlg = document.getElementById('dlg');
+        document
+          .getElementById('dlg-open')
+          .addEventListener('click', () => dlg.showModal());
+        dlg
+          .querySelectorAll('.ae-dialog-acts button')
+          .forEach((b) => b.addEventListener('click', () => dlg.close()));
+      })();
+    </script>
   </body>
 </html>

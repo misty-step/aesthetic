@@ -850,6 +850,16 @@ textarea.ae-input {
 .ae-setting-panel > * {
   overflow: hidden;
   min-height: 0;
+
+  /* the child's border and padding outlive a 0fr row; stop painting
+     them once the fold completes */
+  visibility: hidden;
+  transition: visibility 0s var(--ae-soft);
+}
+
+.ae-setting-panel.is-open > * {
+  visibility: visible;
+  transition: visibility 0s;
 }
 
 /* the menu: a quiet option list (also the long-select answer) */
