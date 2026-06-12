@@ -1,14 +1,17 @@
 <!doctype html>
-<!-- LAB accent law — the operator doubts "exactly one accent instance per
-     view". The same Misty Step ops screen rendered under six accent
-     POLICIES — one per view, one per region, rationed, state-only,
-     ambient, none — so the law can be judged by eye, not argument.
-     VERDICT (2026-06-12): the one-accent-per-view law is dead — not a law, needs complete reimagining; no round-1 policy adopted. Round 2 explores role-based doctrines: accent-doctrine-fan-2.html -->
+<!-- LAB accent doctrine · round 2 — replaces the one-per-view law — the
+     operator killed "exactly one accent instance per view" (a lone accented
+     table row, blue and underlined for no reason at all, was the failure
+     mode). Counting was never a reason. Round 2 fans six ROLE-BASED
+     doctrines — interaction, wayfinding, live, primary, composed,
+     reserved — over the identical Misty Step ops screen, so the
+     replacement rule can be judged by eye, not argument.
+     VERDICT: (pending operator review) -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — the accent law, six policies</title>
+    <title>aesthetic — accent doctrine, round 2: six replacements</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
@@ -109,7 +112,8 @@
       .dep-table td:last-child {
         padding-right: 0;
       }
-      /* the ink baseline for status: weight carries it (this IS policy F) */
+      /* the ink baseline for status: weight carries good/bad everywhere;
+         no doctrine below spends color on a verdict */
       .st-ok {
         color: var(--ae-ink-muted);
       }
@@ -130,83 +134,95 @@
         gap: 1.5em;
       }
 
-      /* ── the six policies: ONLY accent application differs ─────────── */
+      /* ── the six doctrines: ONLY accent application differs ────────── */
 
-      /* A · one per view: the failing deploy is the single instance */
-      .pol-a .st-fail {
-        color: var(--ae-accent);
-      }
-
-      /* B · one per region: bar → active-nav underline, stage → failing
-         row, footer → abstains */
-      .pol-b .ae-nav-ind {
+      /* A · interaction — the accent answers the hand. At rest the page
+         is pure ink; ultramarine exists only as interactive feedback.
+         Link hover already warms to accent (the system default IS this
+         doctrine); add focus, selection, and the pressed nav item. */
+      .doc-a ::selection {
         background: var(--ae-accent);
+        color: var(--ae-surface);
       }
-      .pol-b .st-fail {
+      .doc-a :focus-visible {
+        outline-color: var(--ae-accent);
+      }
+      .doc-a .ae-input:focus-visible {
+        border-bottom-color: var(--ae-accent);
+      }
+      .doc-a .ae-nav button:active {
         color: var(--ae-accent);
       }
 
-      /* C · rationed: the affordance class warms — link hovers (system
-         default) and the active nav item — plus one resting instance */
-      .pol-c .ae-nav .is-active {
-        color: var(--ae-accent);
-      }
-      .pol-c .st-fail {
-        color: var(--ae-accent);
-      }
-
-      /* D · state only: focus + live state; never navigation, never
-         rest — link hover stays ink */
-      .pol-d a:hover {
+      /* B · wayfinding — the accent lives in fixed structural positions
+         only: the active-nav underline and the primary action. Never in
+         content or data; even hover stays ink. */
+      .doc-b a:hover {
         color: var(--ae-ink);
         text-decoration-color: var(--ae-ink);
       }
-      .pol-d :focus-visible {
-        outline-color: var(--ae-accent);
-      }
-      .pol-d .ae-input:focus-visible {
-        border-bottom-color: var(--ae-accent);
-      }
-      .pol-d .st-fail,
-      .pol-d .st-prog {
-        color: var(--ae-accent);
-      }
-
-      /* E · ambient: the conventional design-system policy — buttons,
-         links at rest, active nav, focus, the failing badge */
-      .pol-e a:not(.ae-name) {
-        color: var(--ae-accent);
-        text-decoration-color: currentColor;
-      }
-      .pol-e .ae-nav .is-active {
-        color: var(--ae-accent);
-      }
-      .pol-e .ae-nav-ind {
+      .doc-b .ae-nav-ind {
         background: var(--ae-accent);
       }
-      .pol-e .ae-button {
+      .doc-b .ae-button:not(.ae-button-quiet) {
         background: var(--ae-accent);
         border-color: var(--ae-accent);
         color: var(--ae-surface);
       }
-      .pol-e .ae-button-quiet {
-        background: transparent;
-        color: var(--ae-accent);
+
+      /* C · live — the accent means now: the deploy in flight. Never a
+         verdict (the status inks own good/bad), never decoration, never
+         the hand — hover stays ink. */
+      .doc-c a:hover {
+        color: var(--ae-ink);
+        text-decoration-color: var(--ae-ink);
       }
-      .pol-e :focus-visible {
-        outline-color: var(--ae-accent);
-      }
-      .pol-e .ae-input:focus-visible {
-        border-bottom-color: var(--ae-accent);
-      }
-      .pol-e .st-fail {
+      .doc-c .st-prog {
         color: var(--ae-accent);
       }
 
-      /* F · none: the ink baseline stands; even hover stays ink */
-      .pol-f a:hover {
+      /* D · primary — the old "accents are not spent on buttons"
+         inverted: the commit button is the accent, solid ultramarine
+         with surface text. Everything else, hover included, stays ink. */
+      .doc-d a:hover {
         color: var(--ae-ink);
         text-decoration-color: var(--ae-ink);
+      }
+      .doc-d .ae-button:not(.ae-button-quiet) {
+        background: var(--ae-accent);
+        border-color: var(--ae-accent);
+        color: var(--ae-surface);
+      }
+
+      /* E · composed — guidance, not law. Three instances, each earning
+         its place: where you are (active nav), what is happening (the
+         deploy in flight), what to do (primary button). Link hover keeps
+         the locked system treatment. */
+      .doc-e .ae-nav .is-active {
+        color: var(--ae-accent);
+      }
+      .doc-e .ae-nav-ind {
+        background: var(--ae-accent);
+      }
+      .doc-e .st-prog {
+        color: var(--ae-accent);
+      }
+      .doc-e .ae-button:not(.ae-button-quiet) {
+        background: var(--ae-accent);
+        border-color: var(--ae-accent);
+        color: var(--ae-surface);
+      }
+
+      /* F · reserved — no UI accent at all; ultramarine is the brand's
+         signature only: one stroke under the name. Hover stays ink. */
+      .doc-f a:hover {
+        color: var(--ae-ink);
+        text-decoration-color: var(--ae-ink);
+      }
+      .doc-f .ae-name {
+        padding-bottom: 0.18em;
+        margin-bottom: -0.18em;
+        border-bottom: 2px solid var(--ae-accent);
       }
     </style>
   </head>
@@ -228,8 +244,8 @@
       </symbol>
     </svg>
 
-    <!-- ═══ A · ONE PER VIEW — the current law ═══ -->
-    <section class="proto-variant is-on pol-a" id="va">
+    <!-- ═══ A · INTERACTION — the accent answers the hand ═══ -->
+    <section class="proto-variant is-on doc-a" id="va">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -247,9 +263,9 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              A · ONE PER VIEW — the law as written. The failing deploy is the
-              view's single accent; nav, links, and buttons all rest in ink.
-              accent instances at rest: 1
+              A · INTERACTION — the accent answers the hand: it appears when you
+              act and nowhere else. accent at rest: 0 · on action: link hover,
+              focus ring, text selection, the pressed nav item.
             </p>
             <div class="ops-grid">
               <div>
@@ -357,8 +373,8 @@
         </footer>
       </div>
     </section>
-    <!-- ═══ B · ONE PER REGION — the stratification proposal ═══ -->
-    <section class="proto-variant pol-b" id="vb">
+    <!-- ═══ B · WAYFINDING — where you are, what to do next ═══ -->
+    <section class="proto-variant doc-b" id="vb">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -376,9 +392,10 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              B · ONE PER REGION — stratified. The bar spends its instance on
-              the active-nav underline, the stage on the failing deploy; the
-              footer abstains. accent instances at rest: 2
+              B · WAYFINDING — the accent marks where you are and the one thing
+              to do next; never content, never data. accent at rest: 2
+              (active-nav underline, primary button) · on action: nothing —
+              hover stays ink.
             </p>
             <div class="ops-grid">
               <div>
@@ -486,8 +503,8 @@
         </footer>
       </div>
     </section>
-    <!-- ═══ C · RATIONED — accent as the affordance class ═══ -->
-    <section class="proto-variant pol-c" id="vc">
+    <!-- ═══ C · LIVE — the accent means now ═══ -->
+    <section class="proto-variant doc-c" id="vc">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -505,9 +522,10 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              C · RATIONED — accent as affordance. Link hovers and the active
-              nav item warm to it, plus one resting instance. Is hover + one
-              already the law? accent instances at rest: 2
+              C · LIVE — the accent means now: the deploy in flight, never a
+              verdict (weight owns failed, muted owns live), never decoration.
+              accent at rest: 1 (the deploy in flight) · on action: nothing —
+              hover stays ink.
             </p>
             <div class="ops-grid">
               <div>
@@ -615,8 +633,8 @@
         </footer>
       </div>
     </section>
-    <!-- ═══ D · STATE ONLY — accent is live state ═══ -->
-    <section class="proto-variant pol-d" id="vd">
+    <!-- ═══ D · PRIMARY — the accent is the commit button ═══ -->
+    <section class="proto-variant doc-d" id="vd">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -634,9 +652,10 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              D · STATE ONLY — accent marks live state. Focus rings, the failing
-              deploy, the one in flight; never navigation, never rest. accent
-              instances at rest: 2
+              D · PRIMARY — the accent is the commit button. The old "accents
+              are not spent on buttons" inverted: ultramarine is spent ONLY
+              there. accent at rest: 1 (Acknowledge) · on action: nothing more —
+              hover stays ink.
             </p>
             <div class="ops-grid">
               <div>
@@ -744,8 +763,8 @@
         </footer>
       </div>
     </section>
-    <!-- ═══ E · AMBIENT — the Material strawman ═══ -->
-    <section class="proto-variant pol-e" id="ve">
+    <!-- ═══ E · COMPOSED — guidance, not law ═══ -->
+    <section class="proto-variant doc-e" id="ve">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -763,9 +782,10 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              E · AMBIENT — the conventional policy, rendered honestly. Buttons,
-              links, active nav, focus, and the failure all warm. accent
-              instances at rest: 9
+              E · COMPOSED — the accent is scarce and earns each appearance; the
+              composer judges. Here: where you are, what is happening, what to
+              do. accent at rest: 3 (active nav, the deploy in flight, primary
+              button) · on action: link hover warms.
             </p>
             <div class="ops-grid">
               <div>
@@ -873,8 +893,8 @@
         </footer>
       </div>
     </section>
-    <!-- ═══ F · NONE — zero accent ═══ -->
-    <section class="proto-variant pol-f" id="vf">
+    <!-- ═══ F · RESERVED — the brand's signature, not the UI's ═══ -->
+    <section class="proto-variant doc-f" id="vf">
       <div class="ae-screen ae-wide">
         <header class="ae-bar">
           <a class="ae-name" href="#">MISTY STEP</a>
@@ -892,9 +912,10 @@
         <main class="ae-stage">
           <div class="ae-view">
             <p class="pol-cap ae-dim">
-              F · NONE — zero ultramarine. Ink, muted, faint, and weight carry
-              everything. Does the system need the accent at all? accent
-              instances at rest: 0
+              F · RESERVED — the accent is the brand's signature, not the UI's:
+              one ultramarine stroke under the name, none in the interface.
+              accent at rest: 0 in the UI (1 brand mark) · on action: nothing —
+              hover stays ink.
             </p>
             <div class="ops-grid">
               <div>
@@ -1003,13 +1024,13 @@
       </div>
     </section>
 
-    <nav class="proto-picker" aria-label="policy picker">
-      <button data-v="va" class="is-active">A one/view</button>
-      <button data-v="vb">B one/region</button>
-      <button data-v="vc">C rationed</button>
-      <button data-v="vd">D state</button>
-      <button data-v="ve">E ambient</button>
-      <button data-v="vf">F none</button>
+    <nav class="proto-picker" aria-label="doctrine picker">
+      <button data-v="va" class="is-active">A interaction</button>
+      <button data-v="vb">B wayfinding</button>
+      <button data-v="vc">C live</button>
+      <button data-v="vd">D primary</button>
+      <button data-v="ve">E composed</button>
+      <button data-v="vf">F reserved</button>
     </nav>
 
     <script>

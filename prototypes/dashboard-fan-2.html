@@ -1,0 +1,960 @@
+<!doctype html>
+<!-- LAB dashboard presence · round 2 — VERDICT: (pending operator review)
+     Round 1 (archetypes-fan.html): PANELED won ("pretty solid"); the
+     naked hairline DASHBOARD read "maybe a little too subdued". The open
+     question: how does a dashboard get PRESENCE inside a system whose
+     law says one font size? Six answers: polish the winner (A), carry
+     magnitude with meters (B), shout with composition (C), amend the law
+     with a 24px display register (D), give numbers history with
+     sparklines (E), build hierarchy from layout (F). D is the one
+     sanctioned law-amendment proposal, captioned honestly. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — dashboard presence, round 2</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────── */
+      .proto-variant {
+        display: none;
+      }
+      .proto-variant.is-on {
+        display: block;
+      }
+
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      }
+      .proto-picker button {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1.1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      /* shared instrumentation: gauges, values, tables */
+      .g-label {
+        display: block;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.15em;
+      }
+      .val {
+        display: block;
+        font-family: var(--ae-font-mono);
+        font-weight: var(--ae-w-black);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+      .t {
+        width: 100%;
+        border-collapse: collapse;
+        font-variant-numeric: tabular-nums;
+      }
+      .t th {
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink-muted);
+        text-align: left;
+        padding: 0 1.4em 0.5em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .t td {
+        padding: 0.45em 1.4em 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .t th:last-child,
+      .t td:last-child {
+        padding-right: 0;
+      }
+      .t tr:last-child td {
+        border-bottom: 0;
+      }
+      .dash-table {
+        margin-top: 2.6em;
+      }
+
+      /* ── A + D · panel gauge cards ─────────────────────────────────── */
+      .panels {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.6em;
+        align-items: stretch;
+      }
+      .panels .ae-panel {
+        padding: 1.5em 1.8em 1.4em;
+      }
+      .panel-span {
+        grid-column: 1 / -1;
+      }
+
+      /* ── D · the display register (law amendment proposal) ────────── */
+      .val-display {
+        font-size: 24px;
+        font-weight: var(--ae-w-medium);
+        line-height: 1.4;
+      }
+
+      /* ── B + E + F · hairline-joined gauge grids ───────────────────── */
+      .gauges,
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--ae-line);
+      }
+      .gauge {
+        background: var(--ae-surface);
+        padding: 1.3em 1.6em 1.2em;
+      }
+
+      /* B: the hairline meter — a 1px track, an ink fill, determinate */
+      .meter {
+        display: block;
+        height: 1px;
+        background: var(--ae-line);
+        margin-top: 1em;
+      }
+      .meter-fill {
+        display: block;
+        height: 100%;
+        background: var(--ae-ink);
+      }
+      .scale-note {
+        display: block;
+        margin-top: 0.6em;
+        color: var(--ae-ink-faint);
+      }
+
+      /* E: the sparkline — hairline stroke, last point a 2px ink square */
+      .spark {
+        display: block;
+        margin-top: 0.9em;
+        color: var(--ae-ink-muted);
+      }
+      .spark polyline {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1;
+      }
+      .spark rect {
+        fill: var(--ae-ink);
+      }
+
+      /* ── C · contrast cells ────────────────────────────────────────── */
+      .cells {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2em;
+      }
+      .cell {
+        background: var(--ae-wash);
+        padding: 2.2em 2em 2em;
+      }
+      .cell .g-label {
+        color: var(--ae-ink-faint);
+      }
+      .cell .val {
+        margin-top: 1.7em;
+      }
+      .contrast-table {
+        margin-top: 3.2em;
+      }
+
+      /* ── F · the board: one dominant gauge, the rest small ────────── */
+      .gauge-hero {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        padding: 1.9em 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .gauge-hero .spark {
+        margin-top: 1.2em;
+      }
+      .gauge-hero .scale-note {
+        margin-top: 0.8em;
+      }
+
+      @media (max-width: 700px) {
+        .panels,
+        .cells {
+          grid-template-columns: 1fr;
+        }
+        .gauges,
+        .board {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .gauge-hero {
+          grid-column: 1 / -1;
+          grid-row: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <!-- ═══ A · PANELED+ — the round-1 winner, polished ═════════════════ -->
+    <section class="proto-variant is-on" id="a">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="panels">
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val ae-accent">99.98%</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val">0.02%</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val">38ms</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val">14</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val">41s</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val">2 of 3</span>
+              </p>
+              <div class="ae-panel panel-span">
+                <h2 class="ae-h">RECENT DEPLOYS</h2>
+                <table class="t">
+                  <thead>
+                    <tr>
+                      <th>COMMIT</th>
+                      <th>MESSAGE</th>
+                      <th>BUILD</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>243d24f</code></td>
+                      <td>docs: mark the send done layer aria-hidden</td>
+                      <td class="ae-dim">38s</td>
+                      <td class="ae-item">live</td>
+                    </tr>
+                    <tr>
+                      <td><code>0ff3883</code></td>
+                      <td>feat: v2.2.0 — buttons are not links</td>
+                      <td class="ae-dim">41s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>f1e6a44</code></td>
+                      <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                      <td class="ae-dim">39s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>6aa5b10</code></td>
+                      <td>fix: overflow-safe view centering</td>
+                      <td class="ae-dim">44s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · A · PANELED+ — the round-1 winner, polished: one gauge per
+            panel, 13px muted-caps labels, 16px weight-800 mono values with
+            tabular figures and a touch of tracking. The law-compliant baseline;
+            judge every other variant against this.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ B · METERS — magnitude carried by form, not type ════════════ -->
+    <section class="proto-variant" id="b">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="gauges">
+              <p class="gauge">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val ae-accent">99.98%</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 96%"></span
+                ></span>
+                <span class="ae-chrome scale-note">scale 99.5–100%</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val">0.02%</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 4%"></span
+                ></span>
+                <span class="ae-chrome scale-note"
+                  >of a 0.50% error budget</span
+                >
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val">38ms</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 19%"></span
+                ></span>
+                <span class="ae-chrome scale-note">of a 200ms budget</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val">14</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 70%"></span
+                ></span>
+                <span class="ae-chrome scale-note"
+                  >against 20 / week target</span
+                >
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val">41s</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 68%"></span
+                ></span>
+                <span class="ae-chrome scale-note">of a 60s budget</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val">2 of 3</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 67%"></span
+                ></span>
+                <span class="ae-chrome scale-note">of 3 consumers</span>
+              </p>
+            </div>
+            <div class="dash-table">
+              <table class="t">
+                <thead>
+                  <tr>
+                    <th>COMMIT</th>
+                    <th>MESSAGE</th>
+                    <th>BUILD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>243d24f</code></td>
+                    <td>docs: mark the send done layer aria-hidden</td>
+                    <td class="ae-dim">38s</td>
+                    <td class="ae-item">live</td>
+                  </tr>
+                  <tr>
+                    <td><code>0ff3883</code></td>
+                    <td>feat: v2.2.0 — buttons are not links</td>
+                    <td class="ae-dim">41s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>f1e6a44</code></td>
+                    <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                    <td class="ae-dim">39s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>6aa5b10</code></td>
+                    <td>fix: overflow-safe view centering</td>
+                    <td class="ae-dim">44s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · B · METERS — magnitude carried by form, not type: every
+            value gets a determinate hairline meter against a stated scale. Look
+            at whether uptime, error, and latency become visible quantities
+            instead of captions.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · CONTRAST — presence from composition ════════════════════ -->
+    <section class="proto-variant" id="c">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="cells">
+              <p class="cell">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val ae-accent">99.98%</span>
+              </p>
+              <p class="cell">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val">0.02%</span>
+              </p>
+              <p class="cell">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val">38ms</span>
+              </p>
+              <p class="cell">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val">14</span>
+              </p>
+              <p class="cell">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val">41s</span>
+              </p>
+              <p class="cell">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val">2 of 3</span>
+              </p>
+            </div>
+            <div class="dash-table contrast-table">
+              <table class="t">
+                <thead>
+                  <tr>
+                    <th>COMMIT</th>
+                    <th>MESSAGE</th>
+                    <th>BUILD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>243d24f</code></td>
+                    <td>docs: mark the send done layer aria-hidden</td>
+                    <td class="ae-dim">38s</td>
+                    <td class="ae-item">live</td>
+                  </tr>
+                  <tr>
+                    <td><code>0ff3883</code></td>
+                    <td>feat: v2.2.0 — buttons are not links</td>
+                    <td class="ae-dim">41s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>f1e6a44</code></td>
+                    <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                    <td class="ae-dim">39s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>6aa5b10</code></td>
+                    <td>fix: overflow-safe view centering</td>
+                    <td class="ae-dim">44s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · C · CONTRAST — presence from composition: wash-filled
+            cells, extreme whitespace, faint labels, weight-800 values. Density
+            contrast does the shouting; no rule is touched. Look at whether the
+            air around each number makes it loud.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ D · DISPLAY REGISTER — the law amendment, stated plainly ════ -->
+    <section class="proto-variant" id="d">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="panels">
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val val-display ae-accent">99.98%</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val val-display">0.02%</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val val-display">38ms</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val val-display">14</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val val-display">41s</span>
+              </p>
+              <p class="ae-panel">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val val-display">2 of 3</span>
+              </p>
+              <div class="ae-panel panel-span">
+                <h2 class="ae-h">RECENT DEPLOYS</h2>
+                <table class="t">
+                  <thead>
+                    <tr>
+                      <th>COMMIT</th>
+                      <th>MESSAGE</th>
+                      <th>BUILD</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>243d24f</code></td>
+                      <td>docs: mark the send done layer aria-hidden</td>
+                      <td class="ae-dim">38s</td>
+                      <td class="ae-item">live</td>
+                    </tr>
+                    <tr>
+                      <td><code>0ff3883</code></td>
+                      <td>feat: v2.2.0 — buttons are not links</td>
+                      <td class="ae-dim">41s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>f1e6a44</code></td>
+                      <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                      <td class="ae-dim">39s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                    <tr>
+                      <td><code>6aa5b10</code></td>
+                      <td>fix: overflow-safe view centering</td>
+                      <td class="ae-dim">44s</td>
+                      <td class="ae-dim">superseded</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · D · DISPLAY REGISTER — values at 24px mono, weight 550,
+            tabular: a law amendment proposal, same panels as A otherwise. This
+            breaks one-size; the question is whether data displays earn a third
+            sanctioned register the way chrome earned 13px — and whether what it
+            buys in presence is worth what it costs in calm.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ E · SPARKS — history gives the numbers weight ═══════════════ -->
+    <section class="proto-variant" id="e">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="gauges">
+              <p class="gauge">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val ae-accent">99.98%</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,6 8,5 16,6 24,4 32,5 40,13 48,5 56,4 64,5 72,3 80,4 88,3"
+                  />
+                  <rect x="86" y="2" width="2" height="2" />
+                </svg>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val">0.02%</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,15 8,14 16,15 24,8 32,14 40,15 48,14 56,15 64,14 72,15 80,14 88,15"
+                  />
+                  <rect x="86" y="14" width="2" height="2" />
+                </svg>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val">38ms</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,10 8,11 16,9 24,12 32,10 40,8 48,11 56,9 64,10 72,9 80,8 88,8"
+                  />
+                  <rect x="86" y="7" width="2" height="2" />
+                </svg>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val">14</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,16 8,15 16,15 24,13 32,14 40,11 48,12 56,9 64,10 72,8 80,7 88,6"
+                  />
+                  <rect x="86" y="5" width="2" height="2" />
+                </svg>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val">41s</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,7 8,8 16,7 24,9 32,8 40,10 48,9 56,11 64,10 72,12 80,11 88,12"
+                  />
+                  <rect x="86" y="11" width="2" height="2" />
+                </svg>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val">2 of 3</span>
+                <svg
+                  class="spark"
+                  width="88"
+                  height="20"
+                  viewBox="0 0 88 20"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,16 8,16 16,16 24,11 32,11 40,11 48,11 56,11 64,6 72,6 80,6 88,6"
+                  />
+                  <rect x="86" y="5" width="2" height="2" />
+                </svg>
+              </p>
+            </div>
+            <div class="dash-table">
+              <table class="t">
+                <thead>
+                  <tr>
+                    <th>COMMIT</th>
+                    <th>MESSAGE</th>
+                    <th>BUILD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>243d24f</code></td>
+                    <td>docs: mark the send done layer aria-hidden</td>
+                    <td class="ae-dim">38s</td>
+                    <td class="ae-item">live</td>
+                  </tr>
+                  <tr>
+                    <td><code>0ff3883</code></td>
+                    <td>feat: v2.2.0 — buttons are not links</td>
+                    <td class="ae-dim">41s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>f1e6a44</code></td>
+                    <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                    <td class="ae-dim">39s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>6aa5b10</code></td>
+                    <td>fix: overflow-safe view centering</td>
+                    <td class="ae-dim">44s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · E · SPARKS — each gauge carries a static hairline
+            sparkline, the last point a 2px ink square; nothing animates. Look
+            at whether history gives the numbers weight without size.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ F · BOARD — hierarchy from layout, type law unbroken ════════ -->
+    <section class="proto-variant" id="f">
+      <div class="ae-screen ae-wide">
+        <header class="ae-bar">
+          <span class="ae-name">MISTY STEP</span>
+          <span class="bar-end">
+            <span class="ae-chrome">fleet · last 30 days</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="board">
+              <div class="gauge gauge-hero">
+                <span class="g-label ae-chrome">UPTIME, 90 DAYS</span>
+                <span class="val ae-accent">99.98%</span>
+                <span class="meter"
+                  ><span class="meter-fill" style="width: 96%"></span
+                ></span>
+                <svg
+                  class="spark"
+                  width="260"
+                  height="36"
+                  viewBox="0 0 260 36"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,9 20,8 40,10 60,7 80,9 100,8 120,24 140,9 160,7 180,8 200,6 220,7 240,5 260,6"
+                  />
+                  <rect x="258" y="5" width="2" height="2" />
+                </svg>
+                <span class="ae-chrome scale-note"
+                  >scale 99.5–100% · one dip, 90 days</span
+                >
+              </div>
+              <p class="gauge">
+                <span class="g-label ae-chrome">ERROR RATE</span>
+                <span class="val">0.02%</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">MEDIAN RESPONSE</span>
+                <span class="val">38ms</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">DEPLOYS THIS WEEK</span>
+                <span class="val">14</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">P95 BUILD</span>
+                <span class="val">41s</span>
+              </p>
+              <p class="gauge">
+                <span class="g-label ae-chrome">CONSUMERS PINNED</span>
+                <span class="val">2 of 3</span>
+              </p>
+            </div>
+            <div class="dash-table">
+              <table class="t">
+                <thead>
+                  <tr>
+                    <th>COMMIT</th>
+                    <th>MESSAGE</th>
+                    <th>BUILD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>243d24f</code></td>
+                    <td>docs: mark the send done layer aria-hidden</td>
+                    <td class="ae-dim">38s</td>
+                    <td class="ae-item">live</td>
+                  </tr>
+                  <tr>
+                    <td><code>0ff3883</code></td>
+                    <td>feat: v2.2.0 — buttons are not links</td>
+                    <td class="ae-dim">41s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>f1e6a44</code></td>
+                    <td>feat: v2.1, the LAB 001/002 verdicts</td>
+                    <td class="ae-dim">39s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                  <tr>
+                    <td><code>6aa5b10</code></td>
+                    <td>fix: overflow-safe view centering</td>
+                    <td class="ae-dim">44s</td>
+                    <td class="ae-dim">superseded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-dim ae-chrome">
+            ROUND 2 · F · BOARD — the instrument cluster: the metric that
+            matters spans two columns with its meter and sparkline; the rest
+            stay small. Hierarchy from layout, the type law unbroken. Look at
+            whether the big cell reads as the headline.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <nav class="proto-picker" aria-label="variant picker">
+      <button data-v="a" class="is-active">A paneled+</button>
+      <button data-v="b">B meters</button>
+      <button data-v="c">C contrast</button>
+      <button data-v="d">D display</button>
+      <button data-v="e">E sparks</button>
+      <button data-v="f">F board</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      function isDark() {
+        if (root.classList.contains('dark')) return true;
+        if (root.classList.contains('light')) return false;
+        return matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.querySelectorAll('.js-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+        });
+      });
+
+      // the fan picker
+      const picker = document.querySelector('.proto-picker');
+      const variants = document.querySelectorAll('.proto-variant');
+      picker.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          variants.forEach((s) =>
+            s.classList.toggle('is-on', s.id === btn.dataset.v),
+          );
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -25,9 +25,15 @@ without one.
 
 1. Exit/enter view choreography — the easing vocabulary lives here;
    the canonical `data-leaving` hook consumers wire up belongs to the
-   recipes layer (backlog 005).
+   recipes layer (backlog 005). LAB: round-1 fan was unjudgeable
+   (variants rendered identically); view-motion-fan-2.html reruns it
+   with slower timings and a speed control. Operator taste on motion:
+   slow and soft, never rushed.
 2. Mode-change crossfade (transition on color/background scoped to the
-   change, without transitioning everything always).
+   change, without transitioning everything always). LAB verdict
+   (2026-06-12): view-transition "nice and soft"; wipe only if slowed
+   to a page-turn; uniform/cut harsh — mode-crossfade-fan-2.html
+   explores the slow end.
 3. ~~Form feedback choreography~~ — shipped as the send moment, v2.2.0.
 4. Demo page exercising all of it (see backlog 003).
 5. LAB: input anticipation. A focus affordance that ramps in as the
@@ -46,7 +52,9 @@ without one.
    TanStack/ForesightJS invisible prefetch. Verdict bias going in:
    marketing-site tell, expect FAIL — but it is the strongest test of
    whether "anticipation is feedback about intent" earns a law
-   carve-out.
+   carve-out. LAB verdict (2026-06-12): label warming is the lone
+   keeper ("kind of nice"); ring, hairline, magnetic, glow, and
+   commit all killed. anticipation-fan-2.html refines warming only.
 
 ## Notes
 

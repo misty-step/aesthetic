@@ -5,7 +5,7 @@
   E command, F ink. Every variant is a working Misty Step "deploys" screen:
   delete a deploy (confirm dialog), filter the list (dropdown), hover the
   age header (tooltip), copy a ref (toast).
-  VERDICT: (pending operator review)
+  VERDICT (2026-06-12): panel marginally beats hairline, both fine; command kept if de-teched (no bracket keys, more backdrop fade and shadow); inline shifts UI, killed for confirms; sheet wrong for confirms, fine elsewhere; ink was white-on-white (fixed post-review) and killed. Arbitrary accent on one row rejected. Round 2: overlays-fan-2.html
 -->
 <!doctype html>
 <html lang="en">
@@ -157,6 +157,12 @@
       }
       dialog.ov[open] {
         animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+      }
+      /* dialog.ov outranks .ov-ink by specificity; restate the inversion
+         so F is not white-on-white */
+      dialog.ov-ink {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
       }
       dialog.ov::backdrop {
         background: transparent;

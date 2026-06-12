@@ -1,14 +1,17 @@
 <!doctype html>
-<!-- LAB mode change — when the user toggles light/dark, how does the page
-     change? Today every surface and ink flips instantly (only the sun/moon
-     icon crossfades). The toggle is user feedback, so easing it is lawful —
-     the question is the choreography.
-     VERDICT (2026-06-12): slow and soft wins. view-transition nice and soft; wipe only if dramatically slowed — turning a page, not a shockwave; uniform and cut harsh; inks-then-surface staggers awkwardly. Round 2: mode-crossfade-fan-2.html -->
+<!-- LAB mode change · round 2 — slower, softer; the page turns —
+     VERDICT: (pending operator review)
+     Round 1 verdicts: WIPE "could be interesting if we slowed it down
+     pretty dramatically — more like turning a page rather than a
+     shockwave"; VIEW-TRANSITION "nice and soft", the keeper; UNIFORM and
+     CUT "kind of harsh"; INKS-THEN-SURFACE "awkward… don't like how it
+     staggers". Round 2: two page-turn tempos, two view-transition
+     tempos, a gentled uniform, and the cut as control. -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — mode change, six choreographies</title>
+    <title>aesthetic — mode change, round 2: the page turns</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
@@ -76,62 +79,64 @@
         border-bottom: 1px solid var(--ae-line);
       }
 
-      /* ── the treatments: color transitions exist ONLY while a go-* class
-            is on the variant root, so nothing else ever eases colors ───── */
-      @media (prefers-reduced-motion: no-preference) {
-        /* B · UNIFORM — everything together, --ae-soft, once */
-        .mode-scope.go-uniform,
-        .mode-scope.go-uniform *:not(.ae-icon) {
-          transition:
-            background-color var(--ae-soft) var(--ae-ease),
-            color var(--ae-soft) var(--ae-ease),
-            border-color var(--ae-soft) var(--ae-ease);
-        }
-
-        /* C · INKS-THEN-SURFACE — text and hairlines re-ink first
-           (--ae-quick), the paper follows (--ae-soft, 80ms late) */
-        .mode-scope.go-inks,
-        .mode-scope.go-inks *:not(.ae-icon) {
-          transition:
-            color var(--ae-quick) var(--ae-ease),
-            border-color var(--ae-quick) var(--ae-ease),
-            background-color var(--ae-soft) var(--ae-ease) 80ms;
-        }
-
-        /* F · ELEMENTS-STAGGER — bar, then stage, then foot, 60ms steps */
-        .mode-scope.go-stagger .ae-screen {
-          transition: background-color var(--ae-quick) var(--ae-ease) 60ms;
-        }
-        .mode-scope.go-stagger header.ae-bar,
-        .mode-scope.go-stagger header.ae-bar *:not(.ae-icon) {
-          transition:
-            background-color var(--ae-quick) var(--ae-ease),
-            color var(--ae-quick) var(--ae-ease),
-            border-color var(--ae-quick) var(--ae-ease);
-        }
-        .mode-scope.go-stagger main.ae-stage,
-        .mode-scope.go-stagger main.ae-stage * {
-          transition:
-            background-color var(--ae-quick) var(--ae-ease) 60ms,
-            color var(--ae-quick) var(--ae-ease) 60ms,
-            border-color var(--ae-quick) var(--ae-ease) 60ms;
-        }
-        .mode-scope.go-stagger footer.ae-bar,
-        .mode-scope.go-stagger footer.ae-bar * {
-          transition:
-            background-color var(--ae-quick) var(--ae-ease) 120ms,
-            color var(--ae-quick) var(--ae-ease) 120ms,
-            border-color var(--ae-quick) var(--ae-ease) 120ms;
-        }
+      /* ── A/B · PAGE TURN — a clone of the screen in the destination mode,
+            revealed by a gradient mask whose moving edge is an 80px
+            feather: the new page turns over the old, no ring, no hard
+            edge. --turn is the mask edge's travel along the 225deg
+            gradient line (top-right corner → bottom-left). ────────────── */
+      @property --turn {
+        syntax: '<length>';
+        inherits: false;
+        initial-value: -80px;
       }
 
-      /* E · WIPE — a clone of the screen in the destination mode, clipped
-         to a circle that grows from the toggle */
-      .proto-wipe {
+      .proto-turn {
         position: absolute;
         inset: 0;
         z-index: 5;
         pointer-events: none;
+        --turn: -80px;
+        -webkit-mask-image: linear-gradient(
+          225deg,
+          #000 var(--turn),
+          transparent calc(var(--turn) + 80px)
+        );
+        mask-image: linear-gradient(
+          225deg,
+          #000 var(--turn),
+          transparent calc(var(--turn) + 80px)
+        );
+      }
+      /* fallback when @property/mask is unsupported: the script animates a
+         clip-path polygon instead — a clean slow edge, same diagonal */
+      .proto-turn.proto-turn-hard {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      /* ── C/D · VIEW TRANSITION — the document-level snapshot crossfade,
+            scoped per variant by a temporary class on <html> ──────────── */
+      :root.vt-soft::view-transition-old(root),
+      :root.vt-soft::view-transition-new(root) {
+        animation-duration: 400ms;
+      }
+      :root.vt-gentle::view-transition-old(root),
+      :root.vt-gentle::view-transition-new(root) {
+        animation-duration: 700ms;
+        animation-timing-function: var(--ae-ease);
+      }
+
+      /* ── E · UNIFORM 480 — color transitions exist ONLY while
+            .is-changing is on the variant root, so nothing else ever
+            eases colors; --ae-gentle instead of round 1's --ae-soft ───── */
+      @media (prefers-reduced-motion: no-preference) {
+        .mode-scope.is-changing,
+        .mode-scope.is-changing *:not(.ae-icon) {
+          transition:
+            background-color var(--ae-gentle) var(--ae-ease),
+            color var(--ae-gentle) var(--ae-ease),
+            border-color var(--ae-gentle) var(--ae-ease);
+        }
       }
 
       /* ── the picker ─────────────────────────────────────────────────── */
@@ -188,8 +193,12 @@
       </symbol>
     </svg>
 
-    <!-- ═══ A · CUT — instant flip, the control ══════════════════════════ -->
-    <section class="proto-variant mode-scope is-on" id="a" data-treatment="cut">
+    <!-- ═══ A · PAGE TURN 800 — the wipe reborn, soft-edged ══════════════ -->
+    <section
+      class="proto-variant mode-scope is-on"
+      id="a"
+      data-treatment="turn800"
+    >
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -202,13 +211,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -231,19 +239,21 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            A · CUT — 0ms. Instant flip: today's behavior, the control.
+            A · PAGE TURN — 800ms. The wipe reborn: an 80px soft edge sweeps
+            from the toggle's corner. Watch the edge of the turn.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ B · UNIFORM — everything eases together, once ════════════════ -->
-    <section class="proto-variant mode-scope" id="b" data-treatment="uniform">
+    <!-- ═══ B · PAGE TURN 1300 — the same turn, very slow ════════════════ -->
+    <section class="proto-variant mode-scope" id="b" data-treatment="turn1300">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -256,13 +266,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -285,20 +294,21 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            B · UNIFORM — 240ms (--ae-soft). Every ink and surface eases
-            together, once; nothing transitions outside the change.
+            B · PAGE TURN — 1300ms. The same turn, deliberately very slow: the
+            page takes its time. Pick the tempo against A.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ C · INKS-THEN-SURFACE — re-ink, then re-paper ════════════════ -->
-    <section class="proto-variant mode-scope" id="c" data-treatment="inks">
+    <!-- ═══ C · TRANSITION SOFT — the default crossfade, slowed ══════════ -->
+    <section class="proto-variant mode-scope" id="c" data-treatment="vtsoft">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -311,13 +321,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -340,21 +349,21 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            C · INKS-THEN-SURFACE — inks and hairlines at 160ms (--ae-quick),
-            surface at 240ms after an 80ms hold: the page re-inks, then
-            re-papers.
+            C · TRANSITION SOFT — 400ms. The browser's snapshot crossfade,
+            slowed: the whole page breathes once. Falls back to E.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ D · VIEW-TRANSITION — the platform answer ════════════════════ -->
-    <section class="proto-variant mode-scope" id="d" data-treatment="view">
+    <!-- ═══ D · TRANSITION GENTLE — round 1's keeper, slower ═════════════ -->
+    <section class="proto-variant mode-scope" id="d" data-treatment="vtgentle">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -367,13 +376,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -396,21 +404,21 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            D · VIEW-TRANSITION — document.startViewTransition, the browser's
-            ~250ms snapshot crossfade: the platform answer (falls back to B
-            where unsupported).
+            D · TRANSITION GENTLE — 700ms, --ae-ease. Round 1's keeper, slower
+            and softer still. Falls back to E.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ E · WIPE — a sweep from the toggle's corner ══════════════════ -->
-    <section class="proto-variant mode-scope" id="e" data-treatment="wipe">
+    <!-- ═══ E · UNIFORM 480 — everything together, gentled ═══════════════ -->
+    <section class="proto-variant mode-scope" id="e" data-treatment="uniform">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -423,13 +431,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -452,21 +459,21 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            E · WIPE — 480ms (--ae-gentle) clip-path sweep from the toggle's
-            corner: the showiest proposal. Is a directional wipe feedback, or
-            theater?
+            E · UNIFORM 480 — 480ms (--ae-gentle). Every ink and surface eases
+            together, twice round 1's length: uniform, no longer harsh.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ F · ELEMENTS-STAGGER — lights come on room by room ═══════════ -->
-    <section class="proto-variant mode-scope" id="f" data-treatment="stagger">
+    <!-- ═══ F · CUT — instant flip, the control ══════════════════════════ -->
+    <section class="proto-variant mode-scope" id="f" data-treatment="cut">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
@@ -479,13 +486,12 @@
           <div class="ae-view">
             <div class="ae-group">
               <h1 class="ae-h">LIGHT AND DARK</h1>
-              <p class="x-loud">Two equal materials, one page.</p>
+              <p class="x-loud">Slower, softer — the page turns.</p>
             </div>
             <div class="ae-group">
               <p class="ae-lede">
-                The toggle above is user feedback, so easing it is lawful — the
-                question is the choreography. Flip it and
-                <span class="ae-accent">watch the change itself</span>.
+                Round 2 of the change itself: no shockwaves, no staggers. Flip
+                the mode and <span class="ae-accent">feel the tempo</span>.
               </p>
             </div>
             <div class="ae-group">
@@ -508,30 +514,41 @@
               <button class="ae-button js-toggle" type="button">
                 Toggle mode
               </button>
+              <p class="ae-chrome ae-dim">flip again — tempo shows on repeat</p>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
           <p class="ae-chrome ae-dim">
-            F · ELEMENTS-STAGGER — bar, then stage, then foot: 60ms steps, 160ms
-            (--ae-quick) each. The page changes the way a room's lights come on.
+            F · CUT — 0ms. Instant flip: today's behavior, the control.
           </p>
         </footer>
       </div>
     </section>
 
     <nav class="proto-picker" aria-label="variant picker">
-      <button data-v="a" class="is-active">A cut</button>
-      <button data-v="b">B uniform</button>
-      <button data-v="c">C inks→surface</button>
-      <button data-v="d">D view-transition</button>
-      <button data-v="e">E wipe</button>
-      <button data-v="f">F stagger</button>
+      <button data-v="a" class="is-active">A turn 800</button>
+      <button data-v="b">B turn 1300</button>
+      <button data-v="c">C vt 400</button>
+      <button data-v="d">D vt 700</button>
+      <button data-v="e">E uniform 480</button>
+      <button data-v="f">F cut</button>
     </nav>
 
     <script>
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
-      const EASE = 'cubic-bezier(0.23, 1, 0.32, 1)';
+
+      // the house ease (--ae-ease) front-loads nearly all of its travel; at
+      // page-turn length that still reads as a shockwave, so the turn gets
+      // a page ease instead: gather, sweep, settle.
+      const PAGE_EASE = 'cubic-bezier(0.45, 0.05, 0.25, 1)';
+
+      // soft edge needs @property (to interpolate --turn) and gradient
+      // masks; otherwise the turn degrades to a clean hard-edged clip
+      const TURN_OK =
+        typeof CSS !== 'undefined' &&
+        'registerProperty' in CSS &&
+        CSS.supports('mask-image', 'linear-gradient(#000, transparent)');
 
       // mode lives on the VARIANT root, never on <html>, so variants
       // never fight each other
@@ -545,77 +562,99 @@
         return root.classList.contains('dark');
       }
 
-      // a go-* class exists only for the duration of the change, so color
-      // transitions never leak outside the toggle
+      // a temporary class exists only for the duration of the change, so
+      // color transitions never leak outside the toggle
       function pulse(root, cls, ms) {
         root.classList.add(cls);
         clearTimeout(root._pulse);
         root._pulse = setTimeout(() => root.classList.remove(cls), ms);
       }
 
-      const treatments = {
-        // A — the control: every ink and surface flips at once
-        cut(root, dark) {
-          setMode(root, dark);
-        },
-
-        // B — everything eases together for --ae-soft, once
-        uniform(root, dark) {
-          pulse(root, 'go-uniform', 280);
-          setMode(root, dark);
-        },
-
-        // C — inks at --ae-quick, surface at --ae-soft after an 80ms hold
-        inks(root, dark) {
-          pulse(root, 'go-inks', 380);
-          setMode(root, dark);
-        },
-
-        // D — the platform answer: browser snapshot crossfade
-        view(root, dark) {
-          if (!document.startViewTransition)
-            return treatments.uniform(root, dark);
-          document.startViewTransition(() => setMode(root, dark));
-        },
-
-        // E — clone the screen in the destination mode and grow a circular
-        // clip from the toggle's corner over --ae-gentle
-        wipe(root, dark) {
-          root.querySelectorAll('.proto-wipe').forEach((o) => o.remove());
+      // A/B — clone the screen in the destination mode and sweep its
+      // feathered mask edge from the toggle's corner (top-right) to the
+      // far corner, like a page turning over the old one
+      function pageTurn(root, dark, ms) {
+        const prior = root.querySelector('.proto-turn');
+        if (prior) {
+          // a mid-turn flip commits the in-flight page, then turns again
+          if (root.dataset.pending)
+            setMode(root, root.dataset.pending === 'dark');
           delete root.dataset.pending;
-          const btn = root.querySelector('.ae-mode');
-          const rootBox = root.getBoundingClientRect();
-          const btnBox = btn.getBoundingClientRect();
-          const x = btnBox.left + btnBox.width / 2 - rootBox.left;
-          const y = btnBox.top + btnBox.height / 2 - rootBox.top;
-          const r = Math.hypot(
-            Math.max(x, rootBox.width - x),
-            Math.max(y, rootBox.height - y),
+          prior.remove();
+        }
+        const box = root.getBoundingClientRect();
+        const overlay = document.createElement('div');
+        overlay.className =
+          'proto-turn mode-scope ' + (dark ? 'dark' : 'light');
+        overlay.appendChild(root.querySelector('.ae-screen').cloneNode(true));
+        root.appendChild(overlay);
+        root.dataset.pending = dark ? 'dark' : 'light';
+        // gradient-line length for 225deg: (w + h) · √2/2
+        const len = 0.7071 * (box.width + box.height);
+        let anim;
+        if (TURN_OK) {
+          anim = overlay.animate(
+            [{ '--turn': '-80px' }, { '--turn': `${len + 1}px` }],
+            { duration: ms, easing: PAGE_EASE, fill: 'forwards' },
           );
-          const overlay = document.createElement('div');
-          overlay.className =
-            'proto-wipe mode-scope ' + (dark ? 'dark' : 'light');
-          overlay.appendChild(root.querySelector('.ae-screen').cloneNode(true));
-          root.appendChild(overlay);
-          root.dataset.pending = dark ? 'dark' : 'light';
-          const anim = overlay.animate(
+        } else {
+          overlay.classList.add('proto-turn-hard');
+          anim = overlay.animate(
             [
-              { clipPath: `circle(0px at ${x}px ${y}px)` },
-              { clipPath: `circle(${r}px at ${x}px ${y}px)` },
+              { clipPath: 'polygon(100% 0, 100% 0, 100% 0)' },
+              { clipPath: 'polygon(100% 0, -300% 0, 100% 400%)' },
             ],
-            { duration: 480, easing: EASE },
+            { duration: ms, easing: PAGE_EASE, fill: 'forwards' },
           );
-          anim.onfinish = () => {
-            if (!overlay.isConnected) return;
-            setMode(root, dark);
-            delete root.dataset.pending;
-            overlay.remove();
-          };
+        }
+        anim.onfinish = () => {
+          if (!overlay.isConnected) return;
+          setMode(root, dark);
+          delete root.dataset.pending;
+          overlay.remove();
+        };
+      }
+
+      // C/D — the platform snapshot crossfade; a temporary class on <html>
+      // scopes each variant's duration/ease overrides
+      function viewFlip(root, dark, cls) {
+        if (!document.startViewTransition)
+          return treatments.uniform(root, dark);
+        const html = document.documentElement;
+        html.classList.add(cls);
+        const vt = document.startViewTransition(() => setMode(root, dark));
+        vt.finished.finally(() => html.classList.remove(cls));
+      }
+
+      const treatments = {
+        // A — the turn at 800ms
+        turn800(root, dark) {
+          pageTurn(root, dark, 800);
         },
 
-        // F — bar, then stage, then foot: 60ms steps, --ae-quick each
-        stagger(root, dark) {
-          pulse(root, 'go-stagger', 360);
+        // B — the turn at 1300ms, deliberately very slow
+        turn1300(root, dark) {
+          pageTurn(root, dark, 1300);
+        },
+
+        // C — default crossfade slowed to 400ms (falls back to E)
+        vtsoft(root, dark) {
+          viewFlip(root, dark, 'vt-soft');
+        },
+
+        // D — crossfade at 700ms with --ae-ease (falls back to E)
+        vtgentle(root, dark) {
+          viewFlip(root, dark, 'vt-gentle');
+        },
+
+        // E — everything eases together for --ae-gentle, once
+        uniform(root, dark) {
+          pulse(root, 'is-changing', 520);
+          setMode(root, dark);
+        },
+
+        // F — the control: every ink and surface flips at once
+        cut(root, dark) {
           setMode(root, dark);
         },
       };

@@ -5,7 +5,7 @@
   says motion is feedback that resolves once, so an infinite shimmer is
   unlawful — each variant proposes a lawful loading treatment that
   resolves exactly once.
-  VERDICT: (pending operator review)
+  VERDICT (2026-06-12): terminal substantially beats ledger but loses the brackets; ledger fine (Size header alignment fixed post-review); ink-head a little aggro but okay; rows, grid, dossier killed. Rule: headers share their column alignment. Round 2: data-fan-2.html
 -->
 <html lang="en">
   <head>
@@ -94,6 +94,14 @@
       .num {
         text-align: right;
         font-variant-numeric: tabular-nums;
+      }
+
+      /* the alignment rule: a column header always shares its column's
+         alignment (the #v* th rules outrank bare .num) */
+      #va th.num,
+      #vb th.num,
+      #ve th.num {
+        text-align: right;
       }
 
       /* a hairline placeholder stroke */

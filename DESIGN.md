@@ -23,8 +23,12 @@ glows, nothing floats, nothing bounces.
   comes from ink and weight, never from scale.
 - Nine registers: three inks (ink, muted, faint) by three weights
   (400, 550, 800). The headline is heavier and blacker, not larger.
-- The accent is rationed: exactly one accent instance per view — the
-  single thing that matters now. Accents are never spent on buttons.
+- The accent is scarce, role-justified, and never decorative: when
+  ultramarine appears it must mean something nameable — the active
+  place, the live thing, the primary action — applied consistently to
+  that role, never coloring for its own sake. (The exact doctrine is
+  being settled in the LAB; the old "exactly one instance per view"
+  rule is retired.)
 - Screens, not pages: every view fits the viewport. Long documents
   scroll inside the stage; the chrome never moves.
 - Motion is feedback, never decoration: small, brief, eased. State
@@ -50,8 +54,9 @@ glows, nothing floats, nothing bounces.
 
 ## Composing a view
 
-1. Choose the view's single accent instance first; everything else is
-   ink.
+1. Decide what the accent means on this surface (the live thing, the
+   primary action, wayfinding) and spend it only on that role;
+   everything else is ink.
 2. Build hierarchy with registers: 800 ink for the one loud thing,
    550 for items that matter, 400 for prose; muted for support, faint
    for whispers.

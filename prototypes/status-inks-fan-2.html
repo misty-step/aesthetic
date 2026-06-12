@@ -1,13 +1,14 @@
 <!doctype html>
-<!-- LAB status inks — how does this design system say danger / success /
-     warning without becoming Material? Seven proposals for WHERE status
-     lives: glyph, ink, hairline, weight, wash, prefix, accent-only.
-     VERDICT (2026-06-12): none locked. weight + accent-only killed; glyph subtle and best if icons improve; prefix beats ink, try suffix; wash maybe; the amber warn hue is rejected. Round 2: status-inks-fan-2.html -->
+<!-- LAB status inks · round 2 — VERDICT: (pending operator review)
+     After round 1: glyph kept but needs real icons; prefix reads better
+     as a suffix; ink wants restraint; weight and accent-only are dead;
+     the amber warn is out. Seven proposals: glyph 2, suffix, ink quiet,
+     stamp, dot, danger only, and a warn-hue lineup. -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — status inks, seven proposals</title>
+    <title>aesthetic — status inks, round 2</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
@@ -67,34 +68,38 @@
         gap: 1.6em;
       }
 
-      /* ── status inks: the designed triplet, both modes ────────────── */
-      /* calibrated for AA contrast on #fcfcfc / #121212; ink-forward,
-         desaturated — never the saturated traffic light */
+      /* ── status inks, round 2: the calmer triplet ──────────────────── */
+      /* round 1 triplet desaturated ~15%; the amber warn replaced with
+         bronze. All pairs hold AA on #fcfcfc / #121212. The G lineup
+         carries four warn candidates for the eye test. */
       :root {
-        --st-danger: #b3392e;
-        --st-ok: #0e7a4d;
-        --st-warn: #92600a;
-        --st-danger-wash: rgba(179, 57, 46, 0.08);
-        --st-ok-wash: rgba(14, 122, 77, 0.08);
-        --st-warn-wash: rgba(146, 96, 10, 0.1);
+        --st-danger: #a84138;
+        --st-ok: #15714b;
+        --st-warn: #8a5f32;
+        --g-ochre: #8f6400;
+        --g-sienna: #9a5b2f;
+        --g-bronze: #8a5f32;
+        --g-rust: #a04b2e;
       }
       .dark,
       [data-ae-mode='dark'] {
-        --st-danger: #e58379;
-        --st-ok: #6fd2a8;
-        --st-warn: #d9a45b;
-        --st-danger-wash: rgba(229, 131, 121, 0.13);
-        --st-ok-wash: rgba(111, 210, 168, 0.12);
-        --st-warn-wash: rgba(217, 164, 91, 0.13);
+        --st-danger: #dd8a81;
+        --st-ok: #7cc7a2;
+        --st-warn: #c49d72;
+        --g-ochre: #d2a64a;
+        --g-sienna: #d8956a;
+        --g-bronze: #c49d72;
+        --g-rust: #e08e69;
       }
       @media (prefers-color-scheme: dark) {
         :root:not(.light):not([data-ae-mode='light']) {
-          --st-danger: #e58379;
-          --st-ok: #6fd2a8;
-          --st-warn: #d9a45b;
-          --st-danger-wash: rgba(229, 131, 121, 0.13);
-          --st-ok-wash: rgba(111, 210, 168, 0.12);
-          --st-warn-wash: rgba(217, 164, 91, 0.13);
+          --st-danger: #dd8a81;
+          --st-ok: #7cc7a2;
+          --st-warn: #c49d72;
+          --g-ochre: #d2a64a;
+          --g-sienna: #d8956a;
+          --g-bronze: #c49d72;
+          --g-rust: #e08e69;
         }
       }
 
@@ -158,12 +163,9 @@
       .w5 {
         font-weight: var(--ae-w-medium);
       }
-      .w8 {
-        font-weight: var(--ae-w-black);
-      }
 
       /* ── the devices the variants choose between ──────────────────── */
-      /* color utilities: status hue on text */
+      /* color utilities: status hue on text or glyph */
       .c-err {
         color: var(--st-danger);
       }
@@ -174,68 +176,93 @@
         color: var(--st-warn);
       }
 
-      /* a glyph riding before ink text (A, D) */
-      .g {
-        font-family: var(--ae-font-mono);
-        font-weight: var(--ae-w-medium);
+      /* A · drawn status glyphs: 1.5px stroke, round caps, 1.1em,
+         optically seated on the text baseline */
+      .sg {
+        width: 1.1em;
+        height: 1.1em;
+        vertical-align: -0.18em;
         margin-right: 0.45em;
       }
 
-      /* a mono prefix word in the chrome register (F) */
-      .px {
+      /* B · suffix token: a trailing lowercase mono word, 13px */
+      .sx {
         font-family: var(--ae-font-mono);
         font-size: 13px;
         font-weight: var(--ae-w-medium);
         letter-spacing: 0.08em;
-        margin-right: 0.6em;
+        margin-left: 0.6em;
+      }
+      .sx-solo {
+        margin-left: 0;
       }
 
-      /* status-colored hairlines (C) */
-      .u-err {
-        border-bottom: 1px solid var(--st-danger);
-        padding-bottom: 1px;
-      }
-      .u-ok {
-        border-bottom: 1px solid var(--st-ok);
-        padding-bottom: 1px;
-      }
-      .u-warn {
-        border-bottom: 1px solid var(--st-warn);
-        padding-bottom: 1px;
-      }
-      .bl-ok {
-        border-left: 2px solid var(--st-ok);
-        padding-left: 1.1em;
-      }
-      .bl-warn {
-        border-left: 2px solid var(--st-warn);
-        padding-left: 1.1em;
-      }
-      .ae-input.input-err {
-        border-bottom-color: var(--st-danger);
-      }
-
-      /* low-alpha washes behind ink text (E) */
-      .wash-err {
-        background: var(--st-danger-wash);
-      }
-      .wash-ok {
-        background: var(--st-ok-wash);
-      }
-      .wash-warn {
-        background: var(--st-warn-wash);
-      }
-      .wash-block {
-        padding: 0.6em 1em;
-      }
-      .chiplet {
-        padding: 0.05em 0.45em;
-      }
-
-      /* accent-as-attention (G) */
-      .att {
-        color: var(--ae-accent);
+      /* D · stamp: a lowercase mono word in a hairline box, radius 0 */
+      .stamp {
+        display: inline-block;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
         font-weight: var(--ae-w-medium);
+        letter-spacing: 0.08em;
+        line-height: 1.6;
+        border: 1px solid var(--ae-ink-faint);
+        padding: 0 0.55em;
+        margin-right: 0.6em;
+        vertical-align: 0.05em;
+      }
+      .stamp-err {
+        color: var(--st-danger);
+        border-color: currentColor;
+      }
+
+      /* E · dot: a small square marker before the status word */
+      .dot {
+        display: inline-block;
+        width: 0.45em;
+        height: 0.45em;
+        background: currentColor;
+        margin-right: 0.5em;
+        vertical-align: 0.07em;
+      }
+
+      /* G · warn-hue lineup scaffolding */
+      .g-block {
+        margin-bottom: 2.2em;
+      }
+      .g-block:last-child {
+        margin-bottom: 0;
+      }
+      .g-label {
+        font-family: var(--ae-font-mono);
+        letter-spacing: 0.08em;
+        margin-bottom: 0.5em;
+      }
+      .g-pair {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 0 3.5em;
+        align-items: center;
+      }
+      @media (max-width: 640px) {
+        .g-pair {
+          grid-template-columns: 1fr;
+          gap: 0.6em 0;
+        }
+      }
+      .hue-ochre {
+        --wh: var(--g-ochre);
+      }
+      .hue-sienna {
+        --wh: var(--g-sienna);
+      }
+      .hue-bronze {
+        --wh: var(--g-bronze);
+      }
+      .hue-rust {
+        --wh: var(--g-rust);
+      }
+      .g-ink {
+        color: var(--wh);
       }
     </style>
   </head>
@@ -255,15 +282,30 @@
       <symbol id="i-moon" viewBox="0 0 24 24">
         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
       </symbol>
+      <!-- status glyphs: Lucide x / check / triangle-alert -->
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.73-2Z"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
     </svg>
 
-    <!-- ═══ A · GLYPH — text stays ink; only the glyph carries the hue ═══ -->
+    <!-- ═══ A · GLYPH 2 — the keeper, with icons drawn properly ═════════ -->
     <section class="proto-variant is-on proto-wide" id="v1">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — A · GLYPH</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — A · GLYPH 2</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -287,21 +329,24 @@
                   aria-describedby="v1-email-msg"
                 />
                 <p class="field-msg" id="v1-email-msg">
-                  <span class="g c-err">✕</span>Not a valid address — missing a
-                  domain.
+                  <svg class="ae-icon sg c-err"><use href="#i-x" /></svg>Not a
+                  valid address — missing a domain.
                 </p>
               </div>
               <div>
                 <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <p class="w5"><span class="g c-ok">✓</span>Deploy complete.</p>
+                <p class="w5">
+                  <svg class="ae-icon sg c-ok"><use href="#i-check" /></svg
+                  >Deploy complete.
+                </p>
                 <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
               </div>
               <div>
                 <h2 class="ae-h">WARNING · NOTICE</h2>
                 <div class="notice">
                   <p>
-                    <span class="g c-warn">!</span>Certificate for
-                    api.misty-step.com expires in 9 days.
+                    <svg class="ae-icon sg c-warn"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
                   </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
@@ -320,17 +365,28 @@
                     <tr>
                       <td>misty-step.com</td>
                       <td class="ae-dim">deploy</td>
-                      <td><span class="g c-ok">✓</span>ok</td>
+                      <td>
+                        <svg class="ae-icon sg c-ok">
+                          <use href="#i-check" /></svg
+                        >ok
+                      </td>
                     </tr>
                     <tr>
                       <td>aesthetic ci</td>
                       <td class="ae-dim">build</td>
-                      <td><span class="g c-err">✕</span>failing</td>
+                      <td>
+                        <svg class="ae-icon sg c-err"><use href="#i-x" /></svg
+                        >failing
+                      </td>
                     </tr>
                     <tr>
                       <td>api.misty-step.com</td>
                       <td class="ae-dim">cert</td>
-                      <td><span class="g c-warn">!</span>expiring</td>
+                      <td>
+                        <svg class="ae-icon sg c-warn">
+                          <use href="#i-alert" /></svg
+                        >expiring
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -338,30 +394,40 @@
               <div>
                 <h2 class="ae-h">BADGES</h2>
                 <p class="badge-row">
-                  <span><span class="g c-ok">✓</span>ok</span>
-                  <span><span class="g c-err">✕</span>failing</span>
-                  <span><span class="g c-warn">!</span>expiring</span>
+                  <span>
+                    <svg class="ae-icon sg c-ok"><use href="#i-check" /></svg
+                    >ok</span
+                  >
+                  <span>
+                    <svg class="ae-icon sg c-err"><use href="#i-x" /></svg
+                    >failing</span
+                  >
+                  <span>
+                    <svg class="ae-icon sg c-warn"><use href="#i-alert" /></svg
+                    >expiring</span
+                  >
                 </p>
               </div>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            A — status lives in the glyph; every word stays ink
+            A — status lives in a small drawn icon; every word stays ink. Judge
+            the icons: stroke, size, how they sit on the line.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ B · INK — full status-colored text, no fills ═════════════════ -->
+    <!-- ═══ B · SUFFIX — a trailing lowercase mono token after ink text ══ -->
     <section class="proto-variant proto-wide" id="v2">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — B · INK</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — B · SUFFIX</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -384,20 +450,125 @@
                   aria-invalid="true"
                   aria-describedby="v2-email-msg"
                 />
-                <p class="field-msg c-err" id="v2-email-msg">
+                <p class="field-msg" id="v2-email-msg">
                   Not a valid address — missing a domain.
+                  <span class="sx c-err">err</span>
                 </p>
               </div>
               <div>
                 <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <p class="w5 c-ok">Deploy complete.</p>
+                <p>
+                  <span class="w5">Deploy complete.</span>
+                  <span class="sx c-ok">ok</span>
+                </p>
                 <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
               </div>
               <div>
                 <h2 class="ae-h">WARNING · NOTICE</h2>
                 <div class="notice">
-                  <p class="c-warn">
+                  <p>
                     Certificate for api.misty-step.com expires in 9 days.
+                    <span class="sx c-warn">warn</span>
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="ae-h">TABLE · STATUS</h2>
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>SERVICE</th>
+                      <th>EVENT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>misty-step.com</td>
+                      <td class="ae-dim">deploy</td>
+                      <td><span class="sx sx-solo c-ok">ok</span></td>
+                    </tr>
+                    <tr>
+                      <td>aesthetic ci</td>
+                      <td class="ae-dim">build</td>
+                      <td><span class="sx sx-solo c-err">failed</span></td>
+                    </tr>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="sx sx-solo c-warn">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 class="ae-h">BADGES</h2>
+                <p class="badge-row">
+                  <span>deploy <span class="sx c-ok">· ok</span></span>
+                  <span>build <span class="sx c-err">· failed</span></span>
+                  <span>cert <span class="sx c-warn">· expiring</span></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="ae-bar">
+          <p class="ae-chrome">LAB · status inks · round 2</p>
+          <p class="ae-chrome">
+            B — a quiet lowercase tag trails the words: build · failed. Judge
+            whether trailing reads better than leading did.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ═══ C · INK QUIET — hue on the status word, never the sentence ═══ -->
+    <section class="proto-variant proto-wide" id="v3">
+      <div class="ae-screen">
+        <header class="ae-bar">
+          <span class="ae-name">AESTHETIC</span>
+          <span class="bar-end">
+            <span class="ae-chrome">LAB · STATUS INKS 2 — C · INK QUIET</span>
+            <button class="ae-mode js-mode" aria-label="toggle color mode">
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </span>
+        </header>
+        <main class="ae-stage">
+          <div class="ae-view">
+            <div class="spec-grid">
+              <div>
+                <h2 class="ae-h">FIELD · ERROR</h2>
+                <label class="ae-label" for="v3-email"
+                  >Notification email</label
+                >
+                <input
+                  class="ae-input"
+                  id="v3-email"
+                  type="email"
+                  value="ops@misty-step"
+                  aria-invalid="true"
+                  aria-describedby="v3-email-msg"
+                />
+                <p class="field-msg" id="v3-email-msg">
+                  <span class="w5 c-err">Invalid</span> — missing a domain.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">SUCCESS · MOMENT</h2>
+                <p>
+                  <span class="w5 c-ok">Deployed</span> — misty-step.com is live
+                  on v2.3.1.
+                </p>
+              </div>
+              <div>
+                <h2 class="ae-h">WARNING · NOTICE</h2>
+                <div class="notice">
+                  <p>
+                    <span class="w5 c-warn">Expiring</span> — certificate for
+                    api.misty-step.com, 9 days left.
                   </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
@@ -421,7 +592,7 @@
                     <tr>
                       <td>aesthetic ci</td>
                       <td class="ae-dim">build</td>
-                      <td><span class="w5 c-err">failing</span></td>
+                      <td><span class="w5 c-err">failed</span></td>
                     </tr>
                     <tr>
                       <td>api.misty-step.com</td>
@@ -435,7 +606,7 @@
                 <h2 class="ae-h">BADGES</h2>
                 <p class="badge-row">
                   <span class="w5 c-ok">ok</span>
-                  <span class="w5 c-err">failing</span>
+                  <span class="w5 c-err">failed</span>
                   <span class="w5 c-warn">expiring</span>
                 </p>
               </div>
@@ -443,117 +614,22 @@
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            B — status lives in the ink itself; designed triplet, never a fill
+            C — color on the one status word, never the sentence. Judge the
+            calmer triplet, and the bronze where amber was.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ C · HAIRLINE — text stays ink; the rule carries the hue ══════ -->
-    <section class="proto-variant proto-wide" id="v3">
-      <div class="ae-screen">
-        <header class="ae-bar">
-          <span class="ae-name">AESTHETIC</span>
-          <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — C · HAIRLINE</span>
-            <button class="ae-mode js-mode" aria-label="toggle color mode">
-              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
-              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
-            </button>
-          </span>
-        </header>
-        <main class="ae-stage">
-          <div class="ae-view">
-            <div class="spec-grid">
-              <div>
-                <h2 class="ae-h">FIELD · ERROR</h2>
-                <label class="ae-label" for="v3-email"
-                  >Notification email</label
-                >
-                <input
-                  class="ae-input input-err"
-                  id="v3-email"
-                  type="email"
-                  value="ops@misty-step"
-                  aria-invalid="true"
-                  aria-describedby="v3-email-msg"
-                />
-                <p class="field-msg" id="v3-email-msg">
-                  Not a valid address — missing a domain.
-                </p>
-              </div>
-              <div>
-                <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <div class="bl-ok">
-                  <p class="w5">Deploy complete.</p>
-                  <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
-                </div>
-              </div>
-              <div>
-                <h2 class="ae-h">WARNING · NOTICE</h2>
-                <div class="bl-warn">
-                  <p>Certificate for api.misty-step.com expires in 9 days.</p>
-                  <p class="ae-dim">Renew before June 21.</p>
-                </div>
-              </div>
-              <div>
-                <h2 class="ae-h">TABLE · STATUS</h2>
-                <table class="status-table">
-                  <thead>
-                    <tr>
-                      <th>SERVICE</th>
-                      <th>EVENT</th>
-                      <th>STATUS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>misty-step.com</td>
-                      <td class="ae-dim">deploy</td>
-                      <td><span class="u-ok">ok</span></td>
-                    </tr>
-                    <tr>
-                      <td>aesthetic ci</td>
-                      <td class="ae-dim">build</td>
-                      <td><span class="u-err">failing</span></td>
-                    </tr>
-                    <tr>
-                      <td>api.misty-step.com</td>
-                      <td class="ae-dim">cert</td>
-                      <td><span class="u-warn">expiring</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 class="ae-h">BADGES</h2>
-                <p class="badge-row">
-                  <span class="u-ok">ok</span>
-                  <span class="u-err">failing</span>
-                  <span class="u-warn">expiring</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </main>
-        <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
-          <p class="ae-chrome">
-            C — status lives in a colored hairline; the words stay ink
-          </p>
-        </footer>
-      </div>
-    </section>
-
-    <!-- ═══ D · WEIGHT — zero new color; registers and glyphs only ═══════ -->
+    <!-- ═══ D · STAMP — a lowercase mono word in a hairline box ══════════ -->
     <section class="proto-variant proto-wide" id="v4">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — D · WEIGHT</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — D · STAMP</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -576,22 +652,25 @@
                   aria-invalid="true"
                   aria-describedby="v4-email-msg"
                 />
-                <p class="field-msg w5" id="v4-email-msg">
-                  <span class="g">✕</span>Not a valid address — missing a
-                  domain.
+                <p class="field-msg" id="v4-email-msg">
+                  <span class="stamp stamp-err">invalid</span>Not a valid
+                  address — missing a domain.
                 </p>
               </div>
               <div>
                 <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <p class="w8"><span class="g">✓</span>Deploy complete.</p>
+                <p>
+                  <span class="stamp">ok</span
+                  ><span class="w5">Deploy complete.</span>
+                </p>
                 <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
               </div>
               <div>
                 <h2 class="ae-h">WARNING · NOTICE</h2>
                 <div class="notice">
-                  <p class="w5">
-                    <span class="g">!</span>Certificate for api.misty-step.com
-                    expires in 9 days.
+                  <p>
+                    <span class="stamp">expiring</span>Certificate for
+                    api.misty-step.com expires in 9 days.
                   </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
@@ -610,17 +689,17 @@
                     <tr>
                       <td>misty-step.com</td>
                       <td class="ae-dim">deploy</td>
-                      <td class="ae-dim"><span class="g">✓</span>ok</td>
+                      <td><span class="stamp">ok</span></td>
                     </tr>
                     <tr>
                       <td>aesthetic ci</td>
                       <td class="ae-dim">build</td>
-                      <td class="w8"><span class="g">✕</span>failing</td>
+                      <td><span class="stamp stamp-err">failed</span></td>
                     </tr>
                     <tr>
                       <td>api.misty-step.com</td>
                       <td class="ae-dim">cert</td>
-                      <td class="w5"><span class="g">!</span>expiring</td>
+                      <td><span class="stamp">expiring</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -628,30 +707,31 @@
               <div>
                 <h2 class="ae-h">BADGES</h2>
                 <p class="badge-row">
-                  <span class="ae-dim"><span class="g">✓</span>ok</span>
-                  <span class="w8"><span class="g">✕</span>failing</span>
-                  <span class="w5"><span class="g">!</span>expiring</span>
+                  <span class="stamp">ok</span>
+                  <span class="stamp stamp-err">failed</span>
+                  <span class="stamp">expiring</span>
                 </p>
               </div>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            D — zero new color; weight, glyphs, and muted/ink contrast only
+            D — a lowercase word in a thin box, like a stamp in a manual. Ink by
+            default; only failure is colored.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ E · WASH — low-alpha status hue behind ink text ══════════════ -->
+    <!-- ═══ E · DOT — a small square of color; everything else ink ═══════ -->
     <section class="proto-variant proto-wide" id="v5">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — E · WASH</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — E · DOT</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -675,22 +755,22 @@
                   aria-describedby="v5-email-msg"
                 />
                 <p class="field-msg" id="v5-email-msg">
-                  <span class="wash-err chiplet"
-                    >Not a valid address — missing a domain.</span
-                  >
+                  <span class="dot c-err"></span>Not a valid address — missing a
+                  domain.
                 </p>
               </div>
               <div>
                 <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <div class="wash-ok wash-block">
-                  <p class="w5">Deploy complete.</p>
-                  <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
-                </div>
+                <p class="w5"><span class="dot c-ok"></span>Deploy complete.</p>
+                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
               </div>
               <div>
                 <h2 class="ae-h">WARNING · NOTICE</h2>
-                <div class="wash-warn wash-block">
-                  <p>Certificate for api.misty-step.com expires in 9 days.</p>
+                <div class="notice">
+                  <p>
+                    <span class="dot c-warn"></span>Certificate for
+                    api.misty-step.com expires in 9 days.
+                  </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
               </div>
@@ -708,17 +788,17 @@
                     <tr>
                       <td>misty-step.com</td>
                       <td class="ae-dim">deploy</td>
-                      <td><span class="wash-ok chiplet">ok</span></td>
+                      <td><span class="dot c-ok"></span>ok</td>
                     </tr>
                     <tr>
                       <td>aesthetic ci</td>
                       <td class="ae-dim">build</td>
-                      <td><span class="wash-err chiplet">failing</span></td>
+                      <td><span class="dot c-err"></span>failed</td>
                     </tr>
                     <tr>
                       <td>api.misty-step.com</td>
                       <td class="ae-dim">cert</td>
-                      <td><span class="wash-warn chiplet">expiring</span></td>
+                      <td><span class="dot c-warn"></span>expiring</td>
                     </tr>
                   </tbody>
                 </table>
@@ -726,30 +806,31 @@
               <div>
                 <h2 class="ae-h">BADGES</h2>
                 <p class="badge-row">
-                  <span class="wash-ok chiplet">ok</span>
-                  <span class="wash-err chiplet">failing</span>
-                  <span class="wash-warn chiplet">expiring</span>
+                  <span><span class="dot c-ok"></span>ok</span>
+                  <span><span class="dot c-err"></span>failed</span>
+                  <span><span class="dot c-warn"></span>expiring</span>
                 </p>
               </div>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            E — status as a low-alpha wash behind ink text; radius stays 0
+            E — a small square of color before the words; everything else stays
+            ink. The least color a status can carry.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ F · PREFIX — colored mono prefix words, the log idiom ════════ -->
+    <!-- ═══ F · DANGER ONLY — only failure spends color ══════════════════ -->
     <section class="proto-variant proto-wide" id="v6">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — F · PREFIX</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — F · DANGER ONLY</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -773,15 +854,15 @@
                   aria-describedby="v6-email-msg"
                 />
                 <p class="field-msg" id="v6-email-msg">
-                  <span class="px c-err">ERR</span>Not a valid address — missing
-                  a domain.
+                  <svg class="ae-icon sg c-err"><use href="#i-x" /></svg>Not a
+                  valid address — missing a domain.
                 </p>
               </div>
               <div>
                 <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <p>
-                  <span class="px c-ok">OK</span
-                  ><span class="w5">Deploy complete.</span>
+                <p class="w5">
+                  <svg class="ae-icon sg ae-dim"><use href="#i-check" /></svg
+                  >Deploy complete.
                 </p>
                 <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
               </div>
@@ -789,8 +870,8 @@
                 <h2 class="ae-h">WARNING · NOTICE</h2>
                 <div class="notice">
                   <p>
-                    <span class="px c-warn">WARN</span>Certificate for
-                    api.misty-step.com expires in 9 days.
+                    <svg class="ae-icon sg"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
                   </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
@@ -809,17 +890,25 @@
                     <tr>
                       <td>misty-step.com</td>
                       <td class="ae-dim">deploy</td>
-                      <td><span class="px c-ok">OK</span>live</td>
+                      <td class="ae-dim">
+                        <svg class="ae-icon sg"><use href="#i-check" /></svg>ok
+                      </td>
                     </tr>
                     <tr>
                       <td>aesthetic ci</td>
                       <td class="ae-dim">build</td>
-                      <td><span class="px c-err">ERR</span>failing</td>
+                      <td class="c-err">
+                        <svg class="ae-icon sg"><use href="#i-x" /></svg
+                        ><span class="w5">failed</span>
+                      </td>
                     </tr>
                     <tr>
                       <td>api.misty-step.com</td>
                       <td class="ae-dim">cert</td>
-                      <td><span class="px c-warn">WARN</span>expiring</td>
+                      <td>
+                        <svg class="ae-icon sg"><use href="#i-alert" /></svg
+                        ><span class="w5">expiring</span>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -827,30 +916,40 @@
               <div>
                 <h2 class="ae-h">BADGES</h2>
                 <p class="badge-row">
-                  <span class="px c-ok">OK</span>
-                  <span class="px c-err">ERR</span>
-                  <span class="px c-warn">WARN</span>
+                  <span class="ae-dim">
+                    <svg class="ae-icon sg"><use href="#i-check" /></svg
+                    >ok</span
+                  >
+                  <span class="c-err">
+                    <svg class="ae-icon sg"><use href="#i-x" /></svg
+                    ><span class="w5">failed</span></span
+                  >
+                  <span>
+                    <svg class="ae-icon sg"><use href="#i-alert" /></svg
+                    ><span class="w5">expiring</span></span
+                  >
                 </p>
               </div>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            F — colored mono prefix in the chrome register; the terminal idiom
+            F — success and warning live in ink, weight, and icons alone. Only
+            failure spends color, so it burns.
           </p>
         </footer>
       </div>
     </section>
 
-    <!-- ═══ G · ACCENT-ONLY — attention is ultramarine; red is rationed ══ -->
+    <!-- ═══ G · WARN HUES — four candidate warn inks, pick by eye ════════ -->
     <section class="proto-variant proto-wide" id="v7">
       <div class="ae-screen">
         <header class="ae-bar">
           <span class="ae-name">AESTHETIC</span>
           <span class="bar-end">
-            <span class="ae-chrome">LAB · STATUS INKS — G · ACCENT-ONLY</span>
+            <span class="ae-chrome">LAB · STATUS INKS 2 — G · WARN HUES</span>
             <button class="ae-mode js-mode" aria-label="toggle color mode">
               <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
               <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
@@ -859,98 +958,110 @@
         </header>
         <main class="ae-stage">
           <div class="ae-view">
-            <div class="spec-grid">
-              <div>
-                <h2 class="ae-h">FIELD · ERROR</h2>
-                <label class="ae-label" for="v7-email"
-                  >Notification email</label
-                >
-                <input
-                  class="ae-input"
-                  id="v7-email"
-                  type="email"
-                  value="ops@misty-step"
-                  aria-invalid="true"
-                  aria-describedby="v7-email-msg"
-                />
-                <p class="field-msg att" id="v7-email-msg">
-                  Not a valid address — missing a domain.
-                </p>
-              </div>
-              <div>
-                <h2 class="ae-h">SUCCESS · MOMENT</h2>
-                <p class="w5">Deploy complete.</p>
-                <p class="ae-dim">misty-step.com is live on v2.3.1.</p>
-              </div>
-              <div>
-                <h2 class="ae-h">WARNING · NOTICE</h2>
+            <div class="g-block hue-ochre">
+              <p class="ae-chrome g-label">ochre · #8f6400 / #d2a64a</p>
+              <div class="g-pair">
                 <div class="notice">
-                  <p class="att">
-                    Certificate for api.misty-step.com expires in 9 days.
+                  <p>
+                    <svg class="ae-icon sg g-ink"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
                   </p>
                   <p class="ae-dim">Renew before June 21.</p>
                 </div>
-              </div>
-              <div>
-                <h2 class="ae-h">TABLE · STATUS</h2>
                 <table class="status-table">
-                  <thead>
-                    <tr>
-                      <th>SERVICE</th>
-                      <th>EVENT</th>
-                      <th>STATUS</th>
-                    </tr>
-                  </thead>
                   <tbody>
-                    <tr>
-                      <td>misty-step.com</td>
-                      <td class="ae-dim">deploy</td>
-                      <td class="ae-dim">ok</td>
-                    </tr>
-                    <tr>
-                      <td>aesthetic ci</td>
-                      <td class="ae-dim">build</td>
-                      <td><span class="att">failing</span></td>
-                    </tr>
                     <tr>
                       <td>api.misty-step.com</td>
                       <td class="ae-dim">cert</td>
-                      <td><span class="att">expiring</span></td>
+                      <td><span class="w5 g-ink">expiring</span></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div>
-                <h2 class="ae-h">BADGES · AND THE ONE RED</h2>
-                <p class="badge-row">
-                  <span class="ae-dim">ok</span>
-                  <span class="att">needs attention</span>
-                </p>
-                <p class="w5 c-err" style="margin-top: 0.8em">
-                  Revoke all deploy keys — irreversible.
-                </p>
-                <p class="ae-dim">Red is spent on destruction alone.</p>
+            </div>
+            <div class="g-block hue-sienna">
+              <p class="ae-chrome g-label">sienna · #9a5b2f / #d8956a</p>
+              <div class="g-pair">
+                <div class="notice">
+                  <p>
+                    <svg class="ae-icon sg g-ink"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+                <table class="status-table">
+                  <tbody>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="w5 g-ink">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="g-block hue-bronze">
+              <p class="ae-chrome g-label">bronze · #8a5f32 / #c49d72</p>
+              <div class="g-pair">
+                <div class="notice">
+                  <p>
+                    <svg class="ae-icon sg g-ink"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+                <table class="status-table">
+                  <tbody>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="w5 g-ink">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="g-block hue-rust">
+              <p class="ae-chrome g-label">rust · #a04b2e / #e08e69</p>
+              <div class="g-pair">
+                <div class="notice">
+                  <p>
+                    <svg class="ae-icon sg g-ink"><use href="#i-alert" /></svg
+                    >Certificate for api.misty-step.com expires in 9 days.
+                  </p>
+                  <p class="ae-dim">Renew before June 21.</p>
+                </div>
+                <table class="status-table">
+                  <tbody>
+                    <tr>
+                      <td>api.misty-step.com</td>
+                      <td class="ae-dim">cert</td>
+                      <td><span class="w5 g-ink">expiring</span></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </main>
         <footer class="ae-bar">
-          <p class="ae-chrome">LAB · status inks</p>
+          <p class="ae-chrome">LAB · status inks · round 2</p>
           <p class="ae-chrome">
-            G — attention reuses the accent; only the irreversible earns red
+            G — not a treatment: four candidate warn inks, same warning each
+            time. Pick the one that should replace amber, in both modes.
           </p>
         </footer>
       </div>
     </section>
 
     <nav class="proto-picker" aria-label="variant picker">
-      <button data-v="v1" class="is-active">A · GLYPH</button>
-      <button data-v="v2">B · INK</button>
-      <button data-v="v3">C · HAIRLINE</button>
-      <button data-v="v4">D · WEIGHT</button>
-      <button data-v="v5">E · WASH</button>
-      <button data-v="v6">F · PREFIX</button>
-      <button data-v="v7">G · ACCENT-ONLY</button>
+      <button data-v="v1" class="is-active">A · GLYPH 2</button>
+      <button data-v="v2">B · SUFFIX</button>
+      <button data-v="v3">C · INK QUIET</button>
+      <button data-v="v4">D · STAMP</button>
+      <button data-v="v5">E · DOT</button>
+      <button data-v="v6">F · DANGER ONLY</button>
+      <button data-v="v7">G · WARN HUES</button>
     </nav>
 
     <script>
