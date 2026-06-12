@@ -1,6 +1,13 @@
 # Publish to npm and script the release flow
 
-Priority: P3 · Status: blocked · Estimate: S
+Priority: P3 · Status: abandoned · Estimate: S
+
+**Archived 2026-06-12 (groom):** folded into 007 child 8 as its own
+text proposed. The registry path (static JSON from
+aesthetic.mistystep.io) covers no-npm install; git-tag + jsDelivr
+cover pin and CDN; the one-command release oracle lives in 007 child 8.
+npm publish returns only if a consumer specifically demands registry
+resolution.
 
 **Deletion candidate (2026-06-11, awaiting ratification):** the
 operator asked for an install path that avoids npm credentials, and
