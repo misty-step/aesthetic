@@ -26,8 +26,10 @@ glows, nothing floats, nothing bounces.
 - The accent is the consumer's: define your accent (your color
   scheme) and use it with judgment. The system carries any hue
   without losing its identity — ink, hairlines, type, and motion do
-  the identifying. There is no counting rule; there is taste: color
-  earns its place, it is never ambient filler.
+  the identifying. There is no counting rule and no placement rule;
+  there is taste: spend the accent where it earns its place — buttons,
+  active states, anywhere the product calls for it — and keep it from
+  becoming ambient filler. Restraint is judgment, never law.
 - Screens, not pages: every view fits the viewport. Long documents
   scroll inside the stage; the chrome never moves.
 - Motion is feedback, never decoration: small, brief, eased. State

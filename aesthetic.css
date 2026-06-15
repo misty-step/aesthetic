@@ -854,8 +854,9 @@ textarea.ae-input {
 }
 
 /* buttons are not links: contained shape, ink, never resizing.
-   Primary is solid ink; .ae-button-quiet is the hairline secondary.
-   Accents are not spent on buttons. */
+   Primary is solid ink by default; .ae-button-quiet is the hairline
+   secondary. Spend the accent on a button when the project's scheme calls
+   for it — where the accent goes is the consumer's judgment, not a rule. */
 .ae-button {
   display: inline-flex;
   align-items: center;
