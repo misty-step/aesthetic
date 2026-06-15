@@ -37,7 +37,7 @@ express).
 
 3. **Flow / diagram — the kit cannot draw a system.** A foundry is a pipeline
    (task → arena → search → gates → launch) and a candidate is a composition of
-   parts; making the *system* legible needs nodes + connectors. The kit has no
+   parts; making the _system_ legible needs nodes + connectors. The kit has no
    node/edge/port/wire vocabulary at all, so a schematic view must leave
    entirely (grid background, custom routing). In-idiom answer: hairline-framed
    nodes (radius 0), orthogonal ink connectors, the current stage in the accent,
@@ -45,7 +45,7 @@ express).
    spine Daedalus hand-rolled are the 1D degenerate case of this.
 
 4. **Document → a report/dossier register.** The document archetype carries
-   prose, but a *generated* artifact — a foundry report, a launch packet, a
+   prose, but a _generated_ artifact — a foundry report, a launch packet, a
    comparison dossier meant to be read and shared — wants numbered figures with
    captions, an abstract/lede, and a findings/recommendation block, and it
    wants to stay scannable over a full page. The one-size law (right for a
@@ -90,7 +90,7 @@ express).
 Sequence: this rides behind 013's foundation pass + workbench + matrix (those
 are table stakes; 1–2 here build directly on the matrix/meter idiom). Items
 1–3 are genuinely new vocabulary; 4–5 are decisions, not necessarily new code.
-The reusable proof that the kit can serve a *lab* (not just a dashboard) is the
+The reusable proof that the kit can serve a _lab_ (not just a dashboard) is the
 same bar 013 sets: if Daedalus's comparison screen cannot be built from
 primitives — plot, intervals, matrix, and all — the channels are still
 missing. Daedalus's `lab.css` is the consumer-side sketch of 1–3 and should be
