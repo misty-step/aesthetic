@@ -1,0 +1,1330 @@
+<!doctype html>
+<!--
+  LAB instrument · 3 (round 5) — THE FLOW / DIAGRAM MARK.
+  Backlog 014, GAP 3: "the kit cannot draw a system." A foundry is a pipeline
+  (task → arena → search → gates → launch) and a candidate is a composition of
+  parts; the kit has no node/edge/port/wire vocabulary, so a schematic view
+  has to leave entirely (grid background, custom routing). This sketches the
+  in-idiom answer: hairline-framed nodes (radius 0, hard 90° corners),
+  ORTHOGONAL ink connectors (right-angle elbows, like an engineering
+  schematic), the current stage in the accent, locked stages dashed-faint, a
+  done stage carries a ✓ glyph, mono port labels.
+
+  ONE constant data model — pipeline stages (id, label, state ∈ {done, active,
+  locked, failed}) + edges + ports — drives every treatment. The picker swaps
+  the LAYOUT only; same nodes/edges every time. Everything is one SVG per view
+  so node geometry and wire geometry share a coordinate space (no drift on
+  reflow); hairlines stay hairline via vector-effect="non-scaling-stroke".
+  Ordered most-restrained → most-expressive.
+
+  1 spine        — the 1D degenerate case: hairline nodes in a horizontal row,
+                   orthogonal ink connectors between, active stage in accent,
+                   locked dashed-faint, done carries ✓. The gate/lineage spine.
+                   Trade-off: reads as a progress bar of stages; can't show
+                   structure inside a stage.
+  2 stations     — the same pipeline vertical (a transit-line station list),
+                   each node a hairline row + state glyph, the connector runs
+                   down the left like a rail. Trade-off: scales to many stages,
+                   reads as a checklist; loses the left-to-right flow metaphor.
+  3 ported       — spine nodes gain explicit in/out PORTS with mono port labels
+                   (in:spec out:cand), wires entering at the ports. Trade-off:
+                   shows a node's interface (a candidate is a composition of
+                   parts); busier, needs space per node.
+  4 dag          — one node fans out to 3 PARALLEL arms (arena → search·A/B/C →
+                   gates) that rejoin: orthogonal wires routed through a real
+                   graph, not a line. Trade-off: shows true parallelism; routing
+                   must stay orthogonal and uncrossed, which constrains layout.
+  5 swimlane     — stages across the top, two candidate LANES down, each run's
+                   path drawn as orthogonal wires within its lane (compare two
+                   runs). Trade-off: compares runs at a glance; doubles height,
+                   denser.
+  6 schematic    — the engineering-drawing register: numbered nodes, a title
+                   block (like .ae-plate-cap), and a VERY faint hairline grid
+                   behind. Tests whether a faint grid earns its place in-idiom
+                   or violates restraint. Trade-off: most "instrument" feel; the
+                   grid is the law-tension to judge.
+
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+  VERDICT (round 5): AWAITING OPERATOR
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · inst 3 · flow</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────
+         Every treatment renders into ONE <svg> whose viewBox is its natural
+         coordinate space; nodes (a <g> of <rect> + <text>) and wires (a
+         <path> with H/V-only commands) live in the SAME coordinates, so they
+         can never drift apart on reflow — the bug the backlog flagged. The
+         SVG scales to fit the stage; vector-effect="non-scaling-stroke" on
+         every stroked element keeps hairlines at 1px regardless of scale.
+         All color is token-driven so light/dark both read. */
+
+      .fl-head {
+        max-width: 48em;
+      }
+      .fl-fig {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin: 1.6em 0 0.6em;
+      }
+
+      /* the canvas: the diagram fits inside this framed region. A wide graph
+         scrolls INSIDE the frame (the sub-region), the page never scrolls. */
+      .fl-frame {
+        border: 1px solid var(--ae-line);
+        background: var(--ae-surface);
+        overflow: auto;
+        max-height: min(58vh, 30em);
+        padding: 1.6em 1.8em;
+      }
+      .fl-canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        /* a min-width floor so very wide graphs can scroll rather than crush */
+        min-width: 0;
+      }
+      /* the wide treatments (dag, swimlane, schematic) get a min-width so the
+         orthogonal routing keeps its breathing room; overflow scrolls in the
+         frame. */
+      .fl-frame.is-wide .fl-canvas {
+        min-width: 52em;
+      }
+
+      /* ── SVG vocabulary (the proposed primitives, sketched) ───────────── */
+
+      /* .ae-node — a hairline-framed rectangle, RADIUS 0 (hard corners). */
+      .nd-box {
+        fill: var(--ae-surface);
+        stroke: var(--ae-line);
+        stroke-width: 1;
+      }
+      .nd-box.is-done {
+        stroke: var(--ae-ink-muted);
+      }
+      .nd-box.is-active {
+        stroke: var(--ae-accent);
+        stroke-width: 1.5;
+      }
+      .nd-box.is-locked {
+        stroke: var(--ae-ink-faint);
+        stroke-dasharray: 3 3;
+        fill: var(--ae-wash);
+      }
+      .nd-box.is-failed {
+        stroke: var(--ae-err);
+      }
+
+      /* node label: the type register, ink. State lives in the frame + glyph,
+         never in the label color — EXCEPT the active stage, which takes the
+         one accent role as an accent label (the prescribed "accent node
+         label"). */
+      .nd-label {
+        font-family: var(--ae-font);
+        font-size: 13px;
+        font-weight: var(--ae-w-medium);
+        fill: var(--ae-ink);
+      }
+      .nd-label.is-active {
+        fill: var(--ae-accent);
+        font-weight: var(--ae-w-black);
+      }
+      .nd-label.is-locked {
+        fill: var(--ae-ink-faint);
+        font-weight: var(--ae-w-regular);
+      }
+      /* the stage kicker: a mono ordinal/index above the label */
+      .nd-kick {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        fill: var(--ae-ink-faint);
+      }
+      /* mono port labels */
+      .nd-port {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        fill: var(--ae-ink-muted);
+      }
+      .nd-port.is-locked {
+        fill: var(--ae-ink-faint);
+      }
+      /* the port stub: a tiny hairline tick where a wire meets the node */
+      .nd-stub {
+        stroke: var(--ae-line);
+        stroke-width: 1;
+      }
+
+      /* .ae-wire — an ORTHOGONAL ink connector (H/V segments only). */
+      .wire {
+        fill: none;
+        stroke: var(--ae-line);
+        stroke-width: 1;
+      }
+      .wire.is-reached {
+        stroke: var(--ae-ink-muted);
+      }
+      .wire.is-active {
+        stroke: var(--ae-accent);
+      }
+      .wire.is-locked {
+        stroke: var(--ae-ink-faint);
+        stroke-dasharray: 3 3;
+      }
+      /* a junction dot where parallel wires split/merge — a round pen mark,
+         like the spark's round caps; rectangles stay square, marks are round */
+      .wire-junction {
+        fill: var(--ae-ink-muted);
+      }
+      .wire-junction.is-active {
+        fill: var(--ae-accent);
+      }
+
+      /* the state glyph rides the node (✓ done, ✗ failed). Colored icon, the
+         label stays ink — status on the glyph, never a filled pill. */
+      .nd-glyph {
+        width: 0.95em;
+        height: 0.95em;
+      }
+
+      /* schematic title block — a ruled corner cartouche, mono */
+      .sc-title {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        fill: var(--ae-ink-muted);
+      }
+      .sc-title.strong {
+        fill: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .sc-rule {
+        stroke: var(--ae-line);
+        stroke-width: 1;
+      }
+      /* the faint grid — the law-tension. Faintest possible hairline. */
+      .sc-grid {
+        stroke: var(--ae-line);
+        stroke-width: 1;
+        opacity: 0.4;
+      }
+
+      /* lane chrome for swimlane: a hairline rail + a mono lane caption */
+      .ln-rail {
+        stroke: var(--ae-line);
+        stroke-width: 1;
+      }
+      .ln-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        fill: var(--ae-ink-muted);
+      }
+      .ln-col {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        fill: var(--ae-ink-faint);
+      }
+
+      /* the legend strip under the figure */
+      .fl-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 1.6em;
+        align-items: center;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-muted);
+        margin-top: 0.9em;
+      }
+      .fl-legend .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45em;
+      }
+      .fl-legend svg {
+        width: 0.95em;
+        height: 0.95em;
+      }
+      .fl-legend .sw {
+        display: inline-block;
+        width: 1.6em;
+        height: 0;
+        border-top: 1px solid var(--ae-ink-muted);
+      }
+      .fl-legend .sw.acc {
+        border-top-color: var(--ae-accent);
+      }
+      .fl-legend .sw.lock {
+        border-top: 1px dashed var(--ae-ink-faint);
+      }
+      .fl-legend .box {
+        display: inline-block;
+        width: 0.85em;
+        height: 0.85em;
+        border: 1px solid var(--ae-ink-muted);
+        vertical-align: -0.1em;
+      }
+      .fl-legend .box.acc {
+        border-color: var(--ae-accent);
+      }
+      .fl-legend .box.lock {
+        border: 1px dashed var(--ae-ink-faint);
+      }
+
+      .proto-cap {
+        max-width: 48em;
+        margin: 1.3em 0 0;
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 2em);
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      /* motion: a node resolving (a wire reaching it) draws once. Reduced-
+         motion safe — the dash animation only runs when motion is allowed. */
+      @media (prefers-reduced-motion: no-preference) {
+        .fl-canvas.animate .wire.is-active,
+        .fl-canvas.animate .wire.is-reached {
+          stroke-dasharray: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="6" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="#">AESTHETIC · LAB</a>
+        <span style="display: inline-flex; gap: 1.6em; align-items: baseline">
+          <span class="ae-chrome">inst 3 · flow</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+
+      <main class="ae-stage ae-stage-scroll">
+        <div style="width: 100%">
+          <div class="fl-head">
+            <h1 class="ae-h" style="margin-bottom: 0.5em">
+              FOUNDRY · cache-key-collision · PIPELINE
+            </h1>
+            <p class="ae-dim">
+              One pipeline — task → arena → search → gates → launch — drawn six
+              ways, from a 1D spine to a branching graph to an engineering
+              schematic. Hairline nodes with hard corners, orthogonal ink wires,
+              the running stage in the accent, locked stages dashed-faint, a
+              cleared stage carrying ✓. Same nodes and edges every time; the
+              picker swaps only the layout.
+            </p>
+          </div>
+
+          <p class="fl-fig" id="flfig">FIG 1 · spine</p>
+          <div class="fl-frame" id="flframe">
+            <svg
+              class="fl-canvas"
+              id="flcanvas"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+          </div>
+
+          <div class="fl-legend" id="fllegend"></div>
+
+          <p class="ae-dim proto-cap" id="cap">
+            1 · SPINE — the 1D degenerate case: hairline-framed nodes in a
+            horizontal row, orthogonal ink connectors between them, the running
+            stage in the accent, locked stages dashed-faint, cleared stages
+            carrying a ✓ glyph. This is the gate/lineage spine. Trade-off: reads
+            as a progress bar of stages — it can't show structure inside a
+            stage.
+          </p>
+        </div>
+      </main>
+
+      <footer class="ae-bar">
+        <p class="ae-chrome">prototype — never ships</p>
+        <p class="ae-chrome">instrument 3 · the flow / diagram mark</p>
+      </footer>
+    </div>
+
+    <nav class="proto-picker" aria-label="flow treatment picker">
+      <button data-enc="spine" class="is-active">1 spine</button>
+      <button data-enc="stations">2 stations</button>
+      <button data-enc="ported">3 ported</button>
+      <button data-enc="dag">4 branching DAG</button>
+      <button data-enc="swim">5 swimlane</button>
+      <button data-enc="schem">6 schematic</button>
+    </nav>
+
+    <script>
+      const el = (id) => document.getElementById(id);
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      // ── THE ONE DATA MODEL ──────────────────────────────────────────────
+      // A foundry pipeline as nodes + edges. state ∈ done | active | locked |
+      // failed. ports name a node's interface (in/out). Every treatment is
+      // drawn from THIS — the spine, the stations, the ports, the DAG arms,
+      // the two swimlane runs, and the schematic all read the same stages.
+      const SVGNS = 'http://www.w3.org/2000/svg';
+
+      // the linear backbone (treatments 1,2,3,6 + lane A of 5)
+      const STAGES = [
+        {
+          id: 'task',
+          label: 'task',
+          state: 'done',
+          in: 'in:spec',
+          out: 'out:prompt',
+        },
+        {
+          id: 'arena',
+          label: 'arena',
+          state: 'done',
+          in: 'in:prompt',
+          out: 'out:trials',
+        },
+        {
+          id: 'search',
+          label: 'search',
+          state: 'active',
+          in: 'in:trials',
+          out: 'out:cand',
+        },
+        {
+          id: 'gates',
+          label: 'gates',
+          state: 'locked',
+          in: 'in:cand',
+          out: 'out:pass',
+        },
+        {
+          id: 'launch',
+          label: 'launch',
+          state: 'locked',
+          in: 'in:pass',
+          out: 'out:ship',
+        },
+      ];
+
+      // the branching arms for the DAG: arena fans to three parallel searches
+      // that rejoin at gates. The active arm is the one in flight.
+      const ARMS = [
+        { id: 'search·A', state: 'done' },
+        { id: 'search·B', state: 'active' },
+        { id: 'search·C', state: 'locked' },
+      ];
+
+      // a second candidate run for the swimlane — same stages, different
+      // progress (this run already failed at gates).
+      const RUN_B = {
+        task: 'done',
+        arena: 'done',
+        search: 'done',
+        gates: 'failed',
+        launch: 'locked',
+      };
+
+      // ── status glyph: rides the node; ✓ done, ✗ failed. Colored icon, the
+      //    label stays ink. active/locked carry no glyph (frame says it).
+      const GLYPH = { done: 'i-check', failed: 'i-x' };
+      const GLYPH_INK = { done: 'ae-ok', failed: 'ae-err' };
+
+      // small SVG helpers — build elements in the shared coordinate space
+      function svg(tag, attrs) {
+        const node = document.createElementNS(SVGNS, tag);
+        for (const k in attrs) {
+          if (attrs[k] != null) node.setAttribute(k, attrs[k]);
+        }
+        return node;
+      }
+      // EVERY stroked element gets non-scaling-stroke so hairlines stay 1px
+      // no matter how the SVG is scaled to fit the stage.
+      function stroked(tag, attrs) {
+        const node = svg(tag, attrs);
+        node.setAttribute('vector-effect', 'non-scaling-stroke');
+        return node;
+      }
+      // a state glyph placed at (x,y) sized s — uses <use> on the symbol sprite
+      function glyphAt(state, x, y, s) {
+        const sym = GLYPH[state];
+        if (!sym) return null;
+        const g = svg('use', { href: '#' + sym, x, y, width: s, height: s });
+        // the .ae-icon stroke styling comes from the stylesheet via class
+        g.setAttribute('class', 'ae-icon ' + GLYPH_INK[state]);
+        return g;
+      }
+
+      // a NODE: a hairline rect (radius 0) + a label, optional kicker + glyph.
+      // Returns a <g>. The frame + label carry state. cx/cy is the node CENTER.
+      function nodeBox(opts) {
+        const { x, y, w, h, label, state, kicker, glyph = true, ports } = opts;
+        const g = svg('g', { class: 'fl-node' });
+        // the rect — explicitly rx=0 / ry=0: HARD corners, non-negotiable.
+        g.appendChild(
+          stroked('rect', {
+            x,
+            y,
+            width: w,
+            height: h,
+            rx: 0,
+            ry: 0,
+            class: 'nd-box is-' + state,
+          }),
+        );
+        const cx = x + w / 2;
+        const cy = y + h / 2;
+        // kicker (mono ordinal) above the label, if given
+        let labelDy = 0;
+        if (kicker) {
+          g.appendChild(
+            txt(cx, cy - 8, kicker, 'nd-kick', { anchor: 'middle' }),
+          );
+          labelDy = 8;
+        }
+        // the label — accent only for active; faint for locked
+        const lcls =
+          'nd-label' +
+          (state === 'active'
+            ? ' is-active'
+            : state === 'locked'
+              ? ' is-locked'
+              : '');
+        const tl = txt(cx, cy + labelDy + 4, label, lcls, { anchor: 'middle' });
+        g.appendChild(tl);
+        // the state glyph, top-right inside the frame
+        if (glyph) {
+          const gl = glyphAt(state, x + w - 16, y + 6, 11);
+          if (gl) g.appendChild(gl);
+        }
+        // ports (mono labels at the node edges) for the ported treatment
+        if (ports) {
+          const pcls = state === 'locked' ? 'nd-port is-locked' : 'nd-port';
+          // in-port: a stub on the left edge + a label below it
+          g.appendChild(
+            stroked('line', {
+              x1: x - 7,
+              y1: cy,
+              x2: x,
+              y2: cy,
+              class: 'nd-stub',
+            }),
+          );
+          g.appendChild(txt(x, y + h + 14, opts.in, pcls, { anchor: 'start' }));
+          // out-port: a stub on the right edge + a label below it
+          g.appendChild(
+            stroked('line', {
+              x1: x + w,
+              y1: cy,
+              x2: x + w + 7,
+              y2: cy,
+              class: 'nd-stub',
+            }),
+          );
+          g.appendChild(
+            txt(x + w, y + h + 14, opts.out, pcls, { anchor: 'end' }),
+          );
+        }
+        return g;
+      }
+
+      function txt(x, y, str, cls, o = {}) {
+        const t = svg('text', {
+          x,
+          y,
+          class: cls,
+          'text-anchor': o.anchor || 'start',
+          'dominant-baseline': o.baseline || 'middle',
+        });
+        t.textContent = str;
+        return t;
+      }
+
+      // wire class from the state of the stage it FEEDS (or an explicit state)
+      function wireCls(state) {
+        if (state === 'active') return 'wire is-active';
+        if (state === 'locked' || state === 'failed') return 'wire is-locked';
+        return 'wire is-reached';
+      }
+      // an orthogonal H/V path string from a list of [x,y] points. We emit
+      // M then L commands but only ever move on ONE axis per segment, so the
+      // path is guaranteed right-angle (no diagonals). Callers pass already-
+      // squared waypoints; this asserts orthogonality by snapping any stray
+      // segment to an L-elbow through the corner.
+      function ortho(points) {
+        let d = `M ${points[0][0]} ${points[0][1]}`;
+        for (let i = 1; i < points.length; i++) {
+          const [px, py] = points[i - 1];
+          const [x, y] = points[i];
+          if (x !== px && y !== py) {
+            // not axis-aligned → insert an elbow (horizontal first)
+            d += ` L ${x} ${py} L ${x} ${y}`;
+          } else {
+            d += ` L ${x} ${y}`;
+          }
+        }
+        return d;
+      }
+
+      // ── geometry constants (in SVG user units == px at 1:1) ─────────────
+      const NW = 116; // node width
+      const NH = 56; // node height
+      const GAPX = 64; // horizontal gap between spine nodes
+      const PAD = 18; // canvas inner pad
+
+      // set the canvas viewBox to a natural size; CSS scales it to the frame.
+      function setView(w, h) {
+        const c = el('flcanvas');
+        c.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        c.setAttribute('preserveAspectRatio', 'xMinYMin meet');
+        // a height hint so the frame reserves the right vertical space
+        c.style.height = '';
+        c.style.aspectRatio = `${w} / ${h}`;
+        return c;
+      }
+      function clearCanvas() {
+        const c = el('flcanvas');
+        while (c.firstChild) c.removeChild(c.firstChild);
+        return c;
+      }
+
+      // ═══ TREATMENT 1 — SPINE ════════════════════════════════════════════
+      function drawSpine(c) {
+        const n = STAGES.length;
+        const W = PAD * 2 + n * NW + (n - 1) * GAPX;
+        const H = 150;
+        setView(W, H);
+        const cy = H / 2;
+        // wires first (under the nodes): segment i feeds STAGES[i+1]
+        for (let i = 0; i < n - 1; i++) {
+          const x1 = PAD + i * (NW + GAPX) + NW;
+          const x2 = PAD + (i + 1) * (NW + GAPX);
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [x1, cy],
+                [x2, cy],
+              ]),
+              class: wireCls(STAGES[i + 1].state),
+            }),
+          );
+        }
+        // nodes
+        STAGES.forEach((s, i) => {
+          const x = PAD + i * (NW + GAPX);
+          c.appendChild(
+            nodeBox({
+              x,
+              y: cy - NH / 2,
+              w: NW,
+              h: NH,
+              label: s.label,
+              state: s.state,
+              kicker: String(i + 1).padStart(2, '0'),
+            }),
+          );
+        });
+      }
+
+      // ═══ TREATMENT 2 — STATIONS (vertical transit line) ═════════════════
+      function drawStations(c) {
+        const n = STAGES.length;
+        const rowH = 64;
+        const railX = PAD + 10;
+        const nodeX = railX + 26;
+        const nw = 230;
+        const nh = 44;
+        const W = nodeX + nw + PAD;
+        const H = PAD * 2 + n * rowH;
+        setView(W, H);
+        // the rail down the left + a wire segment per gap, colored by the
+        // stage it descends INTO
+        for (let i = 0; i < n - 1; i++) {
+          const y1 = PAD + i * rowH + rowH / 2;
+          const y2 = PAD + (i + 1) * rowH + rowH / 2;
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [railX, y1],
+                [railX, y2],
+              ]),
+              class: wireCls(STAGES[i + 1].state),
+            }),
+          );
+        }
+        STAGES.forEach((s, i) => {
+          const cy = PAD + i * rowH + rowH / 2;
+          // a station marker on the rail (round dot) — accent if active
+          c.appendChild(
+            svg('circle', {
+              cx: railX,
+              cy,
+              r: 4,
+              class:
+                'wire-junction' + (s.state === 'active' ? ' is-active' : ''),
+            }),
+          );
+          // a short stub from the rail into the node
+          c.appendChild(
+            stroked('line', {
+              x1: railX,
+              y1: cy,
+              x2: nodeX,
+              y2: cy,
+              class: wireCls(s.state),
+            }),
+          );
+          // the station row: a hairline node, label left, glyph right
+          const g = svg('g', {});
+          g.appendChild(
+            stroked('rect', {
+              x: nodeX,
+              y: cy - nh / 2,
+              width: nw,
+              height: nh,
+              rx: 0,
+              ry: 0,
+              class: 'nd-box is-' + s.state,
+            }),
+          );
+          g.appendChild(
+            txt(nodeX + 40, cy, s.label, labelCls(s.state), {
+              anchor: 'start',
+            }),
+          );
+          g.appendChild(
+            txt(nodeX + 14, cy, String(i + 1).padStart(2, '0'), 'nd-kick', {
+              anchor: 'start',
+            }),
+          );
+          const gl = glyphAt(s.state, nodeX + nw - 22, cy - 5.5, 11);
+          if (gl) g.appendChild(gl);
+          c.appendChild(g);
+        });
+      }
+
+      function labelCls(state) {
+        return (
+          'nd-label' +
+          (state === 'active'
+            ? ' is-active'
+            : state === 'locked'
+              ? ' is-locked'
+              : '')
+        );
+      }
+
+      // ═══ TREATMENT 3 — PORTED NODES ═════════════════════════════════════
+      function drawPorted(c) {
+        const n = STAGES.length;
+        const pnw = 124;
+        const pgap = 78;
+        const W = PAD * 2 + n * pnw + (n - 1) * pgap;
+        const H = 170;
+        setView(W, H);
+        const cy = H / 2 - 6;
+        // wires connect out-port (right edge mid) of i to in-port (left edge
+        // mid) of i+1 — a single horizontal run (already orthogonal).
+        for (let i = 0; i < n - 1; i++) {
+          const x1 = PAD + i * (pnw + pgap) + pnw + 7;
+          const x2 = PAD + (i + 1) * (pnw + pgap) - 7;
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [x1, cy],
+                [x2, cy],
+              ]),
+              class: wireCls(STAGES[i + 1].state),
+            }),
+          );
+        }
+        STAGES.forEach((s, i) => {
+          const x = PAD + i * (pnw + pgap);
+          c.appendChild(
+            nodeBox({
+              x,
+              y: cy - NH / 2,
+              w: pnw,
+              h: NH,
+              label: s.label,
+              state: s.state,
+              kicker: String(i + 1).padStart(2, '0'),
+              ports: true,
+              in: s.in,
+              out: s.out,
+            }),
+          );
+        });
+      }
+
+      // ═══ TREATMENT 4 — BRANCHING DAG ════════════════════════════════════
+      // task → arena → { search·A, search·B, search·C } → gates → launch.
+      // Orthogonal routing: arena's out-port splits at a bus column, each arm
+      // gets its own horizontal lane, all rejoin at a bus column before gates.
+      function drawDag(c) {
+        const dnw = 116;
+        const dnh = 50;
+        const colGap = 70;
+        // columns: task | arena | (split bus) | search arms | (merge bus) | gates | launch
+        const colX = [];
+        let x = PAD;
+        colX.push(x); // 0 task
+        x += dnw + colGap;
+        colX.push(x); // 1 arena
+        x += dnw + colGap;
+        const busSplit = x; // split bus x
+        x += 36;
+        colX.push(x); // 2 search arms
+        x += dnw + colGap;
+        const busMerge = x; // merge bus x
+        x += 36;
+        colX.push(x); // 3 gates
+        x += dnw + colGap;
+        colX.push(x); // 4 launch
+        const W = x + dnw + PAD;
+
+        const armGap = 24;
+        const armRows = ARMS.length;
+        const bandH = armRows * dnh + (armRows - 1) * armGap;
+        const H = PAD * 2 + Math.max(bandH, dnh) + 30;
+        setView(W, H);
+        const midY = PAD + H / 2 - PAD - 4;
+
+        const linear = {
+          task: STAGES[0],
+          arena: STAGES[1],
+          gates: STAGES[3],
+          launch: STAGES[4],
+        };
+
+        // arm vertical centers
+        const armY = ARMS.map(
+          (_, i) => midY - bandH / 2 + dnh / 2 + i * (dnh + armGap),
+        );
+        const arenaRightX = colX[1] + dnw;
+        const armLeftX = colX[2];
+        const armRightX = colX[2] + dnw;
+        const gatesLeftX = colX[3];
+
+        // ── wires (drawn first, beneath nodes) ──
+        // task → arena
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [colX[0] + dnw, midY],
+              [colX[1], midY],
+            ]),
+            class: wireCls(linear.arena.state),
+          }),
+        );
+        // arena → split bus (horizontal), then a vertical bus spanning the arms
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [arenaRightX, midY],
+              [busSplit, midY],
+            ]),
+            class: 'wire is-reached',
+          }),
+        );
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [busSplit, armY[0]],
+              [busSplit, armY[armRows - 1]],
+            ]),
+            class: 'wire is-reached',
+          }),
+        );
+        // each arm: split bus → arm in-port  (V then H elbow), colored by arm
+        ARMS.forEach((arm, i) => {
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [busSplit, armY[i]],
+                [armLeftX, armY[i]],
+              ]),
+              class: wireCls(arm.state),
+            }),
+          );
+          // arm out-port → merge bus, colored by arm
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [armRightX, armY[i]],
+                [busMerge, armY[i]],
+              ]),
+              class: wireCls(arm.state),
+            }),
+          );
+        });
+        // merge bus vertical + bus → gates
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [busMerge, armY[0]],
+              [busMerge, armY[armRows - 1]],
+            ]),
+            class: 'wire is-reached',
+          }),
+        );
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [busMerge, midY],
+              [gatesLeftX, midY],
+            ]),
+            class: wireCls(linear.gates.state),
+          }),
+        );
+        // gates → launch
+        c.appendChild(
+          stroked('path', {
+            d: ortho([
+              [colX[3] + dnw, midY],
+              [colX[4], midY],
+            ]),
+            class: wireCls(linear.launch.state),
+          }),
+        );
+        // junction dots at the two buses (round marks)
+        [
+          [busSplit, midY],
+          [busMerge, midY],
+        ].forEach(([jx, jy]) =>
+          c.appendChild(
+            svg('circle', { cx: jx, cy: jy, r: 3.5, class: 'wire-junction' }),
+          ),
+        );
+
+        // ── nodes ──
+        const mk = (col, y, s, kick) =>
+          c.appendChild(
+            nodeBox({
+              x: colX[col],
+              y: y - dnh / 2,
+              w: dnw,
+              h: dnh,
+              label: s.label,
+              state: s.state,
+              kicker: kick,
+            }),
+          );
+        mk(0, midY, linear.task, '01');
+        mk(1, midY, linear.arena, '02');
+        ARMS.forEach((arm, i) =>
+          c.appendChild(
+            nodeBox({
+              x: colX[2],
+              y: armY[i] - dnh / 2,
+              w: dnw,
+              h: dnh,
+              label: arm.id,
+              state: arm.state,
+              kicker: '03' + String.fromCharCode(97 + i),
+            }),
+          ),
+        );
+        mk(3, midY, linear.gates, '04');
+        mk(4, midY, linear.launch, '05');
+      }
+
+      // ═══ TREATMENT 5 — SWIMLANE ═════════════════════════════════════════
+      // stages across the top, two candidate lanes down; each run's path is
+      // orthogonal wires within its lane. Lane A is the live run (STAGES);
+      // lane B is RUN_B (failed at gates).
+      function drawSwim(c) {
+        const n = STAGES.length;
+        const snw = 104;
+        const snh = 44;
+        const colGapS = 56;
+        const laneX = 92; // left gutter for lane captions
+        const colW = snw + colGapS;
+        const W = laneX + n * colW - colGapS + PAD + snw * 0 + 24;
+        const headY = PAD + 16;
+        const laneH = 92;
+        const laneTop = headY + 22;
+        const H = laneTop + 2 * laneH + PAD;
+        setView(W, H);
+
+        const colCx = (i) => laneX + i * colW + snw / 2;
+
+        // column headers (stage names, mono, faint)
+        STAGES.forEach((s, i) => {
+          c.appendChild(
+            txt(colCx(i), headY, s.label, 'ln-col', { anchor: 'middle' }),
+          );
+        });
+
+        const lanes = [
+          { cap: 'cand·01', states: STAGES.map((s) => s.state) },
+          { cap: 'cand·02', states: STAGES.map((s) => RUN_B[s.id]) },
+        ];
+
+        lanes.forEach((lane, li) => {
+          const top = laneTop + li * laneH;
+          const cy = top + laneH / 2;
+          // lane caption + a hairline separator rule above each lane
+          c.appendChild(
+            stroked('line', {
+              x1: PAD,
+              y1: top,
+              x2: W - PAD,
+              y2: top,
+              class: 'ln-rail',
+            }),
+          );
+          c.appendChild(txt(PAD, cy, lane.cap, 'ln-cap', { anchor: 'start' }));
+          // wires between consecutive cells in THIS lane (orthogonal, straight
+          // horizontals since cells share a row) colored by the target state
+          for (let i = 0; i < n - 1; i++) {
+            c.appendChild(
+              stroked('path', {
+                d: ortho([
+                  [colCx(i) + snw / 2, cy],
+                  [colCx(i + 1) - snw / 2, cy],
+                ]),
+                class: wireCls(lane.states[i + 1]),
+              }),
+            );
+          }
+          // the cells
+          STAGES.forEach((s, i) => {
+            const st = lane.states[i];
+            const g = svg('g', {});
+            g.appendChild(
+              stroked('rect', {
+                x: colCx(i) - snw / 2,
+                y: cy - snh / 2,
+                width: snw,
+                height: snh,
+                rx: 0,
+                ry: 0,
+                class: 'nd-box is-' + st,
+              }),
+            );
+            g.appendChild(
+              txt(colCx(i), cy, s.label, labelCls(st), { anchor: 'middle' }),
+            );
+            const gl = glyphAt(st, colCx(i) + snw / 2 - 17, cy - 5.5, 11);
+            if (gl) g.appendChild(gl);
+            c.appendChild(g);
+          });
+        });
+        // closing rule under the last lane
+        c.appendChild(
+          stroked('line', {
+            x1: PAD,
+            y1: laneTop + 2 * laneH,
+            x2: W - PAD,
+            y2: laneTop + 2 * laneH,
+            class: 'ln-rail',
+          }),
+        );
+      }
+
+      // ═══ TREATMENT 6 — SCHEMATIC ════════════════════════════════════════
+      // numbered nodes, a title block, a VERY faint hairline grid behind.
+      function drawSchem(c) {
+        const n = STAGES.length;
+        const W = PAD * 2 + n * NW + (n - 1) * GAPX;
+        const titleH = 38;
+        const H = 200;
+        setView(W, H);
+
+        // the faint grid (the law-tension) — a regular 24px lattice, clipped
+        // to the drawing area above the title block.
+        const grid = svg('g', { class: 'sc-gridwrap' });
+        const step = 24;
+        const gTop = 6;
+        const gBot = H - titleH - 6;
+        for (let gx = PAD; gx <= W - PAD; gx += step) {
+          grid.appendChild(
+            stroked('line', {
+              x1: gx,
+              y1: gTop,
+              x2: gx,
+              y2: gBot,
+              class: 'sc-grid',
+            }),
+          );
+        }
+        for (let gy = gTop; gy <= gBot; gy += step) {
+          grid.appendChild(
+            stroked('line', {
+              x1: PAD,
+              y1: gy,
+              x2: W - PAD,
+              y2: gy,
+              class: 'sc-grid',
+            }),
+          );
+        }
+        c.appendChild(grid);
+
+        // the spine, on the grid
+        const cy = (gTop + gBot) / 2;
+        for (let i = 0; i < n - 1; i++) {
+          const x1 = PAD + i * (NW + GAPX) + NW;
+          const x2 = PAD + (i + 1) * (NW + GAPX);
+          c.appendChild(
+            stroked('path', {
+              d: ortho([
+                [x1, cy],
+                [x2, cy],
+              ]),
+              class: wireCls(STAGES[i + 1].state),
+            }),
+          );
+        }
+        STAGES.forEach((s, i) => {
+          const x = PAD + i * (NW + GAPX);
+          c.appendChild(
+            nodeBox({
+              x,
+              y: cy - NH / 2,
+              w: NW,
+              h: NH,
+              label: s.label,
+              state: s.state,
+              kicker: 'N' + String(i + 1).padStart(2, '0'),
+            }),
+          );
+        });
+
+        // the title block: a ruled cartouche, bottom-right (engineering reg.)
+        const tbW = 300;
+        const tbX = W - PAD - tbW;
+        const tbY = H - titleH;
+        c.appendChild(
+          stroked('line', {
+            x1: PAD,
+            y1: tbY,
+            x2: W - PAD,
+            y2: tbY,
+            class: 'sc-rule',
+          }),
+        );
+        c.appendChild(
+          stroked('line', {
+            x1: tbX,
+            y1: tbY,
+            x2: tbX,
+            y2: H,
+            class: 'sc-rule',
+          }),
+        );
+        c.appendChild(
+          txt(
+            tbX + 14,
+            tbY + titleH / 2 - 6,
+            'FOUNDRY PIPELINE',
+            'sc-title strong',
+            {
+              anchor: 'start',
+            },
+          ),
+        );
+        c.appendChild(
+          txt(
+            tbX + 14,
+            tbY + titleH / 2 + 9,
+            'DWG cache-key-collision · REV 5 · SHEET 1/1',
+            'sc-title',
+            { anchor: 'start' },
+          ),
+        );
+        c.appendChild(
+          txt(
+            PAD + 2,
+            tbY + titleH / 2 + 1,
+            'SCALE NTS · STAGES 5',
+            'sc-title',
+            {
+              anchor: 'start',
+            },
+          ),
+        );
+      }
+
+      // ── legends per treatment ───────────────────────────────────────────
+      const STATUSKEY =
+        '<span class="k"><svg class="ae-icon ae-ok"><use href="#i-check"/></svg> cleared</span>' +
+        '<span class="k"><span class="box acc"></span> running (accent)</span>' +
+        '<span class="k"><span class="box lock"></span> locked</span>' +
+        '<span class="k"><svg class="ae-icon ae-err"><use href="#i-x"/></svg> failed</span>';
+      const LEGEND = {
+        spine: STATUSKEY,
+        stations: STATUSKEY,
+        ported: STATUSKEY + '<span class="k">in:/out: = node interface</span>',
+        dag:
+          STATUSKEY +
+          '<span class="k">parallel arms rejoin · orthogonal routing</span>',
+        swim: STATUSKEY + '<span class="k">two runs, one lane each</span>',
+        schem:
+          STATUSKEY +
+          '<span class="k">N-numbered nodes · faint grid = the law-tension</span>',
+      };
+
+      const CAPS = {
+        spine:
+          '1 · SPINE — the 1D degenerate case: hairline-framed nodes in a horizontal row, orthogonal ink connectors between them, the running stage in the accent, locked stages dashed-faint, cleared stages carrying a ✓ glyph. This is the gate/lineage spine. Trade-off: reads as a progress bar of stages — it can’t show structure inside a stage.',
+        stations:
+          '2 · STATIONS — the same pipeline turned vertical: a transit-line station list, each stage a hairline row with its state glyph, the connector running down the left rail with a round stop at each station. Trade-off: scales to many stages and reads as a checklist; it loses the left-to-right “flow” metaphor the spine carries.',
+        ported:
+          '3 · PORTED NODES — the spine nodes gain an explicit interface: a mono in:/out: port label at each edge, with the wire entering at the port stub. Shows that a candidate is a composition of typed parts (spec→prompt→trials→cand→pass→ship). Trade-off: busier — every node now needs vertical room for its port labels.',
+        dag: '4 · BRANCHING DAG — arena fans out to three PARALLEL search arms (A done, B running, C locked) that rejoin at gates. Wires route through a split bus and a merge bus, staying strictly orthogonal and uncrossed — proof the kit can draw a real graph, not just a line. Trade-off: true parallelism costs layout discipline; the routing constrains where nodes can sit.',
+        swim: '5 · SWIMLANE — stages across the top, two candidate runs as lanes down: cand·01 is live (running at search), cand·02 already failed at gates. Each run’s path is orthogonal wires inside its lane, so two runs compare at a glance. Trade-off: doubles the height and reads denser — the no-page-scroll viewport must hold both lanes.',
+        schem:
+          '6 · SCHEMATIC — the engineering-drawing register: N-numbered nodes, a ruled title block (a DWG cartouche, like .ae-plate-cap), and a VERY faint hairline grid behind. The off-kit version wanted a grid; this tests whether a 40%-opacity lattice earns its place or breaks restraint. Trade-off: the most “instrument” feel of the set — and the grid is the one mark to judge against the law.',
+      };
+
+      const WIDE = { dag: true, swim: true, schem: true };
+
+      let curEnc = 'spine';
+      const RENDERERS = {
+        spine: drawSpine,
+        stations: drawStations,
+        ported: drawPorted,
+        dag: drawDag,
+        swim: drawSwim,
+        schem: drawSchem,
+      };
+      const FIGNAME = {
+        spine: 'spine',
+        stations: 'stations (vertical)',
+        ported: 'ported nodes',
+        dag: 'branching DAG',
+        swim: 'swimlane · two runs',
+        schem: 'schematic',
+      };
+
+      function render() {
+        const c = clearCanvas();
+        c.classList.remove('animate');
+        el('flframe').classList.toggle('is-wide', !!WIDE[curEnc]);
+        RENDERERS[curEnc](c);
+        el('fllegend').innerHTML = LEGEND[curEnc];
+        el('flfig').textContent =
+          'FIG ' +
+          (Object.keys(RENDERERS).indexOf(curEnc) + 1) +
+          ' · ' +
+          FIGNAME[curEnc];
+        el('cap').textContent = CAPS[curEnc];
+        // motion: let the wires settle once (reduced-motion safe via CSS)
+        requestAnimationFrame(() => c.classList.add('animate'));
+      }
+
+      const picker = document.querySelector('.proto-picker');
+      picker.querySelectorAll('button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          curEnc = btn.dataset.enc;
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          render();
+        }),
+      );
+      render();
+    </script>
+  </body>
+</html>

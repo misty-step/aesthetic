@@ -1,0 +1,934 @@
+<!doctype html>
+<!--
+  LAB instrument · 2 (round 5) — THE UNCERTAINTY MARK.
+  Backlog 014, GAP 2: "the lead is inside the spread" is the most important
+  sentence on an eval screen, and the kit cannot draw it. This sketches the
+  interval / error-bar primitive — a meter that shows a POINT and its SPREAD —
+  by extending .ae-meter (wash channel + ink fill + a hairline mark-tick).
+  One constant data array: six foundry candidates, each a mean score + a
+  confidence interval (lo,hi) on a shared 0–100 scale. The picker swaps the
+  TREATMENT only; same data every time so overlap-reads are honest. Ordered
+  most-restrained → most-expressive.
+
+  1 spread·on·glyph  — mean as a mono .ae-num, a faint ±range beside it, a
+                       status glyph only if separable from the runner-up.
+                       Exact and tiny; no visual field to scan overlaps.
+  2 band + mean·tick — THE PRESCRIBED ANSWER: stacked ruled tracks, a faint
+                       wash range BAND + a single ink mean TICK, shared scale.
+                       Overlap visible by eye; the meter idiom, extended.
+  3 whisker + dot    — a round ink mean dot with horizontal whisker caps, no
+                       band fill. Lighter ink than the band; precise ends,
+                       less mass.
+  4 box              — a quartile (IQR) box + median tick + whiskers to
+                       min/max. More statistical info; heaviest mark, closest
+                       to a chart.
+  5 forest           — THE CERTIFICATION READ: rows sorted by mean, a vertical
+                       reference line at the leader's lower bound, a per-row
+                       status glyph (✓ separable / ⚠ overlapping / ✗ behind),
+                       accent marks the leader. Answers "is the lead real";
+                       needs sorting + a reference.
+  6 scatter·whiskers — ties to the 2D plot: a few candidates on a small
+                       cost×quality plane, each point carrying BOTH vertical
+                       and horizontal error whiskers (2D uncertainty). Densest,
+                       reads as a chart.
+
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+  VERDICT (round 5): AWAITING OPERATOR
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · inst 2 · uncertainty</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────
+         Every interval treatment is rendered from one data array; the
+         picker swaps the MARK. All geometry is token-driven so light/dark
+         both invert correctly — bands are var(--ae-wash), marks are
+         var(--ae-ink), reference guides are hairlines, status rides the
+         glyph. Tracks/bands/boxes are rectangles → square ends (radius 0);
+         the mean DOT is a round mark — the pen, like the spark's caps. */
+
+      .un-head {
+        max-width: 46em;
+      }
+      /* the figure caption above the frame. NB: distinct from .un-cap (the
+         whisker end-cap mark) — different name on purpose. */
+      .un-fig {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin: 1.6em 0 0.6em;
+      }
+
+      /* the read frame: rows live inside this; the page never scrolls. If a
+         treatment overruns, it scrolls INSIDE the frame. */
+      .un-frame {
+        border: 1px solid var(--ae-line);
+        max-height: min(58vh, 32em);
+        overflow: auto;
+      }
+
+      /* a candidate row: a label column + a track column on a shared grid so
+         every interval is measured against the same scale. */
+      .un-rows {
+        --lab-w: 13.5rem;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+      }
+      .un-row {
+        display: grid;
+        grid-template-columns: var(--lab-w) 1fr;
+        align-items: center;
+        gap: 1.2em;
+        padding: 0.85em 1.1em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .un-row:last-child {
+        border-bottom: 0;
+      }
+      .un-row.is-lead {
+        /* the leader's row: hairline accent rule on the inline edge, never a
+           fill. One accent role per view. */
+        box-shadow: inset 2px 0 0 var(--ae-accent);
+      }
+      .un-lab {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6em;
+        min-width: 0;
+      }
+      .un-id {
+        color: var(--ae-ink);
+      }
+      .un-id.is-lead {
+        color: var(--ae-accent);
+      }
+      .un-model {
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-faint);
+        white-space: nowrap;
+      }
+
+      /* the track: a hairline 0–100 rule the interval sits on. Shared across
+         every row in a treatment. */
+      .un-track {
+        position: relative;
+        height: 1.6em;
+      }
+      .un-track::before {
+        /* the baseline rule */
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--ae-line);
+      }
+
+      /* 2 — the range band: a faint wash mass, square ends. Extends the
+         meter's wash channel to cover [lo,hi] instead of [0,fill]. */
+      .un-band {
+        position: absolute;
+        top: 50%;
+        height: 8px;
+        transform: translateY(-50%);
+        background: var(--ae-wash);
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+      }
+      /* the mean tick: a single ink hairline, like .ae-meter-mark */
+      .un-tick {
+        position: absolute;
+        top: 50%;
+        width: 2px;
+        height: 1.15em;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink);
+      }
+      .un-tick.is-lead {
+        background: var(--ae-accent);
+      }
+
+      /* 3 — whiskers: a thin ink rule from lo→hi with end caps; a round mean
+         dot. The dot is the only round mark; caps + bar are rectangles. */
+      .un-whisk {
+        position: absolute;
+        top: 50%;
+        height: 1px;
+        transform: translateY(-50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-cap {
+        position: absolute;
+        top: 50%;
+        width: 1px;
+        height: 0.8em;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-dot {
+        position: absolute;
+        top: 50%;
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink);
+      }
+      .un-dot.is-lead {
+        background: var(--ae-accent);
+      }
+
+      /* 4 — box: an IQR rectangle (hairline frame, wash fill), a median ink
+         tick inside, whiskers to min/max. Square ends throughout. */
+      .un-box {
+        position: absolute;
+        top: 50%;
+        height: 1em;
+        transform: translateY(-50%);
+        background: var(--ae-wash);
+        border: 1px solid var(--ae-ink-muted);
+      }
+      .un-med {
+        position: absolute;
+        top: 50%;
+        width: 2px;
+        height: 1em;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink);
+      }
+
+      /* 5 — forest: the reference line dropped through the whole field at the
+         leader's lower bound; the certification datum. */
+      .un-ref {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        border-left: 1px dashed var(--ae-ink-faint);
+        pointer-events: none;
+      }
+      .un-reflab {
+        position: absolute;
+        top: 0.2em;
+        transform: translateX(-50%);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-faint);
+        background: var(--ae-surface);
+        padding: 0 0.4em;
+        white-space: nowrap;
+      }
+
+      /* the readout column: the exact figures, ink. Right-aligned mono. */
+      .un-read {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-end;
+        gap: 0.55em;
+        min-width: 9.5rem;
+      }
+      .un-mean {
+        font-variant-numeric: tabular-nums;
+        color: var(--ae-ink);
+      }
+      .un-mean.is-lead {
+        font-weight: var(--ae-w-black);
+      }
+      .un-pm {
+        font-variant-numeric: tabular-nums;
+        color: var(--ae-ink-faint);
+        font-size: 11px;
+      }
+      .un-ico {
+        width: 0.95em;
+        height: 0.95em;
+        flex: none;
+        align-self: center;
+      }
+      /* rows whose grid carries a readout column too (treatments 1 & 5) */
+      .un-row.has-read {
+        grid-template-columns: var(--lab-w) 1fr auto;
+      }
+      .un-row.glyph-only {
+        grid-template-columns: var(--lab-w) auto;
+      }
+
+      /* 6 — scatter: a framed cost×quality plane with hairline axes; points
+         carry 2D whiskers. The plane scrolls nothing; it is a fixed box. */
+      .un-plane-wrap {
+        display: flex;
+        gap: 1.4em;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 1.2em 1.1em;
+      }
+      .un-plane {
+        position: relative;
+        width: min(34rem, 100%);
+        aspect-ratio: 8 / 5;
+        border-left: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .un-axlab {
+        position: absolute;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+      .un-axlab.x {
+        bottom: -1.7em;
+        right: 0;
+      }
+      .un-axlab.y {
+        top: -0.2em;
+        left: 0.3em;
+      }
+      /* scatter marks: HTML positioned by %, so dots stay round and labels
+         stay one size on the (non-square) plane. Whiskers are hairlines, the
+         mean dot is the round pen; the leader takes the accent. */
+      .un-vbar {
+        position: absolute;
+        width: 1px;
+        transform: translateX(-50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-hbar {
+        position: absolute;
+        height: 1px;
+        transform: translateY(-50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-vcap {
+        position: absolute;
+        width: 7px;
+        height: 1px;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-hcap {
+        position: absolute;
+        width: 1px;
+        height: 7px;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink-muted);
+      }
+      .un-pt.is-lead .un-vbar,
+      .un-pt.is-lead .un-hbar,
+      .un-pt.is-lead .un-vcap,
+      .un-pt.is-lead .un-hcap {
+        background: var(--ae-accent);
+      }
+      .un-pdot {
+        position: absolute;
+        width: 0.55em;
+        height: 0.55em;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink);
+        z-index: 2;
+      }
+      .un-pdot.is-lead {
+        background: var(--ae-accent);
+      }
+      .un-plab {
+        position: absolute;
+        transform: translate(0.7em, -0.4em);
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-faint);
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .un-planekey {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-muted);
+        max-width: 15rem;
+        line-height: 1.7;
+      }
+      .un-planekey b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* shared legend strip under the frame */
+      .un-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 1.6em;
+        align-items: center;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-muted);
+        margin-top: 0.95em;
+      }
+      .un-legend .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+      }
+      .un-legend svg {
+        width: 0.95em;
+        height: 0.95em;
+      }
+      .un-legend .swatch {
+        display: inline-block;
+        width: 1.4em;
+        height: 0.55em;
+        background: var(--ae-wash);
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+        vertical-align: middle;
+      }
+
+      .proto-cap {
+        max-width: 46em;
+        margin: 1.3em 0 0;
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 2em);
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+
+      /* marks resolve in, once — feedback, not decoration */
+      @media (prefers-reduced-motion: no-preference) {
+        .un-row,
+        .un-plane-wrap > * {
+          animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+        <path
+          d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"
+        />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="#">AESTHETIC · LAB</a>
+        <span style="display: inline-flex; gap: 1.6em; align-items: baseline">
+          <span class="ae-chrome">inst 2 · uncertainty</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+
+      <main class="ae-stage ae-stage-scroll">
+        <div style="width: 100%">
+          <div class="un-head">
+            <h1 class="ae-h" style="margin-bottom: 0.5em">
+              ARENA · math-reasoning · CONFIDENCE READ
+            </h1>
+            <p class="ae-dim">
+              Six candidate compositions, each a mean score and a 95% confidence
+              interval on one shared 0–100 scale. The certification question is
+              the same every time: is the lead inside the spread — are the top
+              two intervals separable? Six ways to draw the interval, restrained
+              ink to expressive field. Swap them; same data, so the overlap
+              reads honestly.
+            </p>
+          </div>
+
+          <p class="un-fig" id="uncap">FIG 1 · spread on the glyph</p>
+          <div class="un-frame">
+            <div class="un-rows" id="unrows"></div>
+          </div>
+
+          <div class="un-legend" id="unlegend"></div>
+
+          <p class="ae-dim proto-cap" id="cap">
+            1 · SPREAD ON THE GLYPH — most restrained: the mean in mono, a faint
+            ±range beside it, and a status glyph only when this candidate is
+            statistically separable from the runner-up (intervals clear). Exact
+            and tiny; nothing to spend on the page. Trade-off: no visual field —
+            you read overlap from the numbers, candidate by candidate, not at a
+            glance.
+          </p>
+        </div>
+      </main>
+
+      <footer class="ae-bar">
+        <p class="ae-chrome">prototype — never ships</p>
+        <p class="ae-chrome">instrument 2 · the uncertainty mark</p>
+      </footer>
+    </div>
+
+    <nav class="proto-picker" aria-label="interval treatment picker">
+      <button data-enc="glyph" class="is-active">1 spread·glyph</button>
+      <button data-enc="band">2 band + tick</button>
+      <button data-enc="whisk">3 whisker + dot</button>
+      <button data-enc="box">4 box</button>
+      <button data-enc="forest">5 forest</button>
+      <button data-enc="scatter">6 scatter·whiskers</button>
+    </nav>
+
+    <script>
+      const el = (id) => document.getElementById(id);
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      // ── the one data array: six candidates, each mean + a 95% CI [lo,hi]
+      //    on a shared 0–100 scale. For the box treatment we also carry the
+      //    quartiles (q1,q3) and observed min/max — all on the same scale so
+      //    every treatment is drawn from the SAME numbers.
+      const DATA = [
+        {
+          id: 'cand·01',
+          model: 'sonnet·v4',
+          mean: 84.2,
+          lo: 81.0,
+          hi: 87.4,
+          q1: 82.6,
+          q3: 85.8,
+          min: 78.1,
+          max: 90.0,
+          cost: 0.42,
+        },
+        {
+          id: 'cand·02',
+          model: 'opus·hi',
+          mean: 86.9,
+          lo: 83.1,
+          hi: 90.7,
+          q1: 85.0,
+          q3: 88.8,
+          min: 79.4,
+          max: 93.6,
+          cost: 0.91,
+        },
+        {
+          id: 'cand·03',
+          model: 'opus·lo',
+          mean: 81.5,
+          lo: 78.6,
+          hi: 84.4,
+          q1: 80.1,
+          q3: 83.0,
+          min: 75.2,
+          max: 87.1,
+          cost: 0.58,
+        },
+        {
+          id: 'cand·04',
+          model: 'haiku·rag',
+          mean: 73.8,
+          lo: 67.2,
+          hi: 80.4,
+          q1: 70.5,
+          q3: 77.1,
+          min: 61.0,
+          max: 85.9,
+          cost: 0.19,
+        },
+        {
+          id: 'cand·05',
+          model: 'ensemble',
+          mean: 85.6,
+          lo: 82.9,
+          hi: 88.3,
+          q1: 84.3,
+          q3: 86.9,
+          min: 80.4,
+          max: 91.0,
+          cost: 1.34,
+        },
+        {
+          id: 'cand·06',
+          model: 'sonnet·v3',
+          mean: 79.1,
+          lo: 74.0,
+          hi: 84.2,
+          q1: 76.6,
+          q3: 81.6,
+          min: 68.8,
+          max: 88.0,
+          cost: 0.37,
+        },
+      ];
+
+      // ONE shared scale → percent of track width. The raw scores live on a
+      // 0–100 scale, but every value in this arena sits in ~61–94; drawing the
+      // full 0–100 would crush all the intervals into the right third and hide
+      // the overlap that treatments 2–5 exist to show. So the track WINDOWS to
+      // the data (a clean floor/ceil around the observed min/max), shared
+      // identically by every treatment so swapping stays honest. The window is
+      // printed on the track edges (.un-scale) so the read is not misleading.
+      const allLo = DATA.map((d) => Math.min(d.lo, d.min));
+      const allHi = DATA.map((d) => Math.max(d.hi, d.max));
+      const SMIN = Math.floor(Math.min(...allLo) / 5) * 5; // → 60
+      const SMAX = Math.ceil(Math.max(...allHi) / 5) * 5; // → 95
+      const pct = (v) => ((v - SMIN) / (SMAX - SMIN)) * 100;
+
+      // leader = highest mean. runner-up = second highest mean.
+      const byMean = [...DATA].sort((a, b) => b.mean - a.mean);
+      const LEADER = byMean[0];
+      const RUNNER = byMean[1];
+      // two intervals are SEPARABLE when they do not overlap:
+      //   a.lo > b.hi  (a clears b)  — order-free check below
+      const separable = (a, b) => a.lo > b.hi || b.lo > a.hi;
+      // each row's status vs the LEADER (the certification datum):
+      //   the leader itself → 'lead'
+      //   clears the leader's lower bound and doesn't overlap → 'ok' (separable)
+      //   overlaps the leader's interval → 'warn'
+      //   entirely below the leader's lower bound → 'err' (behind, separably)
+      function statusVsLeader(d) {
+        if (d.id === LEADER.id) return 'lead';
+        if (separable(d, LEADER)) return d.mean > LEADER.mean ? 'ok' : 'err';
+        return 'warn';
+      }
+
+      const GLYPH = { ok: 'i-check', warn: 'i-alert', err: 'i-x' };
+      const ico = (st, cls) =>
+        `<svg class="ae-icon ae-${st} un-ico ${cls || ''}"><use href="#${GLYPH[st]}"/></svg>`;
+
+      const fmt = (v) => v.toFixed(1);
+      const fmtPm = (d) => '±' + ((d.hi - d.lo) / 2).toFixed(1);
+
+      const labCell = (d, isLead) =>
+        `<span class="un-lab"><span class="un-id ${isLead ? 'is-lead' : ''}">${d.id}</span><span class="un-model">${d.model}</span></span>`;
+
+      // ── treatment renderers. Each returns the full row HTML for a candidate.
+      const TREAT = {
+        // 1 — spread on the glyph: number + ±range + a separability verdict.
+        //     The reference is the runner-up for the leader, the leader for
+        //     everyone else ("is this distinguishable from the front-runner").
+        //     Always one glyph: ✓ separable-and-ahead, ⚠ overlapping (inside
+        //     the spread), ✗ separable-but-behind.
+        glyph(d) {
+          const isLead = d.id === LEADER.id;
+          const ref = isLead ? RUNNER : LEADER;
+          const st = !separable(d, ref)
+            ? 'warn'
+            : d.mean > ref.mean
+              ? 'ok'
+              : 'err';
+          return `<div class="un-row glyph-only ${isLead ? 'is-lead' : ''}">
+            ${labCell(d, isLead)}
+            <div class="un-read">
+              <span class="un-mean ${isLead ? 'is-lead' : ''}">${fmt(d.mean)}</span>
+              <span class="un-pm">${fmtPm(d)}</span>
+              ${ico(st)}
+            </div>
+          </div>`;
+        },
+
+        // 2 — range band + mean tick (THE PRESCRIBED ANSWER)
+        band(d) {
+          const isLead = d.id === LEADER.id;
+          const left = pct(d.lo);
+          const w = pct(d.hi) - pct(d.lo);
+          return `<div class="un-row ${isLead ? 'is-lead' : ''}">
+            ${labCell(d, isLead)}
+            <div class="un-track">
+              <span class="un-band" style="left:${left}%;width:${w}%"></span>
+              <span class="un-tick ${isLead ? 'is-lead' : ''}" style="left:${pct(d.mean)}%"></span>
+            </div>
+          </div>`;
+        },
+
+        // 3 — whisker + mean dot (no fill)
+        whisk(d) {
+          const isLead = d.id === LEADER.id;
+          const left = pct(d.lo);
+          const w = pct(d.hi) - pct(d.lo);
+          return `<div class="un-row ${isLead ? 'is-lead' : ''}">
+            ${labCell(d, isLead)}
+            <div class="un-track">
+              <span class="un-whisk" style="left:${left}%;width:${w}%"></span>
+              <span class="un-cap" style="left:${pct(d.lo)}%"></span>
+              <span class="un-cap" style="left:${pct(d.hi)}%"></span>
+              <span class="un-dot ${isLead ? 'is-lead' : ''}" style="left:${pct(d.mean)}%"></span>
+            </div>
+          </div>`;
+        },
+
+        // 4 — box: IQR box + median tick + whiskers to min/max
+        box(d) {
+          const isLead = d.id === LEADER.id;
+          const bl = pct(d.q1);
+          const bw = pct(d.q3) - pct(d.q1);
+          const wl = pct(d.min);
+          const ww = pct(d.max) - pct(d.min);
+          return `<div class="un-row ${isLead ? 'is-lead' : ''}">
+            ${labCell(d, isLead)}
+            <div class="un-track">
+              <span class="un-whisk" style="left:${wl}%;width:${ww}%"></span>
+              <span class="un-cap" style="left:${pct(d.min)}%"></span>
+              <span class="un-cap" style="left:${pct(d.max)}%"></span>
+              <span class="un-box" style="left:${bl}%;width:${bw}%"></span>
+              <span class="un-med" style="left:${pct(d.mean)}%"></span>
+            </div>
+          </div>`;
+        },
+
+        // 5 — forest (THE CERTIFICATION READ): sorted by mean, a reference
+        //     line at the leader's lower bound, per-row separability glyph.
+        //     The reference is drawn INSIDE each track at the same left% — the
+        //     tracks share geometry, so the per-row segments stack into one
+        //     continuous dashed datum (no fragile cross-stack overlay).
+        forest(d, isFirst) {
+          const isLead = d.id === LEADER.id;
+          const st = statusVsLeader(d);
+          const left = pct(d.lo);
+          const w = pct(d.hi) - pct(d.lo);
+          const refLeft = pct(LEADER.lo);
+          return `<div class="un-row has-read ${isLead ? 'is-lead' : ''}">
+            ${labCell(d, isLead)}
+            <div class="un-track">
+              <span class="un-ref" style="left:${refLeft}%"></span>
+              ${isFirst ? `<span class="un-reflab" style="left:${refLeft}%">leader lo · ${fmt(LEADER.lo)}</span>` : ''}
+              <span class="un-whisk" style="left:${left}%;width:${w}%"></span>
+              <span class="un-cap" style="left:${pct(d.lo)}%"></span>
+              <span class="un-cap" style="left:${pct(d.hi)}%"></span>
+              <span class="un-dot ${isLead ? 'is-lead' : ''}" style="left:${pct(d.mean)}%"></span>
+            </div>
+            <div class="un-read">
+              <span class="un-mean ${isLead ? 'is-lead' : ''}">${fmt(d.mean)}</span>
+              <span class="un-pm">${fmtPm(d)}</span>
+              ${isLead ? ico('ok') : ico(st)}
+            </div>
+          </div>`;
+        },
+      };
+
+      // forest: candidates sorted by mean, the reference datum at the leader's
+      // lower bound segmented through every track.
+      function renderForest() {
+        const rows = [...DATA].sort((a, b) => b.mean - a.mean);
+        return rows.map((d, i) => TREAT.forest(d, i === 0)).join('');
+      }
+
+      // 6 — scatter with 2D whiskers: cost (x) × quality (y), a subset of
+      //     candidates, each point carrying horizontal (cost spread, modeled
+      //     as ±8% of cost) and vertical (the score CI) whiskers.
+      function renderScatter() {
+        const subset = DATA;
+        const xs = subset.map((d) => d.cost);
+        const xmin = 0;
+        const xmax = Math.ceil(Math.max(...xs) * 10) / 10 + 0.1;
+        const ymin = 60;
+        const ymax = 95;
+        // map data → percent of the plane box. Marks are HTML positioned by %
+        // (not stretched SVG), so dots stay round and labels stay one size on
+        // a non-uniformly-scaled plane. y is inverted (0% = top).
+        const X = (c) => ((c - xmin) / (xmax - xmin)) * 100;
+        const Y = (q) => 100 - ((q - ymin) / (ymax - ymin)) * 100;
+        const xerr = (c) => c * 0.08; // modeled cost spread, ± per call
+
+        const marks = subset
+          .map((d) => {
+            const isLead = d.id === LEADER.id;
+            const cls = isLead ? 'is-lead' : '';
+            const cx = X(d.cost);
+            const cyMean = Y(d.mean);
+            const yTop = Y(d.hi); // smaller % = higher quality
+            const yBot = Y(d.lo);
+            const xl = X(d.cost - xerr(d.cost));
+            const xr = X(d.cost + xerr(d.cost));
+            return `<div class="un-pt ${cls}">
+              <span class="un-vbar" style="left:${cx}%;top:${yTop}%;height:${yBot - yTop}%"></span>
+              <span class="un-vcap" style="left:${cx}%;top:${yTop}%"></span>
+              <span class="un-vcap" style="left:${cx}%;top:${yBot}%"></span>
+              <span class="un-hbar" style="left:${xl}%;top:${cyMean}%;width:${xr - xl}%"></span>
+              <span class="un-hcap" style="left:${xl}%;top:${cyMean}%"></span>
+              <span class="un-hcap" style="left:${xr}%;top:${cyMean}%"></span>
+              <span class="un-pdot ${cls}" style="left:${cx}%;top:${cyMean}%"></span>
+              <span class="un-plab" style="left:${cx}%;top:${cyMean}%">${d.id}</span>
+            </div>`;
+          })
+          .join('');
+
+        return `<div class="un-plane-wrap">
+          <div class="un-plane">
+            ${marks}
+            <span class="un-axlab x">cost · $/1k →</span>
+            <span class="un-axlab y">quality ↑</span>
+          </div>
+          <p class="un-planekey">
+            Each point is a candidate on the <b>cost × quality</b> plane,
+            carrying <b>both</b> whiskers: vertical = the 95% score CI,
+            horizontal = the per-call cost spread. The accent marks the
+            leader. Reads at a glance: up-and-left is better, and a tall
+            whisker means the score is not yet solid. Trade-off: two
+            uncertainty dims at once — densest of the set, reads as a chart.
+          </p>
+        </div>`;
+      }
+
+      const CAPS = {
+        glyph:
+          '1 · SPREAD ON THE GLYPH — most restrained: the mean in mono, a faint ±range beside it, and a separability glyph vs the front-runner — ✓ clear, ⚠ inside the spread, ✗ separably behind. Exact and tiny; nothing to spend on the page. Trade-off: no visual field — you read overlap from the numbers, candidate by candidate, not at a glance.',
+        band: '2 · RANGE BAND + MEAN TICK — the prescribed answer: per candidate a ruled track carrying a faint wash range BAND [lo,hi] and a single ink mean TICK, every row on one shared windowed scale. The meter idiom extended — a level AND its spread. Trade-off: overlap is now visible by eye (where two bands share a column, the lead is inside the spread); a band is a soft mass, not a precise endpoint.',
+        whisk:
+          '3 · WHISKER + MEAN DOT — the classic error bar: a round ink mean dot with a thin lo→hi rule and end caps, no band fill. Lighter ink than the band; the endpoints are exact. Trade-off: less "mass" to scan than a filled band, so a field of whiskers reads as points; the dot is the only round mark (the pen), the bars and caps stay square.',
+        box: "4 · BOX — a quartile (IQR) box with hairline frame and wash fill, a median ink tick, and whiskers out to the observed min/max. Carries more of the distribution: spread, skew, and tails, not just a symmetric ±. Trade-off: the heaviest mark of the set, closest to a true chart — it spends the most of the page's calm for the most statistical detail.",
+        forest:
+          '5 · FOREST — the certification read: rows sorted by mean, a dashed REFERENCE LINE dropped at the leader\'s lower bound, and a per-row status glyph — ✓ separable (its interval clears the line), ⚠ overlapping (the lead is inside the spread), ✗ behind. The accent marks the leader\'s row. Directly answers "is the lead real?" Trade-off: needs sorting and a reference datum; the answer is in the glyph column, so it leans on status reading.',
+        scatter:
+          '6 · SCATTER WHISKERS — ties to the 2D plot: a few candidates on a small cost × quality plane, each point carrying BOTH a vertical (score CI) and a horizontal (cost spread) whisker. Shows uncertainty in two dimensions at once. Trade-off: the densest treatment — it reads as a chart, and with overlapping whiskers a crowded plane needs the labels to stay legible.',
+      };
+
+      const STATUSKEY = `<span class="k">${ico('ok')} separable</span><span class="k">${ico('warn')} overlapping</span><span class="k">${ico('err')} behind</span>`;
+      const LEGEND = {
+        glyph:
+          STATUSKEY +
+          '<span class="k">±range = half the 95% CI</span><span class="k">glyph = verdict vs front-runner</span>',
+        band: '<span class="k"><span class="swatch"></span> range band [lo,hi]</span><span class="k">| ink tick = mean</span><span class="k" style="color:var(--ae-accent)">| accent = leader</span>',
+        whisk:
+          '<span class="k">⊢—⊣ 95% CI</span><span class="k">● ink dot = mean</span><span class="k" style="color:var(--ae-accent)">● accent = leader</span>',
+        box: '<span class="k"><span class="swatch" style="border-color:var(--ae-ink-muted)"></span> IQR box (q1–q3)</span><span class="k">| median</span><span class="k">⊢—⊣ min/max</span>',
+        forest:
+          STATUSKEY +
+          '<span class="k">dashed = leader lower bound</span><span class="k" style="color:var(--ae-accent)">accent = leader</span>',
+        scatter:
+          '<span class="k">| vertical = score CI</span><span class="k">— horizontal = cost spread</span><span class="k" style="color:var(--ae-accent)">● accent = leader</span>',
+      };
+
+      const TITLES = {
+        glyph: 'spread on the glyph',
+        band: 'range band + mean tick',
+        whisk: 'whisker + mean dot',
+        box: 'box · IQR + median + min/max',
+        forest: 'forest · separability vs the leader',
+        scatter: 'scatter · 2D error whiskers',
+      };
+
+      let curEnc = 'glyph';
+
+      function render() {
+        const host = el('unrows');
+        if (curEnc === 'scatter') {
+          host.innerHTML = renderScatter();
+        } else if (curEnc === 'forest') {
+          host.innerHTML = renderForest();
+        } else {
+          host.innerHTML = DATA.map((d) => TREAT[curEnc](d)).join('');
+        }
+        // the windowed-scale note: the treatments that draw on the shared
+        // windowed track print its domain (honest about the non-zero floor).
+        // glyph is number-only and scatter carries its own axes — both exempt.
+        const onTrack = ['band', 'whisk', 'box', 'forest'].includes(curEnc);
+        const scaleNote = onTrack
+          ? `<span class="k" style="color:var(--ae-ink-faint)">track: ${SMIN}–${SMAX} (shared)</span>`
+          : '';
+        el('unlegend').innerHTML = LEGEND[curEnc] + scaleNote;
+        el('uncap').textContent = 'FIG 1 · ' + TITLES[curEnc];
+        el('cap').textContent = CAPS[curEnc];
+      }
+
+      const picker = document.querySelector('.proto-picker');
+      picker.querySelectorAll('button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          curEnc = btn.dataset.enc;
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          render();
+        }),
+      );
+      render();
+    </script>
+  </body>
+</html>

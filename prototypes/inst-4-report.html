@@ -1,0 +1,816 @@
+<!doctype html>
+<!--
+  LAB instrument · 4 — THE REPORT REGISTER.
+  GAP 4 (backlog 014, Daedalus): the .ae-doc archetype carries prose, but a
+  *generated* artifact — a foundry comparison report meant to be read and
+  shared — wants an abstract/lede, numbered figures with captions, and a
+  findings/recommendation block, and wants to stay scannable over a FULL PAGE.
+  The one-size law (right for a screen) makes a long report monotonous.
+  ONE constant generated artifact (a foundry comparison dossier) is rendered
+  across all treatments; the picker swaps only the REGISTER TREATMENT, ordered
+  "plain doc (the problem)" → "full dossier (the fix)" so the trade-off is
+  legible. EVERY register addition is built from weight + space + hairlines +
+  the 11px mono caption register ONLY — never a new type size, never a serif /
+  display face. That discipline is the whole point: this prototype is literally
+  about ONE law boundary.
+
+  THE DECISION: does .ae-doc gain a thin "report" sub-register, or are generated
+  reports declared a consumer concern (ADOPTING.md note)?
+
+    1 plain    — current .ae-doc idiom: one size, weight-only headings, no
+                 lede, figures uncaptioned. The PROBLEM artifact — over a full
+                 page it reads as a monotonous wall. Pure law, zero new vocab.
+    2 lede     — adds ONLY a standfirst: opening para in medium weight + extra
+                 leading + a hairline rule under it. The smallest way in.
+    3 figures  — adds numbered figure captions (FIG 1 · mono label, 11px) on
+                 the .ae-plate blocks + a figure-reference convention in prose.
+                 Leans on the existing plate vocabulary; makes it citable.
+    4 findings — adds a findings/recommendation block: a hairline-framed summary
+                 (NOT a filled card), key result called out by weight, the
+                 recommendation marked with one accent rule. Inverted pyramid.
+    5 quote    — adds a pull-quote: a key sentence set forward by WEIGHT + SPACE
+                 + a hairline margin rule (never a bigger size, never italic
+                 serif). The closest call to the law line.
+    6 dossier  — all of the above composed into one shareable dossier, scannable
+                 top to bottom. The complete "report register."
+
+  VERDICT (round 5): AWAITING OPERATOR — does .ae-doc gain a report sub-register
+  (weight+space only), or are reports a consumer concern?
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · inst 4 · report register</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────
+         The report is ONE constant artifact rendered inside .ae-doc. Each
+         register is toggled by a class on the article root (.rep.has-lede,
+         .has-figcap, .has-findings, .has-quote) and is expressed with
+         WEIGHT + SPACE + HAIRLINES + the 11px mono caption register ONLY.
+         There is NO font-size lever beyond the three sanctioned registers
+         (16px body via .ae-doc, 13px chrome, 11px mono caption) and NO
+         font-family override anywhere — the whole point of GAP 4. */
+
+      .doc-head {
+        max-width: var(--ae-measure);
+      }
+      .doc-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin: 1.6em 0 0.5em;
+      }
+
+      /* the report scrolls INSIDE this frame; the window never scrolls.
+         A generated dossier is long — the chrome (bars, picker) stays put,
+         the document body scrolls in a fixed-height ruled stage, exactly
+         like flex-3b's .mx-scroll inner region. */
+      .doc-frame {
+        border: 1px solid var(--ae-line);
+        max-height: min(64vh, 34em);
+        overflow-y: auto;
+      }
+      .doc-pad {
+        padding: 2.2em 2.8em 2.6em;
+        /* a generated report holds itself to a reading measure even on a
+           wide stage; figures break wider (see .rep-figure). */
+        max-width: 44rem;
+      }
+
+      /* the article: real .ae-doc body. We add ONLY weight/space classes. */
+      .rep {
+        position: relative;
+      }
+      /* run metadata: the byline strip under the title — 11px mono caption
+         register (sanctioned), faint, never a second body size. */
+      .rep-meta {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-faint);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em 1.6em;
+        margin: 0.7em 0 0;
+      }
+
+      /* ── register 2: the lede / standfirst ──────────────────────────────
+         WEIGHT + SPACE + HAIRLINE ONLY. The opening paragraph lifts to medium
+         (550 vs the body's 400), gains leading and breathing room, and a
+         hairline rule sits beneath it. NO size change. Hidden until .has-lede;
+         when off, the same paragraph reads as plain body. */
+      .rep-lede {
+        font-weight: var(--ae-w-regular);
+        line-height: 1.6;
+        margin-bottom: 0.9em;
+      }
+      .rep.has-lede .rep-lede {
+        font-weight: var(--ae-w-medium);
+        line-height: 1.85;
+        color: var(--ae-ink);
+        margin: 0.4em 0 1.6em;
+        padding-bottom: 1.4em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      /* ── register 3: numbered figures ───────────────────────────────────
+         The plate gets a mono FIG label (11px caption register, sanctioned)
+         above it and the existing .ae-plate-note below. The figure label is
+         present only under .has-figcap; otherwise the plate is uncaptioned.
+         A figure breaks slightly wider than the prose measure (the citable,
+         specimen feel) then prose returns. */
+      .rep-figure {
+        margin: 1.8em 0;
+        margin-inline: -0.6em; /* a gentle break-out past the prose measure */
+      }
+      .rep-figlabel {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin-bottom: 0.7em;
+        display: none; /* shown by .has-figcap */
+      }
+      .rep.has-figcap .rep-figlabel {
+        display: block;
+      }
+      .rep-figlabel .n {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      /* the in-prose figure reference ("see Fig 2") — a mono inline cite,
+         11px caption register, only meaningful once figures are numbered. */
+      .rep-ref {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        color: var(--ae-ink-muted);
+        display: none;
+      }
+      .rep.has-figcap .rep-ref {
+        display: inline;
+      }
+
+      /* a mocked figure body inside a plate: a small results table and
+         simple ruled notes. Mono instrument register (13px), tabular. */
+      .fig-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .fig-table th,
+      .fig-table td {
+        text-align: right;
+        padding: 0.4em 0.9em;
+        border-bottom: 1px solid var(--ae-line);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .fig-table thead th {
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-regular);
+        vertical-align: bottom;
+      }
+      .fig-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .fig-table .lbl {
+        text-align: left;
+        color: var(--ae-ink);
+        font-family: var(--ae-font);
+        font-size: 13px;
+      }
+      .fig-table .win {
+        font-weight: var(--ae-w-black);
+      }
+      .fig-table .faint {
+        color: var(--ae-ink-faint);
+      }
+
+      /* a tiny two-line "cost × quality" note rendered as ruled rows */
+      .fig-rows {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .fig-rows .r {
+        display: flex;
+        justify-content: space-between;
+        gap: 1.5em;
+        padding: 0.35em 0;
+        border-bottom: 1px solid var(--ae-line);
+        font-variant-numeric: tabular-nums;
+      }
+      .fig-rows .r:last-child {
+        border-bottom: 0;
+      }
+      .fig-rows .r .k {
+        color: var(--ae-ink-muted);
+      }
+      .fig-rows .r .v.win {
+        font-weight: var(--ae-w-black);
+        color: var(--ae-ink);
+      }
+
+      /* a gate-summary strip: status on the glyph, label in body weight */
+      .fig-gates {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+      }
+      .fig-gates li {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        padding: 0.4em 0;
+        border-bottom: 1px solid var(--ae-line);
+        margin: 0;
+      }
+      .fig-gates li:last-child {
+        border-bottom: 0;
+      }
+      .fig-gates .g-ico {
+        width: 0.95em;
+        height: 0.95em;
+        flex: none;
+      }
+      .fig-gates .g-name {
+        color: var(--ae-ink);
+      }
+      .fig-gates .g-val {
+        margin-left: auto;
+        color: var(--ae-ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── register 4: findings / recommendation ──────────────────────────
+         A ruled summary box — HAIRLINE FRAME, never a filled card. The key
+         result is called out by WEIGHT (black) at body size. The recommendation
+         is marked with ONE accent rule (a left hairline in --ae-accent) — the
+         single drop of color the report spends. Present only under .has-findings. */
+      .rep-findings {
+        display: none;
+        border: 1px solid var(--ae-line);
+        padding: 1.4em 1.6em 1.3em;
+        margin: 1.8em 0;
+      }
+      .rep.has-findings .rep-findings {
+        display: block;
+      }
+      .rep-findings .ft {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin-bottom: 1em;
+      }
+      .rep-findings ul {
+        list-style: none;
+        margin: 0 0 0;
+        padding: 0;
+      }
+      .rep-findings li {
+        padding: 0.45em 0;
+        border-bottom: 1px solid var(--ae-line);
+        margin: 0;
+      }
+      .rep-findings li:last-of-type {
+        border-bottom: 0;
+      }
+      .rep-findings li .lead {
+        font-weight: var(--ae-w-black); /* the called-out result: weight only */
+      }
+      .rep-findings .rec {
+        margin-top: 1.1em;
+        padding: 0.2em 0 0.2em 1.1em;
+        border-left: 2px solid var(--ae-accent); /* the one accent the report spends */
+      }
+      .rep-findings .rec .rl {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        display: block;
+        margin-bottom: 0.3em;
+      }
+      .rep-findings .rec .rt {
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* ── register 5: the pull-quote ─────────────────────────────────────
+         A key sentence set FORWARD by WEIGHT (medium) + SPACE (leading +
+         margins) + a HAIRLINE margin rule. NEVER a larger font size, NEVER
+         an italic serif. This is the closest call to the law line: presence
+         comes from 550-vs-400 contrast, line-height, and whitespace alone.
+         Present only under .has-quote; otherwise the sentence sits in prose. */
+      .rep-quote {
+        display: none;
+        font-weight: var(--ae-w-medium);
+        line-height: 1.7;
+        color: var(--ae-ink);
+        margin: 1.8em 0;
+        padding: 0.2em 0 0.2em 1.4em;
+        border-left: 1px solid var(--ae-line);
+      }
+      .rep.has-quote .rep-quote {
+        display: block;
+      }
+      .rep-quote .qm {
+        display: block;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        font-weight: var(--ae-w-regular);
+        margin-top: 0.6em;
+      }
+
+      .proto-cap {
+        max-width: var(--ae-measure);
+        margin: 1.3em 0 0;
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 2em);
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="#">AESTHETIC · LAB</a>
+        <span style="display: inline-flex; gap: 1.6em; align-items: baseline">
+          <span class="ae-chrome">inst 4 · report register</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+
+      <main class="ae-stage ae-stage-scroll">
+        <div style="width: 100%">
+          <div class="doc-head">
+            <h1 class="ae-h" style="margin-bottom: 0.5em">
+              GAP 4 · DOES .ae-doc GAIN A REPORT SUB-REGISTER?
+            </h1>
+            <p class="ae-dim">
+              One generated foundry-comparison dossier, six register treatments
+              — plain document (the problem) to full dossier (the fix). Every
+              addition is weight, space, and hairlines only: no new type size,
+              no serif. The document scrolls inside the frame; the chrome never
+              moves.
+            </p>
+          </div>
+
+          <p class="doc-cap" id="doccap">REPORT · 1 of 6 · plain document</p>
+
+          <div class="doc-frame">
+            <div class="doc-pad">
+              <!-- ONE constant generated artifact. Real .ae-doc body; the
+                   register treatments are toggled by classes on .rep. -->
+              <article class="ae-doc rep" id="rep">
+                <h1 style="margin-top: 0">
+                  Foundry Comparison — Cache-Key-Collision Arena
+                </h1>
+                <div class="rep-meta">
+                  <span>RUN df-2026-0615-aa1</span>
+                  <span>FOUNDRY v2.5.1</span>
+                  <span>6 CANDIDATES · 10 HYPOTHESES</span>
+                  <span>GENERATED 2026-06-15 14:02Z</span>
+                </div>
+
+                <p class="rep-lede">
+                  Across ten correctness hypotheses on a shared 0–100 scale,
+                  <strong>opus·hi</strong> wins eight of ten and is the only
+                  candidate to clear every certification gate, but its cost is
+                  2.4× the field median. The ensemble matches it on quality
+                  within the measured spread at 40% of the cost, making it the
+                  recommended delivery composition where the lead is not
+                  separable. haiku·rag remains disqualified on the consistency
+                  hypotheses.
+                </p>
+
+                <h2>Background</h2>
+                <p>
+                  The arena stresses a candidate cache implementation against
+                  ten adversarial hypotheses — TTL eviction, stale-read safety,
+                  key churn, cross-tenant isolation, and partition behavior
+                  among them. Each candidate is a fixed model-and-retrieval
+                  composition; scores are the gate-weighted pass rate over the
+                  hypothesis suite. The question this dossier answers is not
+                  "which is best" but "which is best given the cost and the
+                  uncertainty in the lead."
+                </p>
+
+                <h2>Results</h2>
+                <p>
+                  The full results matrix is summarized below.
+                  <span class="rep-ref">(See Fig 1.)</span> opus·hi and the
+                  ensemble separate clearly from the rest of the field; the gap
+                  between them is inside the measured spread on six of the ten
+                  hypotheses, so the two are not cleanly separable on quality
+                  alone.
+                </p>
+
+                <figure class="rep-figure">
+                  <div class="rep-figlabel">
+                    <span class="n">FIG 1</span> · gate-weighted pass rate by
+                    candidate (0–100), winner per row in heavy weight
+                  </div>
+                  <div class="ae-plate">
+                    <table class="fig-table">
+                      <thead>
+                        <tr>
+                          <th class="lbl">hypothesis</th>
+                          <th>opus·hi</th>
+                          <th>ensemble</th>
+                          <th>sonnet·v4</th>
+                          <th>haiku·rag</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="lbl">no cross-tenant leak</td>
+                          <td class="win">100</td>
+                          <td>100</td>
+                          <td>99</td>
+                          <td class="faint">94</td>
+                        </tr>
+                        <tr>
+                          <td class="lbl">no stale read after write</td>
+                          <td class="win">93</td>
+                          <td>89</td>
+                          <td>90</td>
+                          <td class="faint">44</td>
+                        </tr>
+                        <tr>
+                          <td class="lbl">consistent under partition</td>
+                          <td class="win">88</td>
+                          <td>79</td>
+                          <td>70</td>
+                          <td class="faint">35</td>
+                        </tr>
+                        <tr>
+                          <td class="lbl">survives key churn 10k/s</td>
+                          <td class="win">91</td>
+                          <td>83</td>
+                          <td>73</td>
+                          <td class="faint">29</td>
+                        </tr>
+                        <tr>
+                          <td class="lbl">bounded memory under load</td>
+                          <td class="win">85</td>
+                          <td>81</td>
+                          <td>66</td>
+                          <td>62</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="ae-plate-note">
+                      Means over 200 trials; gate-weighted. haiku·rag lightened
+                      where it falls below the partial threshold (45).
+                    </p>
+                  </div>
+                </figure>
+
+                <h2>Cost and quality</h2>
+                <p>
+                  Quality buys sharply diminishing returns past the ensemble.
+                  <span class="rep-ref">(See Fig 2.)</span> opus·hi is the
+                  quality leader, but per-unit cost rises faster than its score
+                  advantage — on the cost × quality plane it sits past the knee
+                  of the frontier, while the ensemble holds the frontier itself.
+                </p>
+
+                <figure class="rep-figure">
+                  <div class="rep-figlabel">
+                    <span class="n">FIG 2</span> · cost vs. quality, field
+                    median normalized to 1.00×
+                  </div>
+                  <div class="ae-plate">
+                    <div class="fig-rows">
+                      <div class="r">
+                        <span class="k">opus·hi · quality 94 · cost</span>
+                        <span class="v">2.41×</span>
+                      </div>
+                      <div class="r">
+                        <span class="k">ensemble · quality 88 · cost</span>
+                        <span class="v win">0.96×</span>
+                      </div>
+                      <div class="r">
+                        <span class="k">sonnet·v4 · quality 81 · cost</span>
+                        <span class="v">0.71×</span>
+                      </div>
+                      <div class="r">
+                        <span class="k">haiku·rag · quality 51 · cost</span>
+                        <span class="v">0.18×</span>
+                      </div>
+                    </div>
+                    <p class="ae-plate-note">
+                      The ensemble is the cost-frontier choice: within the
+                      quality spread of the leader at 40% of its cost.
+                    </p>
+                  </div>
+                </figure>
+
+                <p class="rep-quote">
+                  The lead is inside the spread on six of ten hypotheses — where
+                  it is, the ensemble delivers the same quality at 40% of the
+                  cost, and cost becomes the deciding axis.
+                  <span class="qm">— gate-weighted spread analysis, Fig 1</span>
+                </p>
+
+                <h2>Certification gates</h2>
+                <p>
+                  Five gates must clear for a candidate to be launch-eligible.
+                  <span class="rep-ref">(See Fig 3.)</span> opus·hi clears all
+                  five; the ensemble clears four and sits one point under the
+                  partition-consistency bar.
+                </p>
+
+                <figure class="rep-figure">
+                  <div class="rep-figlabel">
+                    <span class="n">FIG 3</span> · launch-gate summary for the
+                    leading candidate (opus·hi)
+                  </div>
+                  <div class="ae-plate">
+                    <ul class="fig-gates">
+                      <li>
+                        <svg class="ae-icon ae-ok g-ico">
+                          <use href="#i-check" />
+                        </svg>
+                        <span class="g-name">no cross-tenant leak</span>
+                        <span class="g-val">100 / 98</span>
+                      </li>
+                      <li>
+                        <svg class="ae-icon ae-ok g-ico">
+                          <use href="#i-check" />
+                        </svg>
+                        <span class="g-name">stale-read safety</span>
+                        <span class="g-val">93 / 85</span>
+                      </li>
+                      <li>
+                        <svg class="ae-icon ae-ok g-ico">
+                          <use href="#i-check" />
+                        </svg>
+                        <span class="g-name">partition consistency</span>
+                        <span class="g-val">88 / 80</span>
+                      </li>
+                      <li>
+                        <svg class="ae-icon ae-warn g-ico">
+                          <use href="#i-minus" />
+                        </svg>
+                        <span class="g-name">latency budget p99</span>
+                        <span class="g-val">71 / 75</span>
+                      </li>
+                      <li>
+                        <svg class="ae-icon ae-ok g-ico">
+                          <use href="#i-check" />
+                        </svg>
+                        <span class="g-name">bounded memory</span>
+                        <span class="g-val">85 / 70</span>
+                      </li>
+                    </ul>
+                    <p class="ae-plate-note">
+                      Threshold shown as score / bar. The latency gate is the
+                      only partial — within budget under nominal load, over it
+                      at the p99 tail.
+                    </p>
+                  </div>
+                </figure>
+
+                <div class="rep-findings">
+                  <div class="ft">FINDINGS</div>
+                  <ul>
+                    <li>
+                      <span class="lead">opus·hi wins 8 of 10 hypotheses</span>
+                      and is the only candidate to clear all five gates, at
+                      2.41× the field-median cost.
+                    </li>
+                    <li>
+                      <span class="lead">The lead is inside the spread</span> on
+                      six of ten hypotheses; opus·hi and the ensemble are not
+                      cleanly separable on quality.
+                    </li>
+                    <li>
+                      <span class="lead">haiku·rag is disqualified</span> —
+                      below the partial threshold on the stale-read, churn, and
+                      partition hypotheses.
+                    </li>
+                  </ul>
+                  <div class="rec">
+                    <span class="rl">RECOMMENDATION</span>
+                    <span class="rt"
+                      >Ship the ensemble as the default delivery composition;
+                      reserve opus·hi for runs where the latency tail and cost
+                      are acceptable and the quality lead must be
+                      maximized.</span
+                    >
+                  </div>
+                </div>
+
+                <h2>Method and caveats</h2>
+                <p>
+                  Scores are means over 200 trials per hypothesis; intervals are
+                  the inter-quartile spread. "Not separable" means the leader's
+                  advantage falls within that spread. Cost is per-1k-token
+                  inference plus retrieval, normalized to the field median. The
+                  latency gate measures the p99 tail under a 3× nominal load
+                  spike; nominal-load latency clears for every candidate.
+                </p>
+                <p>
+                  This dossier is a generated artifact. It is regenerated on
+                  every arena run and is meant to be read top to bottom and
+                  shared — the register treatment under test is whether that
+                  reading experience is a sanctioned use of .ae-doc or a
+                  consumer concern.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <p class="ae-dim proto-cap" id="cap">
+            1 · PLAIN DOCUMENT — the dossier in the current .ae-doc idiom: one
+            size, weight-only headings, no lede, figures uncaptioned. This is
+            the PROBLEM artifact — over a full page it reads as a monotonous
+            wall with no way in and nothing to cite. Trade-off: pure law, zero
+            new vocabulary; but a long generated report is hard to scan.
+          </p>
+        </div>
+      </main>
+
+      <footer class="ae-bar">
+        <p class="ae-chrome">prototype — never ships</p>
+        <p class="ae-chrome">inst 4 · report register</p>
+      </footer>
+    </div>
+
+    <nav class="proto-picker" aria-label="register picker">
+      <button data-reg="plain" class="is-active">1 plain</button>
+      <button data-reg="lede">2 lede</button>
+      <button data-reg="figures">3 figures</button>
+      <button data-reg="findings">4 findings</button>
+      <button data-reg="quote">5 pull-quote</button>
+      <button data-reg="dossier">6 full dossier</button>
+    </nav>
+
+    <script>
+      // Known-bug guard: never reference hyphenated-id elements as implicit
+      // globals; always resolve through getElementById.
+      const el = (id) => document.getElementById(id);
+
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      // Each register is the cumulative set of weight/space classes on .rep.
+      // Ordered plain → dossier so the trade-off reads as additions.
+      const REG = {
+        plain: [],
+        lede: ['has-lede'],
+        figures: ['has-lede', 'has-figcap'],
+        findings: ['has-lede', 'has-figcap', 'has-findings'],
+        quote: ['has-lede', 'has-figcap', 'has-findings', 'has-quote'],
+        dossier: ['has-lede', 'has-figcap', 'has-findings', 'has-quote'],
+      };
+      const DOCCAP = {
+        plain: 'REPORT · 1 of 6 · plain document',
+        lede: 'REPORT · 2 of 6 · + lede / standfirst',
+        figures: 'REPORT · 3 of 6 · + numbered figures',
+        findings: 'REPORT · 4 of 6 · + findings / recommendation',
+        quote: 'REPORT · 5 of 6 · + pull-quote',
+        dossier: 'REPORT · 6 of 6 · full dossier',
+      };
+      const CAPS = {
+        plain:
+          '1 · PLAIN DOCUMENT — the dossier in the current .ae-doc idiom: one size, weight-only headings, no lede, figures uncaptioned. This is the PROBLEM artifact — over a full page it reads as a monotonous wall with no way in and nothing to cite. Trade-off: pure law, zero new vocabulary; but a long generated report is hard to scan.',
+        lede: '2 · LEDE / STANDFIRST — adds ONLY an abstract: the opening paragraph lifts to medium weight (550 vs 400) with more leading and a hairline rule beneath it. Weight + space + one rule, no size change. Trade-off: gives the reader a way in and states the conclusion up front — the smallest possible addition to the law.',
+        figures:
+          '3 · NUMBERED FIGURES — adds mono FIG labels (11px caption register) on the .ae-plate blocks and a "(see Fig n)" reference convention in prose. Trade-off: makes the artifact citable and scannable; leans entirely on the existing plate vocabulary, adds no new type size.',
+        findings:
+          '4 · FINDINGS / RECOMMENDATION — adds a hairline-framed summary box (NOT a filled card) with the key result called out by weight, and a recommendation marked by ONE accent rule. Trade-off: front-loads the conclusion (inverted pyramid) and spends exactly one drop of accent.',
+        quote:
+          '5 · PULL-QUOTE — lifts a key sentence forward by WEIGHT (medium) + SPACE (leading, margins) + a hairline margin rule. Never a larger size, never an italic serif. Trade-off: editorial emphasis without breaking one-size — the closest call to the law line; presence comes from 550-vs-400 and whitespace alone.',
+        dossier:
+          '6 · FULL DOSSIER — lede + numbered figures + findings + pull-quote composed into one shareable, scannable artifact. Trade-off: the complete "report register." The operator judges whether this is a sanctioned .ae-doc sub-register (all weight + space + hairlines) or scope-creep that reopens the one-size law.',
+      };
+
+      const ALL = ['has-lede', 'has-figcap', 'has-findings', 'has-quote'];
+      let cur = 'plain';
+
+      function render() {
+        const rep = el('rep');
+        ALL.forEach((c) => rep.classList.remove(c));
+        REG[cur].forEach((c) => rep.classList.add(c));
+        el('doccap').textContent = DOCCAP[cur];
+        el('cap').textContent = CAPS[cur];
+      }
+
+      const picker = document.querySelector('.proto-picker');
+      picker.querySelectorAll('button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          cur = btn.dataset.reg;
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          render();
+        }),
+      );
+      render();
+    </script>
+  </body>
+</html>
