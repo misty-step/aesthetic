@@ -1,0 +1,1738 @@
+<!doctype html>
+<!--
+  LAB flexibility · 3 of 3 — THE INSTRUMENT MATRIX. The hardest thing the
+  law asks: render a DENSE task × candidate eval grid — every cell an
+  outcome AND a magnitude, at operator density — WITHOUT a single filled
+  colored cell. Heat rides status-on-glyph + a ruled intensity bar (the
+  .ae-meter vocabulary), so the heatmap reads as INK DENSITY on a ruled
+  field, never as ambient color. Beside it sits the seductive wrong answer
+  — the filled green/amber/red grid — so the trade-off is legible at a
+  glance. Domain: backlog 012, the comparison-matrix primitive.
+  TRADE-OFF: glyph-per-cell can get noisy at extreme density; intensity-
+  without-color is subtler than a color heatmap and needs a legend — but
+  it scales the law to operator density and never ships a filled pill.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · flex 3 · instrument matrix</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+
+         THE CORE PROBLEM. A task × candidate eval grid needs TWO facts in
+         every cell — an outcome (pass / partial / fail) and a magnitude
+         (a 0–100 score). The lazy answer paints the cell red/amber/green
+         and lets color BE the data. That breaks the law four ways: status
+         stops riding the glyph and becomes the whole cell; the figure
+         drowns in its own background; radius-0 hairline restraint turns
+         into a block-color quilt; and it stops being misty-step.
+
+         THE AESTHETIC ANSWER (state A). Each cell carries:
+           · a status GLYPH (✓ ok · ! partial · ✗ fail) — the hue lives
+             here and ONLY here, exactly as the law demands;
+           · a tabular FIGURE in ink — the score, readable as a number;
+           · a RULED INTENSITY bar — a 3px hairline-framed ink track in
+             the .ae-meter idiom; its fill length IS the magnitude. The
+             "heatmap" is the field of bar lengths: ink density on a ruled
+             grid, never a wash of color.
+
+         The .matrix bones below are written ONCE. The picker swaps a mode
+         class on the wrapper; only the cell DRESSING changes (A glyph+bar,
+         B filled, C ink-weight, D dense). The law holds on A · C · D in
+         both modes; B breaks it ON PURPOSE so the contrast can be seen. */
+
+      /* the horizontal-scroll viewport: the matrix can be wider than the
+         screen, so it scrolls INSIDE this box — the page never moves
+         (the .ae-screen / .ae-stage law). A hairline frame makes the
+         scroll region read as one instrument, like .ae-plate. */
+      .mx-scroll {
+        overflow: auto;
+        border: 1px solid var(--ae-line);
+        /* bound the height so the header sticks against something and the
+           stage itself never grows past the viewport */
+        max-height: min(62vh, 30em);
+        /* a quiet inner gutter so sticky cells don't kiss the frame */
+        scrollbar-width: thin;
+      }
+
+      /* the matrix: terminal density, 13px mono — same register as
+         .ae-table. Separate borders so sticky cells can carry their own
+         hairlines without collapse gaps. */
+      .matrix {
+        border-collapse: separate;
+        border-spacing: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.6;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .matrix th,
+      .matrix td {
+        padding: 0.5em 0.85em;
+        border-bottom: 1px solid var(--ae-line);
+        border-right: 1px solid var(--ae-line);
+        background: var(--ae-surface);
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      /* candidate columns get a comfortable fixed width: enough that six
+         of them overrun the content measure, so horizontal scroll is the
+         intended operator reading, not an edge case. The cell centres
+         within it. */
+      .matrix thead th:not(.mx-corner),
+      .matrix tbody td {
+        min-width: 7.5rem;
+        text-align: center;
+      }
+      .matrix tr td:last-child,
+      .matrix tr th:last-child {
+        border-right: 0;
+      }
+      .matrix tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      /* candidate column headers: lowercase mono on a wash band, like
+         .ae-table th. Each shares its column's CENTERED alignment, since
+         the cells centre their glyph+figure. */
+      .matrix thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--ae-wash);
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-regular);
+        letter-spacing: 0.08em;
+        text-align: center;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .matrix thead th .cand-meta {
+        display: block;
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.04em;
+      }
+
+      /* the task column: sticky to the left edge so a row never loses its
+         name while you scan candidates. Left-aligned; its header shares
+         that alignment. A controlled width keeps the frozen column from
+         eating the field — long hypotheses wrap to two lines rather than
+         stretching the column to the longest name. */
+      .mx-task {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        width: 15rem;
+        min-width: 15rem;
+        max-width: 15rem;
+        text-align: left;
+        white-space: normal;
+        background: var(--ae-surface);
+        /* a heavier seam where the frozen column meets the scroll field */
+        border-right: 1px solid var(--ae-line);
+        box-shadow: 1px 0 0 0 var(--ae-line);
+      }
+      .matrix tbody th.mx-task {
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink);
+      }
+      .mx-task .mx-task-id {
+        display: block;
+        font-weight: var(--ae-w-regular);
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.06em;
+      }
+
+      /* the top-left corner: sticky on BOTH axes, so it pins over
+         everything as the one fixed anchor. */
+      .mx-corner {
+        position: sticky;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        background: var(--ae-wash);
+        text-align: left;
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.08em;
+        box-shadow: 1px 0 0 0 var(--ae-line);
+      }
+
+      /* ── the cell, state A · GLYPH + RULED INTENSITY ──────────────────
+         A centred stack: [glyph + figure] over a ruled intensity bar.
+         The glyph carries the hue; the figure is ink; the bar is the
+         magnitude as a length of ink on a ruled track. */
+      .cell {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.32em;
+        min-width: 3.4em;
+      }
+      .cell-head {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3em;
+        line-height: 1;
+      }
+      .cell .ae-icon {
+        width: 0.92em;
+        height: 0.92em;
+        vertical-align: 0;
+        flex: none;
+      }
+      .cell-fig {
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-ink);
+        letter-spacing: 0.02em;
+      }
+      /* a failed trial: the figure recedes to faint — the eye spends its
+         attention on the survivors, the ✗ already carries the verdict */
+      .cell.is-fail .cell-fig {
+        color: var(--ae-ink-faint);
+        font-weight: var(--ae-w-regular);
+      }
+
+      /* the ruled intensity bar — the .ae-meter idiom shrunk to a cell:
+         a wash channel, hairline-framed, with an ink fill whose WIDTH is
+         the score. No status hue here — length is the only signal, so the
+         field of bars reads as ink density, never color. */
+      .ibar {
+        position: relative;
+        width: 3em;
+        height: 3px;
+        background: var(--ae-wash);
+        border: 1px solid var(--ae-line);
+      }
+      .ibar > i {
+        position: absolute;
+        inset: 0 auto 0 0;
+        background: var(--ae-ink);
+        transition: width var(--ae-gentle) var(--ae-ease);
+      }
+      /* a failed trial's bar is faint — present for the grid rhythm, but
+         it does not compete with the live scores */
+      .cell.is-fail .ibar > i {
+        background: var(--ae-ink-faint);
+      }
+      /* the empty trial: a candidate that never ran this task. An honest
+         dash on the ruled track, no glyph, no figure to invent. */
+      .cell.is-none {
+        color: var(--ae-ink-faint);
+      }
+      .cell.is-none .ibar {
+        visibility: hidden;
+      }
+
+      /* ── state B · FILLED HEATMAP — the anti-pattern, on purpose ───────
+         The SAME scores, painted as soft red/amber/green tiles. This is
+         the seductive wrong answer, and it is wrong on every axis the law
+         names — so the .mx-fill mode says so out loud and the contrast
+         does the teaching. Scoped to .mx-fill only; nothing here leaks
+         into the lawful states. */
+      .mx-fill .cell {
+        gap: 0;
+      }
+      .mx-fill .cell .ibar {
+        display: none; /* the color IS the magnitude now — the law's loss */
+      }
+      .mx-fill .cell .ae-icon {
+        display: none; /* status stopped riding the glyph; the tile ate it */
+      }
+      .mx-fill tbody td:not(.mx-task) {
+        padding: 0;
+      }
+      .mx-fill .cell {
+        display: flex;
+        width: 100%;
+        min-width: 4.2em;
+        padding: 0.7em 0.5em;
+        box-sizing: border-box;
+      }
+      .mx-fill .cell-fig {
+        font-weight: var(--ae-w-medium);
+        color: #1a1a1a;
+      }
+      /* the five heat tiles: lightness ramped by score band. This is the
+         quilt the law forbids. */
+      .mx-fill .h1 {
+        background: #e9f3ec;
+      }
+      .mx-fill .h2 {
+        background: #cfe6d6;
+      }
+      .mx-fill .h3 {
+        background: #f6eccf;
+      }
+      .mx-fill .h4 {
+        background: #f0d8c4;
+      }
+      .mx-fill .h5 {
+        background: #f1cdc6;
+      }
+      .mx-fill .h0 {
+        background: var(--ae-wash);
+        color: var(--ae-ink-faint);
+      }
+      .mx-fill .h0 .cell-fig {
+        color: var(--ae-ink-faint);
+      }
+
+      /* ── state C · INK-WEIGHT FIELD — a second lawful encoding ─────────
+         No glyphs, no bars: the magnitude is carried purely by the
+         tabular figure's INK and WEIGHT — faint → muted → ink → 800.
+         Tufte's ink-density small-multiple. The grid stays hairlines and
+         one size; the only variable is how dark and heavy each number is.
+         A column of figures becomes a value-map you read like a contour. */
+      .mx-ink .cell {
+        gap: 0;
+      }
+      .mx-ink .cell .ibar,
+      .mx-ink .cell .ae-icon {
+        display: none;
+      }
+      .mx-ink .cell-fig {
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+      /* the four ink steps — the whole hierarchy, by ink × weight alone */
+      .mx-ink .w1 {
+        color: var(--ae-ink-faint);
+        font-weight: var(--ae-w-regular);
+      }
+      .mx-ink .w2 {
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-regular);
+      }
+      .mx-ink .w3 {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .mx-ink .w4 {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-black);
+      }
+
+      /* ── state D · DENSE STRESS — A's encoding, tighter & wider ────────
+         The same glyph + ruled-bar cell at higher density: more rows,
+         more candidate columns, tighter padding, a smaller bar. The honest
+         question — does glyph-per-cell get noisy when the grid gets big? */
+      .mx-dense .matrix {
+        line-height: 1.45;
+      }
+      .mx-dense .matrix th,
+      .mx-dense .matrix td {
+        padding: 0.32em 0.55em;
+      }
+      .mx-dense .cell {
+        gap: 0.22em;
+        min-width: 2.9em;
+      }
+      .mx-dense .ibar {
+        width: 2.4em;
+      }
+      .mx-dense .cell-fig {
+        letter-spacing: 0;
+      }
+      /* the dense grid carries extra columns/rows; they are hidden in the
+         roomy states and revealed only here, so the same markup serves
+         both densities */
+      .mx-extra-col,
+      .mx-extra-row {
+        display: none;
+      }
+      .mx-dense .mx-extra-col {
+        display: table-cell;
+      }
+      .mx-dense .mx-extra-row {
+        display: table-row;
+      }
+
+      /* ── the legend — every encoding needs its key ────────────────────
+         Mono, chrome register. Reads the cell vocabulary back: what the
+         glyph means, what the bar means, what an empty trial looks like.
+         Updates per state so the operator always knows what they're
+         scanning. */
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6em 1.6em;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        margin-top: 1.3em;
+        padding-top: 1em;
+        border-top: 1px solid var(--ae-line);
+      }
+      .legend .lg {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45em;
+      }
+      .legend .ae-icon {
+        width: 0.92em;
+        height: 0.92em;
+        vertical-align: 0;
+      }
+      .legend .lg-head {
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.12em;
+      }
+      .legend .ibar {
+        width: 3em;
+      }
+      /* the legend's heat-ramp chip — only meaningful in state B */
+      .lg-ramp {
+        display: inline-flex;
+        height: 0.95em;
+        border: 1px solid var(--ae-line);
+      }
+      .lg-ramp span {
+        width: 1.1em;
+      }
+      .lg-weights {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* the framing copy above the matrix */
+      .mx-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin-bottom: 1em;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 1.4em;
+        align-items: baseline;
+      }
+      .mx-cap .mx-cap-warn {
+        color: var(--ae-err);
+        letter-spacing: 0.1em;
+      }
+
+      .stagewrap {
+        max-width: var(--ae-measure-wide);
+        margin-inline: auto;
+        width: 100%;
+      }
+      .bar-end {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 1.6em;
+      }
+
+      .proto-cap {
+        max-width: 46em;
+        margin: 1.5em auto 0;
+      }
+
+      /* the picker — shared LAB instrument */
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        background: #fff;
+        color: #151515;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #737373;
+        padding: 0.8em 1.1em;
+        transition: color 160ms ease;
+      }
+      .proto-picker button:hover {
+        color: #151515;
+      }
+      .proto-picker button.is-active {
+        color: #fff;
+        background: #151515;
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <!-- the partial / no-trial marks: a minus for "ran, mixed", a dot
+           for "never ran". Added for the matrix's fuller status set. -->
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="1.4" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="#">AESTHETIC · LAB</a>
+        <span class="bar-end">
+          <span class="ae-chrome">flex 3 · instrument matrix</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+
+      <main class="ae-stage ae-stage-scroll">
+        <div class="stagewrap">
+          <section aria-label="eval matrix specimen">
+            <p class="ae-h" style="margin-bottom: 0.3em">
+              ARENA · cache-key-collision · TRIAL MATRIX
+            </p>
+            <p
+              class="ae-dim"
+              style="font-size: 13px; max-width: 44em; margin-bottom: 1.4em"
+            >
+              Ten hypotheses scored across six candidate compositions. Each cell
+              is one trial: an outcome and a 0&ndash;100 score. The grid answers
+              &ldquo;which composition survives which failure mode&rdquo; at a
+              glance &mdash; the question a colored heatmap usually answers by
+              drowning the law.
+            </p>
+
+            <div class="mx-cap" id="mxcap">
+              <span>TABLE 1 · TASK &times; CANDIDATE · n=60 trials</span>
+              <span id="mxcap-warn" hidden class="mx-cap-warn"></span>
+            </div>
+
+            <!-- THE MATRIX — bones written ONCE. The picker swaps a mode
+                 class on .mx-wrap; only the cell dressing changes. -->
+            <div class="mx-wrap" id="mxwrap">
+              <div
+                class="mx-scroll"
+                tabindex="0"
+                aria-label="scrollable trial matrix"
+              >
+                <table class="matrix">
+                  <thead>
+                    <tr>
+                      <th class="mx-corner" scope="col">hypothesis</th>
+                      <th scope="col">
+                        cand&middot;01<span class="cand-meta"
+                          >sonnet&middot;v3</span
+                        >
+                      </th>
+                      <th scope="col">
+                        cand&middot;02<span class="cand-meta"
+                          >sonnet&middot;v4</span
+                        >
+                      </th>
+                      <th scope="col">
+                        cand&middot;03<span class="cand-meta"
+                          >opus&middot;lo</span
+                        >
+                      </th>
+                      <th scope="col">
+                        cand&middot;04<span class="cand-meta"
+                          >opus&middot;hi</span
+                        >
+                      </th>
+                      <th scope="col">
+                        cand&middot;05<span class="cand-meta"
+                          >haiku&middot;rag</span
+                        >
+                      </th>
+                      <th scope="col">
+                        cand&middot;06<span class="cand-meta">ensemble</span>
+                      </th>
+                      <th scope="col" class="mx-extra-col">
+                        cand&middot;07<span class="cand-meta"
+                          >opus&middot;tools</span
+                        >
+                      </th>
+                      <th scope="col" class="mx-extra-col">
+                        cand&middot;08<span class="cand-meta"
+                          >o-mini&middot;v2</span
+                        >
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- row 1 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        evicts on TTL expiry<span class="mx-task-id">H-01</span>
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="92">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">92</span></span
+                          ><span class="ibar"><i style="width: 92%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="95">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">95</span></span
+                          ><span class="ibar"><i style="width: 95%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="88">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">88</span></span
+                          ><span class="ibar"><i style="width: 88%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="97">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">97</span></span
+                          ><span class="ibar"><i style="width: 97%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="71">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">71</span></span
+                          ><span class="ibar"><i style="width: 71%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="96">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">96</span></span
+                          ><span class="ibar"><i style="width: 96%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="94">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">94</span></span
+                          ><span class="ibar"><i style="width: 94%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-partial" data-s="warn" data-v="68">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">68</span></span
+                          ><span class="ibar"><i style="width: 68%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 2 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        no stale read after write<span class="mx-task-id"
+                          >H-02</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="84">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">84</span></span
+                          ><span class="ibar"><i style="width: 84%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="90">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">90</span></span
+                          ><span class="ibar"><i style="width: 90%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="38">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">38</span></span
+                          ><span class="ibar"><i style="width: 38%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="93">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">93</span></span
+                          ><span class="ibar"><i style="width: 93%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="44">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">44</span></span
+                          ><span class="ibar"><i style="width: 44%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="89">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">89</span></span
+                          ><span class="ibar"><i style="width: 89%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="91">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">91</span></span
+                          ><span class="ibar"><i style="width: 91%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-fail" data-s="err" data-v="33">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">33</span></span
+                          ><span class="ibar"><i style="width: 33%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 3 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        survives key churn 10k/s<span class="mx-task-id"
+                          >H-03</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="64">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">64</span></span
+                          ><span class="ibar"><i style="width: 64%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="73">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">73</span></span
+                          ><span class="ibar"><i style="width: 73%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="86">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">86</span></span
+                          ><span class="ibar"><i style="width: 86%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="91">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">91</span></span
+                          ><span class="ibar"><i style="width: 91%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="29">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">29</span></span
+                          ><span class="ibar"><i style="width: 29%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="83">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">83</span></span
+                          ><span class="ibar"><i style="width: 83%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="85">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">85</span></span
+                          ><span class="ibar"><i style="width: 85%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-partial" data-s="warn" data-v="59">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">59</span></span
+                          ><span class="ibar"><i style="width: 59%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 4 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        idempotent on retry<span class="mx-task-id">H-04</span>
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="88">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">88</span></span
+                          ><span class="ibar"><i style="width: 88%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="87">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">87</span></span
+                          ><span class="ibar"><i style="width: 87%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="82">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">82</span></span
+                          ><span class="ibar"><i style="width: 82%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="90">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">90</span></span
+                          ><span class="ibar"><i style="width: 90%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="80">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">80</span></span
+                          ><span class="ibar"><i style="width: 80%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="92">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">92</span></span
+                          ><span class="ibar"><i style="width: 92%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="89">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">89</span></span
+                          ><span class="ibar"><i style="width: 89%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="78">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">78</span></span
+                          ><span class="ibar"><i style="width: 78%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 5 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        bounded memory under load<span class="mx-task-id"
+                          >H-05</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="41">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">41</span></span
+                          ><span class="ibar"><i style="width: 41%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="66">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">66</span></span
+                          ><span class="ibar"><i style="width: 66%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="79">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">79</span></span
+                          ><span class="ibar"><i style="width: 79%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="85">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">85</span></span
+                          ><span class="ibar"><i style="width: 85%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="62">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">62</span></span
+                          ><span class="ibar"><i style="width: 62%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="81">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">81</span></span
+                          ><span class="ibar"><i style="width: 81%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="84">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">84</span></span
+                          ><span class="ibar"><i style="width: 84%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-fail" data-s="err" data-v="36">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">36</span></span
+                          ><span class="ibar"><i style="width: 36%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 6 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        warm-start under 200ms<span class="mx-task-id"
+                          >H-06</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="76">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">76</span></span
+                          ><span class="ibar"><i style="width: 76%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="81">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">81</span></span
+                          ><span class="ibar"><i style="width: 81%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="69">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">69</span></span
+                          ><span class="ibar"><i style="width: 69%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="72">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">72</span></span
+                          ><span class="ibar"><i style="width: 72%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="88">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">88</span></span
+                          ><span class="ibar"><i style="width: 88%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="84">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">84</span></span
+                          ><span class="ibar"><i style="width: 84%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-partial" data-s="warn" data-v="70">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">70</span></span
+                          ><span class="ibar"><i style="width: 70%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="77">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">77</span></span
+                          ><span class="ibar"><i style="width: 77%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 7 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        no cross-tenant leak<span class="mx-task-id">H-07</span>
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="99">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">99</span></span
+                          ><span class="ibar"><i style="width: 99%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="99">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">99</span></span
+                          ><span class="ibar"><i style="width: 99%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="98">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">98</span></span
+                          ><span class="ibar"><i style="width: 98%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="100">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">100</span></span
+                          ><span class="ibar"><i style="width: 100%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="94">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">94</span></span
+                          ><span class="ibar"><i style="width: 94%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="100">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">100</span></span
+                          ><span class="ibar"><i style="width: 100%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="99">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">99</span></span
+                          ><span class="ibar"><i style="width: 99%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="97">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">97</span></span
+                          ><span class="ibar"><i style="width: 97%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 8 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        graceful on backend down<span class="mx-task-id"
+                          >H-08</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="58">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">58</span></span
+                          ><span class="ibar"><i style="width: 58%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="78">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">78</span></span
+                          ><span class="ibar"><i style="width: 78%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="83">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">83</span></span
+                          ><span class="ibar"><i style="width: 83%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="87">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">87</span></span
+                          ><span class="ibar"><i style="width: 87%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="47">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">47</span></span
+                          ><span class="ibar"><i style="width: 47%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="80">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">80</span></span
+                          ><span class="ibar"><i style="width: 80%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="82">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">82</span></span
+                          ><span class="ibar"><i style="width: 82%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-partial" data-s="warn" data-v="55">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">55</span></span
+                          ><span class="ibar"><i style="width: 55%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 9 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        cost per 1k ops &lt; $0.40<span class="mx-task-id"
+                          >H-09</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="90">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">90</span></span
+                          ><span class="ibar"><i style="width: 90%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="85">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">85</span></span
+                          ><span class="ibar"><i style="width: 85%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="22">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">22</span></span
+                          ><span class="ibar"><i style="width: 22%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="14">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">14</span></span
+                          ><span class="ibar"><i style="width: 14%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="96">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">96</span></span
+                          ><span class="ibar"><i style="width: 96%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="61">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">61</span></span
+                          ><span class="ibar"><i style="width: 61%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-fail" data-s="err" data-v="19">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">19</span></span
+                          ><span class="ibar"><i style="width: 19%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="88">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">88</span></span
+                          ><span class="ibar"><i style="width: 88%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 10 -->
+                    <tr>
+                      <th class="mx-task" scope="row">
+                        clean trace, no orphan span<span class="mx-task-id"
+                          >H-10</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="86">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">86</span></span
+                          ><span class="ibar"><i style="width: 86%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="91">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">91</span></span
+                          ><span class="ibar"><i style="width: 91%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="84">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">84</span></span
+                          ><span class="ibar"><i style="width: 84%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="89">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">89</span></span
+                          ><span class="ibar"><i style="width: 89%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-none" data-s="none" data-v="0">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-dim">
+                              <use href="#i-dot" /></svg
+                            ><span class="cell-fig">&mdash;</span></span
+                          ><span class="ibar"><i style="width: 0%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="93">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">93</span></span
+                          ><span class="ibar"><i style="width: 93%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="87">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">87</span></span
+                          ><span class="ibar"><i style="width: 87%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="81">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">81</span></span
+                          ><span class="ibar"><i style="width: 81%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 11 — dense-only -->
+                    <tr class="mx-extra-row">
+                      <th class="mx-task" scope="row">
+                        recovers after OOM kill<span class="mx-task-id"
+                          >H-11</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="31">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">31</span></span
+                          ><span class="ibar"><i style="width: 31%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="60">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">60</span></span
+                          ><span class="ibar"><i style="width: 60%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="77">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">77</span></span
+                          ><span class="ibar"><i style="width: 77%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="82">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">82</span></span
+                          ><span class="ibar"><i style="width: 82%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-fail" data-s="err" data-v="40">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">40</span></span
+                          ><span class="ibar"><i style="width: 40%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="79">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">79</span></span
+                          ><span class="ibar"><i style="width: 79%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="83">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">83</span></span
+                          ><span class="ibar"><i style="width: 83%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell is-fail" data-s="err" data-v="28">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-err">
+                              <use href="#i-x" /></svg
+                            ><span class="cell-fig">28</span></span
+                          ><span class="ibar"><i style="width: 28%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- row 12 — dense-only -->
+                    <tr class="mx-extra-row">
+                      <th class="mx-task" scope="row">
+                        deterministic eviction order<span class="mx-task-id"
+                          >H-12</span
+                        >
+                      </th>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="74">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">74</span></span
+                          ><span class="ibar"><i style="width: 74%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="80">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">80</span></span
+                          ><span class="ibar"><i style="width: 80%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell is-partial" data-s="warn" data-v="67">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-warn">
+                              <use href="#i-minus" /></svg
+                            ><span class="cell-fig">67</span></span
+                          ><span class="ibar"><i style="width: 67%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="88">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">88</span></span
+                          ><span class="ibar"><i style="width: 88%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="75">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">75</span></span
+                          ><span class="ibar"><i style="width: 75%"></i></span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="cell" data-s="ok" data-v="86">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">86</span></span
+                          ><span class="ibar"><i style="width: 86%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="84">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">84</span></span
+                          ><span class="ibar"><i style="width: 84%"></i></span>
+                        </span>
+                      </td>
+                      <td class="mx-extra-col">
+                        <span class="cell" data-s="ok" data-v="72">
+                          <span class="cell-head"
+                            ><svg class="ae-icon ae-ok">
+                              <use href="#i-check" /></svg
+                            ><span class="cell-fig">72</span></span
+                          ><span class="ibar"><i style="width: 72%"></i></span>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- the legend: rewritten per state by the picker -->
+              <div class="legend" id="legend"></div>
+            </div>
+
+            <p class="ae-dim proto-cap" id="cap">
+              A · GLYPH + RULED INTENSITY — the aesthetic answer. The glyph
+              carries the outcome (✓ ok · ! partial · ✗ fail) and the only hue;
+              the figure is the score in ink; the hairline bar under it is the
+              magnitude as a length of ink on a ruled track. Scan a column and
+              the bar-lengths read as ink density — the heatmap, without a drop
+              of color in the field. Scroll sideways: the hypothesis column and
+              the candidate header stay pinned.
+            </p>
+          </section>
+        </div>
+      </main>
+
+      <footer class="ae-bar">
+        <p class="ae-chrome">prototype — never ships</p>
+        <p class="ae-chrome">flex 3 / 3 · instrument matrix</p>
+      </footer>
+    </div>
+
+    <nav class="proto-picker" aria-label="encoding picker">
+      <button data-mode="" class="is-active">A glyph + ruled</button>
+      <button data-mode="mx-fill">B filled heatmap ✕law</button>
+      <button data-mode="mx-ink">C ink-weight</button>
+      <button data-mode="mx-dense">D dense stress</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      const wrap = document.getElementById('mxwrap');
+      const cap = document.getElementById('cap');
+      const legend = document.getElementById('legend');
+      const capWarn = document.getElementById('mxcap-warn');
+
+      // the heat-tile band class for state B, by score (the anti-pattern's
+      // own logic): the deeper the failure, the warmer the tile
+      function heatClass(v, status) {
+        if (status === 'none') return 'h0';
+        if (v >= 85) return 'h1';
+        if (v >= 70) return 'h2';
+        if (v >= 55) return 'h3';
+        if (v >= 40) return 'h4';
+        return 'h5';
+      }
+      // the ink-weight step for state C, by score: stronger score → darker,
+      // heavier figure. Magnitude carried by ink alone.
+      function inkClass(v, status) {
+        if (status === 'none') return 'w1';
+        if (v >= 85) return 'w4';
+        if (v >= 70) return 'w3';
+        if (v >= 50) return 'w2';
+        return 'w1';
+      }
+
+      const cells = Array.from(wrap.querySelectorAll('.cell'));
+      // tag every cell once with its heat + ink classes so the dressing is
+      // pure CSS — the picker only flips the mode class on the wrapper
+      cells.forEach((c) => {
+        const v = +c.dataset.v;
+        const s = c.dataset.s;
+        c.classList.add(heatClass(v, s), inkClass(v, s));
+      });
+
+      const LEGEND = {
+        A: `
+          <span class="lg-head">READS</span>
+          <span class="lg"><svg class="ae-icon ae-ok"><use href="#i-check"/></svg> pass</span>
+          <span class="lg"><svg class="ae-icon ae-warn"><use href="#i-minus"/></svg> partial</span>
+          <span class="lg"><svg class="ae-icon ae-err"><use href="#i-x"/></svg> fail</span>
+          <span class="lg"><svg class="ae-icon ae-dim"><use href="#i-dot"/></svg> no trial</span>
+          <span class="lg">score 0&ndash;100 in ink</span>
+          <span class="lg"><span class="ibar"><i style="width:78%"></i></span> magnitude (ruled, no color)</span>`,
+        B: `
+          <span class="lg-head">READS</span>
+          <span class="lg">heat = score band
+            <span class="lg-ramp" aria-hidden="true"><span style="background:#cfe6d6"></span><span style="background:#f6eccf"></span><span style="background:#f0d8c4"></span><span style="background:#f1cdc6"></span></span>
+          </span>
+          <span class="lg" style="color:var(--ae-err)">status no longer rides a glyph — the tile ate it</span>`,
+        C: `
+          <span class="lg-head">READS</span>
+          <span class="lg">magnitude = ink &times; weight, figure only
+            <span class="lg-weights"><span class="cell-fig w1">41</span><span class="cell-fig w2">66</span><span class="cell-fig w3">82</span><span class="cell-fig w4">96</span></span>
+          </span>
+          <span class="lg">faint &rarr; muted &rarr; ink &rarr; 800</span>`,
+        D: `
+          <span class="lg-head">READS</span>
+          <span class="lg"><svg class="ae-icon ae-ok"><use href="#i-check"/></svg> pass</span>
+          <span class="lg"><svg class="ae-icon ae-warn"><use href="#i-minus"/></svg> partial</span>
+          <span class="lg"><svg class="ae-icon ae-err"><use href="#i-x"/></svg> fail</span>
+          <span class="lg">12 rows &times; 8 candidates &middot; same encoding as A, tighter</span>
+          <span class="lg"><span class="ibar"><i style="width:78%"></i></span> magnitude (ruled)</span>`,
+      };
+
+      const MODES = {
+        '': {
+          key: 'A',
+          warn: null,
+          capn: 'TABLE 1 · TASK × CANDIDATE · n=60 trials',
+          cap: 'A · GLYPH + RULED INTENSITY — the aesthetic answer. The glyph carries the outcome (✓ ok · ! partial · ✗ fail) and the only hue; the figure is the score in ink; the hairline bar under it is the magnitude as a length of ink on a ruled track. Scan a column and the bar-lengths read as ink density — the heatmap, without a drop of color in the field. Scroll sideways: the hypothesis column and the candidate header stay pinned.',
+        },
+        'mx-fill': {
+          key: 'B',
+          warn: '✕ LAW — filled cells: status is now ambient color, not a glyph',
+          capn: 'TABLE 1 · THE WRONG WAY · filled heat tiles',
+          cap: 'B · FILLED HEATMAP — the seductive wrong answer, shown so the contrast can teach. The SAME scores, now painted as soft red/amber/green tiles. It breaks the law on every axis: status stops riding the glyph and becomes the whole cell; the figure drowns in its own background; radius-0 hairline restraint turns into a block-color quilt; and it stops being misty-step. Pretty for one beat, illegible by the tenth row, and the moment the palette shifts it lies. This is the only state that fills a cell — on purpose.',
+        },
+        'mx-ink': {
+          key: 'C',
+          warn: null,
+          capn: 'TABLE 1 · INK-DENSITY FIELD · figures only',
+          cap: 'C · INK-WEIGHT FIELD — a second lawful encoding, glyph-free. No icons, no bars: each score is carried purely by its figure’s ink and weight — faint → muted → ink → 800. Tufte’s ink-density small-multiple. A column of numbers becomes a value-map you read like a contour. It is the quietest of the three and the most data-dense, but it drops the explicit pass/partial/fail verdict — you infer the threshold from darkness. Judge whether glyph-free reads faster, or whether losing the ✓/✗ costs more than the calm is worth.',
+        },
+        'mx-dense': {
+          key: 'D',
+          warn: null,
+          capn: 'TABLE 1 · DENSE STRESS · 12 × 8 · A’s encoding',
+          cap: 'D · DENSE STRESS — A’s exact encoding pushed to 12 hypotheses × 8 candidates with tighter padding and a smaller bar. The honest failure-edge test: does a glyph in every cell get noisy when the grid gets big? The bars still ride as a density field, and the frozen column + header keep you oriented — but the glyph column starts to shimmer at this size. The trade-off, plainly: glyph-per-cell can get noisy at extreme density; intensity-without-color is subtler than a color heatmap and needs a legend — but it scales the law to operator density and never ships a filled pill.',
+        },
+      };
+
+      function applyMode(key) {
+        wrap.className = 'mx-wrap' + (key ? ' ' + key : '');
+        const m = MODES[key];
+        cap.textContent = m.cap;
+        legend.innerHTML = LEGEND[m.key];
+        // the caption line + its law-warning
+        wrap.closest('section').querySelector('.mx-cap span').textContent =
+          m.capn;
+        if (m.warn) {
+          capWarn.textContent = m.warn;
+          capWarn.hidden = false;
+        } else {
+          capWarn.hidden = true;
+        }
+      }
+
+      const picker = document.querySelector('.proto-picker');
+      picker.querySelectorAll('button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          applyMode(btn.dataset.mode);
+        }),
+      );
+      applyMode('');
+    </script>
+  </body>
+</html>

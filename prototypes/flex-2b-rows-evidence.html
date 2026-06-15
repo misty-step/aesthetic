@@ -1,0 +1,1387 @@
+<!doctype html>
+<!--
+  LAB flexibility · 2b — RE-ROLL THE ROW & THE EVIDENCE. The workbench
+  (flex-2) earned its bones, but operator feedback flagged two primitives
+  as weak: the SELECTED-ROW emphasis read as a faint left-tick that got
+  lost in a dense table, and the EVIDENCE inspector's header did not
+  dominate its sub-sections, which bled into "a pile of noise". This
+  sketch isolates BOTH as project-agnostic primitives — a generic
+  "selected row" and a generic "detail / inspector panel" — and fans a
+  set of fresh treatments for each, on a loosened doctrine: the accent is
+  now usable with taste (incl. on selection markers and section labels),
+  and a selected row MAY lift with soft depth.
+  TRADE-OFF: two fans in one file doubles the visual-QA surface, and a
+  lifting/accent row is louder than the system's reflexive restraint —
+  the bet is that an operator scanning a dense arena needs the louder
+  signal more than the purity. Defaults refined, not laws rewritten.
+  VERDICT (round 2): SELECTED ROW → F · PLAYHEAD (the full-height marker
+  reads strongest in a dense arena). EVIDENCE → A + B COMBINED · spacing+
+  rule WITH progressive disclosure (a dominant header, ruled/aired sections
+  that rest as a high-level contents and fold open to drill in; an optional
+  at-a-glance summary is a consuming-app concern). Ledger and accent-marker
+  rejected.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · flex 2b · row &amp; evidence re-roll</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+
+         TWO FANS, one viewport-tall scroll. Each fan owns the SAME bones
+         (one table; one evidence dossier) written once, and its own
+         grouped picker that swaps a treatment class. The pickers never
+         touch the markup or the data — only the emphasis layer.
+
+         Everything composes existing primitives (.ae-table, .ae-fold,
+         .ae-tag, .ae-icon + status, .ae-crumbs, .ae-button-compact) and
+         real tokens (--ae-accent, --ae-wash, --ae-line, the motion
+         scale). The only new surface is the emphasis/hierarchy layer the
+         system does not yet name — which is exactly the thing under
+         test. No new font size: 16px content, 13px chrome, 11px caption. */
+
+      /* the lab page itself scrolls (this is a specimen sheet, not a
+         locked operator screen); the two arenas stack with generous air */
+      body {
+        margin: 0;
+      }
+
+      .lab {
+        max-width: 60rem;
+        margin-inline: auto;
+        padding: 1.5em clamp(1.2rem, 4vw, 3rem) 8rem;
+      }
+
+      .lab-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1.5em;
+        flex-wrap: wrap;
+        padding: 1.4em 0 0.4em;
+      }
+
+      .lab-intro {
+        max-width: 44em;
+        color: var(--ae-ink-muted);
+        font-size: 13px;
+        line-height: 1.7;
+        margin: 0.6em 0 0;
+      }
+      .lab-intro b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* a fan: a titled section holding the specimen + its caption.
+         Hairline-topped, lots of air between the two fans. */
+      .fan {
+        margin-top: 3.4em;
+        padding-top: 2.2em;
+        border-top: 1px solid var(--ae-line);
+      }
+
+      .fan-title {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        color: var(--ae-ink-muted);
+        margin: 0 0 0.4em;
+      }
+      .fan-title b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      .fan-sub {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        line-height: 1.65;
+        max-width: 44em;
+        margin: 0 0 1.6em;
+      }
+
+      /* a grouped, inline picker (one per fan) — the shared LAB
+         instrument, here flowing in the page rather than fixed, because
+         there are two of them. Mono, hairline, the active chip inked. */
+      .fan-picker {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        border: 1px solid var(--ae-line);
+        width: max-content;
+        max-width: 100%;
+        margin-bottom: 1.8em;
+      }
+      .fan-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        border-left: 1px solid var(--ae-line);
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.75em 1em;
+        transition:
+          color var(--ae-quick) var(--ae-ease),
+          background-color var(--ae-quick) var(--ae-ease);
+      }
+      .fan-picker button:first-child {
+        border-left: 0;
+      }
+      .fan-picker button:hover {
+        color: var(--ae-ink);
+        background: var(--ae-wash);
+      }
+      .fan-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+      .fan-picker button.is-active:hover {
+        background: var(--ae-ink);
+        color: var(--ae-surface);
+      }
+
+      /* the per-treatment caption: states the trade-off of the live
+         treatment, swapped by the picker. Chrome register, hairline-top. */
+      .fan-cap {
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--ae-ink-muted);
+        border-top: 1px solid var(--ae-line);
+        padding-top: 1em;
+        margin-top: 1.6em;
+        max-width: 48em;
+      }
+      .fan-cap b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .fan-cap .verdict {
+        color: var(--ae-accent);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         FAN 1 · THE SELECTED ROW
+         A generic "row emphasis" primitive. One .ae-table of records;
+         the picker swaps the data-sel attribute on the arena, which
+         re-skins the .is-sel row. Click any row to move the selection
+         and feel the micro-animation. Every treatment animates ONCE on
+         select (120–200ms, eased) and is reduced-motion-safe via the
+         global kill switch in aesthetic.css.
+         ═══════════════════════════════════════════════════════════════ */
+
+      .arena {
+        border: 1px solid var(--ae-line);
+      }
+      /* the horizontal scroller is an INNER band with vertical padding,
+         so a lifted row's soft shadow has room to render and is not
+         clipped at the row edges by the scroll overflow */
+      .arena-scroll {
+        overflow-x: auto;
+        padding: 0.6em 1.4em 1.2em;
+      }
+      .arena .ae-table {
+        min-width: 40rem;
+      }
+
+      /* operator rhythm: a touch tighter than the comfortable default,
+         still in the 13px register; numbers are tabular so they tick
+         without jitter, and the selection box-shadow needs an inset
+         seam to grow into */
+      .arena .ae-table th,
+      .arena .ae-table td {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        white-space: nowrap;
+      }
+      .arena .ae-table td.num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* the selectable affordance: pointer + a quiet hover wash so the
+         row reads as live before it is chosen */
+      .arena tbody tr {
+        cursor: pointer;
+      }
+      .arena tbody tr:hover td {
+        background: var(--ae-wash);
+      }
+      .arena tbody tr:focus-visible {
+        outline: 2px solid var(--ae-ink);
+        outline-offset: -2px;
+      }
+
+      /* the status cell: the glyph carries the hue, the word stays ink */
+      .ar-stat {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.45em;
+        white-space: nowrap;
+      }
+      .ar-stat .ae-icon {
+        width: 0.95em;
+        height: 0.95em;
+        vertical-align: -0.05em;
+      }
+
+      /* ── the six+ selection treatments ────────────────────────────────
+         All are scoped by .arena[data-sel="…"] .is-sel so the picker
+         swaps one attribute and the whole skin changes. Each defines its
+         own keyframed select feedback, kept subtle and one-shot. */
+
+      /* base resting cell color so treatments can lift it to ink */
+      .arena tbody tr.is-sel td {
+        color: var(--ae-ink);
+      }
+
+      /* A · BASELINE — the current weak version, kept as the control:
+         a hairline ink left-marker, nothing else. Reads as a tick that
+         a dense table swallows. */
+      .arena[data-sel='base'] .is-sel td {
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+      }
+      .arena[data-sel='base'] .is-sel td.ar-key {
+        font-weight: var(--ae-w-medium);
+      }
+      .arena[data-sel='base'] .is-sel td:first-child {
+        animation: sel-marker var(--ae-quick) var(--ae-ease) both;
+      }
+
+      /* B · WASH FILL — the row fills with --ae-wash and a hairline ink
+         marker draws in. Quiet, legible, very house. The wash + the
+         hover wash can read alike, so the marker does the disambiguating. */
+      .arena[data-sel='wash'] .is-sel td {
+        background: var(--ae-wash);
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+      }
+      .arena[data-sel='wash'] .is-sel:hover td {
+        background: var(--ae-wash);
+      }
+      .arena[data-sel='wash'] .is-sel td.ar-key {
+        font-weight: var(--ae-w-medium);
+      }
+      .arena[data-sel='wash'] .is-sel td {
+        animation: sel-wash var(--ae-soft) var(--ae-ease) both;
+      }
+
+      /* C · ACCENT LEFT-BAR — a 3px --ae-accent bar draws in at the left
+         edge over a faint accent-tinted wash. The accent now earns a
+         place as the selection signal (loosened doctrine). Strong scan
+         target without shouting. */
+      .arena[data-sel='accent'] .is-sel td {
+        background: color-mix(in srgb, var(--ae-accent) 7%, transparent);
+        box-shadow: inset 3px 0 0 var(--ae-accent);
+      }
+      .arena[data-sel='accent'] .is-sel:hover td {
+        background: color-mix(in srgb, var(--ae-accent) 7%, transparent);
+      }
+      .arena[data-sel='accent'] .is-sel td.ar-key {
+        font-weight: var(--ae-w-medium);
+        color: var(--ae-accent);
+      }
+      .arena[data-sel='accent'] .is-sel td {
+        animation: sel-accent var(--ae-soft) var(--ae-ease) both;
+      }
+
+      /* D · LIFT — a slight soft-depth elevation (the panel/dialog family
+         already lifts) plus a hairline frame; the row rises 1px. The cell
+         backgrounds go solid surface so the shadow reads as a raised
+         plane over the table. Loosened doctrine: a selected row MAY lift. */
+      .arena[data-sel='lift'] .arena-scroll {
+        /* give the shadow a touch more horizontal room */
+        padding-inline: 1.7em;
+      }
+      .arena[data-sel='lift'] .is-sel td {
+        background: var(--ae-surface);
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .arena[data-sel='lift'] .is-sel:hover td {
+        background: var(--ae-surface);
+      }
+      .arena[data-sel='lift'] .is-sel td:first-child {
+        border-left: 1px solid var(--ae-line);
+      }
+      .arena[data-sel='lift'] .is-sel td:last-child {
+        border-right: 1px solid var(--ae-line);
+      }
+      .arena[data-sel='lift'] .is-sel {
+        position: relative;
+        z-index: 1;
+      }
+      /* the lift itself: a transform on the cells (tr transforms are
+         flaky), carrying a soft shadow that resolves once */
+      .arena[data-sel='lift'] .is-sel td {
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.06),
+          0 8px 22px rgba(0, 0, 0, 0.11);
+        transform: translateY(-1px);
+        animation: sel-lift var(--ae-soft) var(--ae-ease) both;
+      }
+      .dark .arena[data-sel='lift'] .is-sel td,
+      [data-ae-mode='dark'] .arena[data-sel='lift'] .is-sel td {
+        background: var(--ae-wash);
+        box-shadow: none;
+        border-color: var(--ae-ink-faint);
+      }
+
+      /* E · ACCENT INK — the row's key cell flips ink→accent and a draw-
+         on-select underline sweeps in beneath it; the rest of the row
+         lifts to ink. Selection as a typographic event, not a fill. */
+      .arena[data-sel='ink'] .is-sel td.ar-key {
+        color: var(--ae-accent);
+        font-weight: var(--ae-w-medium);
+        position: relative;
+      }
+      .arena[data-sel='ink'] .is-sel td.ar-key::after {
+        content: '';
+        position: absolute;
+        left: 0.7em;
+        right: 1.4em;
+        bottom: 0.35em;
+        height: 1.5px;
+        background: var(--ae-accent);
+        transform-origin: left center;
+        animation: sel-underline var(--ae-soft) var(--ae-ease) both;
+      }
+      .arena[data-sel='ink'] .is-sel td {
+        box-shadow: inset 2px 0 0 var(--ae-accent);
+      }
+
+      /* F · PLAYHEAD — a full-height accent "playhead" rule rides the
+         left edge of the selected row (a timeline read), plus a faint
+         wash. The rule grows from center like a cursor landing. */
+      .arena[data-sel='playhead'] {
+        position: relative;
+      }
+      .arena[data-sel='playhead'] .is-sel td {
+        background: var(--ae-wash);
+      }
+      .arena[data-sel='playhead'] .is-sel:hover td {
+        background: var(--ae-wash);
+      }
+      .arena[data-sel='playhead'] .is-sel td:first-child {
+        position: relative;
+      }
+      .arena[data-sel='playhead'] .is-sel td:first-child::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--ae-accent);
+        animation: sel-playhead var(--ae-soft) var(--ae-ease) both;
+      }
+      .arena[data-sel='playhead'] .is-sel td.ar-key {
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* G · BRACKET — corner brackets clasp the row's first cell, an
+         operator "locked target" read. Ink hairlines, drawn on select.
+         No fill; the brackets alone carry the emphasis + a key-cell bold. */
+      .arena[data-sel='bracket'] .is-sel td.ar-key {
+        font-weight: var(--ae-w-medium);
+      }
+      .arena[data-sel='bracket'] .is-sel td:first-child {
+        position: relative;
+      }
+      .arena[data-sel='bracket'] .is-sel td:first-child::before,
+      .arena[data-sel='bracket'] .is-sel td:first-child::after {
+        content: '';
+        position: absolute;
+        left: 0.1em;
+        width: 0.5em;
+        height: 0.5em;
+        border-color: var(--ae-ink);
+        border-style: solid;
+        animation: sel-bracket var(--ae-soft) var(--ae-ease) both;
+      }
+      .arena[data-sel='bracket'] .is-sel td:first-child::before {
+        top: 0.45em;
+        border-width: 1.5px 0 0 1.5px;
+      }
+      .arena[data-sel='bracket'] .is-sel td:first-child::after {
+        bottom: 0.45em;
+        border-width: 0 0 1.5px 1.5px;
+      }
+      .arena[data-sel='bracket'] .is-sel td {
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+      }
+
+      /* the select micro-animations — each subtle, eased, one-shot. The
+         global reduced-motion kill switch (aesthetic.css) zeroes them. */
+      @keyframes sel-marker {
+        from {
+          box-shadow: inset 0 0 0 var(--ae-ink);
+        }
+      }
+      @keyframes sel-wash {
+        from {
+          background: transparent;
+        }
+      }
+      @keyframes sel-accent {
+        from {
+          background: transparent;
+          box-shadow: inset 0 0 0 var(--ae-accent);
+        }
+      }
+      @keyframes sel-lift {
+        from {
+          transform: translateY(0);
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        }
+      }
+      @keyframes sel-underline {
+        from {
+          transform: scaleX(0);
+        }
+      }
+      @keyframes sel-playhead {
+        from {
+          transform: scaleY(0);
+        }
+      }
+      @keyframes sel-bracket {
+        from {
+          opacity: 0;
+        }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         FAN 2 · THE EVIDENCE HIERARCHY
+         A generic "inspector / detail panel" primitive. The dossier
+         content is the workbench's, verbatim in spirit: trial, source
+         refs, run record, composition hash, gate state, residual risk,
+         trace. The picker swaps a hierarchy class on the panel; the data
+         never moves. Fixes: a dominant EVIDENCE header, sections that no
+         longer bleed together, and the file-icon→path gap in source refs.
+         ═══════════════════════════════════════════════════════════════ */
+
+      .insp-frame {
+        /* the inspector sits in a fixed-width column, as it would in the
+           workbench's third pane, so its internal hierarchy is judged at
+           the real measure rather than full-bleed */
+        max-width: 26rem;
+        border: 1px solid var(--ae-line);
+        background: var(--ae-surface);
+      }
+      .dark .insp-frame,
+      [data-ae-mode='dark'] .insp-frame {
+        background: var(--ae-wash);
+      }
+
+      .insp {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+
+      /* THE HEADER — the operator's complaint #1: not distinct enough.
+         Every treatment makes this dominant. The base header is a mono
+         eyebrow with the trial id alongside; treatments amplify it. */
+      .insp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 1.3em 1.5em;
+      }
+      .insp-title {
+        font-family: var(--ae-font-mono);
+        letter-spacing: 0.18em;
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .insp-head-id {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+      }
+
+      .insp-body {
+        padding: 0 1.5em 1.5em;
+      }
+
+      /* a section: a mono label, then its matter. The base rhythm; the
+         treatments below re-skin spacing, rules, disclosure, or margin. */
+      .insp-sec {
+        padding-top: 1.1em;
+      }
+      .insp-sec-h {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        margin-bottom: 0.5em;
+      }
+
+      /* a key/value evidence row */
+      .insp-kv {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        padding: 0.15em 0;
+      }
+      .insp-kv dt {
+        color: var(--ae-ink-muted);
+      }
+      .insp-kv dd {
+        margin: 0;
+        color: var(--ae-ink);
+        font-family: var(--ae-font-mono);
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+      }
+
+      /* mono evidence (hash, immutable record): ink, selectable, wraps */
+      .insp-mono {
+        font-family: var(--ae-font-mono);
+        color: var(--ae-ink);
+        word-break: break-all;
+        line-height: 1.7;
+        cursor: text;
+      }
+      .insp-mono-dim {
+        color: var(--ae-ink-muted);
+      }
+
+      /* SOURCE REFS — the operator's complaint #3: icon→path gap too
+         tight. The gap is now a generous 0.6em, and the whole row is the
+         link so the cursor never crosses a dead band. */
+      .insp-refs {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .insp-refs li + li {
+        border-top: 1px solid var(--ae-line);
+      }
+      .insp-refs a {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        align-items: baseline;
+        font-family: var(--ae-font-mono);
+        text-decoration: none;
+        color: var(--ae-ink);
+        padding: 0.4em 0;
+      }
+      .insp-refs a:hover {
+        color: var(--ae-accent);
+      }
+      .insp-ref-path {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.6em; /* the fix: was cramped; now the icon breathes */
+        min-width: 0;
+      }
+      .insp-ref-path .ae-icon {
+        width: 0.9em;
+        height: 0.9em;
+        vertical-align: -0.05em;
+        color: var(--ae-ink-faint);
+        flex: none;
+      }
+      .insp-ref-line {
+        color: var(--ae-ink-faint);
+        flex: none;
+      }
+
+      /* gate line: glyph carries the hue, verdict stays ink */
+      .insp-gate {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+        padding: 0.15em 0;
+        color: var(--ae-ink);
+      }
+      .insp-gate .ae-icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.1em;
+      }
+      .insp-gate-meta {
+        margin-left: auto;
+        color: var(--ae-ink-faint);
+        font-family: var(--ae-font-mono);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .insp-risk {
+        color: var(--ae-ink-muted);
+        line-height: 1.65;
+      }
+
+      /* trace spans (used by the disclosure treatment + inline) */
+      .insp-trace-span {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        font-family: var(--ae-font-mono);
+        color: var(--ae-ink-muted);
+        padding: 0.15em 0;
+      }
+      .insp-trace-span .insp-ms {
+        color: var(--ae-ink);
+        font-variant-numeric: tabular-nums;
+      }
+      .insp-trace-span.is-slow .insp-ms {
+        font-weight: var(--ae-w-medium);
+      }
+
+      .insp .ae-fold summary {
+        padding: 0.6em 0;
+        font-size: 13px;
+      }
+
+      /* ── treatment a · SPACING + RULE ─────────────────────────────────
+         A dominant header band (wash, hairline-bottomed, the title in the
+         16px content register so it out-weighs the 11px section labels),
+         then generous inter-section space and a hairline rule between
+         each section so none bleeds into the next. */
+      .insp.h-rule .insp-head {
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding-top: 1.4em;
+        padding-bottom: 1.4em;
+      }
+      .insp.h-rule .insp-title {
+        font-size: 16px;
+        letter-spacing: 0.16em;
+      }
+      .insp.h-rule .insp-sec {
+        border-top: 1px solid var(--ae-line);
+        margin-top: 1.4em;
+        padding-top: 1.4em;
+      }
+      .insp.h-rule .insp-sec:first-child {
+        border-top: 0;
+        margin-top: 0.4em;
+      }
+      .insp.h-rule .insp-sec-h {
+        color: var(--ae-ink-muted);
+        margin-bottom: 0.7em;
+      }
+
+      /* ── treatment b · PROGRESSIVE DISCLOSURE ─────────────────────────
+         The header stays dominant; the two sections that matter at a
+         glance (trial, gate state) rest open, and the rest are .ae-fold
+         rows that expand on demand — less noise resting, full depth on
+         intent. */
+      .insp.h-fold .insp-head {
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding-top: 1.4em;
+        padding-bottom: 1.4em;
+      }
+      .insp.h-fold .insp-title {
+        font-size: 16px;
+        letter-spacing: 0.16em;
+      }
+      .insp.h-fold .insp-body {
+        padding-top: 0.4em;
+      }
+      /* the two resting-open sections get a hairline + air */
+      .insp.h-fold .insp-sec.is-open-sec {
+        border-top: 1px solid var(--ae-line);
+        margin-top: 1.1em;
+        padding-top: 1.1em;
+      }
+      .insp.h-fold .insp-sec.is-open-sec:first-of-type {
+        border-top: 0;
+        margin-top: 0.6em;
+      }
+      .insp.h-fold .insp-sec-h {
+        color: var(--ae-ink-muted);
+      }
+      /* the folded remainder: align its summary label to the section
+         voice — mono, spaced, faint→ink */
+      .insp.h-fold .ae-fold {
+        margin-top: 0;
+      }
+      .insp.h-fold .ae-fold:first-of-type {
+        margin-top: 1.1em;
+      }
+      .insp.h-fold .ae-fold summary {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-medium);
+        text-transform: uppercase;
+      }
+      .insp.h-fold .ae-fold summary:hover {
+        color: var(--ae-ink);
+      }
+      .insp.h-fold .ae-fold > :not(summary) {
+        padding-bottom: 0.9em;
+      }
+
+      /* ── treatment c · LEDGER / MARGIN LABELS ─────────────────────────
+         A two-column ledger: mono section labels set in a left margin
+         with a hairline lead-rule, content in the right column. The eye
+         scans the labels straight down the margin. Header dominates as a
+         full-width band above the ledger. */
+      .insp.h-ledger .insp-head {
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding-top: 1.4em;
+        padding-bottom: 1.4em;
+      }
+      .insp.h-ledger .insp-title {
+        font-size: 16px;
+        letter-spacing: 0.16em;
+      }
+      .insp.h-ledger .insp-sec {
+        display: grid;
+        grid-template-columns: 6.5em 1fr;
+        gap: 0 1.1em;
+        border-left: 1px solid var(--ae-line);
+        margin-left: 0.2em;
+        padding-left: 1.1em;
+        padding-top: 1.2em;
+      }
+      .insp.h-ledger .insp-sec:first-child {
+        padding-top: 0.6em;
+      }
+      .insp.h-ledger .insp-sec-h {
+        margin: 0;
+        padding-top: 0.05em;
+        color: var(--ae-ink-muted);
+        position: relative;
+      }
+      /* the lead-line: a short hairline tying the margin label to the rail */
+      .insp.h-ledger .insp-sec-h::before {
+        content: '';
+        position: absolute;
+        left: -1.1em;
+        top: 0.6em;
+        width: 0.7em;
+        height: 1px;
+        background: var(--ae-line);
+      }
+
+      /* ── treatment d · ACCENT MARKER ──────────────────────────────────
+         The quiet-accent variant: the header is a wash band with an
+         accent tab on its left edge, and each section label wears a small
+         accent leader tick. Accent as a wayfinding marker (loosened
+         doctrine), spent sparingly so it stays a signal. */
+      .insp.h-accent .insp-head {
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        border-left: 3px solid var(--ae-accent);
+        padding-top: 1.4em;
+        padding-bottom: 1.4em;
+      }
+      .insp.h-accent .insp-title {
+        font-size: 16px;
+        letter-spacing: 0.16em;
+      }
+      .insp.h-accent .insp-sec {
+        border-top: 1px solid var(--ae-line);
+        margin-top: 1.3em;
+        padding-top: 1.3em;
+      }
+      .insp.h-accent .insp-sec:first-child {
+        border-top: 0;
+        margin-top: 0.4em;
+      }
+      .insp.h-accent .insp-sec-h {
+        color: var(--ae-ink-muted);
+        display: flex;
+        align-items: baseline;
+        gap: 0.55em;
+      }
+      .insp.h-accent .insp-sec-h::before {
+        content: '';
+        width: 0.5em;
+        height: 2px;
+        background: var(--ae-accent);
+        flex: none;
+        transform: translateY(-0.25em);
+      }
+
+      /* ── the LAB footer + mode toggle ───────────────────────────────── */
+      .proto-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--ae-line);
+        margin-top: 4em;
+        padding-top: 1.2em;
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+        <path d="M14 2v5h5" />
+      </symbol>
+    </svg>
+
+    <main class="lab">
+      <div class="lab-head">
+        <span class="ae-name" style="letter-spacing: 0.3em"
+          >AESTHETIC · LAB</span
+        >
+        <span style="display: inline-flex; gap: 1.4em; align-items: baseline">
+          <span class="ae-chrome">flex 2b · row &amp; evidence re-roll</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </div>
+      <p class="lab-intro">
+        Two primitives the workbench flagged as weak, isolated and re-rolled on
+        the loosened doctrine — the <b>accent is usable with taste</b> and a
+        selected row <b>may lift</b>. Pick a treatment in each fan; the data
+        never moves, only the emphasis. Click the rows. Toggle the mode — both
+        light and dark must hold.
+      </p>
+
+      <!-- ═══════════════════ FAN 1 · THE SELECTED ROW ═══════════════════ -->
+      <section class="fan" aria-label="fan 1 — the selected row">
+        <p class="fan-title"><b>FAN 1</b> · THE SELECTED ROW</p>
+        <p class="fan-sub">
+          A generic row-emphasis primitive. The control (A · baseline) is the
+          current weak left-tick. Each treatment animates once on select, eased
+          and reduced-motion-safe. Click any row to move the selection.
+        </p>
+
+        <nav class="fan-picker" id="selPicker" aria-label="selection treatment">
+          <button data-sel="base" class="is-active">A baseline</button>
+          <button data-sel="wash">B wash fill</button>
+          <button data-sel="accent">C accent bar</button>
+          <button data-sel="lift">D lift</button>
+          <button data-sel="ink">E accent ink</button>
+          <button data-sel="playhead">F playhead</button>
+          <button data-sel="bracket">G bracket</button>
+        </nav>
+
+        <div class="arena" id="arena" data-sel="base">
+          <div class="arena-scroll">
+            <table class="ae-table">
+              <caption class="ae-sr">
+                Generic records; the selected row demonstrates the live emphasis
+                treatment.
+              </caption>
+              <thead>
+                <tr>
+                  <th>item</th>
+                  <th>status</th>
+                  <th class="num">score</th>
+                  <th>tag</th>
+                  <th class="num">runs</th>
+                </tr>
+              </thead>
+              <tbody id="arenaBody">
+                <tr data-row="r-09" class="is-sel" tabindex="0">
+                  <td class="ae-item ar-key">backoff-jitter</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.94</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">38</td>
+                </tr>
+                <tr data-row="r-08" tabindex="0">
+                  <td class="ae-item ar-key">deadline-budget</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.88</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">40</td>
+                </tr>
+                <tr data-row="r-07" tabindex="0">
+                  <td class="ae-item ar-key">circuit-break</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >flaky</span
+                    >
+                  </td>
+                  <td class="num">0.72</td>
+                  <td><span class="ae-tag">opus</span></td>
+                  <td class="num">61</td>
+                </tr>
+                <tr data-row="r-06" tabindex="0">
+                  <td class="ae-item ar-key">token-bucket</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.81</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">44</td>
+                </tr>
+                <tr data-row="r-05" tabindex="0">
+                  <td class="ae-item ar-key">naive-retry</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-err"><use href="#i-x" /></svg
+                      >fail</span
+                    >
+                  </td>
+                  <td class="num">0.31</td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">12</td>
+                </tr>
+                <tr data-row="r-04" tabindex="0">
+                  <td class="ae-item ar-key">hedged-request</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.90</td>
+                  <td><span class="ae-tag">opus</span></td>
+                  <td class="num">37</td>
+                </tr>
+                <tr data-row="r-03" tabindex="0">
+                  <td class="ae-item ar-key">deadline-only</td>
+                  <td>
+                    <span class="ar-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >flaky</span
+                    >
+                  </td>
+                  <td class="num">0.66</td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">29</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="fan-cap" id="selCap"></p>
+      </section>
+
+      <!-- ════════════════ FAN 2 · THE EVIDENCE HIERARCHY ════════════════ -->
+      <section class="fan" aria-label="fan 2 — the evidence hierarchy">
+        <p class="fan-title"><b>FAN 2</b> · THE EVIDENCE HIERARCHY</p>
+        <p class="fan-sub">
+          A generic inspector / detail-panel primitive. Same dossier content as
+          the workbench — trial, source refs, run record, composition hash, gate
+          state, residual risk, trace. Each treatment makes the EVIDENCE header
+          dominant, separates the sections so they stop bleeding, and breathes
+          the file-icon→path gap in source refs.
+        </p>
+
+        <nav
+          class="fan-picker"
+          id="inspPicker"
+          aria-label="hierarchy treatment"
+        >
+          <button data-h="h-rule" class="is-active">a spacing + rule</button>
+          <button data-h="h-fold">b progressive disclosure</button>
+          <button data-h="h-ledger">c ledger / margin</button>
+          <button data-h="h-accent">d accent marker</button>
+        </nav>
+
+        <div class="insp-frame">
+          <div class="insp h-rule" id="insp">
+            <div class="insp-head">
+              <span class="insp-title">EVIDENCE</span>
+              <span class="insp-head-id">t-09 · r-0091</span>
+            </div>
+
+            <div class="insp-body">
+              <!-- TRIAL (rests open in the disclosure treatment) -->
+              <section class="insp-sec is-open-sec" data-sec="trial">
+                <p class="insp-sec-h">TRIAL</p>
+                <div class="insp-sec-content">
+                  <dl style="margin: 0">
+                    <div class="insp-kv">
+                      <dt>id</dt>
+                      <dd>t-09</dd>
+                    </div>
+                    <div class="insp-kv">
+                      <dt>candidate</dt>
+                      <dd>backoff-jitter</dd>
+                    </div>
+                    <div class="insp-kv">
+                      <dt>score</dt>
+                      <dd>0.94</dd>
+                    </div>
+                  </dl>
+                </div>
+              </section>
+
+              <!-- GATE STATE (rests open in the disclosure treatment) -->
+              <section class="insp-sec is-open-sec" data-sec="gate">
+                <p class="insp-sec-h">GATE STATE</p>
+                <div class="insp-sec-content">
+                  <div class="insp-gate">
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    <span>contract met</span>
+                    <span class="insp-gate-meta">4 / 4</span>
+                  </div>
+                  <div class="insp-gate">
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    <span>regression clean</span>
+                    <span class="insp-gate-meta">182 / 182</span>
+                  </div>
+                  <div class="insp-gate">
+                    <svg class="ae-icon ae-warn"><use href="#i-tri" /></svg>
+                    <span>cost budget</span>
+                    <span class="insp-gate-meta">0.41 / 0.40</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- SOURCE REFS (folds in the disclosure treatment) -->
+              <section class="insp-sec" data-sec="refs">
+                <p class="insp-sec-h">SOURCE REFS</p>
+                <div class="insp-sec-content">
+                  <ul class="insp-refs">
+                    <li>
+                      <a href="#"
+                        ><span class="insp-ref-path"
+                          ><svg class="ae-icon"><use href="#i-file" /></svg
+                          >runtime/retry.rs</span
+                        ><span class="insp-ref-line">L40–88</span></a
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="insp-ref-path"
+                          ><svg class="ae-icon"><use href="#i-file" /></svg
+                          >runtime/backoff.rs</span
+                        ><span class="insp-ref-line">L12–54</span></a
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="insp-ref-path"
+                          ><svg class="ae-icon"><use href="#i-file" /></svg
+                          >tests/transient.rs</span
+                        ><span class="insp-ref-line">L1–96</span></a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <!-- RUN RECORD (folds in the disclosure treatment) -->
+              <section class="insp-sec" data-sec="run">
+                <p class="insp-sec-h">RUN RECORD · IMMUTABLE</p>
+                <div class="insp-sec-content">
+                  <p class="insp-mono">
+                    r-0091
+                    <span class="insp-mono-dim">· 2026-06-15T09:41:22Z</span>
+                  </p>
+                  <p class="insp-mono insp-mono-dim" style="margin-top: 0.3em">
+                    exec 14.1s · 1 retry · sonnet-4.6
+                  </p>
+                </div>
+              </section>
+
+              <!-- COMPOSITION HASH (folds in the disclosure treatment) -->
+              <section class="insp-sec" data-sec="hash">
+                <p class="insp-sec-h">COMPOSITION HASH</p>
+                <div class="insp-sec-content">
+                  <p class="insp-mono">sha256:7f3c9a1e8b04d2f6a91c</p>
+                  <p class="insp-mono insp-mono-dim" style="margin-top: 0.3em">
+                    retry → jittered backoff → deadline
+                  </p>
+                </div>
+              </section>
+
+              <!-- RESIDUAL RISK (folds in the disclosure treatment) -->
+              <section class="insp-sec" data-sec="risk">
+                <p class="insp-sec-h">RESIDUAL RISK</p>
+                <div class="insp-sec-content">
+                  <p class="insp-risk">
+                    Backoff caps at 3 attempts; a fourth consecutive transient
+                    still fails the task. Unobserved under triage load — open as
+                    a regression probe before promotion.
+                  </p>
+                </div>
+              </section>
+
+              <!-- TRACE (folds in the disclosure treatment) -->
+              <section class="insp-sec" data-sec="trace">
+                <p class="insp-sec-h">TRACE</p>
+                <div class="insp-sec-content">
+                  <div class="insp-trace-span">
+                    <span>plan.compose</span><span class="insp-ms">412 ms</span>
+                  </div>
+                  <div class="insp-trace-span is-slow">
+                    <span>tool.fetch_logs · retry</span
+                    ><span class="insp-ms">1840 ms</span>
+                  </div>
+                  <div class="insp-trace-span">
+                    <span>tool.fetch_logs · ok</span
+                    ><span class="insp-ms">503 ms</span>
+                  </div>
+                  <div class="insp-trace-span is-slow">
+                    <span>model.reason</span
+                    ><span class="insp-ms">6120 ms</span>
+                  </div>
+                  <div class="insp-trace-span">
+                    <span>tool.run_tests</span
+                    ><span class="insp-ms">3210 ms</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <p class="fan-cap" id="inspCap"></p>
+      </section>
+
+      <footer class="proto-foot">
+        <span>prototype — never ships</span>
+        <span class="ae-chrome">flex 2b · row &amp; evidence re-roll</span>
+      </footer>
+    </main>
+
+    <script>
+      /* ── mode toggle: lifted from flex-1, drives every .js-mode ─────── */
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      /* ═══ FAN 1 · the selected row ═══════════════════════════════════ */
+      const arena = document.getElementById('arena');
+      const arenaBody = document.getElementById('arenaBody');
+      const selPicker = document.getElementById('selPicker');
+      const selCap = document.getElementById('selCap');
+
+      const SEL_CAPS = {
+        base: 'A · BASELINE (control) — a hairline ink left-marker, nothing more. <b>Trade-off:</b> quietest and most house-pure, but in a dense table the tick is easy to lose — this is the weakness the fan is answering. Reads worst the moment the table gets long.',
+        wash: 'B · WASH FILL — the row fills with --ae-wash and the ink marker draws in. <b>Trade-off:</b> calm and unmistakably native, but the fill is close to the hover wash, so the marker has to carry the "this is selected, not hovered" distinction. <span class="verdict">Strong default for calm operator tables.</span>',
+        accent:
+          'C · ACCENT BAR — a 3px accent bar over a 7% accent wash; the key cell goes accent. <b>Trade-off:</b> the loosened-doctrine pick — accent as the selection signal. Most scannable of the set; spend it on exactly one row so it stays a signal, not a theme. <span class="verdict">Best for a dense arena scanned at speed.</span>',
+        lift: 'D · LIFT — a soft-depth elevation + hairline frame; the row rises 1px. <b>Trade-off:</b> reads as a physically raised plane (the panel/dialog family already lifts), excellent for a "pulled-forward" record — but the shadow needs horizontal room and is the loudest, least-dense option. Dark mode swaps the shadow for a brighter hairline frame.',
+        ink: 'E · ACCENT INK — the key cell flips ink→accent with a draw-on underline; an accent inset marker anchors the left. <b>Trade-off:</b> selection as a typographic event, no fill at all — very light and elegant, but the signal lives in one cell, so a reader scanning the right columns can miss it.',
+        playhead:
+          'F · PLAYHEAD — a full-height accent rule rides the left edge (a timeline read) over a faint wash, growing from center like a landing cursor. <b>Trade-off:</b> the rule is a precise "you are here" for sequential / run data; on non-temporal tables the timeline metaphor is slightly borrowed.',
+        bracket:
+          'G · BRACKET — corner brackets clasp the first cell (an operator "locked target"), drawn on select, no fill. <b>Trade-off:</b> distinctive and information-dense, with real character; the brackets are small, so on tiny row heights they crowd the glyph — give the rows breath.',
+      };
+
+      function applySel(key) {
+        arena.dataset.sel = key;
+        selCap.innerHTML = SEL_CAPS[key];
+        selPicker
+          .querySelectorAll('button')
+          .forEach((b) =>
+            b.classList.toggle('is-active', b.dataset.sel === key),
+          );
+        /* re-trigger the select animation on the live row so switching a
+           treatment shows its entrance, not just its resting state */
+        const sel = arenaBody.querySelector('tr.is-sel');
+        if (sel) retriggerSelect(sel);
+      }
+
+      /* moving the selection: a forced reflow restarts the keyframes so
+         the micro-animation fires on every fresh pick (one-shot each) */
+      function retriggerSelect(tr) {
+        tr.querySelectorAll('td').forEach((td) => {
+          td.style.animation = 'none';
+          /* read offsetWidth to flush, then clear so the CSS rule's
+             animation reattaches and replays */
+          void td.offsetWidth;
+          td.style.animation = '';
+        });
+      }
+
+      function selectRow(tr) {
+        arenaBody
+          .querySelectorAll('tr')
+          .forEach((r) => r.classList.toggle('is-sel', r === tr));
+        retriggerSelect(tr);
+      }
+
+      arenaBody.querySelectorAll('tr').forEach((tr) => {
+        tr.addEventListener('click', () => selectRow(tr));
+        tr.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectRow(tr);
+          }
+        });
+      });
+
+      selPicker
+        .querySelectorAll('button')
+        .forEach((btn) =>
+          btn.addEventListener('click', () => applySel(btn.dataset.sel)),
+        );
+
+      /* ═══ FAN 2 · the evidence hierarchy ════════════════════════════ */
+      const insp = document.getElementById('insp');
+      const inspPicker = document.getElementById('inspPicker');
+      const inspCap = document.getElementById('inspCap');
+
+      const INSP_CAPS = {
+        'h-rule':
+          'a · SPACING + RULE — a wash header band with the title in the 16px content register (out-weighing the 11px labels), then a hairline rule and generous air between every section. <b>Trade-off:</b> the most robust fix — nothing bleeds, nothing is hidden, scans top to bottom — at the cost of vertical length; a tall dossier scrolls. <span class="verdict">Safest answer to "a pile of noise".</span>',
+        'h-fold':
+          'b · PROGRESSIVE DISCLOSURE — the dominant header stays; trial and gate state rest open, the rest collapse into mono fold rows that expand on demand. <b>Trade-off:</b> the quietest at a glance and the shortest resting height, but it hides evidence behind a click — wrong when an operator needs every field visible to make a call.',
+        'h-ledger':
+          'c · LEDGER / MARGIN — mono labels in a left margin with lead-lines tying them to a hairline rail; content in the right column. <b>Trade-off:</b> the labels scan straight down the margin like a contents rail, very legible for skimming — but the fixed label column narrows the content measure, which can crowd long hashes and paths.',
+        'h-accent':
+          'd · ACCENT MARKER — a wash header with an accent tab on its edge and a small accent leader on each section label. <b>Trade-off:</b> accent as quiet wayfinding (loosened doctrine); the ticks give the eye a rhythm to follow without shouting — provided the accent appears nowhere else in the panel, or it stops being a marker.',
+      };
+
+      function applyInsp(key) {
+        insp.className = 'insp ' + key;
+        inspCap.innerHTML = INSP_CAPS[key];
+        inspPicker
+          .querySelectorAll('button')
+          .forEach((b) => b.classList.toggle('is-active', b.dataset.h === key));
+        renderInspBody(key);
+      }
+
+      /* the disclosure treatment needs the folded sections wrapped in
+         <details>; every other treatment shows them as plain sections.
+         We rebuild the body content from the same source nodes so the
+         data is written ONCE and only its container changes. */
+      const OPEN_SECS = new Set(['trial', 'gate']);
+      const inspBody = insp.querySelector('.insp-body');
+      /* cache the original section nodes once, before any rewrap */
+      const SECTIONS = [...inspBody.querySelectorAll('.insp-sec')].map(
+        (sec) => ({
+          key: sec.dataset.sec,
+          label: sec.querySelector('.insp-sec-h').textContent,
+          content: sec.querySelector('.insp-sec-content'),
+          node: sec,
+        }),
+      );
+
+      function renderInspBody(key) {
+        if (key !== 'h-fold') {
+          /* plain sections, original order, no folds */
+          inspBody.replaceChildren(
+            ...SECTIONS.map((s) => {
+              s.node.replaceChildren(sectionLabel(s.label, s.key), s.content);
+              return s.node;
+            }),
+          );
+          return;
+        }
+        /* disclosure: open sections plain, the rest as <details> */
+        const frag = document.createDocumentFragment();
+        SECTIONS.forEach((s) => {
+          if (OPEN_SECS.has(s.key)) {
+            s.node.replaceChildren(sectionLabel(s.label, s.key), s.content);
+            frag.appendChild(s.node);
+          } else {
+            const d = document.createElement('details');
+            d.className = 'ae-fold';
+            const sum = document.createElement('summary');
+            sum.textContent = s.label;
+            d.appendChild(sum);
+            d.appendChild(s.content);
+            frag.appendChild(d);
+          }
+        });
+        inspBody.replaceChildren(frag);
+      }
+
+      function sectionLabel(text, key) {
+        const p = document.createElement('p');
+        p.className = 'insp-sec-h';
+        p.textContent = text;
+        return p;
+      }
+
+      inspPicker
+        .querySelectorAll('button')
+        .forEach((btn) =>
+          btn.addEventListener('click', () => applyInsp(btn.dataset.h)),
+        );
+
+      /* ── boot both fans ─────────────────────────────────────────────── */
+      applySel('base');
+      applyInsp('h-rule');
+    </script>
+  </body>
+</html>

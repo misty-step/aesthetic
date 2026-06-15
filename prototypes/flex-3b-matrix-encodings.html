@@ -1,0 +1,639 @@
+<!doctype html>
+<!--
+  LAB flexibility · 3 of 3 (round 2) — THE INSTRUMENT MATRIX, re-rolled.
+  One task×candidate eval grid, six cell-encodings swapped live, ordered
+  most-restrained → most-expressive. Research-driven (Bertin retinal
+  variables, Cleveland-McGill ranking, Tufte small-multiples, Few bullet,
+  the Papers-with-Code winner-bold convention, grayscale/CVD-safe heat).
+  The law here is PROVISIONAL — filled ink-value heat and a freely-spent
+  accent are both on the table; the question is which reads best, not
+  which obeys a rule. Bonus: the reorder lever (sort rows by difficulty)
+  to cluster structure, after Bertin's reorderable matrix.
+  TRADE-OFF per encoding is printed in the caption; pick favorites, kill
+  the rest.
+  VERDICT (round 2): NUMERALS + WINNER is the default — exact, restrained,
+  low scores lightened, the column headers right-aligned to match their
+  numeric cells. ACCENT-MARKS-THE-WINNER is kept as an option to EXPOSE to
+  consuming apps (draw the eye to the per-task winner), not the default.
+  Ink-heat / databar / dot rejected as too aggressive or noisy.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · flex 3b · matrix encodings</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ─────────────────────
+         The matrix is rendered from one data array; the picker swaps the
+         CELL ENCODER. Everything is token-driven so light/dark both work,
+         and the "heat" encoders mix ink↔surface so they invert correctly
+         in dark mode (high value = dark cell in light, light cell in
+         dark — the lightness channel reads either way). */
+
+      .mx-head {
+        max-width: 46em;
+      }
+      .mx-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        margin: 1.6em 0 0.5em;
+      }
+
+      /* the scroll frame: the matrix scrolls inside this, the page never
+         does. Wide candidate columns overrun the measure → sideways scroll
+         with a frozen header row and a frozen task column. */
+      .mx-scroll {
+        overflow: auto;
+        max-height: min(60vh, 30em);
+        border: 1px solid var(--ae-line);
+      }
+      table.mx {
+        border-collapse: separate;
+        border-spacing: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.5;
+        width: max-content;
+        min-width: 100%;
+      }
+      .mx th,
+      .mx td {
+        border-bottom: 1px solid var(--ae-line);
+        border-right: 1px solid var(--ae-line);
+        padding: 0;
+      }
+      .mx thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--ae-wash);
+        color: var(--ae-ink-muted);
+        font-weight: var(--ae-w-regular);
+        text-align: left;
+        vertical-align: bottom;
+        padding: 0.5em 0.8em;
+        white-space: nowrap;
+      }
+      /* dataviz: a column header shares its column's alignment. The
+         candidate columns are numeric (cells right-aligned), so their
+         headers right-align too; only "hypothesis" stays left. */
+      .mx thead th:not(.corner) {
+        text-align: right;
+      }
+      .mx thead th .meta {
+        display: block;
+        color: var(--ae-ink-faint);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+      }
+      /* the frozen task column */
+      .mx .rowhead {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: var(--ae-surface);
+        text-align: left;
+        font-family: var(--ae-font);
+        font-size: 13px;
+        padding: 0.4em 1em 0.4em 0.8em;
+        min-width: 16rem;
+        max-width: 16rem;
+      }
+      .mx .rowhead .rid {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        color: var(--ae-ink-faint);
+        letter-spacing: 0.08em;
+        margin-right: 0.7em;
+      }
+      .mx thead .corner {
+        position: sticky;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        background: var(--ae-wash);
+        min-width: 16rem;
+        max-width: 16rem;
+      }
+      /* the data cell: a fixed footprint so columns read as a field */
+      .mx td.cell {
+        min-width: 7.5rem;
+        height: 2.6em;
+        text-align: right;
+        vertical-align: middle;
+        padding: 0.2em 0.8em;
+        transition:
+          background-color var(--ae-soft) var(--ae-ease),
+          color var(--ae-soft) var(--ae-ease);
+      }
+      .cell-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5em;
+      }
+      .cell-num {
+        font-variant-numeric: tabular-nums;
+      }
+      .cell-num.win {
+        font-weight: var(--ae-w-black);
+      }
+      .cell-num.faint {
+        color: var(--ae-ink-faint);
+      }
+      .cell-ico {
+        width: 0.9em;
+        height: 0.9em;
+        flex: none;
+      }
+      /* databar: ink fill on a wash track under the number */
+      .cell-bar {
+        position: relative;
+        height: 3px;
+        background: var(--ae-wash);
+        margin-top: 0.28em;
+        width: 100%;
+      }
+      .cell-bar > i {
+        position: absolute;
+        inset: 0 auto 0 0;
+        background: var(--ae-ink);
+      }
+      .cell-stack {
+        width: 100%;
+      }
+      /* cleveland dot: a faint full-width track, a dot at value */
+      .cell-track {
+        position: relative;
+        height: 1.05em;
+        width: 100%;
+      }
+      .cell-track::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--ae-line);
+      }
+      .cell-dot {
+        position: absolute;
+        top: 50%;
+        width: 0.5em;
+        height: 0.5em;
+        transform: translate(-50%, -50%);
+        background: var(--ae-ink);
+      }
+      .cell-dot.ok {
+        background: var(--ae-ok);
+      }
+      .cell-dot.warn {
+        background: var(--ae-warn);
+      }
+      .cell-dot.err {
+        background: var(--ae-err);
+      }
+      .cell-dot-num {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 11px;
+        color: var(--ae-ink-faint);
+      }
+      /* accent winner */
+      .cell-num.acc {
+        color: var(--ae-accent);
+        font-weight: var(--ae-w-black);
+      }
+      .cell-acc-dot {
+        width: 0.4em;
+        height: 0.4em;
+        background: var(--ae-accent);
+        flex: none;
+      }
+
+      .mx-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 1.6em;
+        align-items: center;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ae-ink-muted);
+        margin-top: 0.9em;
+      }
+      .mx-legend .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+      }
+      .mx-legend svg {
+        width: 0.95em;
+        height: 0.95em;
+      }
+      .mx-tools {
+        display: flex;
+        gap: 1.4em;
+        align-items: baseline;
+        margin: 1.1em 0 0.4em;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+      .mx-tools button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        color: var(--ae-ink-muted);
+        cursor: pointer;
+        padding: 0 0 0.2em;
+      }
+      .mx-tools button.on {
+        color: var(--ae-ink);
+        border-bottom-color: var(--ae-ink);
+      }
+
+      .proto-cap {
+        max-width: 46em;
+        margin: 1.3em 0 0;
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 2em);
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.8em 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .proto-picker button:hover {
+        color: var(--ae-ink);
+      }
+      .proto-picker button.is-active {
+        color: var(--ae-surface);
+        background: var(--ae-ink);
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="#">AESTHETIC · LAB</a>
+        <span style="display: inline-flex; gap: 1.6em; align-items: baseline">
+          <span class="ae-chrome">flex 3b · matrix encodings</span>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+
+      <main class="ae-stage ae-stage-scroll">
+        <div style="width: 100%">
+          <div class="mx-head">
+            <h1 class="ae-h" style="margin-bottom: 0.5em">
+              ARENA · cache-key-collision · TRIAL MATRIX
+            </h1>
+            <p class="ae-dim">
+              Ten hypotheses × six candidate compositions, one shared 0–100
+              scale. Six ways to draw the same cell — restrained ink to
+              expressive field. Swap them; sort to cluster. Same data every
+              time.
+            </p>
+          </div>
+
+          <p class="mx-cap" id="mxcap">TABLE 1 · numerals · winner per task</p>
+          <div class="mx-scroll">
+            <table class="mx" id="mx">
+              <thead>
+                <tr id="mxhead"></tr>
+              </thead>
+              <tbody id="mxbody"></tbody>
+            </table>
+          </div>
+
+          <div class="mx-legend" id="mxlegend"></div>
+
+          <div class="mx-tools">
+            <span>order</span>
+            <button data-sort="as" class="on">as listed</button>
+            <button data-sort="hard">hardest task first</button>
+            <span style="margin-left: 1em; color: var(--ae-ink-faint)"
+              >— the reorder lever clusters strong/weak rows (Bertin)</span
+            >
+          </div>
+
+          <p class="ae-dim proto-cap" id="cap">
+            1 · NUMERALS + WINNER — pure ink: the score in mono, status on a
+            leading glyph, the best candidate per task in heavy weight (the
+            leaderboard convention). Most restrained, most exact; but only
+            best/not-best is encoded — no magnitude field to scan.
+          </p>
+        </div>
+      </main>
+
+      <footer class="ae-bar">
+        <p class="ae-chrome">prototype — never ships</p>
+        <p class="ae-chrome">flex 3 / 3 · matrix encodings</p>
+      </footer>
+    </div>
+
+    <nav class="proto-picker" aria-label="encoding picker">
+      <button data-enc="num" class="is-active">1 numerals·winner</button>
+      <button data-enc="heat">2 ink heat</button>
+      <button data-enc="bar">3 databar</button>
+      <button data-enc="dot">4 dot·scale</button>
+      <button data-enc="acc">5 accent·winner</button>
+      <button data-enc="dual">6 dual</button>
+    </nav>
+
+    <script>
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      const CANDS = [
+        { n: 'cand·01', m: 'sonnet·v3' },
+        { n: 'cand·02', m: 'sonnet·v4' },
+        { n: 'cand·03', m: 'opus·lo' },
+        { n: 'cand·04', m: 'opus·hi' },
+        { n: 'cand·05', m: 'haiku·rag' },
+        { n: 'cand·06', m: 'ensemble' },
+      ];
+      const ROWS = [
+        { id: 'H-01', t: 'evicts on TTL expiry', s: [92, 95, 88, 97, 71, 96] },
+        {
+          id: 'H-02',
+          t: 'no stale read after write',
+          s: [84, 90, 38, 93, 44, 89],
+        },
+        {
+          id: 'H-03',
+          t: 'survives key churn 10k/s',
+          s: [64, 73, 86, 91, 29, 83],
+        },
+        { id: 'H-04', t: 'idempotent on retry', s: [88, 87, 82, 90, 80, 92] },
+        {
+          id: 'H-05',
+          t: 'bounded memory under load',
+          s: [41, 66, 79, 85, 62, 81],
+        },
+        {
+          id: 'H-06',
+          t: 'warm-start under 200ms',
+          s: [76, 81, 69, 72, 88, 84],
+        },
+        {
+          id: 'H-07',
+          t: 'no cross-tenant leak',
+          s: [99, 99, 98, 100, 94, 100],
+        },
+        {
+          id: 'H-08',
+          t: 'graceful on backend down',
+          s: [58, 78, 83, 87, 47, 80],
+        },
+        {
+          id: 'H-09',
+          t: 'consistent under partition',
+          s: [53, 70, 81, 88, 35, 79],
+        },
+        { id: 'H-10', t: 'no thundering herd', s: [72, 77, 90, 93, 60, 86] },
+      ];
+      const statusOf = (v) => (v >= 78 ? 'ok' : v >= 45 ? 'warn' : 'err');
+      const GLYPH = { ok: 'i-check', warn: 'i-minus', err: 'i-x' };
+      const ico = (st, cls) =>
+        `<svg class="ae-icon ae-${st} cell-ico ${cls || ''}"><use href="#${GLYPH[st]}"/></svg>`;
+      const heatBg = (v) =>
+        `color-mix(in oklab, var(--ae-ink) ${Math.round(v * 0.8)}%, var(--ae-surface))`;
+
+      // encoders return { inner, bg, fg }
+      const ENC = {
+        num(v, ctx) {
+          const st = statusOf(v);
+          return {
+            inner: `<span class="cell-row">${ico(st)}<span class="cell-num ${ctx.rowWin ? 'win' : ''} ${st === 'err' ? 'faint' : ''}">${v}</span></span>`,
+          };
+        },
+        heat(v) {
+          const st = statusOf(v);
+          return {
+            bg: heatBg(v),
+            fg: v >= 62 ? 'var(--ae-surface)' : 'var(--ae-ink)',
+            inner: `<span class="cell-row"><span class="cell-num">${v}</span></span>`,
+          };
+        },
+        bar(v) {
+          const st = statusOf(v);
+          return {
+            inner: `<div class="cell-stack"><span class="cell-row">${ico(st)}<span class="cell-num ${st === 'err' ? 'faint' : ''}">${v}</span></span><div class="cell-bar"><i style="width:${v}%"></i></div></div>`,
+          };
+        },
+        dot(v) {
+          const st = statusOf(v);
+          return {
+            inner: `<div class="cell-track"><span class="cell-dot ${st}" style="left:${v}%"></span><span class="cell-dot-num">${v}</span></div>`,
+          };
+        },
+        acc(v, ctx) {
+          const st = statusOf(v);
+          if (ctx.rowWin)
+            return {
+              inner: `<span class="cell-row"><span class="cell-acc-dot"></span><span class="cell-num acc">${v}</span></span>`,
+            };
+          return {
+            inner: `<span class="cell-row"><span class="cell-num ${st === 'err' ? 'faint' : ''}">${v}</span></span>`,
+          };
+        },
+        dual(v) {
+          const st = statusOf(v);
+          return {
+            bg: heatBg(v),
+            fg: v >= 62 ? 'var(--ae-surface)' : 'var(--ae-ink)',
+            inner: `<span class="cell-row">${ico(st)}<span class="cell-num">${v}</span></span>`,
+          };
+        },
+      };
+
+      const CAPS = {
+        num: '1 · NUMERALS + WINNER — pure ink: the score in mono, status on a leading glyph, the best candidate per task in heavy weight (the leaderboard convention). Most restrained, most exact; but only best/not-best is encoded — no magnitude field to scan.',
+        heat: '2 · INK-LIGHTNESS HEAT — magnitude as grayscale value (white→ink, capped so text survives), the number printed on top. Bertin’s value channel; CVD- and photocopier-safe; the canonical dense-matrix read. Scan a column and the field shows where strength concentrates — no hue spent. Trade-off: ~5–7 distinguishable steps; the number rescues precision.',
+        bar: '3 · DATABAR — your favorite, refined: the number with a 0–100 ink bar beneath it and status on a leading glyph. Length is the 2nd-most-accurate channel after position; you get exact + approximate + status in one footprint. Trade-off: bars read from each row’s own baseline, so cross-row comparison is slightly weaker than aligned dots.',
+        dot: '4 · DOT ON A COMMON SCALE — one dot per cell on a shared 0–100 hairline track; the dot carries status as its only hue. Highest-precision magnitude (position on a common scale, Cleveland-McGill #1). Trade-off: reads as points, not a heat field; near-equal values can collide.',
+        acc: '5 · ACCENT MARKS THE WINNER — every cell pure ink, the accent spent on exactly one cell per task: the winner. Hue as a selective channel (“this is the one”), never magnitude. One drop of color, maximum taste — the freely-spent accent earning its place. Trade-off: encodes only the argmax; rides on top of the numbers, doesn’t replace them.',
+        dual: '6 · DUAL — ink-lightness field + the exact number + a status glyph: scannable as a field, exact on inspection, status-legible at once (the confusion-matrix workhorse). Most expressive, most ink. Trade-off: the richest of the set — closest to a heatmap, so it spends the most of the page’s calm.',
+      };
+      const STATUSKEY = `<span class="k">${ico('ok')} pass</span><span class="k">${ico('warn')} partial</span><span class="k">${ico('err')} fail</span>`;
+      const LEGEND = {
+        num: STATUSKEY + '<span class="k">bold = best per task</span>',
+        heat:
+          STATUSKEY + '<span class="k">darker = higher score (0–100)</span>',
+        bar: STATUSKEY + '<span class="k">bar length = score (0–100)</span>',
+        dot:
+          STATUSKEY +
+          '<span class="k">dot position = score on a shared 0–100 track</span>',
+        acc:
+          STATUSKEY +
+          '<span class="k"><span class="cell-acc-dot" style="display:inline-block"></span> accent = winner</span>',
+        dual: STATUSKEY + '<span class="k">darker = higher score</span>',
+      };
+
+      let curEnc = 'num';
+      let curSort = 'as';
+
+      function orderedRows() {
+        if (curSort === 'as') return ROWS.map((r, i) => ({ r, i }));
+        // hardest first: ascending mean score
+        return ROWS.map((r, i) => ({
+          r,
+          i,
+          mean: r.s.reduce((a, b) => a + b, 0) / r.s.length,
+        })).sort((a, b) => a.mean - b.mean);
+      }
+
+      function render() {
+        // header
+        const head = document.getElementById('mxhead');
+        head.innerHTML =
+          '<th class="corner">hypothesis</th>' +
+          CANDS.map(
+            (c) => `<th>${c.n}<span class="meta">${c.m}</span></th>`,
+          ).join('');
+        // body
+        const enc = ENC[curEnc];
+        const body = document.getElementById('mxbody');
+        body.innerHTML = orderedRows()
+          .map(({ r }) => {
+            const max = Math.max(...r.s);
+            const cells = r.s
+              .map((v) => {
+                const out = enc(v, { rowWin: v === max });
+                const style =
+                  (out.bg ? `background:${out.bg};` : '') +
+                  (out.fg ? `color:${out.fg};` : '');
+                return `<td class="cell" style="${style}">${out.inner}</td>`;
+              })
+              .join('');
+            return `<tr><td class="rowhead"><span class="rid">${r.id}</span>${r.t}</td>${cells}</tr>`;
+          })
+          .join('');
+        document.getElementById('mxlegend').innerHTML = LEGEND[curEnc];
+        document.getElementById('mxcap').textContent =
+          'TABLE 1 · ' +
+          {
+            num: 'numerals · winner per task',
+            heat: 'ink-lightness heat',
+            bar: 'databar · number + length',
+            dot: 'dot on a common 0–100 scale',
+            acc: 'accent marks the winner',
+            dual: 'dual · heat + number + glyph',
+          }[curEnc];
+        document.getElementById('cap').textContent = CAPS[curEnc];
+      }
+
+      const picker = document.querySelector('.proto-picker');
+      picker.querySelectorAll('button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          curEnc = btn.dataset.enc;
+          picker
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('is-active', b === btn));
+          render();
+        }),
+      );
+      document.querySelectorAll('.mx-tools button').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          curSort = btn.dataset.sort;
+          document
+            .querySelectorAll('.mx-tools button')
+            .forEach((b) => b.classList.toggle('on', b === btn));
+          render();
+        }),
+      );
+      render();
+    </script>
+  </body>
+</html>

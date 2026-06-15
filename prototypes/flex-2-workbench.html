@@ -1,0 +1,1497 @@
+<!doctype html>
+<!--
+  LAB flexibility · 2 — THE WORKBENCH. The fourth-archetype bet: after
+  screen, shell, and document, a dense operator WORKBENCH — the Daedalus
+  task dossier. Three hairline-divided panes in one viewport: a RAIL of
+  places, a DESK of work (task header · compact toolbar · tabbed scroll-
+  table), and a collapsible INSPECTOR of evidence. The law never moves:
+  one size (16px / 13px chrome), radius 0, hairlines only, status on the
+  glyph, the accent never on a button, and the PAGE never scrolls — each
+  pane scrolls inside itself.
+  TRADE-OFF: more surface area to maintain and prove; internal scroll
+  regions multiply; the viewport law holds only because every pane
+  scrolls itself, and a sticky thead must be wired by hand per table.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · flex 2 · the workbench</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+
+         THE PROPOSAL: a WORKBENCH archetype, the operator sibling of
+         .ae-shell. .ae-shell is a 2-column rail+desk; the workbench adds
+         a third hairline-divided column — a collapsible evidence
+         INSPECTOR — and solves dense data inside the viewport law with a
+         sticky-thead scroll-table that lives in the desk's tab panel.
+
+         Everything below composes the existing primitives (.ae-rail,
+         .ae-desk, .ae-tabs, .ae-table, .ae-tag, .ae-fold, .ae-crumbs,
+         .ae-meter, .ae-button-compact, status .ae-icon) and only adds
+         the THREE-PANE GRID and the SCROLL-TABLE plumbing the system
+         does not yet name. No new color, no new size, no fill. */
+
+      /* THE WORKBENCH SHELL — rail · desk · inspector, one viewport.
+         Same bones as .ae-shell, one column wider. The page never
+         scrolls (body/html locked below); each pane owns min-height:0 +
+         its own overflow. */
+      /* the LAB shell stacks a caption strip over the workbench, both
+         inside one locked viewport — the page itself never scrolls */
+      body {
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .wb {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 13.5rem minmax(0, 1fr) 23rem;
+        overflow: hidden;
+      }
+
+      /* every pane is a min-height:0 scroll container so the grid can
+         hand each one a bounded height and let it scroll itself */
+      .wb-rail,
+      .wb-desk,
+      .wb-inspector {
+        min-height: 0;
+        min-width: 0;
+        overflow-y: auto;
+      }
+
+      /* RAIL — reuse the .ae-rail register; hairline on the right */
+      .wb-rail {
+        border-right: 1px solid var(--ae-line);
+      }
+
+      /* DESK — a column whose HEADER and TABS stay put while only the
+         table body below them scrolls. The desk itself does not scroll;
+         its inner .wb-panel-scroll does. */
+      .wb-desk {
+        overflow-y: hidden; /* the desk frames; the table body scrolls */
+        display: grid;
+        grid-template-rows: auto auto 1fr; /* header · tabs · scroll-table */
+        padding: 0;
+      }
+
+      .wb-desk-head {
+        padding: 1.6em 2.4em 1.2em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      .wb-task-id {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-muted);
+      }
+
+      /* the ONE 800 thing on the desk — the task title, by weight only */
+      .wb-task-title {
+        font-weight: var(--ae-w-black);
+        margin: 0.1em 0 0.7em;
+        text-wrap: balance;
+      }
+
+      .wb-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6em;
+        margin-top: 1.1em;
+      }
+
+      .wb-toolbar .wb-tool-gap {
+        flex: 1 1 1em;
+        min-width: 0.5em;
+      }
+
+      /* the tab strip lives on its own hairline-bottomed band, flush
+         with the table that scrolls beneath it */
+      .wb-desk-tabs {
+        padding: 1.1em 2.4em 0;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      /* THE SCROLL-TABLE — the viewport-law answer for tall/wide data.
+         The wrapper is the ONLY scroller in the desk (x AND y); the
+         thead sticks to its top, the desk header + tabs above never
+         move. Horizontal overflow scrolls the wide table inside the
+         same frame. */
+      .wb-panel-scroll {
+        min-height: 0;
+        overflow: auto;
+        padding: 0 2.4em 2em;
+      }
+
+      /* the panels are display-swapped by state; only one is on */
+      .wb-panel {
+        display: none;
+      }
+      .wb-panel.is-on {
+        display: block;
+      }
+
+      /* the table caption rides above the sticky head, scrolling away */
+      .wb-table-cap {
+        position: sticky;
+        left: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        padding: 1.4em 0 1em;
+      }
+
+      /* the sticky head: the wash band freezes at the scroll top. A
+         hairline drawn via box-shadow (not border) so it survives the
+         collapsed top border-edge during sticky paint. */
+      .wb-panel-scroll .ae-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--ae-wash);
+        box-shadow: inset 0 -1px 0 var(--ae-line);
+      }
+
+      /* operator rhythm: tighten the table's row breath a touch below
+         the comfortable default, staying in the 13px chrome register */
+      .wb-panel-scroll .ae-table th,
+      .wb-panel-scroll .ae-table td {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        white-space: nowrap;
+      }
+
+      /* the selected row: ink-weight + a hairline LEFT-MARKER drawn with
+         a box-shadow inset, never a fill. The marker is ink; the cells
+         lift from muted to ink. */
+      .wb-table-body tr.is-sel td {
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+        color: var(--ae-ink);
+      }
+      .wb-table-body tr.is-sel td.wb-cand {
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* a row is selectable: the cursor and a quiet hover wash say so */
+      .wb-table-body tr {
+        cursor: pointer;
+        transition: background-color var(--ae-quick) var(--ae-ease);
+      }
+      .wb-table-body tr:hover td {
+        background: var(--ae-wash);
+      }
+
+      /* the status cell: glyph carries the hue, the word stays ink */
+      .wb-stat {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.45em;
+        white-space: nowrap;
+      }
+      .wb-stat .ae-icon {
+        width: 0.95em;
+        height: 0.95em;
+        vertical-align: -0.05em;
+      }
+
+      /* INSPECTOR — the third pane, hairline on its left. A column of
+         hairline-topped sections, each a quiet evidence block. */
+      .wb-inspector {
+        border-left: 1px solid var(--ae-line);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wb-insp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 1.6em 1.6em 1.1em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      .wb-insp-title {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-muted);
+      }
+
+      /* close-inspector: a quiet mono × in the chrome register */
+      .wb-insp-x {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        color: var(--ae-ink-faint);
+        display: inline-flex;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .wb-insp-x:hover {
+        color: var(--ae-ink);
+      }
+      .wb-insp-x .ae-icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.15em;
+      }
+
+      .wb-insp-body {
+        padding: 0 1.6em 2em;
+      }
+
+      /* an evidence section: hairline-topped rhythm, a mono label, then
+         the matter. Whitespace + hairlines, no boxes. */
+      .wb-sec {
+        border-top: 1px solid var(--ae-line);
+        padding: 1.2em 0 0.2em;
+      }
+      .wb-sec:first-child {
+        border-top: 0;
+      }
+      .wb-sec-h {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        margin-bottom: 0.7em;
+      }
+
+      /* the immutable record / hash: mono, ink, selectable, wraps hard */
+      .wb-mono {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink);
+        word-break: break-all;
+        line-height: 1.7;
+        cursor: text;
+      }
+      .wb-mono-dim {
+        color: var(--ae-ink-muted);
+      }
+
+      /* a key/value evidence row: label muted-left, value ink-right */
+      .wb-kv {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1em;
+        padding: 0.2em 0;
+      }
+      .wb-kv dt {
+        color: var(--ae-ink-muted);
+      }
+      .wb-kv dd {
+        margin: 0;
+        color: var(--ae-ink);
+        font-family: var(--ae-font-mono);
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+      }
+
+      /* source refs: a hairline-ruled list of mono paths, the whole row
+         a link so the cursor never crosses a dead band */
+      .wb-refs {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .wb-refs li + li {
+        border-top: 1px solid var(--ae-line);
+      }
+      .wb-refs a {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        text-decoration: none;
+        color: var(--ae-ink);
+        padding: 0.4em 0;
+        margin: 0;
+      }
+      .wb-refs a:hover {
+        color: var(--ae-accent);
+      }
+      .wb-refs .wb-ref-line {
+        color: var(--ae-ink-faint);
+      }
+
+      /* the gate line: glyph carries the hue, the verdict word stays ink */
+      .wb-gate {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+        padding: 0.2em 0;
+        color: var(--ae-ink);
+      }
+      .wb-gate .ae-icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.1em;
+      }
+      .wb-gate .wb-gate-meta {
+        margin-left: auto;
+        color: var(--ae-ink-faint);
+        font-family: var(--ae-font-mono);
+      }
+
+      /* residual risk: muted prose, the honest sentence */
+      .wb-risk {
+        color: var(--ae-ink-muted);
+        line-height: 1.65;
+      }
+
+      /* the trace drilldown reuses .ae-fold; tighten its breath to the
+         inspector's register and make the spans mono */
+      .wb-inspector .ae-fold summary {
+        padding: 0.65em 0;
+        font-size: 13px;
+      }
+      .wb-trace-span {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        padding: 0.18em 0;
+      }
+      .wb-trace-span .wb-ms {
+        color: var(--ae-ink);
+        font-variant-numeric: tabular-nums;
+      }
+      .wb-trace-span.is-slow .wb-ms {
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* the empty inspector: the honest hint, centered breath */
+      .wb-insp-empty {
+        padding: 2.6em 1.6em;
+        color: var(--ae-ink-muted);
+        line-height: 1.7;
+      }
+      .wb-insp-empty .ae-tag {
+        margin-top: 1em;
+      }
+
+      /* ── the four states, swapped on .wb by the picker ────────────────
+         The bones are written ONCE. A state class toggles which tab is
+         live, whether a row is selected, and whether the inspector is
+         populated or collapsed — never the markup, never the law. */
+
+      /* by default the inspector shows its empty hint; a populated body
+         is revealed only when a state asks for it */
+      .wb-insp-full {
+        display: none;
+      }
+
+      /* B · TRIAL SELECTED — fill the inspector, mark the row (handled
+         by JS adding .is-sel to the chosen row) */
+      .wb.s-selected .wb-insp-full {
+        display: block;
+      }
+      .wb.s-selected .wb-insp-empty {
+        display: none;
+      }
+
+      /* C · RUNS/TRACES — same populated inspector, the runs tab live
+         (tab + panel swap handled by JS). The table is taller here. */
+      .wb.s-runs .wb-insp-full {
+        display: block;
+      }
+      .wb.s-runs .wb-insp-empty {
+        display: none;
+      }
+
+      /* D · INSPECTOR COLLAPSED — drop the third column; the desk
+         reflows wider. Proves the inspector is optional. */
+      .wb.s-collapsed {
+        grid-template-columns: 13.5rem minmax(0, 1fr);
+      }
+      .wb.s-collapsed .wb-inspector {
+        display: none;
+      }
+
+      /* the picker — shared LAB instrument, lifted verbatim from flex-1 */
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        display: flex;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        background: #fff;
+        color: #151515;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #737373;
+        padding: 0.8em 1.1em;
+        transition: color 160ms ease;
+      }
+      .proto-picker button:hover {
+        color: #151515;
+      }
+      .proto-picker button.is-active {
+        color: #fff;
+        background: #151515;
+      }
+
+      /* the caption: a fixed slip top-center stating what to judge. It
+         must not steal desk height, so it floats over the rail/desk
+         seam rather than taking a row. */
+      /* the caption is a reserved top strip — LAB chrome above the
+         workbench, never floating over the task header */
+      .proto-cap {
+        flex: none;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ae-ink-muted);
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.55em 4em;
+        margin: 0;
+        text-align: center;
+      }
+      .proto-cap b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      /* the LAB mode toggle, parked top-right out of the cap's way */
+      .proto-mode {
+        position: fixed;
+        top: 0.9em;
+        right: 1em;
+        z-index: 30;
+      }
+
+      /* ── responsive: keep it sane, mirror .ae-shell's fold ─────────── */
+
+      /* under ~900px the inspector drops; the desk reflows to 2-pane.
+         (The collapsed state already proves this layout reads.) */
+      @media (max-width: 900px) {
+        .wb {
+          grid-template-columns: 13.5rem minmax(0, 1fr);
+        }
+        .wb-inspector {
+          display: none;
+        }
+      }
+
+      /* under 640px the rail steps aside, just like .ae-shell */
+      @media (max-width: 640px) {
+        .wb {
+          grid-template-columns: 1fr;
+        }
+        .wb-rail {
+          display: none;
+        }
+        .wb-desk-head,
+        .wb-desk-tabs,
+        .wb-panel-scroll {
+          padding-left: 1.2rem;
+          padding-right: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <!-- running: a quiet activity glyph (Lucide loader-pinwheel-lite) -->
+      <symbol id="i-dot" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3" />
+      </symbol>
+      <!-- play: run a trial -->
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <path d="M6 3v18l15-9Z" />
+      </symbol>
+      <!-- overflow menu (vertical dots) -->
+      <symbol id="i-dots" viewBox="0 0 24 24">
+        <circle cx="12" cy="5" r="1" />
+        <circle cx="12" cy="12" r="1" />
+        <circle cx="12" cy="19" r="1" />
+      </symbol>
+      <!-- a chevron for the rail group / drilldown affordance -->
+      <symbol id="i-chev" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <!-- a file glyph for source refs -->
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+        <path d="M14 2v5h5" />
+      </symbol>
+    </svg>
+
+    <p class="ae-chrome proto-cap" id="cap">
+      <b>A · OVERVIEW</b> — the arena tab, no selection. The inspector holds its
+      honest hint. Judge the three-pane rhythm: hairline seams, one 800 title,
+      the table body scrolling under a frozen head while header and tabs stay
+      put.
+    </p>
+
+    <button class="ae-mode js-mode proto-mode" aria-label="toggle color mode">
+      <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+      <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+    </button>
+
+    <!-- THE WORKBENCH — written once; the picker swaps only .wb's state
+         class. Same bones, different state. -->
+    <div class="wb" id="wb">
+      <!-- ─────────────────────────── RAIL ─────────────────────────── -->
+      <nav class="ae-rail wb-rail" aria-label="places">
+        <a
+          class="ae-name"
+          href="#"
+          style="letter-spacing: 0.26em; color: var(--ae-ink)"
+          >DAEDALUS</a
+        >
+
+        <h2 class="ae-h">ARENAS</h2>
+        <a href="#" aria-current="true">triage</a>
+        <a href="#">regression</a>
+        <a href="#">redteam</a>
+        <a href="#">long-horizon</a>
+
+        <h2 class="ae-h">OPEN TASKS</h2>
+        <a href="#" class="is-active">DAE-4127</a>
+        <a href="#">DAE-4126</a>
+        <a href="#">DAE-4119</a>
+        <a href="#">DAE-4102</a>
+
+        <h2 class="ae-h">SYNTHESIS</h2>
+        <a href="#">master · sweep-19</a>
+
+        <div class="ae-rail-foot">
+          <p class="ae-chrome" style="margin-bottom: 0.6em">
+            aesthetic · v2.5.1
+          </p>
+          <button class="ae-mode js-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- ─────────────────────────── DESK ─────────────────────────── -->
+      <section class="wb-desk" aria-label="task workbench">
+        <!-- task header: id, the one 800 title, crumbs, compact toolbar -->
+        <header class="wb-desk-head">
+          <p class="wb-task-id">DAE-4127 · triage arena · contract v3</p>
+          <h1 class="wb-task-title">
+            Harden the retry path so transient tool errors never surface as task
+            failures
+          </h1>
+          <nav class="ae-crumbs" aria-label="breadcrumb">
+            <ol>
+              <li><a href="#">triage</a></li>
+              <li><a href="#">DAE-4127</a></li>
+              <li aria-current="page">arena</li>
+            </ol>
+          </nav>
+
+          <div class="wb-toolbar" role="toolbar" aria-label="task actions">
+            <button class="ae-button ae-button-compact">
+              <svg class="ae-icon" style="width: 0.95em; height: 0.95em">
+                <use href="#i-play" /></svg
+              >Run trial
+            </button>
+            <button class="ae-button ae-button-quiet ae-button-compact">
+              Approve
+            </button>
+            <button class="ae-button ae-button-quiet ae-button-compact">
+              Reject
+            </button>
+            <span class="wb-tool-gap"></span>
+            <span class="ae-tag">hash 7f3c9a1</span>
+            <button
+              class="ae-button ae-button-quiet ae-button-compact"
+              aria-label="more actions"
+              data-ae-tip="more actions"
+            >
+              <svg class="ae-icon" style="width: 1.1em; height: 1.1em">
+                <use href="#i-dots" /></svg
+              ><span class="ae-sr">more actions</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- the tab strip: real .ae-tabs, one band, hairline-bottomed -->
+        <div class="wb-desk-tabs">
+          <div class="ae-tabs" role="tablist" id="tabs">
+            <button role="tab" aria-selected="true" data-panel="arena">
+              arena
+            </button>
+            <button role="tab" aria-selected="false" data-panel="composition">
+              composition
+            </button>
+            <button role="tab" aria-selected="false" data-panel="runs">
+              runs
+            </button>
+            <button role="tab" aria-selected="false" data-panel="traces">
+              traces
+            </button>
+            <span class="ae-nav-ind"></span>
+          </div>
+        </div>
+
+        <!-- THE SCROLL-TABLE: the desk's only scroller. Header + tabs
+             above stay put; this body scrolls (x AND y) with a sticky
+             thead. -->
+        <div class="wb-panel-scroll">
+          <!-- ARENA panel: candidate × trial eval grid -->
+          <div class="wb-panel is-on" data-panel="arena" role="tabpanel">
+            <p class="wb-table-cap">EVAL ARENA · 12 TRIALS · 4 CANDIDATES</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>trial</th>
+                  <th>candidate</th>
+                  <th>status</th>
+                  <th class="num">score</th>
+                  <th>model</th>
+                  <th class="num">cost · usd</th>
+                  <th class="num">tok · k</th>
+                  <th class="num">latency</th>
+                </tr>
+              </thead>
+              <tbody class="wb-table-body" id="arenaBody">
+                <tr data-trial="t-09" class="is-sel">
+                  <td class="ae-item">t-09</td>
+                  <td class="wb-cand">backoff-jitter</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.94</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">0.41</td>
+                  <td class="num">38.2</td>
+                  <td class="num">14.1s</td>
+                </tr>
+                <tr data-trial="t-08">
+                  <td class="ae-item">t-08</td>
+                  <td class="wb-cand">backoff-jitter</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.91</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">0.39</td>
+                  <td class="num">37.0</td>
+                  <td class="num">13.6s</td>
+                </tr>
+                <tr data-trial="t-07">
+                  <td class="ae-item">t-07</td>
+                  <td class="wb-cand">circuit-break</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >flaky</span
+                    >
+                  </td>
+                  <td class="num">0.72</td>
+                  <td><span class="ae-tag">opus</span></td>
+                  <td class="num">1.18</td>
+                  <td class="num">61.4</td>
+                  <td class="num">22.8s</td>
+                </tr>
+                <tr data-trial="t-06">
+                  <td class="ae-item">t-06</td>
+                  <td class="wb-cand">circuit-break</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >flaky</span
+                    >
+                  </td>
+                  <td class="num">0.69</td>
+                  <td><span class="ae-tag">opus</span></td>
+                  <td class="num">1.21</td>
+                  <td class="num">63.0</td>
+                  <td class="num">23.4s</td>
+                </tr>
+                <tr data-trial="t-05">
+                  <td class="ae-item">t-05</td>
+                  <td class="wb-cand">naive-retry</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-err"><use href="#i-x" /></svg
+                      >fail</span
+                    >
+                  </td>
+                  <td class="num">0.31</td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">0.07</td>
+                  <td class="num">11.9</td>
+                  <td class="num">6.2s</td>
+                </tr>
+                <tr data-trial="t-04">
+                  <td class="ae-item">t-04</td>
+                  <td class="wb-cand">naive-retry</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-err"><use href="#i-x" /></svg
+                      >fail</span
+                    >
+                  </td>
+                  <td class="num">0.28</td>
+                  <td><span class="ae-tag">haiku</span></td>
+                  <td class="num">0.06</td>
+                  <td class="num">11.2</td>
+                  <td class="num">5.9s</td>
+                </tr>
+                <tr data-trial="t-03">
+                  <td class="ae-item">t-03</td>
+                  <td class="wb-cand">deadline-budget</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.88</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">0.44</td>
+                  <td class="num">40.7</td>
+                  <td class="num">15.3s</td>
+                </tr>
+                <tr data-trial="t-02">
+                  <td class="ae-item">t-02</td>
+                  <td class="wb-cand">deadline-budget</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >pass</span
+                    >
+                  </td>
+                  <td class="num">0.86</td>
+                  <td><span class="ae-tag">sonnet</span></td>
+                  <td class="num">0.43</td>
+                  <td class="num">40.1</td>
+                  <td class="num">15.0s</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              Best of 4: <span class="ae-item">backoff-jitter</span> at 0.94,
+              promoted to the regression arena. naive-retry eliminated — the
+              transient surfaced as a task failure twice.
+            </p>
+          </div>
+
+          <!-- COMPOSITION panel: the candidate compositions under test -->
+          <div class="wb-panel" data-panel="composition" role="tabpanel">
+            <p class="wb-table-cap">CANDIDATE COMPOSITIONS · 4 UNDER TEST</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>candidate</th>
+                  <th>composition</th>
+                  <th>gate</th>
+                  <th class="num">best</th>
+                  <th class="num">trials</th>
+                  <th>hash</th>
+                </tr>
+              </thead>
+              <tbody class="wb-table-body">
+                <tr>
+                  <td class="ae-item wb-cand">backoff-jitter</td>
+                  <td>retry → jittered backoff → deadline</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ready</span
+                    >
+                  </td>
+                  <td class="num">0.94</td>
+                  <td class="num">3</td>
+                  <td><span class="ae-tag">7f3c9a1</span></td>
+                </tr>
+                <tr>
+                  <td class="ae-item wb-cand">deadline-budget</td>
+                  <td>deadline → budget guard → retry</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ready</span
+                    >
+                  </td>
+                  <td class="num">0.88</td>
+                  <td class="num">3</td>
+                  <td><span class="ae-tag">b1d40e8</span></td>
+                </tr>
+                <tr>
+                  <td class="ae-item wb-cand">circuit-break</td>
+                  <td>retry → circuit breaker → fallback</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >held</span
+                    >
+                  </td>
+                  <td class="num">0.72</td>
+                  <td class="num">3</td>
+                  <td><span class="ae-tag">c92a7f4</span></td>
+                </tr>
+                <tr>
+                  <td class="ae-item wb-cand">naive-retry</td>
+                  <td>retry × 3 (no backoff)</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-err"><use href="#i-x" /></svg
+                      >cut</span
+                    >
+                  </td>
+                  <td class="num">0.31</td>
+                  <td class="num">3</td>
+                  <td><span class="ae-tag">0a5e1b2</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              Each composition is a frozen graph of tool steps. The hash binds
+              the graph to its trials; a changed step is a new candidate.
+            </p>
+          </div>
+
+          <!-- RUNS panel: tall, to prove the internal scroll + sticky head -->
+          <div class="wb-panel" data-panel="runs" role="tabpanel">
+            <p class="wb-table-cap">RUN RECORDS · 40 · IMMUTABLE</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>run</th>
+                  <th>trial</th>
+                  <th>status</th>
+                  <th>started</th>
+                  <th class="num">dur</th>
+                  <th class="num">retries</th>
+                  <th class="num">cost</th>
+                </tr>
+              </thead>
+              <tbody class="wb-table-body" id="runsBody">
+                <!-- rows injected by the runs generator for honest depth -->
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              Runs are append-only. A run is never edited or deleted; a
+              re-execution is a new run with a new id and timestamp.
+            </p>
+          </div>
+
+          <!-- TRACES panel: span-level drilldown rows -->
+          <div class="wb-panel" data-panel="traces" role="tabpanel">
+            <p class="wb-table-cap">TRACE · run r-0091 · 9 SPANS</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>span</th>
+                  <th>op</th>
+                  <th>status</th>
+                  <th class="num">start · ms</th>
+                  <th class="num">dur · ms</th>
+                  <th>attempt</th>
+                </tr>
+              </thead>
+              <tbody class="wb-table-body">
+                <tr>
+                  <td class="ae-item">s-00</td>
+                  <td>plan.compose</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">0</td>
+                  <td class="num">412</td>
+                  <td>1 / 1</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-01</td>
+                  <td>tool.fetch_logs</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg
+                      >retry</span
+                    >
+                  </td>
+                  <td class="num">412</td>
+                  <td class="num">1840</td>
+                  <td>2 / 3</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-02</td>
+                  <td>tool.fetch_logs</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">2252</td>
+                  <td class="num">503</td>
+                  <td>3 / 3</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-03</td>
+                  <td>model.reason</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">2755</td>
+                  <td class="num">6120</td>
+                  <td>1 / 1</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-04</td>
+                  <td>tool.apply_patch</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">8875</td>
+                  <td class="num">980</td>
+                  <td>1 / 1</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-05</td>
+                  <td>tool.run_tests</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">9855</td>
+                  <td class="num">3210</td>
+                  <td>1 / 1</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-06</td>
+                  <td>gate.evaluate</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">13065</td>
+                  <td class="num">220</td>
+                  <td>1 / 1</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">s-07</td>
+                  <td>record.commit</td>
+                  <td>
+                    <span class="wb-stat"
+                      ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                      >ok</span
+                    >
+                  </td>
+                  <td class="num">13285</td>
+                  <td class="num">96</td>
+                  <td>1 / 1</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              span s-01 carried the transient: fetch_logs failed once, the
+              jittered backoff recovered it on attempt 2 — the failure never
+              reached the task verdict.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── INSPECTOR ──────────────────────── -->
+      <aside class="wb-inspector" aria-label="evidence">
+        <div class="wb-insp-head">
+          <span class="wb-insp-title">EVIDENCE</span>
+          <button
+            class="wb-insp-x js-collapse"
+            aria-label="close inspector"
+            data-ae-tip="close inspector"
+          >
+            <svg class="ae-icon"><use href="#i-x" /></svg>
+            <span class="ae-sr">close inspector</span>
+          </button>
+        </div>
+
+        <!-- empty hint: shown until a trial is selected -->
+        <div class="wb-insp-empty">
+          <p class="ae-item" style="color: var(--ae-ink)">No trial selected.</p>
+          <p>
+            Pick a row in the arena to load its run record, composition hash,
+            gate state, residual risk, and trace.
+          </p>
+          <span class="ae-tag">awaiting selection</span>
+        </div>
+
+        <!-- the dossier: revealed when a trial is selected -->
+        <div class="wb-insp-full">
+          <div class="wb-insp-body">
+            <section class="wb-sec">
+              <p class="wb-sec-h">TRIAL</p>
+              <div class="wb-kv">
+                <dt>id</dt>
+                <dd>t-09</dd>
+              </div>
+              <div class="wb-kv">
+                <dt>candidate</dt>
+                <dd>backoff-jitter</dd>
+              </div>
+              <div class="wb-kv">
+                <dt>score</dt>
+                <dd>0.94</dd>
+              </div>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">SOURCE REFS</p>
+              <ul class="wb-refs">
+                <li>
+                  <a href="#"
+                    ><span
+                      ><svg
+                        class="ae-icon"
+                        style="
+                          width: 0.9em;
+                          height: 0.9em;
+                          color: var(--ae-ink-faint);
+                        "
+                      >
+                        <use href="#i-file" /></svg
+                      >runtime/retry.rs</span
+                    ><span class="wb-ref-line">L40–88</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span
+                      ><svg
+                        class="ae-icon"
+                        style="
+                          width: 0.9em;
+                          height: 0.9em;
+                          color: var(--ae-ink-faint);
+                        "
+                      >
+                        <use href="#i-file" /></svg
+                      >runtime/backoff.rs</span
+                    ><span class="wb-ref-line">L12–54</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span
+                      ><svg
+                        class="ae-icon"
+                        style="
+                          width: 0.9em;
+                          height: 0.9em;
+                          color: var(--ae-ink-faint);
+                        "
+                      >
+                        <use href="#i-file" /></svg
+                      >tests/transient.rs</span
+                    ><span class="wb-ref-line">L1–96</span></a
+                  >
+                </li>
+              </ul>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">RUN RECORD · IMMUTABLE</p>
+              <p class="wb-mono">
+                r-0091
+                <span class="wb-mono-dim">· 2026-06-15T09:41:22Z</span>
+              </p>
+              <p class="wb-mono wb-mono-dim" style="margin-top: 0.4em">
+                exec 14.1s · 1 retry · sonnet-4.6
+              </p>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">COMPOSITION HASH</p>
+              <p class="wb-mono">sha256:7f3c9a1e8b04d2f6a91c</p>
+              <p
+                class="wb-mono wb-mono-dim"
+                style="margin-top: 0.4em; font-size: 13px"
+              >
+                retry → jittered backoff → deadline
+              </p>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">GATE STATE</p>
+              <div class="wb-gate">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                <span>contract met</span>
+                <span class="wb-gate-meta">4 / 4</span>
+              </div>
+              <div class="wb-gate">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                <span>regression clean</span>
+                <span class="wb-gate-meta">182 / 182</span>
+              </div>
+              <div class="wb-gate">
+                <svg class="ae-icon ae-warn"><use href="#i-tri" /></svg>
+                <span>cost budget</span>
+                <span class="wb-gate-meta">0.41 / 0.40</span>
+              </div>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">RESIDUAL RISK</p>
+              <p class="wb-risk">
+                Backoff caps at 3 attempts; a fourth consecutive transient still
+                fails the task. Unobserved under triage load — open as a
+                regression probe before promotion.
+              </p>
+            </section>
+
+            <section class="wb-sec">
+              <p class="wb-sec-h">TRACE</p>
+              <details class="ae-fold" open>
+                <summary>9 spans · 1 recovered</summary>
+                <div class="wb-trace-span">
+                  <span>plan.compose</span><span class="wb-ms">412 ms</span>
+                </div>
+                <div class="wb-trace-span is-slow">
+                  <span>tool.fetch_logs · retry</span
+                  ><span class="wb-ms">1840 ms</span>
+                </div>
+                <div class="wb-trace-span">
+                  <span>tool.fetch_logs · ok</span
+                  ><span class="wb-ms">503 ms</span>
+                </div>
+                <div class="wb-trace-span is-slow">
+                  <span>model.reason</span><span class="wb-ms">6120 ms</span>
+                </div>
+                <div class="wb-trace-span">
+                  <span>tool.run_tests</span><span class="wb-ms">3210 ms</span>
+                </div>
+              </details>
+              <details class="ae-fold">
+                <summary>approvals · 1 pending</summary>
+                <div class="wb-trace-span">
+                  <span>eval · auto</span
+                  ><span class="wb-ms" style="color: var(--ae-ink-muted)"
+                    >passed</span
+                  >
+                </div>
+                <div class="wb-trace-span">
+                  <span>human · @rin</span
+                  ><span class="wb-ms" style="color: var(--ae-ink-muted)"
+                    >pending</span
+                  >
+                </div>
+              </details>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer
+      class="ae-chrome"
+      style="
+        position: fixed;
+        bottom: 0.9em;
+        left: 1.2em;
+        z-index: 25;
+        pointer-events: none;
+      "
+    >
+      prototype — never ships
+    </footer>
+
+    <nav class="proto-picker" aria-label="state picker">
+      <button data-state="" class="is-active">A overview</button>
+      <button data-state="s-selected">B trial selected</button>
+      <button data-state="s-runs">C runs / traces</button>
+      <button data-state="s-collapsed">D inspector collapsed</button>
+    </nav>
+
+    <script>
+      /* ── mode toggle: lifted from flex-1, drives every .js-mode ─────── */
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+          placeTabInd();
+        }),
+      );
+
+      /* ── tabs: swap the live panel + slide the .ae-nav-ind, exactly as
+         the system's nav recipe does (offsetLeft / offsetWidth under the
+         selected tab) ─────────────────────────────────────────────── */
+      const tabs = document.getElementById('tabs');
+      const tabBtns = [...tabs.querySelectorAll('button')];
+      const ind = tabs.querySelector('.ae-nav-ind');
+      const panels = [...document.querySelectorAll('.wb-panel')];
+
+      function placeTabInd() {
+        const active = tabs.querySelector('[aria-selected="true"]');
+        if (!active || !tabs.offsetWidth) return;
+        ind.style.left = active.offsetLeft + 'px';
+        ind.style.width = active.offsetWidth + 'px';
+      }
+
+      function showPanel(name) {
+        tabBtns.forEach((b) =>
+          b.setAttribute('aria-selected', String(b.dataset.panel === name)),
+        );
+        panels.forEach((p) =>
+          p.classList.toggle('is-on', p.dataset.panel === name),
+        );
+        // a fresh panel scrolls back to its own top
+        const scroller = document.querySelector('.wb-panel-scroll');
+        if (scroller) scroller.scrollTop = 0;
+        placeTabInd();
+      }
+
+      tabBtns.forEach((b) =>
+        b.addEventListener('click', () => showPanel(b.dataset.panel)),
+      );
+
+      /* ── row selection: mark a row (ink-weight + hairline left-marker),
+         load the dossier by flipping the shell into the selected state ── */
+      const wb = document.getElementById('wb');
+      const arenaBody = document.getElementById('arenaBody');
+      function selectRow(tr) {
+        arenaBody
+          .querySelectorAll('tr')
+          .forEach((r) => r.classList.toggle('is-sel', r === tr));
+        // selecting always reveals the inspector if it was collapsed
+        wb.classList.remove('s-collapsed');
+        wb.classList.add('s-selected');
+        syncPicker('s-selected');
+      }
+      arenaBody
+        .querySelectorAll('tr')
+        .forEach((tr) => tr.addEventListener('click', () => selectRow(tr)));
+
+      /* ── close-inspector affordance → the collapsed state ──────────── */
+      document
+        .querySelectorAll('.js-collapse')
+        .forEach((btn) =>
+          btn.addEventListener('click', () => applyState('s-collapsed')),
+        );
+
+      /* ── the runs panel: generated rows for honest internal-scroll
+         depth (40 immutable records). Real-shaped, not lorem. ────────── */
+      const runsBody = document.getElementById('runsBody');
+      (function fillRuns() {
+        const cands = [
+          'backoff-jitter',
+          'backoff-jitter',
+          'deadline-budget',
+          'circuit-break',
+          'naive-retry',
+        ];
+        const stat = [
+          ['ae-ok', 'i-check', 'pass'],
+          ['ae-ok', 'i-check', 'pass'],
+          ['ae-warn', 'i-tri', 'flaky'],
+          ['ae-err', 'i-x', 'fail'],
+        ];
+        let h = 9,
+          mn = 41;
+        const rows = [];
+        for (let i = 40; i >= 1; i--) {
+          const c = cands[i % cands.length];
+          const s =
+            c === 'naive-retry'
+              ? stat[3]
+              : c === 'circuit-break'
+                ? stat[2]
+                : stat[i % 2];
+          mn -= 7;
+          if (mn < 0) {
+            mn += 60;
+            h -= 1;
+          }
+          const id = 'r-' + String(67 + i).padStart(4, '0');
+          const trial = 't-' + String((i % 12) + 1).padStart(2, '0');
+          const dur = (4 + ((i * 7) % 21) + 0.1 * (i % 9)).toFixed(1) + 's';
+          const retries =
+            c === 'backoff-jitter' ? i % 2 : i % 4 === 0 ? 3 : i % 3;
+          const cost = (
+            c === 'naive-retry'
+              ? 0.06 + (i % 3) * 0.01
+              : c === 'circuit-break'
+                ? 1.0 + (i % 5) * 0.06
+                : 0.38 + (i % 6) * 0.02
+          ).toFixed(2);
+          const t =
+            String(h).padStart(2, '0') + ':' + String(mn).padStart(2, '0');
+          rows.push(
+            `<tr>
+              <td class="ae-item">${id}</td>
+              <td>${trial}</td>
+              <td><span class="wb-stat"><svg class="ae-icon ${s[0]}"><use href="#${s[1]}"/></svg>${s[2]}</span></td>
+              <td>09:${String(mn).padStart(2, '0')}:${String((i * 13) % 60).padStart(2, '0')}</td>
+              <td class="num">${dur}</td>
+              <td class="num">${retries}</td>
+              <td class="num">${cost}</td>
+            </tr>`,
+          );
+        }
+        runsBody.innerHTML = rows.join('');
+      })();
+
+      /* ── the picker: swaps the .wb state class + the cap copy, exactly
+         like flex-1 swaps the specimen's dial-set ───────────────────── */
+      const cap = document.getElementById('cap');
+      const picker = document.querySelector('.proto-picker');
+      const STATES = {
+        '': {
+          html: '<b>A · OVERVIEW</b> — the arena tab, no selection. The inspector holds its honest hint. Judge the three-pane rhythm: hairline seams, one 800 title, the table body scrolling under a frozen head while header and tabs stay put.',
+          tab: 'arena',
+          inspector: 'empty',
+        },
+        's-selected': {
+          html: '<b>B · TRIAL SELECTED</b> — row t-09 is marked by ink-weight and a hairline left-marker (never a fill). The inspector loads the full dossier: source refs, immutable run record, composition hash, gate state, residual risk, trace. Status still rides the glyph.',
+          tab: 'arena',
+          inspector: 'full',
+        },
+        's-runs': {
+          html: '<b>C · RUNS / TRACES</b> — the runs tab is live with 40 immutable records, tall enough that the body scrolls while the wash thead stays frozen and the desk header + tabs never move. Scroll the table; the page does not. The wide arena table also scrolls sideways inside its frame.',
+          tab: 'runs',
+          inspector: 'full',
+        },
+        's-collapsed': {
+          html: '<b>D · INSPECTOR COLLAPSED</b> — the third pane is closed; the desk reflows wider into two panes. Proves the inspector is optional. Re-open by selecting a trial. Same bones, one column dropped.',
+          tab: 'arena',
+          inspector: 'full',
+        },
+      };
+
+      function applyState(key) {
+        wb.className = 'wb' + (key ? ' ' + key : '');
+        const s = STATES[key];
+        cap.innerHTML = s.html;
+        showPanel(s.tab);
+        // make sure the demonstrated selection exists when the dossier shows
+        if (s.inspector === 'full' && key !== 's-collapsed') {
+          const first = arenaBody.querySelector('tr');
+          arenaBody
+            .querySelectorAll('tr')
+            .forEach((r) => r.classList.toggle('is-sel', r === first));
+        }
+        syncPicker(key);
+        requestAnimationFrame(placeTabInd);
+      }
+
+      function syncPicker(key) {
+        picker
+          .querySelectorAll('button')
+          .forEach((b) =>
+            b.classList.toggle('is-active', b.dataset.state === key),
+          );
+      }
+
+      picker
+        .querySelectorAll('button')
+        .forEach((btn) =>
+          btn.addEventListener('click', () => applyState(btn.dataset.state)),
+        );
+
+      /* place the indicator once fonts settle (metrics shift on load) */
+      if (document.fonts) document.fonts.ready.then(placeTabInd);
+      addEventListener('resize', placeTabInd);
+      applyState('');
+    </script>
+  </body>
+</html>
