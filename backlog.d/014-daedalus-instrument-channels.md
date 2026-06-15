@@ -96,3 +96,55 @@ primitives — plot, intervals, matrix, and all — the channels are still
 missing. Daedalus's `lab.css` is the consumer-side sketch of 1–3 and should be
 read as a proposal, then rebuilt properly here per repo law (never graduate by
 copy).
+
+## Build evidence — friction from the in-kit rebuilds (2026-06-15)
+
+Four directions were rebuilt strictly in-kit; each lane was told to STOP and log
+friction rather than hand-roll. What the kit could not express, by gap:
+
+**Gap 1–2 (plot / uncertainty).** The report figure wanted confidence whiskers
+ON the scatter points; `.ae-scatter` has dots + a frontier line but no native
+uncertainty mark, so whiskers became faint absolutely-positioned spans. → a
+`.ae-dot-whisker` / scatter error-bar belongs alongside `.ae-ci`.
+
+**Gap 3 (flow / diagram) — strongest, fully confirmed.** The system view had to
+hand-roll the whole diagram: nodes were `.ae-plate` + inline padding with ad-hoc
+border-color/style for current-vs-locked (no `.ae-node` with
+`is-current`/`is-locked`); every connector was an absolute inline `<svg>` with a
+viewBox guessed to the row box (no `.ae-wire` straight/elbow + reached/locked/
+accent variants); wires attach to invented coordinates (no PORT/anchor model, so
+node and wire geometry drift on reflow); there is no flow/canvas container; chip
+role states (leader/delivery/dominated/ref) were `.ae-tag` border overrides (no
+`.ae-chip`).
+
+**Gap 4 (report register) — fully confirmed.** No display/headline register (h1
+= body, only weight separates, so the masthead opens flat); no lede lift (a
+small-caps/rule opening device that isn't size-based); no figure-number
+primitive (`Figure 1`/`Table 1` hand-typed into `.ae-plate-cap`; wanted
+`figure`/`figcaption` + CSS counters); no break-out width utility
+(figures-break-wide-then-return needs `.ae-wide` + per-block inline
+`max-width:var(--ae-measure)` on every prose section — wanted an `.ae-bleed`/
+measure toggle); no lawful row-emphasis in `.ae-table` (marking the subject/
+delivery row needed a soft `color-mix` fill the law avoids — `.ae-table` wants
+the `mx-pick` equivalent).
+
+**Gap 5 (density) — confirmed against the densest surface.** The in-kit operator
+screen (`terminal.html`) holds the scatter + the 8×8 matrix + the read + the gate
+row in one dark viewport only by letting the matrix scroll inside `.mx-scroll`;
+at comfortable density it is genuinely tight. The locked-density cost, made
+visible — keep or revisit "comfortable only" against this artifact, not in the
+abstract.
+
+**Belongs to 013 (workbench plumbing), surfaced here.** No command/status-bar
+primitive (`.ae-statusbar` — the operator strip is hand-strung `.lab-bar` + flex
+glue); no desk-fills-viewport layout class (every operator screen re-derives
+`height:100vh; overflow; flex; min-height:0`); the winner-bold matrix cell
+(`is-best`/`is-fail`, the flex-3b encoding) lives in `lab.css` but not yet in
+`aesthetic.css`. (`kbd` already exists — use it for keyboard hints instead of
+bordered chrome.)
+
+Artifacts (in-kit rebuilds vs off-kit originals), in
+`daedalus/docs/daedalus-ui-lab/round-2/`: `comparison.html` (shell),
+`terminal.html` (dark operator), `atlas.html` (report), `schematic.html` (flow).
+The `*-offkit.html` siblings are the leave-the-kit versions, kept as each
+friction's "before".
