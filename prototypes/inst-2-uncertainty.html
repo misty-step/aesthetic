@@ -148,11 +148,10 @@
       .un-band {
         position: absolute;
         top: 50%;
-        height: 8px;
+        height: 10px;
         transform: translateY(-50%);
-        background: var(--ae-wash);
-        border-top: 1px solid var(--ae-line);
-        border-bottom: 1px solid var(--ae-line);
+        background: color-mix(in oklab, var(--ae-ink) 9%, var(--ae-surface));
+        border: 1px solid var(--ae-ink-faint);
       }
       /* the mean tick: a single ink hairline, like .ae-meter-mark */
       .un-tick {
@@ -397,11 +396,79 @@
       .un-legend .swatch {
         display: inline-block;
         width: 1.4em;
-        height: 0.55em;
-        background: var(--ae-wash);
-        border-top: 1px solid var(--ae-line);
-        border-bottom: 1px solid var(--ae-line);
+        height: 0.6em;
+        background: color-mix(in oklab, var(--ae-ink) 9%, var(--ae-surface));
+        border: 1px solid var(--ae-ink-faint);
         vertical-align: middle;
+      }
+
+      /* ── interaction layer: the part a consumer can't trivially hand-roll ─
+         (1) a draw-in once per render — the interval resolves outward from
+         the mean (the meter's width-as-resolution), and (2) a hover that
+         reveals the exact figures. Both are feedback that happens once;
+         reduced motion makes them instant. */
+      .un-band,
+      .un-whisk,
+      .un-box {
+        transform: translateY(-50%) scaleX(var(--dw, 1));
+        transform-origin: center;
+        transition: transform var(--ae-soft) var(--ae-ease);
+      }
+      .un-tick,
+      .un-dot,
+      .un-med,
+      .un-cap {
+        transition: opacity var(--ae-quick) var(--ae-ease);
+      }
+      .un-rows.is-entering .un-band,
+      .un-rows.is-entering .un-whisk,
+      .un-rows.is-entering .un-box {
+        --dw: 0.04;
+      }
+      .un-rows.is-entering .un-tick,
+      .un-rows.is-entering .un-dot,
+      .un-rows.is-entering .un-med,
+      .un-rows.is-entering .un-cap {
+        opacity: 0;
+      }
+      /* hover reveals the exact mean + interval at the track's right edge;
+         surface-backed so it rides over the baseline rule with no layout
+         shift, and clip-safe inside the scrolling frame. */
+      .un-detail {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5em;
+        padding: 0.1em 0.2em 0.1em 0.7em;
+        background: var(--ae-surface);
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+        color: var(--ae-ink);
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ae-quick) var(--ae-ease);
+      }
+      .un-detail .ci {
+        color: var(--ae-ink-faint);
+      }
+      .un-row:hover .un-detail {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .un-band,
+        .un-whisk,
+        .un-box,
+        .un-tick,
+        .un-dot,
+        .un-med,
+        .un-cap,
+        .un-detail {
+          transition: none;
+        }
       }
 
       .proto-cap {
@@ -724,6 +791,7 @@
             <div class="un-track">
               <span class="un-band" style="left:${left}%;width:${w}%"></span>
               <span class="un-tick ${isLead ? 'is-lead' : ''}" style="left:${pct(d.mean)}%"></span>
+              <span class="un-detail">μ ${fmt(d.mean)} <span class="ci">[${fmt(d.lo)}, ${fmt(d.hi)}]</span></span>
             </div>
           </div>`;
         },
@@ -740,6 +808,7 @@
               <span class="un-cap" style="left:${pct(d.lo)}%"></span>
               <span class="un-cap" style="left:${pct(d.hi)}%"></span>
               <span class="un-dot ${isLead ? 'is-lead' : ''}" style="left:${pct(d.mean)}%"></span>
+              <span class="un-detail">μ ${fmt(d.mean)} <span class="ci">[${fmt(d.lo)}, ${fmt(d.hi)}]</span></span>
             </div>
           </div>`;
         },
@@ -759,6 +828,7 @@
               <span class="un-cap" style="left:${pct(d.max)}%"></span>
               <span class="un-box" style="left:${bl}%;width:${bw}%"></span>
               <span class="un-med" style="left:${pct(d.mean)}%"></span>
+              <span class="un-detail">μ ${fmt(d.mean)} <span class="ci">IQR [${fmt(d.q1)}, ${fmt(d.q3)}]</span></span>
             </div>
           </div>`;
         },
@@ -897,14 +967,25 @@
 
       let curEnc = 'glyph';
 
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
       function render() {
         const host = el('unrows');
+        host.classList.remove('is-entering');
         if (curEnc === 'scatter') {
           host.innerHTML = renderScatter();
         } else if (curEnc === 'forest') {
           host.innerHTML = renderForest();
         } else {
           host.innerHTML = DATA.map((d) => TREAT[curEnc](d)).join('');
+        }
+        // draw-in once: collapse the interval marks, release on the next frame
+        // so they resolve outward from the mean. Skipped under reduced motion.
+        if (!reduceMotion.matches) {
+          host.classList.add('is-entering');
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => host.classList.remove('is-entering')),
+          );
         }
         // the windowed-scale note: the treatments that draw on the shared
         // windowed track print its domain (honest about the non-zero floor).

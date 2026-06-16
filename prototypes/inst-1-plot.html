@@ -5,23 +5,27 @@
   meter = level) but a lab lives on the cost×quality plane — an XY
   scatter with a Pareto frontier — and there is no primitive, so the
   consumer hand-rolls SVG. This sketches the in-idiom answer and swaps
-  six treatments live, ordered most-restrained → most-expressive.
+  five treatments live, ordered most-restrained → most-expressive.
   One constant data array of model-eval candidates (cand·01…cand·06,
   x = $/1k-tasks, y = score 0–100); the Pareto frontier (non-dominated
   set: cheaper-or-better, nobody beats it on both) is computed in JS so
-  all six treatments draw identical points. Round dots ARE the pen (cf.
+  all five treatments draw identical points. Round dots ARE the pen (cf.
   the spark's round caps); radius-0 still governs the rectangle frame,
   axes, and ticks. The view fits the viewport and never page-scrolls.
 
   Treatments (trade-off printed in the caption):
   1 bare scatter   — hairline L+B axes, mono ticks, ink round dots; no frontier.
-  2 frontier guide — dashed ink Pareto frontier; chosen pt in accent; dominated faint. PRESCRIBED.
+  2 frontier guide — dashed ink Pareto frontier; chosen pt in accent; dominated faint. PRESCRIBED DEFAULT.
   3 labeled        — 2 + persistent mono cand-id labels beside each point.
-  4 dominated wash — 2 + a faint --ae-wash fill over the dominated region (frontier as AREA).
-  5 reference rings— 2 + an open-ring oracle baseline + faint crosshair; pts it dominates go faint.
-  6 status marks   — 2, but a gate-failed candidate is a colored ✗ glyph in the plane (status on the glyph).
+  4 reference rings— 2 + an open-ring oracle baseline + faint crosshair; pts it dominates go faint.
+  5 status marks   — 2, but a gate-failed candidate is a colored ✗ glyph in the plane (status on the glyph).
 
-  VERDICT (round 5): AWAITING OPERATOR
+  VERDICT (round 5): COMPOSABLE PRIMITIVE + DEFAULT. The kit ships ONE
+  plot primitive (axes + dot marks + frontier line + reference ring +
+  status glyph); the consumer composes bare / labeled / frontier /
+  reference / status as the product needs. Kit DEFAULT = frontier
+  (treatment 2). Dominated-wash DROPPED — a filled region the kit
+  needn't support (operator call, round 5).
   Sketch only — never ships. Serve repo root, open /prototypes/.
 -->
 <html lang="en">
@@ -106,14 +110,6 @@
         letter-spacing: 0.12em;
       }
 
-      /* the dominated-region wash (treatment 4): a faint fill below/right
-         of the frontier staircase — the only fill in the whole plot, and
-         it spends --ae-wash, not ink. */
-      .pl-wash {
-        fill: var(--ae-wash);
-        stroke: none;
-      }
-
       /* the Pareto frontier guide: a DASHED ink polyline, round-joined
          like the spark; no fill, no axis weight. */
       .pl-frontier {
@@ -189,19 +185,19 @@
       .pl-legend {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5em 1.6em;
+        gap: 0.7em 2.3em;
         align-items: center;
         font-family: var(--ae-font-mono);
         font-size: 11px;
         letter-spacing: 0.06em;
         color: var(--ae-ink-muted);
-        margin-top: 1em;
-        max-width: 38em;
+        margin-top: 1.1em;
+        max-width: 44em;
       }
       .pl-legend .k {
         display: inline-flex;
         align-items: center;
-        gap: 0.45em;
+        gap: 0.55em;
       }
       .pl-legend .k svg {
         width: 1em;
@@ -327,8 +323,9 @@
             <p class="ae-dim">
               Six candidate compositions on the cost (x, $/1k-tasks) × quality
               (y, eval score 0–100) plane. The frontier is the non-dominated set
-              — nobody is both cheaper and better. Six ways to draw the same
-              plane, restrained axes to expressive field. Swap them; same data
+              — nobody is both cheaper and better. Five ways to draw the same
+              plane, restrained axes to expressive field — one composable
+              primitive, the consumer picks the parts. Swap them; same data
               every time.
             </p>
           </div>
@@ -365,9 +362,8 @@
       <button data-t="bare" class="is-active">1 bare</button>
       <button data-t="frontier">2 frontier</button>
       <button data-t="labeled">3 labeled</button>
-      <button data-t="wash">4 dominated wash</button>
-      <button data-t="ref">5 reference rings</button>
-      <button data-t="status">6 status marks</button>
+      <button data-t="ref">4 reference rings</button>
+      <button data-t="status">5 status marks</button>
     </nav>
 
     <script>
@@ -399,7 +395,7 @@
       // ── the data: model-eval candidates on the cost × quality plane ──
       // x = cost ($/1k tasks, lower better), y = quality (eval score, higher
       // better). `chosen` is the operator's pick; `failed` flunked a gate.
-      // All six treatments draw from THIS array — nothing is duplicated.
+      // All five treatments draw from THIS array — nothing is duplicated.
       const CANDS = [
         { id: 'cand·01', m: 'haiku·rag', x: 1.0, y: 75 }, // frontier — cheapest
         { id: 'cand·02', m: 'sonnet·v4', x: 2.6, y: 89, chosen: true }, // frontier knee — the pick
@@ -565,35 +561,6 @@
         ).join(' ');
       }
 
-      // the dominated region as a staircase polygon under the frontier:
-      // from each frontier point, step right then down (cheaper→pricier),
-      // closing along the bottom + right edges of the plot box.
-      function dominatedPolygon() {
-        const x0 = PAD.l,
-          x1 = PAD.l + plotW,
-          y1 = PAD.t + plotH;
-        // frontier sorted ascending cost; build the staircase boundary
-        let pts = [];
-        FRONT.forEach((p, i) => {
-          const px = sx(p.x),
-            py = sy(p.y);
-          if (i === 0) pts.push([px, py]);
-          else {
-            // step: hold previous quality across to this cost, then drop
-            const prev = FRONT[i - 1];
-            pts.push([px, sy(prev.y)]);
-            pts.push([px, py]);
-          }
-        });
-        // extend the last (cheapest-quality-at-highest-cost) flat to the right edge
-        const last = FRONT[FRONT.length - 1];
-        pts.push([x1, sy(last.y)]);
-        // close down the right edge, along the bottom, back up the start cost
-        pts.push([x1, y1]);
-        pts.push([sx(FRONT[0].x), y1]);
-        return pts.map((p) => p.join(',')).join(' ');
-      }
-
       function drawDots(svg, opts) {
         opts = opts || {};
         for (const p of CANDS) {
@@ -665,19 +632,7 @@
           );
           drawDots(svg, { frontier: true, chosen: true, labels: true });
         },
-        // 4 — 2 + a faint wash over the dominated region (frontier as AREA)
-        wash(svg) {
-          drawAxes(svg);
-          // wash first so dots + frontier sit on top
-          svg.appendChild(
-            mk('polygon', { class: 'pl-wash', points: dominatedPolygon() }),
-          );
-          svg.appendChild(
-            mk('path', { class: 'pl-frontier', d: frontierPath() }),
-          );
-          drawDots(svg, { frontier: true, chosen: true });
-        },
-        // 5 — 2 + an open-ring reference baseline + faint crosshair; pts it
+        // 4 — 2 + an open-ring reference baseline + faint crosshair; pts it
         //     dominates go faint
         ref(svg) {
           drawAxes(svg);
@@ -721,7 +676,7 @@
             ),
           );
         },
-        // 6 — 2, but a gate-failed candidate is a colored ✗ in the plane
+        // 5 — 2, but a gate-failed candidate is a colored ✗ in the plane
         status(svg) {
           drawAxes(svg);
           svg.appendChild(
@@ -736,7 +691,6 @@
         bare: 'bare scatter',
         frontier: 'frontier guide',
         labeled: 'frontier + labels',
-        wash: 'dominated wash',
         ref: 'reference rings',
         status: 'status marks',
       };
@@ -746,10 +700,9 @@
           '2 · FRONTIER GUIDE — a dashed ink Pareto frontier threads the non-dominated points; the chosen candidate is the one filled accent dot; the dominated points drop to faint. THE PRESCRIBED IN-IDIOM ANSWER. Trade-off: names the trade-off curve and lets one accent earn its place on the decision — magnitude stays in position, hue is spent once.',
         labeled:
           '3 · FRONTIER + LABELS — treatment 2 with a persistent mono cand-id beside every point. Trade-off: legible without hover — every dot is named on the page — but the labels crowd and collide as point density rises.',
-        wash: '4 · DOMINATED WASH — treatment 2 with a faint --ae-wash fill over the dominated region (the staircase below/right of the frontier) so the frontier reads as an AREA boundary, not just a line. Trade-off: teaches “dominated” at a glance, but spends some of the page’s calm on a fill — the one place ink-restraint bends.',
-        ref: '5 · REFERENCE RINGS — treatment 2 plus an open-ring oracle/incumbent baseline with a faint crosshair dropped to both axes; candidates the reference dominates go faint. Trade-off: anchors the field to a known baseline — the certification read (“does any candidate beat what we run today?”) — at the cost of a second non-dot mark to learn.',
+        ref: '4 · REFERENCE RINGS — treatment 2 plus an open-ring oracle/incumbent baseline with a faint crosshair dropped to both axes; candidates the reference dominates go faint. Trade-off: anchors the field to a known baseline — the certification read (“does any candidate beat what we run today?”) — at the cost of a second non-dot mark to learn.',
         status:
-          '6 · STATUS MARKS — treatment 2, but a candidate that FAILED its gates is drawn as a colored ✗ glyph where its dot would sit: status rides the glyph, the position is still the datum. Trade-off: folds pass/fail into the plane — the densest, most expressive read — but asks the eye to parse two mark shapes at once.',
+          '5 · STATUS MARKS — treatment 2, but a candidate that FAILED its gates is drawn as a colored ✗ glyph where its dot would sit: status rides the glyph, the position is still the datum. Trade-off: folds pass/fail into the plane — the densest, most expressive read — but asks the eye to parse two mark shapes at once.',
       };
       const SWATCH = (cls, label) =>
         `<span class="k"><span class="pl-swatch ${cls}"></span>${label}</span>`;
@@ -765,10 +718,6 @@
           SWATCH('acc', 'chosen') +
           SWATCH('faint', 'dominated') +
           `<span class="k">label = cand id</span>`,
-        wash:
-          `<span class="k"><span class="pl-dashkey"></span>Pareto frontier</span>` +
-          SWATCH('acc', 'chosen') +
-          `<span class="k"><span class="pl-swatch" style="background:var(--ae-wash);border:1px solid var(--ae-line);box-sizing:border-box"></span>dominated region</span>`,
         ref:
           `<span class="k"><span class="pl-dashkey"></span>Pareto frontier</span>` +
           SWATCH('acc', 'chosen') +
