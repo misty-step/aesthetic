@@ -148,3 +148,40 @@ Artifacts (in-kit rebuilds vs off-kit originals), in
 `terminal.html` (dark operator), `atlas.html` (report), `schematic.html` (flow).
 The `*-offkit.html` siblings are the leave-the-kit versions, kept as each
 friction's "before".
+
+## ROUND 5 lab verdicts (2026-06-16)
+
+LAB proofs: `prototypes/inst-1-plot`, `inst-2-uncertainty`, `inst-3-flow`,
+`inst-4-report` (six treatments each, both modes, law-abiding).
+
+**The framing correction (load-bearing).** These instruments ship as
+**composable, un-opinionated primitives + one tasteful default each** — the
+consumer composes. The treatment-fans are a menu and a proof of what the
+primitives must express, NOT a bracket to crown one winner. The kit holds one
+opinion per instrument (its default); which treatment beyond that is the
+consumer's call. Same DNA as accent-not-law. Spend kit effort on the parts a
+consumer cannot hand-roll: the building blocks, a clean composition API, the
+micro-interactions, and the default.
+
+- **inst-1 plot.** Legend spacing needs work (esp. the frontier legend row).
+  Reference-rings decent. **Drop dominated-wash** — a filled region the kit
+  needn't support. Bare / labeled / frontier / reference-rings / status-marks
+  are all consumer-composable from the same primitive (axes + dot marks +
+  frontier line + ref-ring + status glyph). Kit default: lean **frontier**;
+  the default may be domain-flavored (the demo is math-reasoning).
+- **inst-2 uncertainty.** Spread-on-glyph reads poorly — weak. **Band + tick
+  and whiskers are the strong pair** (default candidates), but the band must
+  read **clearer**. Needs the interaction layer the consumer can't trivially
+  hand-roll: **subtle micro-animation + a hover state that reveals the detailed
+  numbers.** Box / forest / scatter-whiskers are less compelling but still
+  surfaced as options.
+- **inst-3 flow.** Fine; branching-DAG / swimlane fine. Mostly consumer-
+  composable from `.ae-node` + `.ae-wire` + ports. Default: **spine**.
+- **inst-4 report.** Plain reads reasonable; the lede / figure / findings /
+  pull-quote registers are opt-in (weight + space only). Mostly the consumer's;
+  the kit supplies the registers, not a prescribed dossier.
+
+Next move: stop fanning treatments — define the actual composable primitive set
+(`.ae-scatter` + `.ae-ci`/`.ae-dot-whisker`, `.ae-node`/`.ae-wire`/ports, the
+report registers) and the per-instrument defaults, then graduate into the
+013/014 build.
