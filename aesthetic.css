@@ -1223,6 +1223,122 @@ input.ae-switch:checked::before {
   vertical-align: -0.15em;
 }
 
+/* the interval: the meter with a spread. A ruled track carrying a
+   [lo,hi] range band and a mean tick, so a score reads as a level AND
+   its confidence — and where two bands share a column, the lead is
+   inside the spread (the certification read). Marks are positioned by
+   inline left/width %, exactly like the meter. Every mark is a
+   rectangle, so radius 0 holds (round marks are the scatter's pen). */
+.ae-ci {
+  position: relative;
+  height: 1.6em;
+}
+
+.ae-ci::before {
+  /* the shared baseline rule the interval sits on */
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: var(--ae-line);
+}
+
+/* the [lo,hi] range band: a bounded mass with a hairline edge — never a
+   filled status pill. It draws in once from the mean (the meter's
+   width-as-resolution), gentle and only on first render. */
+.ae-ci-band {
+  position: absolute;
+  top: 50%;
+  height: 10px;
+  transform: translateY(-50%);
+  transform-origin: center;
+  background: color-mix(in oklab, var(--ae-ink) 9%, var(--ae-surface));
+  border: 1px solid var(--ae-ink-faint);
+  animation: ae-ci-draw var(--ae-soft) var(--ae-ease) both;
+}
+
+@keyframes ae-ci-draw {
+  from {
+    transform: translateY(-50%) scaleX(0.04);
+  }
+}
+
+/* the mean: a single ink tick, like .ae-meter-mark. is-lead spends the
+   accent on it — one accent role per view, the consumer's to assign. */
+.ae-ci-mean {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 1.15em;
+  transform: translate(-50%, -50%);
+  background: var(--ae-ink);
+}
+
+.ae-ci.is-lead .ae-ci-mean {
+  background: var(--ae-accent);
+}
+
+/* the no-fill variant: a thin lo→hi rule with square end caps, for a
+   field that should read as points rather than mass */
+.ae-ci-whisker {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: var(--ae-ink-muted);
+}
+
+.ae-ci-cap {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 0.8em;
+  transform: translate(-50%, -50%);
+  background: var(--ae-ink-muted);
+}
+
+/* hover (or keyboard focus) reveals the exact figures at the track's
+   right edge — surface-backed so it rides over the baseline rule with
+   no layout shift. The mark carries the field; the numbers stay exact
+   on inspection. */
+.ae-ci-detail {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.1em 0.2em 0.1em 0.7em;
+  background: var(--ae-surface);
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ae-ink);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ae-quick) var(--ae-ease);
+}
+
+.ae-ci-detail .ae-ci-bound {
+  color: var(--ae-ink-faint);
+}
+
+.ae-ci:hover .ae-ci-detail,
+.ae-ci:focus-within .ae-ci-detail {
+  opacity: 1;
+}
+
+/* touch has no hover: show the exact figures by default there, so the
+   precise read is never pointer-only. Screen readers get them from the
+   element's aria-label (role="img"). */
+@media (hover: none) {
+  .ae-ci-detail {
+    opacity: 1;
+  }
+}
+
 /* ── choice controls: rows that open ──────────────────────────────── */
 
 /* a setting is a quiet hairline row — label left, current value right

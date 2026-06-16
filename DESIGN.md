@@ -97,7 +97,8 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
 7. Data is drawn in ink: gauges are ruled lines (`.ae-meter`), figures
    are tabular numerals (`.ae-num`, loud by weight via `.ae-strong`),
    deltas put the hue on the arrow (`.ae-delta`), trends are pen
-   strokes (`.ae-spark`).
+   strokes (`.ae-spark`), an interval is a level and its spread
+   (`.ae-ci` — a range band, a mean tick, hover for the exact figures).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed), and the form flow (settings rows,

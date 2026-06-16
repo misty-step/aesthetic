@@ -74,7 +74,7 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Thirty-eight primitives.</span>
+              <span class="ae-item">Thirty-nine primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
@@ -305,6 +305,15 @@
                 </td>
                 <td class="role">figures, deltas, and pen-stroke trends</td>
                 <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#interval">.ae-ci / .ae-ci-band / .ae-ci-mean</a>
+                </td>
+                <td class="role">
+                  a level and its spread; the certification read
+                </td>
+                <td class="since">2.6</td>
               </tr>
               <tr>
                 <td class="cls">
@@ -1326,6 +1335,84 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
      preserveAspectRatio="none" aria-hidden="true"&gt;
   &lt;polyline points="0,18 14,15 … 100,4" /&gt;
 &lt;/svg&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="interval">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-CI / .AE-CI-BAND / .AE-CI-MEAN</h2>
+            <p class="ae-dim">
+              The interval is the meter with a spread: a ruled track carrying a
+              [lo,hi] range band and a mean tick, so a score reads as a level
+              and its confidence at once. Where two bands share a column the
+              lead is inside the spread — the certification read. The band draws
+              in once from the mean; hover (or focus) a track for the exact
+              figures. Every mark is a rectangle, so radius 0 holds.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.45em">
+                cand·02 · <span class="ae-num">86.9</span> · the lead
+              </p>
+              <div
+                class="ae-ci is-lead"
+                role="img"
+                aria-label="cand·02 mean 86.9, 95% CI 83.1 to 90.7"
+              >
+                <span class="ae-ci-band" style="left: 66%; width: 22%"></span>
+                <span class="ae-ci-mean" style="left: 77%"></span>
+                <span class="ae-ci-detail"
+                  >μ 86.9 <span class="ae-ci-bound">[83.1, 90.7]</span></span
+                >
+              </div>
+              <p class="ae-chrome" style="margin: 1.5em 0 0.45em">
+                cand·05 · inside the spread
+              </p>
+              <div
+                class="ae-ci"
+                role="img"
+                aria-label="cand·05 mean 85.6, 95% CI 82.9 to 88.3"
+              >
+                <span class="ae-ci-band" style="left: 65%; width: 16%"></span>
+                <span class="ae-ci-mean" style="left: 73%"></span>
+                <span class="ae-ci-detail"
+                  >μ 85.6 <span class="ae-ci-bound">[82.9, 88.3]</span></span
+                >
+              </div>
+              <p class="ae-chrome" style="margin: 1.5em 0 0.45em">
+                cand·01 · whisker variant, no fill
+              </p>
+              <div
+                class="ae-ci"
+                role="img"
+                aria-label="cand·01 mean 84.2, 95% CI 81.0 to 87.4"
+              >
+                <span
+                  class="ae-ci-whisker"
+                  style="left: 60%; width: 18%"
+                ></span>
+                <span class="ae-ci-cap" style="left: 60%"></span>
+                <span class="ae-ci-cap" style="left: 78%"></span>
+                <span class="ae-ci-mean" style="left: 69%"></span>
+                <span class="ae-ci-detail"
+                  >μ 84.2 <span class="ae-ci-bound">[81.0, 87.4]</span></span
+                >
+              </div>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">div</span> class="<span class="t">ae-ci is-lead</span>" role="img"
+     aria-label="cand·02 mean 86.9, 95% CI 83.1 to 90.7"&gt;
+  &lt;span class="<span class="t">ae-ci-band</span>" style="left: 66%; width: 22%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-ci-mean</span>" style="left: 77%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-ci-detail</span>"&gt;μ 86.9 &lt;span class="<span class="t">ae-ci-bound</span>"&gt;[83.1, 90.7]&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;
+<span class="t">// the no-fill variant: a lo→hi rule with end caps</span>
+&lt;span class="<span class="t">ae-ci-whisker</span>" style="left: 60%; width: 18%"&gt;&lt;/span&gt;
+&lt;span class="<span class="t">ae-ci-cap</span>" style="left: 60%"&gt;&lt;/span&gt;
+&lt;span class="<span class="t">ae-ci-cap</span>" style="left: 78%"&gt;&lt;/span&gt;</code></pre>
           </div>
         </div>
 
