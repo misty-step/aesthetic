@@ -185,3 +185,54 @@ Next move: stop fanning treatments — define the actual composable primitive se
 (`.ae-scatter` + `.ae-ci`/`.ae-dot-whisker`, `.ae-node`/`.ae-wire`/ports, the
 report registers) and the per-instrument defaults, then graduate into the
 013/014 build.
+
+Lab refinements applied (round 5, committed): inst-1 dropped dominated-wash +
+dead code, renumbered to five, widened the frontier legend; inst-2 gave the band
+a bounded-hairline clarity pass, a draw-in-from-the-mean micro-animation, and a
+hover that reveals the exact mean + CI. Both VERDICTs reframed to "one primitive
+
+- a default." inst-3 / inst-4 unchanged (verdicts = fine / mostly consumer's).
+
+## Build contract — the composable primitive API (round 5 → build)
+
+The lean API each instrument graduates into. Per primitive: the class(es), the
+state modifiers, the kit DEFAULT (its one opinion), and the consumer-composes
+boundary. Purely-additive where possible (new classes can't break pinned
+consumers); the `@layer` + token work is the semver-conscious exception.
+
+- **Plot — `.ae-plot` (frame + axes) · `.ae-pt` (round dot mark) ·
+  `.ae-frontier` (dashed guide).** Modifiers on the mark: `is-chosen` (accent),
+  `is-dominated` (faint), `is-ref` (open ring), failed → a status glyph at the
+  point. DEFAULT = frontier (axes + dots + dashed frontier + accent chosen +
+  faint dominated). Consumer composes bare / labeled / reference / status by
+  toggling parts. Dominated-wash is NOT in the kit.
+- **Uncertainty — `.ae-ci` (interval on a track: bounded band + mean tick) ·
+  `.ae-dot-whisker` (scatter error bar).** Interaction is part of the primitive:
+  draw-in resolves from the mean (once, reduced-motion safe), hover reveals the
+  exact mean + CI. Modifier `is-lead` (accent); separability glyph ✓/⚠/✗.
+  DEFAULT = band + mean tick; whiskers the alt. Forest is a composed view
+  (sort + a reference line), not a separate primitive. Spread-on-glyph dropped.
+- **Flow — `.ae-node` (square hairline node) · `.ae-wire` (orthogonal
+  connector) · ports (anchors so geometry survives reflow) · an optional flow
+  canvas.** Node states `is-current` (accent) / `is-locked` (dashed-faint) /
+  `is-done` (✓) / `is-failed` (✗); wire variants straight / elbow ·
+  reached / locked / accent. DEFAULT = spine (row + orthogonal wires + accent
+  current + dashed locked). Consumer composes stations / ported / DAG /
+  swimlane / schematic; the schematic grid is opt-in, off by default.
+- **Report — `.ae-doc` opt-in sub-registers, weight + space ONLY (no new size,
+  no serif):** `.ae-lede` (standfirst — weight + leading + a hairline rule),
+  `figure`/`figcaption` + CSS counters (FIG n), `.ae-findings` (hairline summary
+  box, not a filled card), `.ae-pull` (pull-quote — weight + space + a margin
+  rule). DEFAULT = plain `.ae-doc` unchanged; every register is opt-in. The kit
+  supplies registers, never a prescribed dossier.
+
+Plus, from the build-evidence above: `.ae-chip`, `.ae-statusbar`, and the
+winner-bold matrix cell (`is-best`/`is-fail`) graduate alongside.
+
+**Sequence + risk.** Ride behind 013's foundation pass (`@layer aesthetic{}` is
+the semver-significant one — it changes the cascade for consumers, so it lands
+as a deliberate version bump, not a silent patch). Build additive primitives
+first (plot, `.ae-ci`, nodes/wires, report registers) each with a `site/`
+specimen + `tests/law.spec.ts` coverage, render-verified both modes, before the
+cascade-affecting foundation work. One primitive end-to-end as the pattern, then
+fan out.
