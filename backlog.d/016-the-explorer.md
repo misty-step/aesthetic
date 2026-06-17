@@ -1,6 +1,17 @@
 # The explorer — the catalog becomes a world-class, zero-build component + token reference
 
-Priority: P1 · Status: in-progress · Estimate: L
+Priority: P1 · Status: shipped · Estimate: L
+
+## Closeout (2026-06-17)
+
+Children #1–5 are shipped and live in prod — the catalog is now a world-class,
+zero-build explorer: state matrices, a rendered token reference, copy-to-
+clipboard, a machine composition feed, and index search. The epic's goal is
+met. **#6** (editable steering preview + a consolidated register reference) was
+always marked deferred/optional; it did not earn its place in this arc — split
+it to its own ticket if a consumer need appears. The remaining cross-epic
+threads (013's `--ae-space-*` feeding the token page's deferred space row, 015's
+machine-spec complementing the feed) live in those epics, not here.
 
 ## Goal
 
@@ -58,8 +69,9 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
       renders (no second source of truth). — _shipped 2026-06-17:
       `site/r/primitives.json` via `scripts/build-feed.mjs`; a round-trip
       proof composed an in-law view from the feed alone._
-- [ ] Client-side **search/filter** over the 42-row index, keyboard-focusable
-      (`/`), pure progressive enhancement (works without it).
+- [x] Client-side **search/filter** over the 42-row index, keyboard-focusable
+      (`/`), pure progressive enhancement (works without it). — _shipped
+      2026-06-17._
 - [ ] `tests/law.spec.ts` covers every new route/surface (font sizes, radius
       0, no page scroll, console clean, both modes); the state-matrix and
       token-reference surfaces are in the gate, not exempt.
@@ -135,8 +147,11 @@ Ordered by adoption leverage (the swarm's consensus), not by ease:
    `--check` wired into `npm run check`, CI, and `release.mjs`; linked from the
    catalog index. Found + fixed a real wrinkle: a teaching snippet's `//` note +
    loose variant are split out so the `markup` field stays naive-composable.
-5. **Client-side search/filter** on the index `<table class="idx">`, `/` to
-   focus, progressive enhancement. Lowest leverage; completes "findable."
+5. **Client-side search/filter** ✅ _Shipped 2026-06-17._ A JS-injected
+   `.ae-input` above the index filters rows by class/role text as you type; `/`
+   focuses it from anywhere on the index. Injected by JS, so no-JS users keep
+   the full static table (true progressive enhancement). Completes "findable";
+   covered by a functional law-spec test.
 6. **(Deferred, optional) Editable steering preview + consolidated register
    reference.** `steering.html` today ships a six-scheme _static_ gallery
    (`.s-house`/`.s-chrondle`/…); an editable `--ae-accent` / status-triplet
