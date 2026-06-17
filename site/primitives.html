@@ -678,6 +678,54 @@
 &lt;/button&gt;
 <span class="t">// on success:</span> add .is-sent, set disabled</code></pre>
           </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">default</span>
+                <div class="state-demo">
+                  <button class="ae-button" type="button">Primary</button>
+                </div>
+                <span class="state-note">the resting control.</span>
+              </div>
+              <div class="state">
+                <span class="state-name">disabled</span>
+                <div class="state-demo">
+                  <button class="ae-button" type="button" disabled>
+                    Primary
+                  </button>
+                </div>
+                <span class="state-note"
+                  >add <code>disabled</code> — 0.7 opacity, default cursor. No
+                  shadow, no new shape.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">resolved</span>
+                <div class="state-demo">
+                  <button
+                    class="ae-button ae-send is-sent"
+                    type="button"
+                    disabled
+                  >
+                    <span class="ae-send-label">Send message</span>
+                    <span class="ae-send-done" aria-hidden="true"
+                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                    ></span>
+                  </button>
+                </div>
+                <span class="state-note"
+                  ><code>.is-sent</code> + disabled — the send moment, resolved
+                  once, success persists.</span
+                >
+              </div>
+            </div>
+            <p class="state-note" style="margin-top: 1.4em">
+              Hover (0.9 opacity), active (a 1px press), and focus (a 2px ink
+              ring) are live on the controls — pseudo-states, never faked into a
+              class.
+            </p>
+          </div>
         </div>
 
         <div class="ae-view" data-route="status">
@@ -942,6 +990,78 @@
   Auto-deploy
 &lt;/label&gt;</code></pre>
           </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">switch · off</span>
+                <div class="state-demo">
+                  <label class="ae-choice"
+                    ><input class="ae-switch" type="checkbox" />
+                    Auto-deploy</label
+                  >
+                </div>
+                <span class="state-note"
+                  >an ink thumb resting left on a hairline channel.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">switch · on</span>
+                <div class="state-demo">
+                  <label class="ae-choice"
+                    ><input class="ae-switch" type="checkbox" checked />
+                    Auto-deploy</label
+                  >
+                </div>
+                <span class="state-note"
+                  >the thumb slides right — never a filled green pill.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">switch · disabled</span>
+                <div class="state-demo">
+                  <label class="ae-choice"
+                    ><input
+                      class="ae-switch"
+                      type="checkbox"
+                      checked
+                      disabled
+                    />
+                    Locked on</label
+                  >
+                </div>
+                <span class="state-note"
+                  >add <code>disabled</code> — faded, the thumb holds.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">checkbox · disabled</span>
+                <div class="state-demo">
+                  <label class="ae-choice"
+                    ><input class="ae-check" type="checkbox" checked disabled />
+                    Locked</label
+                  >
+                </div>
+                <span class="state-note">the ink fill intact, faded.</span>
+              </div>
+              <div class="state">
+                <span class="state-name">radio · disabled</span>
+                <div class="state-demo">
+                  <label class="ae-choice"
+                    ><input
+                      class="ae-radio"
+                      type="radio"
+                      name="s-vis"
+                      checked
+                      disabled
+                    />
+                    Locked</label
+                  >
+                </div>
+                <span class="state-note">the ink core intact, faded.</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="ae-view" data-route="validation">
@@ -979,6 +1099,64 @@
 &lt;p class="<span class="t">ae-field-note</span>" id="email-note"&gt;
   &lt;svg class="<span class="t">ae-icon ae-err</span>"&gt;…x…&lt;/svg&gt; Not a valid address.
 &lt;/p&gt;</code></pre>
+          </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">resting</span>
+                <div class="state-demo">
+                  <label class="ae-label" for="s-rest">Email</label>
+                  <input
+                    class="ae-input"
+                    id="s-rest"
+                    type="email"
+                    value="reader@example.com"
+                  />
+                </div>
+                <span class="state-note"
+                  >a hairline underline; the label stays put.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">invalid</span>
+                <div class="state-demo">
+                  <label class="ae-label" for="s-inv">Email</label>
+                  <input
+                    class="ae-input"
+                    id="s-inv"
+                    type="email"
+                    value="phaedrus@"
+                    aria-invalid="true"
+                    aria-describedby="s-inv-note"
+                  />
+                  <p class="ae-field-note" id="s-inv-note">
+                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                    Not a valid address.
+                  </p>
+                </div>
+                <span class="state-note"
+                  ><code>aria-invalid</code> — the line goes err, the glyph
+                  carries it, never a filled red box.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">disabled</span>
+                <div class="state-demo">
+                  <label class="ae-label" for="s-dis">Email</label>
+                  <input
+                    class="ae-input"
+                    id="s-dis"
+                    type="email"
+                    value="reader@example.com"
+                    disabled
+                  />
+                </div>
+                <span class="state-note"
+                  >add <code>disabled</code> — the field rests, no edit.</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1143,6 +1321,13 @@
                 >
                   Toast failure
                 </button>
+                <button
+                  class="ae-button ae-button-quiet"
+                  type="button"
+                  id="toast-neutral"
+                >
+                  Toast neutral
+                </button>
               </p>
             </div>
             <pre
@@ -1152,6 +1337,44 @@ aeToast('Deploy 4121 resolved.', { status: '<span class="t">ok</span>' });
 aeToast('Build failed on preview.', { status: '<span class="t">err</span>' });
 <span class="t">// opt-in self-dismissal, never the default:</span>
 aeToast('Copied.', { timeout: 4000 });</code></pre>
+          </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">success</span>
+                <div class="state-demo">
+                  <div class="ae-toast">
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    Deploy 4121 resolved.
+                  </div>
+                </div>
+                <span class="state-note"
+                  >a surface slip; the glyph carries the status.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">failure</span>
+                <div class="state-demo">
+                  <div class="ae-toast">
+                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                    Build failed on preview.
+                  </div>
+                </div>
+                <span class="state-note"
+                  >err on the glyph — never a filled red pill.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">neutral</span>
+                <div class="state-demo">
+                  <div class="ae-toast">Working set updated.</div>
+                </div>
+                <span class="state-note"
+                  >no status, no glyph — just the slip.</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1967,6 +2190,11 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
         err.addEventListener('click', () =>
           aeToast('Build failed on preview.', { status: 'err' }),
         );
+        const neutral = document.getElementById('toast-neutral');
+        neutral &&
+          neutral.addEventListener('click', () =>
+            aeToast('Working set updated.'),
+          );
       })();
 
       /* copy-to-clipboard: each source block gets a quiet button that copies

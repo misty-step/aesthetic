@@ -267,6 +267,46 @@ footer.ae-bar a:hover {
   border-color: var(--ae-ink-faint);
 }
 
+/* state matrices: a primitive shown in each of its states, so the law is
+   visible where consumers drift (disabled, error, loading, resolved) — not
+   just the happy path. The label is the 11px mono caption, the note 13px. */
+.states-cap {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-faint);
+  margin-bottom: 1.2em;
+}
+
+.states {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+  gap: 1.8em 2.4em;
+  align-items: start;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.state-name {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ae-ink-faint);
+}
+
+.state-demo {
+  min-height: 1.6em;
+}
+
+.state-note {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
 .back-link {
   margin-bottom: 1.6em;
 }

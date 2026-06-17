@@ -130,6 +130,71 @@ for (const route of INSTRUMENT_ROUTES) {
   }
 }
 
+// the state matrices: each interactive primitive's detail view shows the
+// control in every state (disabled / error / resolved / …). The gate runs
+// against the whole fan, so an off-law state — a filled pill, a rounded box,
+// a second size — fails. A catalog that only shows the happy path lets the
+// drift land exactly where the gate never looks (012).
+const STATE_ROUTES = ['buttons', 'choice', 'validation', 'toast'];
+for (const route of STATE_ROUTES) {
+  for (const mode of MODES) {
+    test(`catalog #${route} states · ${mode} · the law holds`, async ({
+      page,
+    }) => {
+      const errors: string[] = [];
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') errors.push(msg.text());
+      });
+      page.on('pageerror', (err) => errors.push(String(err)));
+
+      await page.addInitScript((m) => {
+        localStorage.setItem('ae-mode', m);
+      }, mode);
+      await page.goto(`/site/primitives.html#${route}`);
+      await page.waitForLoadState('networkidle');
+      await expect(
+        page.locator(`[data-route="${route}"] .states`),
+      ).toBeVisible();
+
+      expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
+      expect(await nonZeroRadii(page)).toEqual([]);
+
+      const pageScrolls = await page.evaluate(
+        () =>
+          document.scrollingElement!.scrollHeight >
+          document.scrollingElement!.clientHeight + 1,
+      );
+      expect(pageScrolls, 'page-level scroll is outlawed').toBe(false);
+      expect(errors).toEqual([]);
+    });
+  }
+}
+
+test('the state-matrix gate catches a planted off-law state', async ({
+  page,
+}) => {
+  await page.goto('/site/primitives.html#buttons');
+  await expect(page.locator('[data-route="buttons"] .states')).toBeVisible();
+  // baseline: the fan is clean
+  expect(await nonZeroRadii(page)).toEqual([]);
+  expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
+
+  // plant an off-law state into the fan: a rounded, oversized button
+  await page.evaluate(() => {
+    const demo = document.querySelector('[data-route="buttons"] .state-demo')!;
+    const bad = document.createElement('button');
+    bad.className = 'ae-button';
+    bad.style.borderRadius = '9px';
+    bad.style.fontSize = '20px';
+    bad.textContent = 'off-law';
+    demo.appendChild(bad);
+  });
+
+  // the gate must now flag both violations — it is not theater
+  expect(await nonZeroRadii(page)).not.toEqual([]);
+  expect(await maxFontPx(page)).toBeGreaterThan(16.01);
+});
+
 test('the send moment resolves once and announces', async ({ page }) => {
   await page.goto('/site/');
   const email = page.locator('#email');
