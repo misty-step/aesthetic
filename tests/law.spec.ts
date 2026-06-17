@@ -93,6 +93,42 @@ for (const { path, name } of PAGES) {
   }
 }
 
+// the v2.6 instrument routes are hash-routed detail views; the base catalog
+// check skips hidden views for font size (the offsetParent guard), so the
+// one-size law on each is otherwise unverified until it is the active route.
+// Drive each route and assert the law on the now-visible view, both modes.
+const INSTRUMENT_ROUTES = ['interval', 'plot', 'flow', 'report'];
+for (const route of INSTRUMENT_ROUTES) {
+  for (const mode of MODES) {
+    test(`catalog #${route} · ${mode} · the law holds`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') errors.push(msg.text());
+      });
+      page.on('pageerror', (err) => errors.push(String(err)));
+
+      await page.addInitScript((m) => {
+        localStorage.setItem('ae-mode', m);
+      }, mode);
+      await page.goto(`/site/primitives.html#${route}`);
+      await page.waitForLoadState('networkidle');
+      await expect(page.locator(`[data-route="${route}"]`)).toBeVisible();
+
+      expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
+      expect(await nonZeroRadii(page)).toEqual([]);
+
+      const pageScrolls = await page.evaluate(
+        () =>
+          document.scrollingElement!.scrollHeight >
+          document.scrollingElement!.clientHeight + 1,
+      );
+      expect(pageScrolls, 'page-level scroll is outlawed').toBe(false);
+
+      expect(errors).toEqual([]);
+    });
+  }
+}
+
 test('the send moment resolves once and announces', async ({ page }) => {
   await page.goto('/site/');
   const email = page.locator('#email');
