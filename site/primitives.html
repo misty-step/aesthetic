@@ -74,7 +74,7 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Forty-one primitives.</span>
+              <span class="ae-item">Forty-two primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
@@ -348,6 +348,15 @@
                 <td class="cls"><a href="#doc">.ae-doc</a></td>
                 <td class="role">the document: markdown drops in unclassed</td>
                 <td class="since">2.5</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#report">.ae-lede / .ae-findings / .ae-pull</a>
+                </td>
+                <td class="role">
+                  the report register: lede, numbered figures, findings
+                </td>
+                <td class="since">2.6</td>
               </tr>
               <tr>
                 <td class="cls"><a href="#sr">.ae-sr</a></td>
@@ -1817,6 +1826,81 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
   &lt;pre&gt;&lt;code&gt;pnpm add …&lt;/code&gt;&lt;/pre&gt;
 &lt;/article&gt;
 <span class="t">// markdown output needs no classes inside</span></code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="report">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-LEDE / .AE-FINDINGS / .AE-PULL</h2>
+            <p class="ae-dim">
+              The report sub-registers: opt-in additions for a generated
+              document that is read and shared — all weight, space, and
+              hairlines, never a new size or a serif. A
+              <code>&lt;figure&gt;</code> in a doc auto-numbers (FIG n); the
+              lede lifts the standfirst to a way in; the findings box is a
+              hairline frame (never a filled card) with the recommendation on
+              the one accent rule; the pull-quote is the closest call to the
+              one-size law, held on the right side of it. The plain
+              <a href="#doc">.ae-doc</a> stays the default.
+            </p>
+          </div>
+          <div class="src-split">
+            <article class="ae-doc">
+              <p class="ae-lede">
+                Across ten correctness hypotheses, opus·hi wins eight and clears
+                every gate — but at 2.4× the field-median cost; the ensemble
+                matches it within the spread at 40% of the cost.
+              </p>
+              <figure>
+                <figcaption>
+                  gate-weighted pass rate, winner per row in weight
+                </figcaption>
+                <div class="ae-plate">
+                  <p class="ae-plate-note" style="margin: 0">
+                    opus·hi <span class="ae-strong">93</span> · ensemble 89 ·
+                    sonnet·v4 90 ·
+                    <span style="color: var(--ae-ink-faint)">haiku·rag 44</span>
+                  </p>
+                </div>
+              </figure>
+              <div class="ae-findings">
+                <p class="ae-findings-title">FINDINGS</p>
+                <p>
+                  <span class="ae-strong">opus·hi wins 8 of 10</span> and clears
+                  all five gates, at 2.41× cost; the lead is inside the spread
+                  on six hypotheses.
+                </p>
+                <div class="ae-rec">
+                  <p class="ae-findings-title" style="margin: 0 0 0.3em">
+                    RECOMMENDATION
+                  </p>
+                  Ship the ensemble as the default; reserve opus·hi for runs
+                  where the cost and latency tail are acceptable.
+                </div>
+              </div>
+              <p class="ae-pull">
+                Where the lead is inside the spread, the ensemble delivers the
+                same quality at 40% of the cost — and cost becomes the deciding
+                axis.
+                <span class="ae-pull-by">— gate-weighted spread analysis</span>
+              </p>
+            </article>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">article</span> class="<span class="t">ae-doc</span>"&gt;
+  &lt;<span class="t">p</span> class="<span class="t">ae-lede</span>"&gt;… the conclusion, up front …&lt;/p&gt;
+  &lt;<span class="t">figure</span>&gt;
+    &lt;<span class="t">figcaption</span>&gt;gate-weighted pass rate&lt;/figcaption&gt;
+    &lt;<span class="t">div</span> class="<span class="t">ae-plate</span>"&gt;…&lt;/div&gt;
+  &lt;/<span class="t">figure</span>&gt;
+<span class="t">// the &lt;figure&gt; auto-numbers: FIG 1 ·</span>
+  &lt;<span class="t">div</span> class="<span class="t">ae-findings</span>"&gt;
+    &lt;<span class="t">p</span> class="<span class="t">ae-findings-title</span>"&gt;FINDINGS&lt;/p&gt;
+    &lt;<span class="t">div</span> class="<span class="t">ae-rec</span>"&gt;… the one accent rule …&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;<span class="t">p</span> class="<span class="t">ae-pull</span>"&gt;… by weight + space …&lt;/p&gt;
+&lt;/<span class="t">article</span>&gt;</code></pre>
           </div>
         </div>
 

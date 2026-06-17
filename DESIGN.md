@@ -105,8 +105,10 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    stage in accent).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
-   markdown drops in unclassed), and the form flow (settings rows,
-   choice marks, one send moment).
+   markdown drops in unclassed; opt-in report registers add a lede,
+   numbered figures, a findings box, and a pull-quote, all weight and
+   space), and the form flow (settings rows, choice marks, one send
+   moment).
 9. The canonical markup for every primitive is in `site/` —
    view-source is documentation.
 

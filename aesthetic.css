@@ -1948,6 +1948,90 @@ details.ae-fold:last-of-type {
   max-width: 100%;
 }
 
+/* ── report sub-registers: opt-in, for a generated document that is read
+   and shared. Weight + space + hairlines + the 11px mono caption
+   register only — never a new type size, never a serif. The plain
+   .ae-doc above stays the default. ──────────────────────────────────── */
+
+/* numbered figures: a <figure> in a doc auto-numbers and its <figcaption>
+   drops to the mono caption register, prefixed FIG n. Pairs with
+   .ae-plate for the figure body. */
+.ae-doc {
+  counter-reset: ae-fig;
+}
+
+.ae-doc figure {
+  counter-increment: ae-fig;
+  margin: 1.8em 0;
+}
+
+.ae-doc figcaption {
+  margin-bottom: 0.7em;
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-muted);
+}
+
+.ae-doc figcaption::before {
+  content: 'FIG ' counter(ae-fig) ' · ';
+  color: var(--ae-ink);
+  font-weight: var(--ae-w-medium);
+}
+
+/* the lede / standfirst: the opening paragraph lifts to medium weight
+   with a hairline rule beneath — a way in, the conclusion up front. */
+.ae-doc .ae-lede {
+  margin-bottom: 1.6em;
+  padding-bottom: 1.4em;
+  border-bottom: 1px solid var(--ae-line);
+  font-weight: var(--ae-w-medium);
+}
+
+/* the findings box: a hairline frame (never a filled card) summarizing
+   the conclusion. The called-out result is weight; the recommendation
+   takes the one accent rule the report spends. */
+.ae-findings {
+  margin: 1.8em 0;
+  padding: 1.4em 1.6em 1.3em;
+  border: 1px solid var(--ae-line);
+}
+
+.ae-findings-title {
+  margin-bottom: 1em;
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-muted);
+}
+
+.ae-rec {
+  margin-top: 1.1em;
+  padding-left: 1.1em;
+  border-left: 2px solid var(--ae-accent);
+}
+
+/* the pull-quote: a sentence lifted forward by weight + space + a
+   hairline rule. Never a larger size, never an italic serif — the
+   closest call to the one-size law, held on the right side of it. */
+.ae-pull {
+  margin: 1.8em 0;
+  padding-left: 1.4em;
+  border-left: 1px solid var(--ae-line);
+  font-weight: var(--ae-w-medium);
+  line-height: 1.7;
+}
+
+.ae-pull-by {
+  display: block;
+  margin-top: 0.6em;
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  font-weight: var(--ae-w-regular);
+  letter-spacing: 0.14em;
+  color: var(--ae-ink-faint);
+}
+
 /* ── utilities ────────────────────────────────────────────────────── */
 
 /* present to assistive tech, invisible on paper — live regions and
