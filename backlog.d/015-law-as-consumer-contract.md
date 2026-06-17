@@ -59,11 +59,23 @@ machine-readable spec, not only as CSS and prose.
    consumer repos with no live surface to render-gate. Prior art:
    `stylelint-plugin-rhythmguard`, `stylelint-design-token-guard`, Discourse's
    `require-design-tokens.mjs`.
-3. **Machine-readable spec export.** DTCG-format tokens (`$type` / `$value`)
-   plus a DESIGN.md-format machine block, so Stitch / MCP / Style-Dictionary
-   consumers ingest the law natively instead of re-deriving it. `tokens.json`
-   is already intent-named with `law` + `contrast` manifests — this is a
-   schema view, not new decisions.
+3. **Machine-readable spec export.** DTCG-format tokens (`$type` / `$value` /
+   `$description`) plus a DESIGN.md-format machine block, so Stitch / MCP /
+   Style-Dictionary consumers ingest the law natively instead of re-deriving
+   it. `tokens.json` is already intent-named with `law` + `contrast`
+   manifests — this is a schema view, not new decisions. **Author a
+   `$description` on every token carrying its invariant-or-dial status** (e.g.
+   `--ae-radius`: "0 — invariant; round marks are SVG circles, never CSS
+   border-radius"; `--ae-ink-faint`: "decoration only; fails AA 4.5:1; never
+   interactive"; `--ae-accent`: "the consumer's dial; steer freely"). This is
+   how the law survives the trip into Figma / Stitch / an LLM consumer —
+   prose rots, a token description travels with the value (the whole premise
+   of the 2026 wave). While restructuring, collapse the `tokens.json`
+   `color.light` / `color.dark` parallel key sets into DTCG `$value: {light,
+dark}` form — the data-layer twin of 013's CSS de-triplication (close the
+   013↔015 seam deliberately). The _rendered_ token reference a human walks is
+   **016's** job (016 renders, 015 packages); this child ships the
+   machine-readable source that 016's page reads.
 4. **Wire into ADOPTING + 011.** Document the gate in `docs/ADOPTING.md`;
    make "run the gate" the mechanical form of 011's "invariants hold in every
    PR" oracle.

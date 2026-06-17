@@ -104,6 +104,37 @@ dark-token de-triplication doubles as the `light-dark()` modernization the
 wave favors (Panda's automatic light/dark — it removes the "agent forgets
 dark mode" bug class).
 
+## Grooming note (2026-06-17 — GLM 5.2 swarm + lead)
+
+Flags for the operator; not applied unilaterally (013 is in-progress with
+locked LAB verdicts — these are recommendations, not silent edits):
+
+- **Consider splitting foundation from product surface.** This epic bundles
+  cascade-affecting plumbing (`@layer aesthetic{}`, dark-token de-triplication,
+  `--ae-space-*`, `--ae-z-*`, a11y recipes) with visible product (workbench,
+  matrix, playhead, inspector). The `@layer` change is **semver-conscious** —
+  it changes the cascade for pinned consumers — and should land as a deliberate
+  version bump on its own critical path, not gate the additive primitive work.
+  A 013a (foundation) / 013b (channels) split would make the risk and
+  sequencing honest. Operator's call.
+- **`--ae-space-*` is now a shared dependency.** It gates 015's token-guard
+  spacing rule _and_ 016's rendered token-reference space-scale row. Landing
+  the scale early unblocks two downstream epics.
+- **Pull in from 014** (its build-evidence flags these as workbench/matrix
+  plumbing, not lab instruments): `.ae-statusbar` (the operator command strip)
+  and the winner-bold matrix cell (`is-best` / `is-fail`, the flex-3b
+  encoding). They belong to this epic's comparison-matrix + workbench children.
+- **The dark-token de-triplication has a data twin.** Collapsing the CSS
+  `:root` / `.dark` / `[data-ae-mode]` triplication pairs with 015's DTCG
+  `$value: {light, dark}` restructure of `tokens.json`'s parallel
+  `color.light` / `color.dark` key sets — same de-duplication, two layers.
+  Close the seam deliberately so the CSS and the token source stay in step.
+- **Fast sub-items, not epic lines:** the accent-not-law doc sweep is nearly
+  done (the css header + `DESIGN.md` already read accent-as-dial) — close it in
+  one PR; the `release.mjs` hardening is a bugfix, not foundation plumbing —
+  split it out or fold into 015's "no divergence" lane; the parked "generative
+  accent basis" line is a sketch with no oracle — give it a ticket or strike it.
+
 ## Notes
 
 The proof surfaces are the LAB files, each carrying its own VERDICT comment:

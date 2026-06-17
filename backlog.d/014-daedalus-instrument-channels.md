@@ -1,6 +1,30 @@
 # Daedalus instrument channels — plotting, uncertainty, flow, report
 
-Priority: P1 · Status: in-progress · Estimate: L
+Priority: P1 · Status: in-progress · Estimate: S (re-baselined)
+
+## Re-baseline (2026-06-17 groom)
+
+The headline instruments **shipped in v2.6.0** (verified live in
+`aesthetic.css`): `.ae-plot` (+ frontier/dot/ring states), `.ae-ci` (interval
+band + mean tick + whisker, with the draw-in micro-animation and hover-reveals-
+the-numbers interaction layer), `.ae-flow` / `.ae-node` / `.ae-wire` + ports,
+and the report sub-registers (`.ae-lede`, `figure`/`figcaption` + CSS counters,
+`.ae-findings`, `.ae-pull`). Oracle items 1, 3, and 4 are met; the catalog
+lists all four as live routes.
+
+**What remains (the S):**
+
+- `.ae-dot-whisker` — scatter error whiskers _on_ plot points (the `.ae-ci`
+  interval shipped; the scatter-point error bar did not). Completes oracle 2.
+- `.ae-chip` — the role chip (leader / delivery / dominated / reference) that
+  the in-kit rebuilds faked with `.ae-tag` border overrides.
+- The **density decision** (oracle 5) — still a decision to record against the
+  densest real surface, not new code.
+
+**Moved to 013** (014's own build-evidence flags these as workbench/matrix
+plumbing, not lab instruments): `.ae-statusbar` (the operator command strip)
+and the winner-bold matrix cell (`is-best` / `is-fail`, the flex-3b encoding)
+belong to 013's comparison-matrix + workbench children. Tracked there now.
 
 ## Goal
 
@@ -67,20 +91,24 @@ express).
 
 ## Oracle
 
-- [ ] A 2D plot primitive ships (`.ae-plot` / `.ae-scatter`): hairline axes,
+- [x] A 2D plot primitive ships (`.ae-plot` / `.ae-scatter`): hairline axes,
       mono ticks, ink point marks with frontier/dominated/chosen/reference
       states, one accent, both modes. A `site/` specimen proves a cost×quality
       frontier from primitives; the law holds (radius 0 on rectangles, one
-      accent, status on the glyph not the fill).
-- [ ] An uncertainty primitive ships: a mean+range interval track and scatter
-      error whiskers, expressing "overlapping intervals = not separable."
-- [ ] A flow/diagram primitive ships (`.ae-flow` nodes + connectors): hairline
+      accent, status on the glyph not the fill). — _shipped v2.6.0._
+- [~] An uncertainty primitive ships: a mean+range interval track and scatter
+  error whiskers, expressing "overlapping intervals = not separable." —
+  _`.ae-ci` interval shipped v2.6.0; `.ae-dot-whisker` scatter error bar
+  still to ship._
+- [x] A flow/diagram primitive ships (`.ae-flow` nodes + connectors): hairline
       nodes, orthogonal ink wires, accent for the active stage, dashed-faint for
       locked; a `site/` specimen draws a small pipeline. (The existing gate/
-      lineage spines fold in as the 1D case.)
-- [ ] The document archetype's report needs are resolved: either a documented
+      lineage spines fold in as the 1D case.) — _shipped v2.6.0._
+- [x] The document archetype's report needs are resolved: either a documented
       lede/figure-caption/pull-quote register (weight + space only) or an
-      explicit "reports are a consumer concern" note in ADOPTING.md.
+      explicit "reports are a consumer concern" note in ADOPTING.md. —
+      _shipped v2.6.0: opt-in `.ae-doc` registers (lede, figure counters,
+      findings, pull-quote)._
 - [ ] The density decision is recorded against the densest real surface (the
       Daedalus operator screen), with the in-kit artifact linked as evidence;
       keep or revisit "comfortable only" on that basis.
