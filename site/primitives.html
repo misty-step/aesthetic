@@ -2242,6 +2242,42 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
           });
         });
       })();
+
+      /* search: enhance the index with a client-side filter. The field is
+         injected by JS, so no-JS users keep the full static table
+         (progressive enhancement). Press / to focus it from the index. */
+      (() => {
+        const table = document.querySelector('.idx');
+        if (!table) return;
+        const rows = [...table.querySelectorAll('tbody tr')];
+        const field = document.createElement('input');
+        field.type = 'search';
+        field.className = 'ae-input idx-filter';
+        field.placeholder = 'filter primitives…  (press /)';
+        field.setAttribute('aria-label', 'filter primitives');
+        table.parentNode.insertBefore(field, table);
+        field.addEventListener('input', () => {
+          const q = field.value.trim().toLowerCase();
+          for (const tr of rows) {
+            tr.hidden = !!q && !tr.textContent.toLowerCase().includes(q);
+          }
+        });
+        document.addEventListener('keydown', (e) => {
+          const tag = document.activeElement?.tagName;
+          if (
+            e.key === '/' &&
+            !e.metaKey &&
+            !e.ctrlKey &&
+            !e.altKey &&
+            field.offsetParent !== null &&
+            document.activeElement !== field &&
+            !/^(input|textarea|select)$/i.test(tag)
+          ) {
+            e.preventDefault();
+            field.focus();
+          }
+        });
+      })();
     </script>
   </body>
 </html>

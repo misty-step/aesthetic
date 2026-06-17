@@ -206,6 +206,12 @@ footer.ae-bar a:hover {
   padding-right: 0;
 }
 
+/* the index filter (search #5): a constrained input above the table */
+.idx-filter {
+  max-width: 20em;
+  margin-bottom: 1.4em;
+}
+
 /* detail views: render beside canonical markup */
 .src-split {
   display: grid;

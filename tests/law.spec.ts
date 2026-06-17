@@ -255,3 +255,29 @@ test('the catalog copy button copies the clean canonical markup', async ({
   // the ack resolves once, then reverts so it can copy again
   await expect(btn).toHaveText('copy', { timeout: 2500 });
 });
+
+test('the catalog index filters by query, and / focuses the field', async ({
+  page,
+}) => {
+  await page.goto('/site/primitives.html');
+  const field = page.locator('.idx-filter');
+  await expect(field).toBeVisible(); // JS-injected; no-JS keeps the full table
+  const rows = page.locator('.idx tbody tr');
+  const total = await rows.count();
+
+  // `/` focuses the filter from the index
+  await page.keyboard.press('/');
+  await expect(field).toBeFocused();
+
+  // typing narrows the table
+  await field.fill('meter');
+  const hits = () =>
+    rows.evaluateAll((trs) => trs.filter((t) => !t.hidden).length);
+  const narrowed = await hits();
+  expect(narrowed).toBeGreaterThan(0);
+  expect(narrowed).toBeLessThan(total);
+
+  // clearing restores every row
+  await field.fill('');
+  expect(await hits()).toBe(total);
+});
