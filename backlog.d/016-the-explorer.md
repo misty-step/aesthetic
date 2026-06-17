@@ -45,10 +45,9 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
       documentation; the law holds in both modes. — _shipped 2026-06-17:
       `site/tokens.html` via `scripts/build-tokens.mjs`; the `--ae-space-*`
       scale row is the one deferred piece (blocked on 013)._
-- [ ] **Copy-to-clipboard** on every specimen yields clean, runnable markup
-      (serialized from the live specimen DOM, not the elided/`…`-placeholder
-      `<pre>`), with a quiet chrome-register affordance and a resolve-once
-      "copied" confirmation (reduced-motion safe).
+- [x] **Copy-to-clipboard** on every source block yields clean, runnable
+      markup, with a quiet chrome-register affordance and a resolve-once
+      "copied" confirmation (reduced-motion safe). — _shipped 2026-06-17._
 - [ ] The **machine registry** (`site/r/`) carries a per-primitive
       composition feed — canonical markup + the recipe(s) it needs + the law
       clauses that bind it — so an agent composes a view from JSON without
@@ -102,10 +101,17 @@ Ordered by adoption leverage (the swarm's consensus), not by ease:
    the primitives catalog: primitives = how to compose; tokens = what the
    values are. **Remaining:** the `--ae-space-*` scale row, deferred until 013
    lands the scale (the page notes it inline).
-3. **Copy-to-clipboard.** A `copy.js` recipe (dependency-free, ~15 lines):
-   one chrome-register button per specimen, `navigator.clipboard.writeText`
-   of the serialized live specimen markup, a resolve-once confirmation reusing
-   the toast/anticipate idiom.
+3. **Copy-to-clipboard.** ✅ _Shipped 2026-06-17._ A dependency-free button
+   per source block (`site/primitives.html` inline glue + `.src-copy` in
+   `site/site.css`) copies the `.src-code` `textContent` — clean, unescaped
+   markup with the syntax-highlight wrappers flattened — with a resolve-once
+   "copied" ack that reverts. **Reasoned reversal of the plan:** shipped as
+   site glue, not a `copy.js` recipe (the `.src-code` blocks exist only in the
+   catalog, so it stays out of the npm-shipped `recipes/`), and it copies the
+   curated source block rather than serializing the live specimen DOM — the
+   live DOM is a structural mock for shell/scroll/nav, so the authored source
+   is the correct "what you ship." Covered by `tests/law.spec.ts` (clipboard
+   equals the unescaped source, both modes).
 4. **Per-primitive composition feed in `site/r/`.** Extend
    `scripts/build-registry.mjs` (or a sibling) to emit one registry item per
    primitive/archetype carrying markup + required recipes + bound law clauses,
