@@ -32,11 +32,14 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
 
 ## Oracle
 
-- [ ] Every interactive primitive's detail view shows its full **state
-      matrix** (default / hover / focus / disabled / error / loading as
-      applicable) as live specimens + markup — not one happy-path specimen.
-      The law gate (015) runs against the state fan, so an off-law error
-      state (a filled pill, a soft wash, a second size) fails.
+- [x] Every interactive primitive's detail view shows its full **state
+      matrix** (default / disabled / error / resolved / … as applicable) as
+      live specimens — not one happy-path specimen. The law gate runs against
+      the state fan, so an off-law error state (a filled pill, a rounded box,
+      a second size) fails. — _shipped 2026-06-17: `.states` blocks on
+      #buttons / #choice / #validation / #toast; #status's specimen is already
+      its triplet matrix; a falsifier proves the gate catches a planted
+      off-law state._
 - [x] A **rendered token reference** ships in `site/`, generated from
       `tokens.json` (the `scripts/build-*.mjs` codegen pattern, no new build
       category): light+dark palette swatches, the type register, the
@@ -85,11 +88,16 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
 
 Ordered by adoption leverage (the swarm's consensus), not by ease:
 
-1. **State matrices per interactive primitive.** Each detail view gains a
-   `states` block: default / hover / focus / disabled / error / loading where
-   applicable, live specimen + markup, states by class (no JS state). Start
-   with the primitives where drift actually lands: `#buttons`, `#choice`,
-   `#validation`, `#status`, `#toast`. Wire 015's render-gate to the fan.
+1. **State matrices per interactive primitive.** ✅ _Shipped 2026-06-17._ A
+   `.states` block on #buttons (default / disabled / resolved), #choice
+   (checked / unchecked / disabled), #validation (resting / invalid /
+   disabled), and #toast (success / failure / neutral slips) — live specimens
+   by class/attribute, with the live pseudo-states (hover / active / focus)
+   noted, never faked. #status's main specimen is already its ok/warn/err
+   matrix. `tests/law.spec.ts` gates each state route in both modes, and a
+   falsifier proves the gate catches a planted rounded/oversized button — so
+   the catalog can't show a happy path the gate never checks. Built as catalog
+   markup (no JS state); the one behavior add is a neutral toast trigger.
 2. **Rendered token reference.** ✅ _Shipped 2026-06-17._
    `scripts/build-tokens.mjs` → `site/tokens.html`: palette swatches both
    modes, the nine-register type grid, motion durations, layout, and the
