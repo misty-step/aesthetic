@@ -12,6 +12,7 @@ const PAGES = [
   { path: '/site/', name: 'manual' },
   { path: '/site/primitives.html', name: 'catalog' },
   { path: '/site/steering.html', name: 'steering' },
+  { path: '/site/tokens.html', name: 'tokens' },
   { path: '/site/gauntlet/dashboard.html', name: 'dashboard' },
   { path: '/site/gauntlet/docs.html', name: 'docs' },
   { path: '/site/gauntlet/settings.html', name: 'settings' },

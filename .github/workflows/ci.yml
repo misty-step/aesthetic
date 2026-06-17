@@ -17,6 +17,7 @@ jobs:
       - run: npx prettier --check .
       - run: npx stylelint aesthetic.css site/site.css
       - run: node scripts/build-recipes.mjs --check
+      - run: node scripts/build-tokens.mjs --check
 
   law:
     runs-on: ubuntu-latest

@@ -264,3 +264,105 @@ footer.ae-bar a:hover {
   border: 1px solid var(--ae-line);
   padding: 0 1em;
 }
+
+/* ── the token reference (tokens.html) ────────────────────────────── */
+
+/* sections: hairline-topped like the manual's chapters */
+.tok-sec {
+  border-top: 1px solid var(--ae-line);
+  padding-top: 2em;
+  margin-top: 2.4em;
+}
+
+.tok-sec > p {
+  max-width: 40em;
+}
+
+/* the palette: token name, then its light and dark values side by side.
+   A dense reference reads in the 13px chrome register. */
+.tok-pal {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.7em 2em;
+  align-items: center;
+  max-width: 40em;
+  margin-top: 1.4em;
+  font-size: 13px;
+}
+
+.tok-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.tok-key {
+  font-family: var(--ae-font-mono);
+}
+
+.tok-role {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  color: var(--ae-ink-faint);
+}
+
+.tok-cell {
+  display: flex;
+  align-items: center;
+}
+
+/* the swatch: a square of the literal value (radius 0), a hairline so a
+   near-surface token still reads against the ground */
+.tok-sw {
+  display: inline-block;
+  width: 1.7em;
+  height: 1.7em;
+  margin-right: 0.7em;
+  border: 1px solid var(--ae-line);
+  flex: none;
+}
+
+.tok-hex {
+  font-family: var(--ae-font-mono);
+  color: var(--ae-ink-muted);
+}
+
+/* spec lists: term and value, both mono, 13px chrome register */
+.tok-spec {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.4em 1.5em;
+  align-items: baseline;
+  max-width: 40em;
+  margin-top: 1.4em;
+  font-size: 13px;
+}
+
+.tok-spec dt {
+  font-family: var(--ae-font-mono);
+  color: var(--ae-ink-muted);
+}
+
+.tok-spec dd {
+  margin: 0;
+  font-family: var(--ae-font-mono);
+}
+
+/* the two contrast plates, side by side until they crowd */
+.tok-plates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5em;
+  align-items: start;
+  margin-top: 1.4em;
+}
+
+/* a contrast value that fails AA by contract: faint, never a red ✗ */
+.tok-dec {
+  color: var(--ae-ink-faint);
+}
+
+@media (max-width: 900px) {
+  .tok-plates {
+    grid-template-columns: 1fr;
+  }
+}

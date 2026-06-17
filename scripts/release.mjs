@@ -38,6 +38,7 @@ for (const f of pinFiles) {
 
 sh('node scripts/build-recipes.mjs');
 sh('node scripts/build-registry.mjs');
+sh('node scripts/build-tokens.mjs');
 sh('npx prettier --write . --log-level warn');
 sh('npx prettier --check . --log-level warn');
 sh('npx stylelint aesthetic.css site/site.css');
