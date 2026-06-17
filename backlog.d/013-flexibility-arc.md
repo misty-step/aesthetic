@@ -91,6 +91,19 @@ From the architecture audit — do first; each is law-respecting plumbing:
 - [ ] `release.mjs`: replace only anchored version strings (not global
       `replaceAll`); guard `window.ae*` globals against double-inclusion.
 
+## External validation (2026-06)
+
+A `/research` sweep of the 2026 "LLM-safe design system" wave (Polar Orbit,
+Builder.io, Atlassian DESIGN.md, Pandya, `stylelint-plugin-rhythmguard`)
+independently confirms 013's premise: when an LLM is the author, prose rules
+rot and the interface drifts toward "a thousand slightly different grays"
+exactly where the system stays silent. Naming the channels (this ticket) is
+the _positive_ fix; **epic 015** ships the _enforcement_ complement — the law
+as a gate consumers run, not just prose they read. The foundation pass's
+dark-token de-triplication doubles as the `light-dark()` modernization the
+wave favors (Panda's automatic light/dark — it removes the "agent forgets
+dark mode" bug class).
+
 ## Notes
 
 The proof surfaces are the LAB files, each carrying its own VERDICT comment:

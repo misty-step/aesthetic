@@ -1,6 +1,6 @@
 # Daedalus instrument channels — plotting, uncertainty, flow, report
 
-Priority: P1 · Status: open · Estimate: L
+Priority: P1 · Status: in-progress · Estimate: L
 
 ## Goal
 
