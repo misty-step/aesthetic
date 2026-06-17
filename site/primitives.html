@@ -74,7 +74,7 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Thirty-nine primitives.</span>
+              <span class="ae-item">Forty primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
@@ -312,6 +312,17 @@
                 </td>
                 <td class="role">
                   a level and its spread; the certification read
+                </td>
+                <td class="since">2.6</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#plot"
+                    >.ae-plot / .ae-plot-frontier / .ae-plot-dot</a
+                  >
+                </td>
+                <td class="role">
+                  the cost × quality plane; the Pareto frontier
                 </td>
                 <td class="since">2.6</td>
               </tr>
@@ -1413,6 +1424,173 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
 &lt;span class="<span class="t">ae-ci-whisker</span>" style="left: 60%; width: 18%"&gt;&lt;/span&gt;
 &lt;span class="<span class="t">ae-ci-cap</span>" style="left: 60%"&gt;&lt;/span&gt;
 &lt;span class="<span class="t">ae-ci-cap</span>" style="left: 78%"&gt;&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="plot">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-PLOT / .AE-PLOT-FRONTIER / .AE-PLOT-DOT</h2>
+            <p class="ae-dim">
+              The plane draws two dimensions at once: cost against quality, the
+              candidates as round dots, the Pareto frontier — nobody both
+              cheaper and better — as a dashed guide. Like the spark, the kit
+              dresses a consumer-authored SVG; the dots are the pen, so radius 0
+              still governs the frame, axes, and ticks. The default composition
+              is the frontier: the pick is the lone accent dot, the dominated
+              drop to faint. The parts compose — an open .ae-plot-ring marks a
+              reference baseline, a colored .ae-plot-glyph sits where a
+              gate-failed datum would (status rides the glyph).
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.45em">
+                arena · cost × quality · the frontier
+              </p>
+              <svg
+                class="ae-plot"
+                viewBox="0 0 440 360"
+                role="img"
+                aria-label="cost by quality scatter of six candidates; the Pareto frontier is dashed, the chosen pick is the accent dot, a gate-failed candidate is a crossed glyph"
+              >
+                <path class="ae-plot-axis" d="M 46 16 L 46 320 L 422 320" />
+                <line class="ae-plot-tick" x1="46" y1="320" x2="46" y2="324" />
+                <line
+                  class="ae-plot-tick"
+                  x1="153"
+                  y1="320"
+                  x2="153"
+                  y2="324"
+                />
+                <line
+                  class="ae-plot-tick"
+                  x1="261"
+                  y1="320"
+                  x2="261"
+                  y2="324"
+                />
+                <line
+                  class="ae-plot-tick"
+                  x1="368"
+                  y1="320"
+                  x2="368"
+                  y2="324"
+                />
+                <text
+                  class="ae-plot-ticklabel"
+                  x="46"
+                  y="336"
+                  text-anchor="middle"
+                >
+                  0
+                </text>
+                <text
+                  class="ae-plot-ticklabel"
+                  x="153"
+                  y="336"
+                  text-anchor="middle"
+                >
+                  2
+                </text>
+                <text
+                  class="ae-plot-ticklabel"
+                  x="261"
+                  y="336"
+                  text-anchor="middle"
+                >
+                  4
+                </text>
+                <text
+                  class="ae-plot-ticklabel"
+                  x="368"
+                  y="336"
+                  text-anchor="middle"
+                >
+                  6
+                </text>
+                <line class="ae-plot-tick" x1="42" y1="320" x2="46" y2="320" />
+                <line class="ae-plot-tick" x1="42" y1="168" x2="46" y2="168" />
+                <line class="ae-plot-tick" x1="42" y1="16" x2="46" y2="16" />
+                <text
+                  class="ae-plot-ticklabel"
+                  x="39"
+                  y="323"
+                  text-anchor="end"
+                >
+                  60
+                </text>
+                <text
+                  class="ae-plot-ticklabel"
+                  x="39"
+                  y="171"
+                  text-anchor="end"
+                >
+                  80
+                </text>
+                <text class="ae-plot-ticklabel" x="39" y="19" text-anchor="end">
+                  100
+                </text>
+                <text
+                  class="ae-plot-axislabel"
+                  x="422"
+                  y="350"
+                  text-anchor="end"
+                >
+                  COST · $/1K
+                </text>
+                <text
+                  class="ae-plot-axislabel"
+                  x="12"
+                  y="168"
+                  text-anchor="middle"
+                  transform="rotate(-90 12 168)"
+                >
+                  QUALITY
+                </text>
+                <path
+                  class="ae-plot-frontier"
+                  d="M 100 206 L 186 100 L 358 46"
+                />
+                <circle class="ae-plot-dot" cx="100" cy="206" r="4.5" />
+                <circle
+                  class="ae-plot-dot is-dominated"
+                  cx="239"
+                  cy="153"
+                  r="4.5"
+                />
+                <circle
+                  class="ae-plot-dot is-dominated"
+                  cx="315"
+                  cy="107"
+                  r="4.5"
+                />
+                <circle class="ae-plot-dot" cx="358" cy="46" r="4.5" />
+                <g class="ae-plot-glyph ae-err">
+                  <line x1="277" y1="178" x2="288" y2="189" />
+                  <line x1="277" y1="189" x2="288" y2="178" />
+                </g>
+                <circle
+                  class="ae-plot-dot is-chosen"
+                  cx="186"
+                  cy="100"
+                  r="4.5"
+                />
+                <text class="ae-plot-label is-chosen" x="195" y="103.5">
+                  sonnet·v4
+                </text>
+              </svg>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">svg</span> class="<span class="t">ae-plot</span>" viewBox="0 0 440 360" role="img"&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-plot-axis</span>" d="M 46 16 L 46 320 L 422 320"/&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-plot-frontier</span>" d="M 100 206 L 186 100 L 358 46"/&gt;
+  &lt;<span class="t">circle</span> class="<span class="t">ae-plot-dot is-chosen</span>" cx="186" cy="100" r="4.5"/&gt;
+  &lt;<span class="t">circle</span> class="<span class="t">ae-plot-dot is-dominated</span>" cx="239" cy="153" r="4.5"/&gt;
+<span class="t">// a gate-failed datum: status rides the glyph</span>
+  &lt;<span class="t">g</span> class="<span class="t">ae-plot-glyph ae-err</span>"&gt;…&lt;/<span class="t">g</span>&gt;
+&lt;/<span class="t">svg</span>&gt;</code></pre>
           </div>
         </div>
 

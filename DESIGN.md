@@ -98,7 +98,9 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    are tabular numerals (`.ae-num`, loud by weight via `.ae-strong`),
    deltas put the hue on the arrow (`.ae-delta`), trends are pen
    strokes (`.ae-spark`), an interval is a level and its spread
-   (`.ae-ci` — a range band, a mean tick, hover for the exact figures).
+   (`.ae-ci` — a range band, a mean tick, hover for the exact figures),
+   and a field is a plane (`.ae-plot` — cost against quality, the
+   Pareto frontier dashed, the pick in accent).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed), and the form flow (settings rows,

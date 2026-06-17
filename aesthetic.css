@@ -1339,6 +1339,96 @@ input.ae-switch:checked::before {
   }
 }
 
+/* the plane: an XY field — cost against quality — with a Pareto
+   frontier. Like .ae-spark, the kit dresses a consumer-authored <svg>
+   (the consumer owns the data and the projection); round dots are the
+   pen (SVG <circle>, never a CSS radius), the frame/axes/ticks stay
+   radius 0. Default composition = frontier: a dashed guide threads the
+   non-dominated points, the pick is the lone accent dot, the rest drop
+   to faint. */
+.ae-plot {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--ae-font-mono);
+}
+.ae-plot-axis {
+  fill: none;
+  stroke: var(--ae-line);
+  stroke-width: 1;
+}
+.ae-plot-tick {
+  stroke: var(--ae-line);
+  stroke-width: 1;
+}
+.ae-plot-ticklabel {
+  fill: var(--ae-ink-faint);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.ae-plot-axislabel {
+  fill: var(--ae-ink-muted);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.ae-plot-frontier {
+  fill: none;
+  stroke: var(--ae-ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ae-plot-crosshair {
+  stroke: var(--ae-ink-faint);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+.ae-plot-dot {
+  fill: var(--ae-ink);
+  transition: fill var(--ae-soft) var(--ae-ease);
+}
+.ae-plot-dot.is-dominated {
+  fill: var(--ae-ink-faint);
+}
+.ae-plot-dot.is-chosen {
+  fill: var(--ae-accent);
+}
+.ae-plot-ring {
+  fill: none;
+  stroke: var(--ae-ink-muted);
+  stroke-width: 1.5;
+}
+.ae-plot-label {
+  fill: var(--ae-ink-muted);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.ae-plot-label.is-dominated {
+  fill: var(--ae-ink-faint);
+}
+.ae-plot-label.is-chosen {
+  fill: var(--ae-accent);
+}
+
+/* a gate-failed datum is a colored mark where its dot would sit —
+   status rides the glyph; compose with .ae-ok / .ae-warn / .ae-err */
+.ae-plot-glyph {
+  fill: none;
+  stroke: var(--ae-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.ae-plot-glyph.ae-ok {
+  stroke: var(--ae-ok);
+}
+.ae-plot-glyph.ae-warn {
+  stroke: var(--ae-warn);
+}
+.ae-plot-glyph.ae-err {
+  stroke: var(--ae-err);
+}
+
 /* ── choice controls: rows that open ──────────────────────────────── */
 
 /* a setting is a quiet hairline row — label left, current value right
