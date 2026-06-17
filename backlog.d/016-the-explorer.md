@@ -51,11 +51,13 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
 - [x] **Copy-to-clipboard** on every source block yields clean, runnable
       markup, with a quiet chrome-register affordance and a resolve-once
       "copied" confirmation (reduced-motion safe). — _shipped 2026-06-17._
-- [ ] The **machine registry** (`site/r/`) carries a per-primitive
+- [x] The **machine registry** (`site/r/`) carries a per-primitive
       composition feed — canonical markup + the recipe(s) it needs + the law
       clauses that bind it — so an agent composes a view from JSON without
       scraping `primitives.html`. Generated from the same source the catalog
-      renders (no second source of truth).
+      renders (no second source of truth). — _shipped 2026-06-17:
+      `site/r/primitives.json` via `scripts/build-feed.mjs`; a round-trip
+      proof composed an in-law view from the feed alone._
 - [ ] Client-side **search/filter** over the 42-row index, keyboard-focusable
       (`/`), pure progressive enhancement (works without it).
 - [ ] `tests/law.spec.ts` covers every new route/surface (font sizes, radius
@@ -120,11 +122,19 @@ Ordered by adoption leverage (the swarm's consensus), not by ease:
    live DOM is a structural mock for shell/scroll/nav, so the authored source
    is the correct "what you ship." Covered by `tests/law.spec.ts` (clipboard
    equals the unescaped source, both modes).
-4. **Per-primitive composition feed in `site/r/`.** Extend
-   `scripts/build-registry.mjs` (or a sibling) to emit one registry item per
-   primitive/archetype carrying markup + required recipes + bound law clauses,
-   alongside the existing shadcn file items. Serves the adopting agent (011)
-   and complements 015's machine-spec export.
+4. **Per-primitive composition feed in `site/r/`.** ✅ _Shipped 2026-06-17._
+   `scripts/build-feed.mjs` parses `site/primitives.html` (the catalog is the
+   single source of truth) → `site/r/primitives.json`: one entry per primitive
+   with route / title / summary / classes / **role** / since / **markup** (the
+   same clean text the copy button yields) / **recipes** (inferred from the
+   markup's trigger classes) / an optional **note**, plus the global **law**
+   manifest.
+   The machine dual of copy (#3): copy serves humans, this serves the adopting
+   agent (011). Proven by a round-trip — a page composed from the feed's markup
+   alone rendered in-law (font ≤ 16, radius 0, recipes resolved). Byte-exact
+   `--check` wired into `npm run check`, CI, and `release.mjs`; linked from the
+   catalog index. Found + fixed a real wrinkle: a teaching snippet's `//` note +
+   loose variant are split out so the `markup` field stays naive-composable.
 5. **Client-side search/filter** on the index `<table class="idx">`, `/` to
    focus, progressive enhancement. Lowest leverage; completes "findable."
 6. **(Deferred, optional) Editable steering preview + consolidated register
