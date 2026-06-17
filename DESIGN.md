@@ -100,7 +100,9 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    strokes (`.ae-spark`), an interval is a level and its spread
    (`.ae-ci` — a range band, a mean tick, hover for the exact figures),
    and a field is a plane (`.ae-plot` — cost against quality, the
-   Pareto frontier dashed, the pick in accent).
+   Pareto frontier dashed, the pick in accent), and a system is a
+   diagram (`.ae-flow` — hairline nodes, orthogonal wires, the running
+   stage in accent).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed), and the form flow (settings rows,

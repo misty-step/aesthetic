@@ -1429,6 +1429,106 @@ input.ae-switch:checked::before {
   stroke: var(--ae-err);
 }
 
+/* the flow: a pipeline as a diagram — hairline-framed nodes (hard
+   corners, radius 0) joined by orthogonal ink wires. Like the plot, the
+   kit dresses a consumer-authored <svg> so node and wire geometry share
+   one coordinate space; non-scaling strokes keep hairlines 1px at any
+   fit. State rides the frame and a glyph (✓ done, ✗ failed), the running
+   stage takes the accent, locked stages go dashed-faint. The default is
+   the spine: a row of stages, the gate/lineage backbone. */
+.ae-flow {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ae-node {
+  fill: var(--ae-surface);
+  stroke: var(--ae-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ae-node.is-done {
+  stroke: var(--ae-ink-muted);
+}
+.ae-node.is-active {
+  stroke: var(--ae-accent);
+  stroke-width: 1.5;
+}
+.ae-node.is-locked {
+  fill: var(--ae-wash);
+  stroke: var(--ae-ink-faint);
+  stroke-dasharray: 3 3;
+}
+.ae-node.is-failed {
+  stroke: var(--ae-err);
+}
+
+/* the node label — the 13px instrument register, ink. State lives in the
+   frame and the glyph; only the running stage spends the accent. */
+.ae-node-label {
+  fill: var(--ae-ink);
+  font-family: var(--ae-font);
+  font-size: 13px;
+  font-weight: var(--ae-w-medium);
+}
+.ae-node-label.is-active {
+  fill: var(--ae-accent);
+  font-weight: var(--ae-w-black);
+}
+.ae-node-label.is-locked {
+  fill: var(--ae-ink-faint);
+  font-weight: var(--ae-w-regular);
+}
+
+/* a mono ordinal above the label, and mono in/out port labels at the
+   node's edges (a node's typed interface) */
+.ae-node-kicker {
+  fill: var(--ae-ink-faint);
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.ae-node-port {
+  fill: var(--ae-ink-muted);
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.ae-node-port.is-locked {
+  fill: var(--ae-ink-faint);
+}
+.ae-node-stub {
+  stroke: var(--ae-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* the wire: an orthogonal ink connector (H/V segments only), colored by
+   the stage it feeds. A round junction marks a split or merge — the one
+   round mark, like the spark's caps; the frames stay square. */
+.ae-wire {
+  fill: none;
+  stroke: var(--ae-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ae-wire.is-reached {
+  stroke: var(--ae-ink-muted);
+}
+.ae-wire.is-active {
+  stroke: var(--ae-accent);
+}
+.ae-wire.is-locked {
+  stroke: var(--ae-ink-faint);
+  stroke-dasharray: 3 3;
+}
+.ae-wire-junction {
+  fill: var(--ae-ink-muted);
+}
+.ae-wire-junction.is-active {
+  fill: var(--ae-accent);
+}
+
 /* ── choice controls: rows that open ──────────────────────────────── */
 
 /* a setting is a quiet hairline row — label left, current value right

@@ -74,7 +74,7 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Forty primitives.</span>
+              <span class="ae-item">Forty-one primitives.</span>
               <span class="ae-dim"
                 >Each class opens its rendered specimen and the canonical markup
                 — what you see is what you ship.</span
@@ -323,6 +323,15 @@
                 </td>
                 <td class="role">
                   the cost × quality plane; the Pareto frontier
+                </td>
+                <td class="since">2.6</td>
+              </tr>
+              <tr>
+                <td class="cls">
+                  <a href="#flow">.ae-flow / .ae-node / .ae-wire</a>
+                </td>
+                <td class="role">
+                  a pipeline as a diagram; nodes and orthogonal wires
                 </td>
                 <td class="since">2.6</td>
               </tr>
@@ -1590,6 +1599,152 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
   &lt;<span class="t">circle</span> class="<span class="t">ae-plot-dot is-dominated</span>" cx="239" cy="153" r="4.5"/&gt;
 <span class="t">// a gate-failed datum: status rides the glyph</span>
   &lt;<span class="t">g</span> class="<span class="t">ae-plot-glyph ae-err</span>"&gt;…&lt;/<span class="t">g</span>&gt;
+&lt;/<span class="t">svg</span>&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="ae-view" data-route="flow">
+          <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+          <div class="ae-group">
+            <h2 class="ae-h">.AE-FLOW / .AE-NODE / .AE-WIRE</h2>
+            <p class="ae-dim">
+              The flow draws a system: hairline-framed stages (hard corners,
+              radius 0) joined by orthogonal ink wires, so a pipeline reads as a
+              diagram. State rides the frame and a glyph — a cleared stage
+              carries ✓, the running stage takes the accent, locked stages go
+              dashed-faint. Like the plot, the kit dresses a consumer-authored
+              SVG so nodes and wires share one coordinate space, and non-scaling
+              strokes hold the hairline at any fit. The default is the spine —
+              the gate/lineage backbone; the same nodes compose into stations,
+              ported nodes, or a branching DAG.
+            </p>
+          </div>
+          <div class="src-split">
+            <div>
+              <p class="ae-chrome" style="margin-bottom: 0.45em">
+                foundry · cache-key-collision · the spine
+              </p>
+              <svg
+                class="ae-flow"
+                viewBox="0 0 684 140"
+                role="img"
+                aria-label="a four-stage pipeline spine: arena cleared, search running in accent, gates and launch locked, joined by orthogonal wires"
+              >
+                <path class="ae-wire is-active" d="M 138 70 L 194 70" />
+                <path class="ae-wire is-locked" d="M 314 70 L 370 70" />
+                <path class="ae-wire is-locked" d="M 490 70 L 546 70" />
+                <rect
+                  class="ae-node is-done"
+                  x="18"
+                  y="43"
+                  width="120"
+                  height="54"
+                />
+                <text
+                  class="ae-node-kicker"
+                  x="78"
+                  y="61"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  01
+                </text>
+                <text
+                  class="ae-node-label"
+                  x="78"
+                  y="80"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  arena
+                </text>
+                <path class="ae-icon ae-ok" d="M 117 54 L 120 57 L 126 49" />
+                <rect
+                  class="ae-node is-active"
+                  x="194"
+                  y="43"
+                  width="120"
+                  height="54"
+                />
+                <text
+                  class="ae-node-kicker"
+                  x="254"
+                  y="61"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  02
+                </text>
+                <text
+                  class="ae-node-label is-active"
+                  x="254"
+                  y="80"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  search
+                </text>
+                <rect
+                  class="ae-node is-locked"
+                  x="370"
+                  y="43"
+                  width="120"
+                  height="54"
+                />
+                <text
+                  class="ae-node-kicker"
+                  x="430"
+                  y="61"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  03
+                </text>
+                <text
+                  class="ae-node-label is-locked"
+                  x="430"
+                  y="80"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  gates
+                </text>
+                <rect
+                  class="ae-node is-locked"
+                  x="546"
+                  y="43"
+                  width="120"
+                  height="54"
+                />
+                <text
+                  class="ae-node-kicker"
+                  x="606"
+                  y="61"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  04
+                </text>
+                <text
+                  class="ae-node-label is-locked"
+                  x="606"
+                  y="80"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                >
+                  launch
+                </text>
+              </svg>
+            </div>
+            <pre
+              class="src-code"
+            ><code>&lt;<span class="t">svg</span> class="<span class="t">ae-flow</span>" viewBox="0 0 684 140" role="img"&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-wire is-active</span>" d="M 138 70 L 194 70"/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-done</span>" x="18" y="43" width="120" height="54"/&gt;
+  &lt;<span class="t">text</span> class="<span class="t">ae-node-label</span>" x="78" y="80"&gt;arena&lt;/text&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-icon ae-ok</span>" d="M 117 54 L 120 57 L 126 49"/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-active</span>" x="194" y="43" …/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-locked</span>" x="370" y="43" …/&gt;
 &lt;/<span class="t">svg</span>&gt;</code></pre>
           </div>
         </div>
