@@ -1,6 +1,6 @@
 # The explorer — the catalog becomes a world-class, zero-build component + token reference
 
-Priority: P1 · Status: pending · Estimate: L
+Priority: P1 · Status: in-progress · Estimate: L
 
 ## Goal
 
@@ -37,12 +37,14 @@ scraping HTML — delivering the _jobs_ of Storybook with none of its machinery.
       applicable) as live specimens + markup — not one happy-path specimen.
       The law gate (015) runs against the state fan, so an off-law error
       state (a filled pill, a soft wash, a second size) fails.
-- [ ] A **rendered token reference** ships in `site/`, generated from
+- [x] A **rendered token reference** ships in `site/`, generated from
       `tokens.json` (the `scripts/build-*.mjs` codegen pattern, no new build
       category): light+dark palette swatches, the type register, the
-      `--ae-space-*` scale, the motion durations, and the already-computed
-      `contrast` table surfaced as an `.ae-table` plate. Built only with the
-      system; view-source is documentation; the law holds in both modes.
+      motion durations, and the already-computed `contrast` table surfaced as
+      an `.ae-table` plate. Built only with the system; view-source is
+      documentation; the law holds in both modes. — _shipped 2026-06-17:
+      `site/tokens.html` via `scripts/build-tokens.mjs`; the `--ae-space-*`
+      scale row is the one deferred piece (blocked on 013)._
 - [ ] **Copy-to-clipboard** on every specimen yields clean, runnable markup
       (serialized from the live specimen DOM, not the elided/`…`-placeholder
       `<pre>`), with a quiet chrome-register affordance and a resolve-once
@@ -89,12 +91,17 @@ Ordered by adoption leverage (the swarm's consensus), not by ease:
    applicable, live specimen + markup, states by class (no JS state). Start
    with the primitives where drift actually lands: `#buttons`, `#choice`,
    `#validation`, `#status`, `#toast`. Wire 015's render-gate to the fan.
-2. **Rendered token reference.** `scripts/build-tokens.mjs` → a `#tokens`
-   route (or `site/tokens.html`): palette swatches both modes, the type
-   register, the space scale (depends on 013's `--ae-space-*`), motion
-   durations, and the `contrast` plate (zero new computation — the data is in
-   `tokens.json:contrast`). The dual of the primitives catalog: primitives =
-   how to compose; tokens = what the values are.
+2. **Rendered token reference.** ✅ _Shipped 2026-06-17._
+   `scripts/build-tokens.mjs` → `site/tokens.html`: palette swatches both
+   modes, the nine-register type grid, motion durations, layout, and the
+   `contrast` plate (zero new computation — the data is in
+   `tokens.json:contrast`, rendered with the green ✓ riding each AA pass and
+   the by-contract failures faint). Generated + prettier-formatted + byte-exact
+   `--check` (wired into `npm run check`, CI, and `release.mjs`); linked from
+   the catalog index; covered by `tests/law.spec.ts` both modes. The dual of
+   the primitives catalog: primitives = how to compose; tokens = what the
+   values are. **Remaining:** the `--ae-space-*` scale row, deferred until 013
+   lands the scale (the page notes it inline).
 3. **Copy-to-clipboard.** A `copy.js` recipe (dependency-free, ~15 lines):
    one chrome-register button per specimen, `navigator.clipboard.writeText`
    of the serialized live specimen markup, a resolve-once confirmation reusing
