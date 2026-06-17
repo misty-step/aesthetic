@@ -1968,6 +1968,51 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
           aeToast('Build failed on preview.', { status: 'err' }),
         );
       })();
+
+      /* copy-to-clipboard: each source block gets a quiet button that copies
+         the clean, unescaped canonical markup — textContent flattens the
+         syntax-highlight spans back to plain text. The ack resolves once and
+         reverts so you can copy again; nothing animates (reduced-motion safe). */
+      (() => {
+        if (!navigator.clipboard) return;
+        // one shared status region announces 'Copied' once per copy (and not
+        // on the revert) — the success stays audible to screen readers, quietly
+        const status = document.createElement('span');
+        status.className = 'ae-sr';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        document.body.appendChild(status);
+        document.querySelectorAll('pre.src-code').forEach((pre) => {
+          const wrap = document.createElement('div');
+          wrap.className = 'src-codewrap';
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'src-copy';
+          btn.textContent = 'copy';
+          wrap.appendChild(btn);
+          let timer;
+          btn.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(
+                pre.textContent.replace(/\s+$/, '') + '\n',
+              );
+              btn.textContent = 'copied';
+              btn.classList.add('is-copied');
+              status.textContent = 'Copied';
+              clearTimeout(timer);
+              timer = setTimeout(() => {
+                btn.textContent = 'copy';
+                btn.classList.remove('is-copied');
+                status.textContent = '';
+              }, 1500);
+            } catch (e) {
+              /* clipboard unavailable (insecure context or denied) — no-op */
+            }
+          });
+        });
+      })();
     </script>
   </body>
 </html>

@@ -234,6 +234,39 @@ footer.ae-bar a:hover {
   color: var(--ae-ink);
 }
 
+/* copy affordance: a quiet chrome-register button per source block. The wrap
+   holds it fixed at the top-right while the pre scrolls under it. */
+.src-codewrap {
+  position: relative;
+}
+
+.src-copy {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ae-ink-faint);
+  background: var(--ae-surface);
+  border: 1px solid var(--ae-line);
+  padding: 0.25em 0.7em;
+  cursor: pointer;
+}
+
+.src-copy:hover,
+.src-copy:focus-visible {
+  color: var(--ae-ink);
+  border-color: var(--ae-ink-faint);
+}
+
+/* the ack: weight + the word, never a colored pill — status stays off the box */
+.src-copy.is-copied {
+  color: var(--ae-ink);
+  font-weight: var(--ae-w-medium);
+  border-color: var(--ae-ink-faint);
+}
+
 .back-link {
   margin-bottom: 1.6em;
 }

@@ -163,3 +163,30 @@ test('the catalog routes by hash and the toggle flips the mode', async ({
     )
     .not.toBe('none');
 });
+
+test('the catalog copy button copies the clean canonical markup', async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/site/primitives.html#buttons');
+  const view = page.locator('[data-route="buttons"]');
+  await expect(view).toBeVisible();
+
+  const btn = view.locator('.src-copy').first();
+  await expect(btn).toHaveText('copy');
+  await btn.click();
+  await expect(btn).toHaveText('copied');
+
+  // the clipboard holds the source block's text: real, unescaped markup with
+  // the syntax-highlight wrappers flattened away (content spans stay)
+  const code = (await view.locator('pre.src-code').first().textContent()) ?? '';
+  const clip = await page.evaluate(() => navigator.clipboard.readText());
+  expect(clip.trim()).toBe(code.trim());
+  expect(clip).toContain('<button class="ae-button'); // unescaped, runnable
+  expect(clip).not.toContain('&lt;'); // entities decoded
+  expect(clip).not.toContain('class="t"'); // highlight wrappers gone
+
+  // the ack resolves once, then reverts so it can copy again
+  await expect(btn).toHaveText('copy', { timeout: 2500 });
+});
