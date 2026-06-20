@@ -135,7 +135,17 @@ for (const route of INSTRUMENT_ROUTES) {
 // against the whole fan, so an off-law state — a filled pill, a rounded box,
 // a second size — fails. A catalog that only shows the happy path lets the
 // drift land exactly where the gate never looks (012).
-const STATE_ROUTES = ['buttons', 'choice', 'validation', 'toast'];
+const STATE_ROUTES = [
+  'buttons',
+  'choice',
+  'validation',
+  'toast',
+  'meter',
+  'table',
+  'settings',
+  'waiting',
+  'interval',
+];
 for (const route of STATE_ROUTES) {
   for (const mode of MODES) {
     test(`catalog #${route} states · ${mode} · the law holds`, async ({
