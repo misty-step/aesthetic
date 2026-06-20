@@ -74,10 +74,12 @@
         <div class="ae-view is-on" data-route="index">
           <div class="ae-group">
             <p>
-              <span class="ae-item">Forty-two primitives.</span>
+              <span class="ae-item"
+                >Thirty-three primitives, rendered live.</span
+              >
               <span class="ae-dim"
-                >Each class opens its rendered specimen and the canonical markup
-                — what you see is what you ship.</span
+                >Each specimen opens its detail view — the full render beside
+                the canonical markup, states included.</span
               >
             </p>
             <p class="ae-chrome">
@@ -90,9 +92,10 @@
               <a href="r/primitives.json">the composition feed</a>
             </p>
           </div>
-          <table class="idx ae-chrome">
+          <table class="idx">
             <thead>
               <tr>
+                <th>SPECIMEN</th>
                 <th>CLASS</th>
                 <th>ROLE</th>
                 <th>SINCE</th>
@@ -100,272 +103,836 @@
             </thead>
             <tbody>
               <tr>
-                <td class="cls">
-                  <a href="#shell">.ae-screen / .ae-bar / .ae-stage</a>
+                <td class="specimen">
+                  <div class="mini-shell">
+                    <div class="ms-bar">
+                      <span>NAME</span><span>nav · mode</span>
+                    </div>
+                    <div class="ms-stage">the stage — one view</div>
+                    <div class="ms-bar">
+                      <span>chrome</span><span>links</span>
+                    </div>
+                  </div>
                 </td>
-                <td class="role">
-                  viewport shell: chrome bars, centered stage
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#shell"
+                    >.ae-screen / .ae-bar / .ae-stage</a
+                  >
+                  <span class="spec-role"
+                    >viewport shell: chrome bars, centered stage</span
+                  >
+                  <span class="spec-since">2.0</span>
                 </td>
-                <td class="since">2.0</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#shell">.ae-wide</a></td>
-                <td class="role">
-                  screen modifier: the 68rem measure for catalog shapes
+                <td class="specimen">
+                  <div
+                    style="
+                      border: 1px solid var(--ae-line);
+                      padding: 0.6em 0.8em;
+                      width: 100%;
+                    "
+                  >
+                    <p class="ae-dim" style="margin: 0 0 0.2em">
+                      Inner scroll —
+                    </p>
+                    <p class="ae-chrome" style="margin: 0">
+                      the chrome never moves
+                    </p>
+                  </div>
                 </td>
-                <td class="since">2.3</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#scroll">.ae-stage-scroll</a></td>
-                <td class="role">
-                  inner scroll for long documents — this very page
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#scroll">.ae-stage-scroll</a>
+                  <span class="spec-role">inner scroll for long documents</span>
+                  <span class="spec-since">2.0</span>
                 </td>
-                <td class="since">2.0</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#nav">.ae-view</a></td>
-                <td class="role">one screenful, quiet entrance on remount</td>
-                <td class="since">2.0</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#nav">.ae-nav + .ae-nav-ind</a></td>
-                <td class="role">view switcher, sliding ink underline</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#rows">.ae-row-link</a></td>
-                <td class="role">whole-row links; the cursor never strobes</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#chrome">.ae-chrome / .ae-foot</a></td>
-                <td class="role">the 13px chrome register; hairline footer</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#icons">.ae-icon</a></td>
-                <td class="role">Lucide at 1.5px stroke, riding with text</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#icons">.ae-mode</a></td>
-                <td class="role">sun/moon rotate-crossfade toggle</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#panel">.ae-panel</a></td>
-                <td class="role">soft depth for dense content, radius 0</td>
-                <td class="since">2.1</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#registers">.ae-name / .ae-lede</a>
+                <td class="specimen">
+                  <nav class="ae-nav">
+                    <button class="is-active" type="button">work</button>
+                    <button type="button">writing</button>
+                    <button type="button">contact</button>
+                    <span class="ae-nav-ind"></span>
+                  </nav>
                 </td>
-                <td class="role">
-                  the name, never large; the argument, plainly
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#nav">.ae-nav + .ae-nav-ind</a>
+                  <span class="spec-role"
+                    >view switcher, sliding ink underline</span
+                  >
+                  <span class="spec-since">2.1</span>
                 </td>
-                <td class="since">1.0</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#registers">.ae-group / .ae-h</a></td>
-                <td class="role">a section and its muted heading</td>
-                <td class="since">1.0</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#registers">.ae-item / .ae-dim</a></td>
-                <td class="role">medium ink / muted ink</td>
-                <td class="since">1.0</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#registers">.ae-accent</a></td>
-                <td class="role">the accent: yours to steer</td>
-                <td class="since">1.0</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#form">.ae-label / .ae-input</a></td>
-                <td class="role">fields as lines, not boxes</td>
-                <td class="since">1.0</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#buttons">.ae-button / .ae-button-quiet</a>
+                <td class="specimen">
+                  <div>
+                    <a class="ae-row-link" href="#rows"
+                      ><span class="ae-item">A project</span>
+                      <span class="ae-dim">— description</span></a
+                    >
+                    <a class="ae-row-link" href="#rows"
+                      ><span class="ae-item">Another</span>
+                      <span class="ae-dim">— hover the row</span></a
+                    >
+                  </div>
                 </td>
-                <td class="role">solid ink primary, hairline secondary</td>
-                <td class="since">2.2</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#buttons">.ae-send</a></td>
-                <td class="role">label resolves to “Sent ✓”, exactly once</td>
-                <td class="since">2.2</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#status">.ae-ok / .ae-warn / .ae-err</a>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#rows">.ae-row-link</a>
+                  <span class="spec-role"
+                    >whole-row links; no cursor strobing</span
+                  >
+                  <span class="spec-since">2.1</span>
                 </td>
-                <td class="role">status rides the glyph; words stay ink</td>
-                <td class="since">2.4</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#table">.ae-table / .ae-plate</a></td>
-                <td class="role">terminal-density data, framed as a plate</td>
-                <td class="since">2.4</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#dialog">.ae-dialog</a></td>
-                <td class="role">the panel costume in the top layer</td>
-                <td class="since">2.4</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#settings">.ae-settings / .ae-menu</a>
+                <td class="specimen">
+                  <div class="ae-foot">
+                    <span>v2.6.0 · MIT</span>
+                    <span class="ae-foot-links"
+                      ><a href="#chrome">github</a
+                      ><a href="#chrome">npm</a></span
+                    >
+                  </div>
                 </td>
-                <td class="role">quiet rows that fold open into choosers</td>
-                <td class="since">2.4</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#choice">.ae-choice / .ae-check / .ae-radio</a>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#chrome">.ae-chrome / .ae-foot</a>
+                  <span class="spec-role"
+                    >the 13px chrome register; hairline footer</span
+                  >
+                  <span class="spec-since">2.1</span>
                 </td>
-                <td class="role">choice marks: squares, since radius is 0</td>
-                <td class="since">2.5</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#choice">.ae-switch</a></td>
-                <td class="role">a hairline channel and an ink slide</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#validation">.ae-field-note + [aria-invalid]</a>
+                <td class="specimen">
+                  <p style="margin: 0">
+                    ride with text
+                    <svg class="ae-icon"><use href="#i-check" /></svg>
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    <svg class="ae-icon ae-warn">
+                      <use href="#i-triangle-alert" />
+                    </svg>
+                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                  </p>
                 </td>
-                <td class="role">
-                  validation: the line confesses, glyph speaks
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#icons">.ae-icon / .ae-mode</a>
+                  <span class="spec-role"
+                    >Lucide at 1.5px stroke; mode toggle</span
+                  >
+                  <span class="spec-since">2.1</span>
                 </td>
-                <td class="since">2.5</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#buttons">.ae-button-compact</a></td>
-                <td class="role">the chrome-register button scale</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#tabs">.ae-tabs</a></td>
-                <td class="role">the nav instrument pointed at panels</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#tag">.ae-tag</a></td>
-                <td class="role">the badge, refused: a mono word, no pill</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#tip">[data-ae-tip]</a></td>
-                <td class="role">the tip: a whisper that answers hover</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#pop">.ae-pop</a></td>
-                <td class="role">the popover slip, placed by its invoker</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#toast">.ae-toasts / .ae-toast</a></td>
-                <td class="role">news arrives at the edge and waits</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#fold">.ae-fold</a></td>
-                <td class="role">
-                  disclosure as a hairline row, native details
+                <td class="specimen">
+                  <div class="ae-panel" style="width: 100%">
+                    <p class="ae-item" style="margin: 0 0 0.1em">
+                      Dense content
+                    </p>
+                    <p class="ae-dim" style="margin: 0">
+                      earns its quiet lift.
+                    </p>
+                  </div>
                 </td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls"><a href="#crumbs">.ae-crumbs</a></td>
-                <td class="role">the path: here is ink, the way back muted</td>
-                <td class="since">2.5</td>
-              </tr>
-              <tr>
-                <td class="cls">
-                  <a href="#waiting">.ae-skeleton / .ae-empty</a>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#panel">.ae-panel</a>
+                  <span class="spec-role"
+                    >soft depth for dense content, radius 0</span
+                  >
+                  <span class="spec-since">2.1</span>
                 </td>
-                <td class="role">waiting without a shimmer; honest absence</td>
-                <td class="since">2.5</td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#meter">.ae-meter / .ae-meter-mark</a>
+                <td class="specimen">
+                  <div>
+                    <p class="ae-name" style="margin: 0 0 0.1em">THE NAME</p>
+                    <p class="ae-lede" style="margin: 0 0 0.1em">
+                      The argument, plainly.
+                    </p>
+                    <p class="ae-item" style="margin: 0 0 0.1em">
+                      An item that matters
+                    </p>
+                    <p class="ae-dim" style="margin: 0 0 0.1em">
+                      supporting matter
+                    </p>
+                    <p style="margin: 0">
+                      The <span class="ae-accent">accent</span>
+                    </p>
+                  </div>
                 </td>
-                <td class="role">the gauge as a ruled line, never a pill</td>
-                <td class="since">2.5</td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#registers"
+                    >.ae-name / .ae-lede / .ae-item / .ae-dim / .ae-accent</a
+                  >
+                  <span class="spec-role"
+                    >nine registers: three inks by three weights</span
+                  >
+                  <span class="spec-since">1.0</span>
+                </td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#figures"
+                <td class="specimen">
+                  <label class="ae-label" style="width: 100%"
+                    >Name
+                    <input
+                      class="ae-input"
+                      type="text"
+                      placeholder="Phaedrus"
+                      style="margin-top: 0.3em"
+                  /></label>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#form">.ae-label / .ae-input</a>
+                  <span class="spec-role">fields as lines, not boxes</span>
+                  <span class="spec-since">1.0</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div
+                    style="
+                      display: flex;
+                      gap: 0.5em;
+                      flex-wrap: wrap;
+                      align-items: center;
+                    "
+                  >
+                    <button class="ae-button" type="button">Primary</button>
+                    <button class="ae-button ae-button-quiet" type="button">
+                      Quiet
+                    </button>
+                    <button class="ae-button ae-button-compact" type="button">
+                      Compact
+                    </button>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#buttons"
+                    >.ae-button / .ae-button-quiet / .ae-send</a
+                  >
+                  <span class="spec-role"
+                    >solid ink primary, hairline secondary</span
+                  >
+                  <span class="spec-since">2.2</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div>
+                    <p style="margin: 0 0 0.15em">
+                      <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                      Deploy succeeded.
+                    </p>
+                    <p style="margin: 0 0 0.15em">
+                      <svg class="ae-icon ae-warn">
+                        <use href="#i-triangle-alert" />
+                      </svg>
+                      Expires soon.
+                    </p>
+                    <p style="margin: 0">
+                      <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                      Build failed.
+                    </p>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#status"
+                    >.ae-ok / .ae-warn / .ae-err</a
+                  >
+                  <span class="spec-role"
+                    >status rides the glyph; words stay ink</span
+                  >
+                  <span class="spec-since">2.4</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <table class="ae-table">
+                    <thead>
+                      <tr>
+                        <th>ep</th>
+                        <th class="num">ms</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="ae-item">/send</td>
+                        <td class="num">412</td>
+                      </tr>
+                      <tr>
+                        <td class="ae-item">/verify</td>
+                        <td class="num">88</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#table">.ae-table / .ae-plate</a>
+                  <span class="spec-role"
+                    >terminal-density data, framed as a plate</span
+                  >
+                  <span class="spec-since">2.4</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <button class="ae-button ae-button-quiet" type="button">
+                    Archive project…
+                  </button>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#dialog">.ae-dialog</a>
+                  <span class="spec-role"
+                    >the panel costume in the top layer</span
+                  >
+                  <span class="spec-since">2.4</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div class="ae-settings" style="width: 100%">
+                    <button class="ae-setting" type="button">
+                      Theme <span class="ae-setting-val">system</span>
+                    </button>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#settings"
+                    >.ae-settings / .ae-menu</a
+                  >
+                  <span class="spec-role"
+                    >quiet rows that fold open into choosers</span
+                  >
+                  <span class="spec-since">2.4</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div
+                    style="display: flex; flex-direction: column; gap: 0.3em"
+                  >
+                    <label class="ae-choice"
+                      ><input class="ae-check" type="checkbox" checked />
+                      Enable</label
+                    >
+                    <label class="ae-choice"
+                      ><input
+                        class="ae-radio"
+                        type="radio"
+                        name="g-radio"
+                        checked
+                      />
+                      One</label
+                    >
+                    <label class="ae-choice"
+                      ><input class="ae-radio" type="radio" name="g-radio" />
+                      Two</label
+                    >
+                    <label class="ae-choice"
+                      ><input class="ae-switch" type="checkbox" checked />
+                      Notify</label
+                    >
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#choice"
+                    >.ae-choice / .ae-check / .ae-radio / .ae-switch</a
+                  >
+                  <span class="spec-role"
+                    >choice marks: squares, since radius is 0</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div style="width: 100%">
+                    <input
+                      class="ae-input"
+                      type="text"
+                      aria-invalid="true"
+                      value="not-an-email"
+                      style="margin-bottom: 0.4em"
+                    />
+                    <p class="ae-field-note" style="margin: 0">
+                      <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                      Not a valid address.
+                    </p>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#validation"
+                    >.ae-field-note + [aria-invalid]</a
+                  >
+                  <span class="spec-role"
+                    >validation: the line confesses, glyph speaks</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div class="ae-tabs">
+                    <button class="is-active" type="button">overview</button>
+                    <button type="button">usage</button>
+                    <button type="button">refs</button>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#tabs">.ae-tabs</a>
+                  <span class="spec-role"
+                    >the nav instrument pointed at panels</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div
+                    style="
+                      display: flex;
+                      gap: 0.5em;
+                      align-items: center;
+                      flex-wrap: wrap;
+                    "
+                  >
+                    <span class="ae-tag">stable</span>
+                    <span class="ae-tag-bare">bare</span>
+                    <span class="ae-tag"
+                      ><svg
+                        class="ae-icon ae-ok"
+                        style="width: 0.85em; height: 0.85em"
+                      >
+                        <use href="#i-check" />
+                      </svg>
+                      passed</span
+                    >
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#tag">.ae-tag / .ae-tag-bare</a>
+                  <span class="spec-role"
+                    >the badge, refused: a mono word, no pill</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <p style="margin: 0">
+                    <span data-ae-tip="a whisper on hover">hover me</span> — a
+                    tip answers.
+                  </p>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#tip">[data-ae-tip]</a>
+                  <span class="spec-role"
+                    >the tip: a whisper that answers hover</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <button class="ae-button ae-button-compact" type="button">
+                    Open menu ▾
+                  </button>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#pop">.ae-pop</a>
+                  <span class="spec-role"
+                    >the popover slip, placed by its invoker</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div
+                    class="ae-toast"
+                    style="
+                      position: relative;
+                      bottom: auto;
+                      right: auto;
+                      max-width: none;
+                      width: 100%;
+                    "
+                  >
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    Deploy resolved.
+                    <button
+                      class="ae-toast-x"
+                      type="button"
+                      aria-label="dismiss"
+                    >
+                      <svg class="ae-icon"><use href="#i-x" /></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#toast">.ae-toasts / .ae-toast</a>
+                  <span class="spec-role"
+                    >news arrives at the edge and waits</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <details class="ae-fold" style="width: 100%">
+                    <summary>More about this</summary>
+                    <p class="ae-dim" style="margin: 0">
+                      The fold opens as a hairline row.
+                    </p>
+                  </details>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#fold">.ae-fold</a>
+                  <span class="spec-role"
+                    >disclosure as a hairline row, native details</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <nav class="ae-crumbs">
+                    <ol>
+                      <li><a href="#crumbs">home</a></li>
+                      <li><a href="#crumbs">settings</a></li>
+                      <li aria-current="page">profile</li>
+                    </ol>
+                  </nav>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#crumbs">.ae-crumbs</a>
+                  <span class="spec-role"
+                    >the path: here is ink, the way back muted</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div>
+                    <p
+                      class="ae-skeleton"
+                      style="max-width: 12em; margin: 0 0 0.3em"
+                    >
+                      loading
+                    </p>
+                    <p
+                      class="ae-skeleton"
+                      style="max-width: 8em; margin: 0 0 0.6em"
+                    >
+                      loading
+                    </p>
+                    <div class="ae-empty" style="margin: 0">
+                      <p class="ae-item" style="margin: 0">Nothing yet.</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#waiting"
+                    >.ae-skeleton / .ae-empty</a
+                  >
+                  <span class="spec-role"
+                    >waiting without a shimmer; honest absence</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="62"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width: 100%"
+                  >
+                    <span class="ae-meter-fill" style="width: 62%"></span>
+                    <span class="ae-meter-mark" style="left: 80%"></span>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#meter"
+                    >.ae-meter / .ae-meter-mark</a
+                  >
+                  <span class="spec-role"
+                    >the gauge as a ruled line, never a pill</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="specimen">
+                  <div>
+                    <p style="margin: 0">
+                      <span class="ae-num ae-strong">48,211</span>
+                      <span class="ae-delta ae-num ae-dim"
+                        ><svg
+                          class="ae-icon ae-ok"
+                          viewBox="0 0 24 24"
+                          style="width: 0.9em; height: 0.9em"
+                        >
+                          <path d="M12 19V5" />
+                          <path d="m5 12 7-7 7 7" /></svg
+                        >4.2%</span
+                      >
+                    </p>
+                    <svg
+                      class="ae-spark"
+                      viewBox="0 0 100 24"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                      style="margin-top: 0.3em; width: 8em"
+                    >
+                      <polyline
+                        points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                      />
+                    </svg>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#figures"
                     >.ae-num / .ae-strong / .ae-delta / .ae-spark</a
                   >
+                  <span class="spec-role"
+                    >figures, deltas, and pen-stroke trends</span
+                  >
+                  <span class="spec-since">2.5</span>
                 </td>
-                <td class="role">figures, deltas, and pen-stroke trends</td>
-                <td class="since">2.5</td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#interval">.ae-ci / .ae-ci-band / .ae-ci-mean</a>
+                <td class="specimen">
+                  <div
+                    class="ae-ci is-lead"
+                    role="img"
+                    aria-label="mean 86.9, CI 83.1 to 90.7"
+                    style="width: 100%"
+                  >
+                    <span
+                      class="ae-ci-band"
+                      style="left: 66%; width: 22%"
+                    ></span>
+                    <span class="ae-ci-mean" style="left: 77%"></span>
+                  </div>
                 </td>
-                <td class="role">
-                  a level and its spread; the certification read
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#interval"
+                    >.ae-ci / .ae-ci-band / .ae-ci-mean</a
+                  >
+                  <span class="spec-role"
+                    >a level and its spread; the certification read</span
+                  >
+                  <span class="spec-since">2.6</span>
                 </td>
-                <td class="since">2.6</td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#plot"
+                <td class="specimen">
+                  <svg
+                    class="ae-plot"
+                    viewBox="0 0 440 200"
+                    role="img"
+                    aria-label="cost against quality, Pareto frontier"
+                    style="max-width: 100%; height: auto"
+                  >
+                    <path class="ae-plot-axis" d="M 46 16 L 46 180 L 422 180" />
+                    <path
+                      class="ae-plot-frontier"
+                      d="M 100 120 L 186 60 L 358 30"
+                    />
+                    <circle
+                      class="ae-plot-dot is-chosen"
+                      cx="186"
+                      cy="60"
+                      r="4.5"
+                    />
+                    <circle
+                      class="ae-plot-dot is-dominated"
+                      cx="239"
+                      cy="100"
+                      r="4.5"
+                    />
+                    <circle
+                      class="ae-plot-dot is-dominated"
+                      cx="315"
+                      cy="70"
+                      r="4.5"
+                    />
+                  </svg>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#plot"
                     >.ae-plot / .ae-plot-frontier / .ae-plot-dot</a
                   >
+                  <span class="spec-role"
+                    >the cost × quality plane; the Pareto frontier</span
+                  >
+                  <span class="spec-since">2.6</span>
                 </td>
-                <td class="role">
-                  the cost × quality plane; the Pareto frontier
-                </td>
-                <td class="since">2.6</td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#flow">.ae-flow / .ae-node / .ae-wire</a>
+                <td class="specimen">
+                  <svg
+                    class="ae-flow"
+                    viewBox="0 0 340 80"
+                    role="img"
+                    aria-label="three-stage pipeline"
+                    style="max-width: 100%; height: auto"
+                  >
+                    <path class="ae-wire is-active" d="M 90 40 L 126 40" />
+                    <path class="ae-wire is-locked" d="M 246 40 L 282 40" />
+                    <rect
+                      class="ae-node is-done"
+                      x="10"
+                      y="20"
+                      width="80"
+                      height="40"
+                    />
+                    <text
+                      class="ae-node-label"
+                      x="50"
+                      y="44"
+                      text-anchor="middle"
+                    >
+                      arena
+                    </text>
+                    <rect
+                      class="ae-node is-active"
+                      x="126"
+                      y="20"
+                      width="120"
+                      height="40"
+                    />
+                    <text
+                      class="ae-node-label is-active"
+                      x="186"
+                      y="44"
+                      text-anchor="middle"
+                    >
+                      search
+                    </text>
+                    <rect
+                      class="ae-node is-locked"
+                      x="282"
+                      y="20"
+                      width="48"
+                      height="40"
+                    />
+                    <text
+                      class="ae-node-label is-locked"
+                      x="306"
+                      y="44"
+                      text-anchor="middle"
+                    >
+                      gate
+                    </text>
+                  </svg>
                 </td>
-                <td class="role">
-                  a pipeline as a diagram; nodes and orthogonal wires
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#flow"
+                    >.ae-flow / .ae-node / .ae-wire</a
+                  >
+                  <span class="spec-role"
+                    >a pipeline as a diagram; nodes and orthogonal wires</span
+                  >
+                  <span class="spec-since">2.6</span>
                 </td>
-                <td class="since">2.6</td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#shellapp">.ae-shell / .ae-rail / .ae-desk</a>
+                <td class="specimen">
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 4.5em 1fr;
+                      border: 1px solid var(--ae-line);
+                      min-height: 4em;
+                      width: 100%;
+                    "
+                  >
+                    <div
+                      style="
+                        border-right: 1px solid var(--ae-line);
+                        padding: 0.4em 0.6em;
+                        font-size: 13px;
+                      "
+                    >
+                      rail<br />· places<br />· mode
+                    </div>
+                    <div style="padding: 0.4em 0.6em; font-size: 13px">
+                      the desk
+                    </div>
+                  </div>
                 </td>
-                <td class="role">
-                  the app shell: a chrome rail beside the desk
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#shellapp"
+                    >.ae-shell / .ae-rail / .ae-desk</a
+                  >
+                  <span class="spec-role"
+                    >the app shell: a chrome rail beside the desk</span
+                  >
+                  <span class="spec-since">2.5</span>
                 </td>
-                <td class="since">2.5</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#doc">.ae-doc</a></td>
-                <td class="role">the document: markdown drops in unclassed</td>
-                <td class="since">2.5</td>
+                <td class="specimen">
+                  <div class="ae-doc">
+                    <h2 style="margin: 0 0 0.2em">Install</h2>
+                    <p style="margin: 0 0 0.2em">Pin the tag.</p>
+                    <blockquote style="margin: 0">One file.</blockquote>
+                  </div>
+                </td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#doc">.ae-doc</a>
+                  <span class="spec-role"
+                    >the document: markdown drops in unclassed</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
               </tr>
               <tr>
-                <td class="cls">
-                  <a href="#report">.ae-lede / .ae-findings / .ae-pull</a>
+                <td class="specimen">
+                  <div class="ae-doc">
+                    <p class="ae-lede" style="margin: 0 0 0.4em">
+                      The conclusion, up front.
+                    </p>
+                    <div class="ae-findings">
+                      <p class="ae-findings-title" style="margin: 0 0 0.15em">
+                        FINDINGS
+                      </p>
+                      <p style="margin: 0">
+                        <span class="ae-strong">Winner</span> clears all gates.
+                      </p>
+                    </div>
+                  </div>
                 </td>
-                <td class="role">
-                  the report register: lede, numbered figures, findings
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#report"
+                    >.ae-lede / .ae-findings / .ae-pull</a
+                  >
+                  <span class="spec-role"
+                    >the report register: lede, numbered figures, findings</span
+                  >
+                  <span class="spec-since">2.6</span>
                 </td>
-                <td class="since">2.6</td>
               </tr>
               <tr>
-                <td class="cls"><a href="#sr">.ae-sr</a></td>
-                <td class="role">
-                  present to assistive tech, invisible on paper
+                <td class="specimen">
+                  <p class="ae-dim" style="margin: 0">
+                    There is an <span class="ae-sr">invisible</span> live region
+                    on this page — you cannot see it, and that is the point.
+                  </p>
                 </td>
-                <td class="since">2.5</td>
+                <td class="spec-meta">
+                  <a class="spec-cls" href="#sr">.ae-sr</a>
+                  <span class="spec-role"
+                    >present to assistive tech, invisible on paper</span
+                  >
+                  <span class="spec-since">2.5</span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -828,6 +1395,79 @@
   &lt;p class="<span class="t">ae-plate-note</span>"&gt;p99 over the trailing 24 hours.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
           </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">populated</span>
+                <div class="state-demo">
+                  <table class="ae-table">
+                    <thead>
+                      <tr>
+                        <th>endpoint</th>
+                        <th class="num">ms</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="ae-item">/send</td>
+                        <td class="num">412</td>
+                      </tr>
+                      <tr>
+                        <td class="ae-item">/verify</td>
+                        <td class="num">88</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <span class="state-note"
+                  >13px mono, wash header band, hairline row rules — the
+                  instrument at rest.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">loading</span>
+                <div class="state-demo">
+                  <table class="ae-table">
+                    <thead>
+                      <tr>
+                        <th>endpoint</th>
+                        <th class="num">ms</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="ae-skeleton">&nbsp;</td>
+                        <td class="ae-skeleton num">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td class="ae-skeleton">&nbsp;</td>
+                        <td class="ae-skeleton num">&nbsp;</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p class="ae-chrome" role="status">loading endpoints…</p>
+                </div>
+                <span class="state-note"
+                  >skeleton holds the row shape — still wash, never a shimmer.
+                  Words to a status line.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">empty</span>
+                <div class="state-demo">
+                  <div class="ae-empty">
+                    <p class="ae-item">No endpoints.</p>
+                    <p class="ae-dim">Add one to begin.</p>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >an honest sentence where the rows will be — no illustration
+                  party.</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="ae-view" data-route="dialog">
@@ -932,6 +1572,60 @@
 &lt;/div&gt;
 <span class="t">// recipes.js wires the fold, the choice,</span>
 <span class="t">// and the written value</span></code></pre>
+          </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">closed</span>
+                <div class="state-demo">
+                  <div class="ae-settings">
+                    <button class="ae-setting" type="button">
+                      Theme <span class="ae-setting-val">system</span>
+                    </button>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >resting row — label left, value right in muted ink. The form
+                  is a column of lines.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">open</span>
+                <div class="state-demo">
+                  <div class="ae-settings">
+                    <button class="ae-setting" type="button">
+                      Theme <span class="ae-setting-val">system</span>
+                    </button>
+                    <div class="ae-setting-panel is-open">
+                      <div class="ae-menu">
+                        <button type="button" class="is-sel">system</button>
+                        <button type="button">light</button>
+                        <button type="button">dark</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span class="state-note"
+                  ><code>.is-open</code> — the chooser folds open beneath. No
+                  box, no shadow — a grid-rows expand.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">written</span>
+                <div class="state-demo">
+                  <div class="ae-settings">
+                    <button class="ae-setting" type="button">
+                      Theme <span class="ae-setting-val">dark</span>
+                    </button>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >after a choice — the value updates, the panel folds. One row
+                  open at a time.</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1484,6 +2178,51 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
   &lt;p&gt;&lt;button class="<span class="t">ae-button ae-button-quiet</span>"&gt;New project&lt;/button&gt;&lt;/p&gt;
 &lt;/div&gt;</code></pre>
           </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">loading</span>
+                <div class="state-demo">
+                  <p class="ae-skeleton" style="max-width: 18em">
+                    loading title
+                  </p>
+                  <p class="ae-skeleton" style="max-width: 12em">
+                    loading meta
+                  </p>
+                  <p class="ae-chrome" role="status">loading…</p>
+                </div>
+                <span class="state-note"
+                  >still wash holds the layout — no shimmer, no spinner. Words
+                  to a status line.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">absent</span>
+                <div class="state-demo">
+                  <div class="ae-empty">
+                    <p class="ae-item">Nothing here yet.</p>
+                    <p class="ae-dim">The first item lands here.</p>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >an honest sentence — muted words, one quiet action. No
+                  illustration party.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">arrived</span>
+                <div class="state-demo">
+                  <p class="ae-item">Project Atlas</p>
+                  <p class="ae-dim">archived 2 days ago</p>
+                </div>
+                <span class="state-note"
+                  >content replaces the skeleton — the wash held this shape, now
+                  it's ink.</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="ae-view" data-route="meter">
@@ -1538,6 +2277,92 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
 <span class="t">// the fill takes a status ink only when</span>
 <span class="t">// the level IS the signal:</span>
 &lt;span class="<span class="t">ae-meter-fill ae-warn</span>" style="width: 91%"&gt;&lt;/span&gt;</code></pre>
+          </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">empty</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="0"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label="idle"
+                  >
+                    <span class="ae-meter-fill" style="width: 0%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >0% fill — the resting channel before data arrives. No
+                  shimmer, no spinner.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">partial</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="40"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label="load"
+                  >
+                    <span class="ae-meter-fill" style="width: 40%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >ink fill — the normal operational read. The level is not the
+                  signal, so no status ink.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">at threshold</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="62"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label="budget"
+                  >
+                    <span class="ae-meter-fill" style="width: 62%"></span>
+                    <span class="ae-meter-mark" style="left: 80%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >ink fill with a hairline threshold tick — approaching the
+                  limit, still ink.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">over limit</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-meter"
+                    role="meter"
+                    aria-valuenow="91"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label="budget"
+                  >
+                    <span
+                      class="ae-meter-fill ae-warn"
+                      style="width: 91%"
+                    ></span>
+                    <span class="ae-meter-mark" style="left: 80%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  ><code>.ae-warn</code> fill — the level IS the signal, so the
+                  fill takes the status ink. Never a colored pill.</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1667,6 +2492,73 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
 &lt;span class="<span class="t">ae-ci-whisker</span>" style="left: 60%; width: 18%"&gt;&lt;/span&gt;
 &lt;span class="<span class="t">ae-ci-cap</span>" style="left: 60%"&gt;&lt;/span&gt;
 &lt;span class="<span class="t">ae-ci-cap</span>" style="left: 78%"&gt;&lt;/span&gt;</code></pre>
+          </div>
+          <div class="ae-group">
+            <p class="states-cap">STATES · the law holds in every one</p>
+            <div class="states">
+              <div class="state">
+                <span class="state-name">default</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-ci"
+                    role="img"
+                    aria-label="mean 84, CI 80 to 88"
+                  >
+                    <span
+                      class="ae-ci-band"
+                      style="left: 60%; width: 16%"
+                    ></span>
+                    <span class="ae-ci-mean" style="left: 68%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >band + mean — a score and its confidence. Ink throughout, no
+                  accent.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">lead</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-ci is-lead"
+                    role="img"
+                    aria-label="mean 87, CI 83 to 91"
+                  >
+                    <span
+                      class="ae-ci-band"
+                      style="left: 66%; width: 22%"
+                    ></span>
+                    <span class="ae-ci-mean" style="left: 77%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  ><code>.is-lead</code> — the mean tick takes the accent. One
+                  accent role per view.</span
+                >
+              </div>
+              <div class="state">
+                <span class="state-name">whisker</span>
+                <div class="state-demo">
+                  <div
+                    class="ae-ci"
+                    role="img"
+                    aria-label="mean 84, CI 81 to 87"
+                  >
+                    <span
+                      class="ae-ci-whisker"
+                      style="left: 60%; width: 18%"
+                    ></span>
+                    <span class="ae-ci-cap" style="left: 60%"></span>
+                    <span class="ae-ci-cap" style="left: 78%"></span>
+                    <span class="ae-ci-mean" style="left: 69%"></span>
+                  </div>
+                </div>
+                <span class="state-note"
+                  >no-fill variant — a lo→hi rule with end caps. Points, not
+                  mass.</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 
