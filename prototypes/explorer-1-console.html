@@ -1,0 +1,1110 @@
+<!doctype html>
+<!--
+  LAB explorer · 1 — THE CONSOLE. The Storybook-literal bet: a three-pane
+  operator console that unifies the whole kit on one surface. A dense RAIL
+  tree of every facet (foundation · primitives · archetypes · compositions
+  · themes); a CANVAS that renders the selected entry live, large, with its
+  state matrix beneath; an INSPECTOR that holds the source, the tokens it
+  reads, the recipes it needs, and a law-status checklist. The Storybook
+  mapping is exact — sidebar tree · canvas · docs/controls/source addons —
+  and it dogfoods the .ae-shell/workbench archetype (closes 012/013's
+  headline ask). The toolbar carries the global dials: mode + a live accent
+  swatch row.
+  TRADE-OFF: the heaviest shell to build and prove — three scroll regions,
+  the inspector competes with the canvas for width, and it reads as a TOOL
+  more than a public showcase. Risks "Storybook in aesthetic paint" unless
+  the restraint carries it.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · explorer 1 · the console</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+
+         THE PROPOSAL: an EXPLORER built as the workbench archetype — rail ·
+         canvas · inspector, one locked viewport. Everything below composes
+         existing primitives (.ae-rail, .ae-tabs, .ae-table, .ae-tag,
+         .ae-meter, .ae-button*, .ae-choice, status .ae-icon, .ae-fold) and
+         only adds the THREE-PANE GRID + the per-pane scroll plumbing the
+         system does not yet name. No new color, no new size, no fill. */
+
+      body {
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* the explorer shell: toolbar over a three-pane grid */
+      .xp {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 14rem minmax(0, 1fr) 21rem;
+        overflow: hidden;
+      }
+
+      /* GLOBAL TOOLBAR — the one chrome strip. Name · breadcrumb · dials. */
+      .xp-bar {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 1.4em;
+        padding: 0 1.4em;
+        height: 3.1em;
+        border-bottom: 1px solid var(--ae-line);
+        font-size: 13px;
+      }
+      .xp-bar .ae-name {
+        letter-spacing: 0.24em;
+        color: var(--ae-ink);
+      }
+      .xp-crumb {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-muted);
+      }
+      .xp-crumb b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .xp-bar-end {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 1.1em;
+      }
+      /* the accent dial — round marks ARE the pen (cf. plot dots); these are
+         swatches of the steerable --ae-accent, set live on the root */
+      .xp-accents {
+        display: inline-flex;
+        gap: 0.5em;
+        align-items: center;
+      }
+      .xp-accents .ae-chrome {
+        margin-right: 0.2em;
+      }
+      .xp-swatch {
+        width: 1.05em;
+        height: 1.05em;
+        padding: 0;
+        border: 1px solid var(--ae-line);
+        background: var(--sw);
+        cursor: pointer;
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .xp-swatch:hover {
+        transform: scale(1.12);
+      }
+      .xp-swatch[aria-pressed='true'] {
+        box-shadow: inset 0 0 0 2px var(--ae-surface);
+        outline: 1px solid var(--ae-ink);
+      }
+
+      /* every pane is its own min-height:0 scroll container */
+      .xp-rail,
+      .xp-canvas,
+      .xp-insp {
+        min-height: 0;
+        min-width: 0;
+        overflow-y: auto;
+      }
+
+      /* RAIL — the kit tree. Reuses the .ae-rail register; hairline right. */
+      .xp-rail {
+        border-right: 1px solid var(--ae-line);
+        padding: 1.4em 0 2em;
+      }
+      .xp-grp {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-faint);
+        padding: 0 1.4em;
+        margin: 1.7em 0 0.7em;
+      }
+      .xp-grp:first-of-type {
+        margin-top: 0;
+      }
+      .xp-rail nav {
+        display: flex;
+        flex-direction: column;
+      }
+      .xp-link {
+        text-align: left;
+        background: transparent;
+        border: 0;
+        font: inherit;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        padding: 0.34em 1.4em;
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .xp-link:hover {
+        color: var(--ae-ink);
+      }
+      /* the active entry: ink-weight + a hairline LEFT-MARKER (never a fill) */
+      .xp-link[aria-current='true'] {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+      }
+      .xp-link .xp-since {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        color: var(--ae-ink-faint);
+      }
+
+      /* CANVAS — the live specimen. Comfortable breath around the work. */
+      .xp-canvas {
+        padding: 2.4em 3em 3em;
+      }
+      .xp-view {
+        display: none;
+      }
+      .xp-view.is-on {
+        display: block;
+      }
+      .xp-kicker {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-faint);
+        margin-bottom: 0.6em;
+      }
+      .xp-title {
+        font-weight: var(--ae-w-black);
+        margin: 0 0 0.5em;
+      }
+      .xp-lede {
+        color: var(--ae-ink-muted);
+        max-width: 34em;
+        margin: 0 0 2.2em;
+      }
+      /* the live stage: the specimen sits in air, framed only by space */
+      .xp-stage {
+        padding: 0.4em 0 2em;
+      }
+
+      /* the state matrix beneath the specimen — reused idiom from the
+         catalog: a labelled grid of the same primitive in each state */
+      .xp-states-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        border-top: 1px solid var(--ae-line);
+        padding-top: 1.6em;
+        margin-bottom: 1.4em;
+      }
+      .xp-states {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+        gap: 1.8em 2.2em;
+        align-items: start;
+      }
+      .xp-state {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7em;
+      }
+      .xp-state-name {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+      }
+      .xp-state-demo {
+        min-height: 1.6em;
+      }
+
+      /* the palette swatch grid (foundation view) */
+      .xp-pal {
+        display: grid;
+        grid-template-columns: 9em repeat(2, minmax(0, 1fr));
+        gap: 0.55em 2em;
+        align-items: center;
+        max-width: 34em;
+        font-size: 13px;
+      }
+      .xp-pal .xp-ph {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+      }
+      .xp-tok {
+        font-family: var(--ae-font-mono);
+      }
+      .xp-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+      }
+      .xp-sw2 {
+        width: 1.5em;
+        height: 1.5em;
+        border: 1px solid var(--ae-line);
+        flex: none;
+      }
+      .xp-hex {
+        font-family: var(--ae-font-mono);
+        color: var(--ae-ink-muted);
+      }
+
+      /* the steering matrix (themes view): one specimen, four brands */
+      .xp-themes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(13em, 1fr));
+        gap: 2em;
+      }
+      .xp-theme {
+        border: 1px solid var(--ae-line);
+        padding: 1.4em;
+      }
+      .xp-theme h4 {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        margin: 0 0 1.1em;
+        font-weight: var(--ae-w-regular);
+      }
+      .xp-theme .ae-meter {
+        margin: 0.9em 0;
+      }
+
+      /* INSPECTOR — source · uses · law. Hairline-left, chrome register. */
+      .xp-insp {
+        border-left: 1px solid var(--ae-line);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+      .xp-insp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 1.4em 1.4em 1.1em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .xp-insp-title {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-muted);
+      }
+      .xp-insp-body {
+        display: none;
+        padding: 0 1.4em 2em;
+      }
+      .xp-insp-body.is-on {
+        display: block;
+      }
+      .xp-sec {
+        border-top: 1px solid var(--ae-line);
+        padding: 1.2em 0 0.4em;
+      }
+      .xp-sec:first-child {
+        border-top: 0;
+      }
+      .xp-sec-h {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-faint);
+        margin-bottom: 0.8em;
+      }
+      /* the source block: wash field, mono, the copy affordance top-right */
+      .xp-srcwrap {
+        position: relative;
+      }
+      .xp-src {
+        background: var(--ae-wash);
+        padding: 1em 1.1em;
+        margin: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--ae-ink);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .xp-copy {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+        background: var(--ae-surface);
+        border: 1px solid var(--ae-line);
+        padding: 0.2em 0.6em;
+        cursor: pointer;
+      }
+      .xp-copy:hover {
+        color: var(--ae-ink);
+        border-color: var(--ae-ink-faint);
+      }
+      /* token chips the primitive reads: a swatch + the mono name */
+      .xp-uses {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em 0.8em;
+      }
+      .xp-use {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink);
+      }
+      .xp-use i {
+        width: 0.9em;
+        height: 0.9em;
+        border: 1px solid var(--ae-line);
+        background: var(--sw);
+      }
+      /* the law checklist: glyph carries the verdict, the rule stays ink */
+      .xp-law {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .xp-law li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+        padding: 0.2em 0;
+        color: var(--ae-ink);
+      }
+      .xp-law .ae-icon {
+        width: 0.95em;
+        height: 0.95em;
+        vertical-align: -0.05em;
+      }
+
+      /* ── shared LAB chrome (verbatim from flex-2) ──────────────────── */
+      .proto-cap {
+        flex: none;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ae-ink-muted);
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.55em 4em;
+        margin: 0;
+        text-align: center;
+      }
+      .proto-cap b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        display: flex;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        background: #fff;
+        color: #151515;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #737373;
+        padding: 0.8em 1.1em;
+        transition: color 160ms ease;
+      }
+      .proto-picker button:hover {
+        color: #151515;
+      }
+      .proto-picker button.is-active {
+        color: #fff;
+        background: #151515;
+      }
+
+      /* responsive: drop the inspector, then the rail — mirrors .ae-shell */
+      @media (max-width: 1000px) {
+        .xp {
+          grid-template-columns: 14rem minmax(0, 1fr);
+        }
+        .xp-insp {
+          display: none;
+        }
+      }
+      @media (max-width: 680px) {
+        .xp {
+          grid-template-columns: 1fr;
+        }
+        .xp-rail {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+    </svg>
+
+    <p class="ae-chrome proto-cap" id="cap">
+      <b>THE CONSOLE</b> — rail tree · live canvas · source/uses/law inspector,
+      one viewport. Click the rail to explore; the picker is a guided tour
+      across facets. Each pane scrolls itself; the page never does.
+    </p>
+
+    <!-- THE EXPLORER — written once; nav + picker swap the live entry. -->
+    <div class="xp" id="xp">
+      <!-- ───────────────────────── TOOLBAR ───────────────────────── -->
+      <!-- a flex strip spanning the grid's top would break the 3-col grid;
+           instead the toolbar is its own row above .xp via the body flex.
+           Here it lives inside .xp as a full-width header by spanning. -->
+      <!-- ─────────────────────────── RAIL ─────────────────────────── -->
+      <nav class="ae-rail xp-rail" aria-label="the kit">
+        <p class="xp-grp">FOUNDATION</p>
+        <nav>
+          <button class="xp-link" data-entry="palette" aria-current="true">
+            <span>color</span><span class="xp-since">10</span>
+          </button>
+          <button class="xp-link" data-entry="palette">
+            <span>type</span>
+          </button>
+          <button class="xp-link" data-entry="palette">
+            <span>motion</span>
+          </button>
+        </nav>
+
+        <p class="xp-grp">PRIMITIVES</p>
+        <nav>
+          <button class="xp-link" data-entry="button">
+            <span>button</span>
+          </button>
+          <button class="xp-link" data-entry="button">
+            <span>input · send</span>
+          </button>
+          <button class="xp-link" data-entry="button">
+            <span>choice</span>
+          </button>
+          <button class="xp-link" data-entry="meter"><span>meter</span></button>
+          <button class="xp-link" data-entry="meter">
+            <span>spark · delta</span>
+          </button>
+          <button class="xp-link" data-entry="meter">
+            <span>table · plate</span>
+          </button>
+          <button class="xp-link" data-entry="button"><span>tag</span></button>
+          <button class="xp-link" data-entry="button">
+            <span>dialog</span>
+          </button>
+        </nav>
+
+        <p class="xp-grp">ARCHETYPES</p>
+        <nav>
+          <button class="xp-link" data-entry="meter">
+            <span>screen</span>
+          </button>
+          <button class="xp-link" data-entry="meter">
+            <span>app shell</span>
+          </button>
+          <button class="xp-link" data-entry="meter">
+            <span>document</span>
+          </button>
+        </nav>
+
+        <p class="xp-grp">THEMES</p>
+        <nav>
+          <button class="xp-link" data-entry="themes">
+            <span>steering</span>
+          </button>
+        </nav>
+      </nav>
+
+      <!-- ────────────────────────── CANVAS ───────────────────────── -->
+      <main class="xp-canvas" aria-label="specimen">
+        <!-- the toolbar floats as the canvas's own sticky head so it spans
+             the working width without breaking the 3-column grid -->
+        <!-- A · PALETTE (foundation / tokens) -->
+        <section class="xp-view is-on" data-entry="palette">
+          <p class="xp-kicker">FOUNDATION · COLOR</p>
+          <h2 class="xp-title">The palette</h2>
+          <p class="xp-lede">
+            Ten intent-named inks, each with a light and a dark value. Hierarchy
+            is built from these three inks by three weights — never from scale.
+            The accent is the one you steer; everything else is the shared
+            identity.
+          </p>
+          <div class="xp-stage">
+            <div class="xp-pal">
+              <span class="xp-ph">token</span><span class="xp-ph">light</span
+              ><span class="xp-ph">dark</span>
+              <span class="xp-tok">ink</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #151515"></i
+                ><span class="xp-hex">#151515</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #ededed"></i
+                ><span class="xp-hex">#ededed</span></span
+              >
+              <span class="xp-tok">ink-muted</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #737373"></i
+                ><span class="xp-hex">#737373</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #8f8f8f"></i
+                ><span class="xp-hex">#8f8f8f</span></span
+              >
+              <span class="xp-tok">line</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #e9e9e9"></i
+                ><span class="xp-hex">#e9e9e9</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #262626"></i
+                ><span class="xp-hex">#262626</span></span
+              >
+              <span class="xp-tok">accent</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #2643d0"></i
+                ><span class="xp-hex">#2643d0</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #8c9eff"></i
+                ><span class="xp-hex">#8c9eff</span></span
+              >
+              <span class="xp-tok">ok</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #15714b"></i
+                ><span class="xp-hex">#15714b</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #6fd2a8"></i
+                ><span class="xp-hex">#6fd2a8</span></span
+              >
+              <span class="xp-tok">err</span>
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #a84138"></i
+                ><span class="xp-hex">#a84138</span></span
+              >
+              <span class="xp-cell"
+                ><i class="xp-sw2" style="background: #e58379"></i
+                ><span class="xp-hex">#e58379</span></span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- B · BUTTON (primitive + state matrix) -->
+        <section class="xp-view" data-entry="button">
+          <p class="xp-kicker">PRIMITIVE · BUTTON</p>
+          <h2 class="xp-title">The button</h2>
+          <p class="xp-lede">
+            A contained ink shape that acts — never a styled link. Solid for the
+            primary action, hairline for the secondary. Radius 0; the accent
+            rides it when the product calls for it.
+          </p>
+          <div class="xp-stage">
+            <button class="ae-button" type="button">Send message</button>
+          </div>
+          <p class="xp-states-cap">STATES</p>
+          <div class="xp-states">
+            <div class="xp-state">
+              <span class="xp-state-name">PRIMARY</span>
+              <span class="xp-state-demo"
+                ><button class="ae-button" type="button">Deploy</button></span
+              >
+            </div>
+            <div class="xp-state">
+              <span class="xp-state-name">QUIET</span>
+              <span class="xp-state-demo"
+                ><button class="ae-button ae-button-quiet" type="button">
+                  Cancel
+                </button></span
+              >
+            </div>
+            <div class="xp-state">
+              <span class="xp-state-name">COMPACT</span>
+              <span class="xp-state-demo"
+                ><button class="ae-button ae-button-compact" type="button">
+                  Run trial
+                </button></span
+              >
+            </div>
+            <div class="xp-state">
+              <span class="xp-state-name">DISABLED</span>
+              <span class="xp-state-demo"
+                ><button class="ae-button" type="button" disabled>
+                  Deploy
+                </button></span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- C · METER (data instrument) -->
+        <section class="xp-view" data-entry="meter">
+          <p class="xp-kicker">DATA · METER</p>
+          <h2 class="xp-title">The meter</h2>
+          <p class="xp-lede">
+            Gauges are ruled lines, never glowing pills — a fill against a
+            hairline track, with an optional warn mark. Figures are tabular
+            numerals, loud by weight; trends are pen strokes.
+          </p>
+          <div class="xp-stage">
+            <p class="ae-chrome" style="margin-bottom: 0.4em">
+              turn spend · <span class="ae-num">62%</span> · warn at 80
+            </p>
+            <div
+              class="ae-meter"
+              role="meter"
+              aria-valuenow="62"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="turn spend"
+            >
+              <span class="ae-meter-fill" style="width: 62%"></span>
+              <span class="ae-meter-mark" style="left: 80%"></span>
+            </div>
+          </div>
+          <p class="xp-states-cap">LEVELS</p>
+          <div class="xp-states">
+            <div class="xp-state">
+              <span class="xp-state-name">NOMINAL · 24%</span>
+              <span class="xp-state-demo"
+                ><div class="ae-meter" role="meter" aria-label="nominal">
+                  <span class="ae-meter-fill" style="width: 24%"></span></div
+              ></span>
+            </div>
+            <div class="xp-state">
+              <span class="xp-state-name">WARN · 88%</span>
+              <span class="xp-state-demo"
+                ><div class="ae-meter" role="meter" aria-label="warn">
+                  <span class="ae-meter-fill" style="width: 88%"></span>
+                  <span class="ae-meter-mark" style="left: 80%"></span></div
+              ></span>
+            </div>
+            <div class="xp-state">
+              <span class="xp-state-name">TREND</span>
+              <span class="xp-state-demo">
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- D · THEMES (steering matrix) -->
+        <section class="xp-view" data-entry="themes">
+          <p class="xp-kicker">STEERING · THE ACCENT IS YOURS</p>
+          <h2 class="xp-title">One system, every brand</h2>
+          <p class="xp-lede">
+            The invariants never move — one size, radius 0, status on the glyph,
+            ink hierarchy. Only the dials turn: the accent, the status triplet,
+            the hue count. Here one composition wears four schemes; flip the
+            swatches in the toolbar to steer the whole console live.
+          </p>
+          <div class="xp-stage">
+            <div class="xp-themes">
+              <div class="xp-theme" style="--ae-accent: #2643d0">
+                <h4>ULTRAMARINE · HOUSE</h4>
+                <p><span class="ae-accent">running</span> · deploy 4121</p>
+                <div class="ae-meter" role="meter" aria-label="house">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button class="ae-button" type="button">Deploy</button>
+              </div>
+              <div class="xp-theme" style="--ae-accent: #c2410c">
+                <h4>EMBER · LOUD</h4>
+                <p><span class="ae-accent">running</span> · deploy 4121</p>
+                <div class="ae-meter" role="meter" aria-label="ember">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button class="ae-button" type="button">Deploy</button>
+              </div>
+              <div class="xp-theme" style="--ae-accent: #2f6b3f">
+                <h4>PINE · SCHOLAR</h4>
+                <p><span class="ae-accent">running</span> · deploy 4121</p>
+                <div class="ae-meter" role="meter" aria-label="pine">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button class="ae-button" type="button">Deploy</button>
+              </div>
+              <div class="xp-theme" style="--ae-accent: #7c3aed">
+                <h4>VIOLET · PLAYFUL</h4>
+                <p><span class="ae-accent">running</span> · deploy 4121</p>
+                <div class="ae-meter" role="meter" aria-label="violet">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button class="ae-button" type="button">Deploy</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ───────────────────────── INSPECTOR ──────────────────────── -->
+      <aside class="xp-insp" aria-label="inspector">
+        <div class="xp-insp-head">
+          <span class="xp-insp-title">INSPECTOR</span>
+          <span
+            class="ae-chrome"
+            id="insp-route"
+            style="font-family: var(--ae-font-mono)"
+            >#color</span
+          >
+        </div>
+
+        <!-- palette inspector -->
+        <div class="xp-insp-body is-on" data-entry="palette">
+          <section class="xp-sec">
+            <p class="xp-sec-h">SOURCE</p>
+            <div class="xp-srcwrap">
+              <pre class="xp-src">
+:root {
+  --ae-ink:    #151515;
+  --ae-line:   #e9e9e9;
+  --ae-accent: #2643d0;
+}</pre
+              >
+              <button class="xp-copy" type="button">copy</button>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">STEER</p>
+            <p style="margin: 0; line-height: 1.6">
+              Override
+              <span class="xp-tok" style="color: var(--ae-ink)"
+                >--ae-accent</span
+              >
+              and
+              <span class="xp-tok" style="color: var(--ae-ink)"
+                >--ae-accent-dark</span
+              >; every surface follows.
+            </p>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">LAW</p>
+            <ul class="xp-law">
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> radius
+                0 on every swatch
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> faint
+                ink is decoration only
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <!-- button inspector -->
+        <div class="xp-insp-body" data-entry="button">
+          <section class="xp-sec">
+            <p class="xp-sec-h">SOURCE</p>
+            <div class="xp-srcwrap">
+              <pre class="xp-src">
+&lt;button class="ae-button"&gt;
+  Send message
+&lt;/button&gt;</pre
+              >
+              <button class="xp-copy" type="button">copy</button>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">READS</p>
+            <div class="xp-uses">
+              <span class="xp-use"
+                ><i style="--sw: #2643d0"></i>--ae-accent</span
+              >
+              <span class="xp-use"
+                ><i style="--sw: #fcfcfc"></i>--ae-surface</span
+              >
+              <span class="xp-use"><i style="--sw: #e9e9e9"></i>--ae-line</span>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">LAW</p>
+            <ul class="xp-law">
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> one
+                size — weight, not scale
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> radius
+                0
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> a
+                button, never a link
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <!-- meter inspector -->
+        <div class="xp-insp-body" data-entry="meter">
+          <section class="xp-sec">
+            <p class="xp-sec-h">SOURCE</p>
+            <div class="xp-srcwrap">
+              <pre class="xp-src">
+&lt;div class="ae-meter" role="meter"&gt;
+  &lt;span class="ae-meter-fill"
+        style="width:62%"&gt;&lt;/span&gt;
+  &lt;span class="ae-meter-mark"
+        style="left:80%"&gt;&lt;/span&gt;
+&lt;/div&gt;</pre
+              >
+              <button class="xp-copy" type="button">copy</button>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">READS</p>
+            <div class="xp-uses">
+              <span class="xp-use"><i style="--sw: #151515"></i>--ae-ink</span>
+              <span class="xp-use"><i style="--sw: #e9e9e9"></i>--ae-line</span>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">LAW</p>
+            <ul class="xp-law">
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> a ruled
+                line, not a pill
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> the
+                mark warns; no fill turns red
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <!-- themes inspector -->
+        <div class="xp-insp-body" data-entry="themes">
+          <section class="xp-sec">
+            <p class="xp-sec-h">SOURCE</p>
+            <div class="xp-srcwrap">
+              <pre class="xp-src">
+:root {
+  --ae-accent:      #c2410c;
+  --ae-accent-dark: #fb923c;
+}</pre
+              >
+              <button class="xp-copy" type="button">copy</button>
+            </div>
+          </section>
+          <section class="xp-sec">
+            <p class="xp-sec-h">INVARIANT ACROSS ALL FOUR</p>
+            <ul class="xp-law">
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> one
+                size, nine registers
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> radius
+                0, hairlines
+              </li>
+              <li>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> status
+                on the glyph
+              </li>
+            </ul>
+          </section>
+        </div>
+      </aside>
+    </div>
+
+    <button
+      class="ae-mode js-mode"
+      aria-label="toggle color mode"
+      style="position: fixed; top: 0.95em; right: 1em; z-index: 30"
+    >
+      <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+      <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+    </button>
+
+    <footer
+      class="ae-chrome"
+      style="
+        position: fixed;
+        bottom: 0.9em;
+        left: 1.2em;
+        z-index: 25;
+        pointer-events: none;
+      "
+    >
+      prototype — never ships
+    </footer>
+
+    <nav class="proto-picker" aria-label="tour">
+      <button data-entry="palette" class="is-active">A foundation</button>
+      <button data-entry="button">B primitive + states</button>
+      <button data-entry="meter">C data</button>
+      <button data-entry="themes">D themes</button>
+    </nav>
+
+    <script>
+      /* mode toggle — drives every .js-mode (lifted from the workbench) */
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      /* selecting an entry: swap the canvas view, the inspector body, the
+         active rail marker, the breadcrumb route, and the cap. Both the rail
+         and the tour picker call this — it is a real explorer, not a slideshow. */
+      const ROUTES = {
+        palette: {
+          route: '#color',
+          cap: '<b>FOUNDATION</b> — the palette: ten intent-named inks, light + dark. The inspector carries the source, the steer point, and the law. Click any rail entry; the canvas and inspector follow.',
+        },
+        button: {
+          route: '#button',
+          cap: '<b>PRIMITIVE · BUTTON</b> — the specimen large, the state matrix beneath (primary · quiet · compact · disabled). The inspector holds runnable source, the tokens it reads, and a law checklist.',
+        },
+        meter: {
+          route: '#meter',
+          cap: '<b>DATA · METER</b> — a ruled gauge, never a pill; levels and a trend beneath. Status warns by mark, not by turning the fill red.',
+        },
+        themes: {
+          route: '#steering',
+          cap: '<b>STEERING</b> — one composition, four schemes. The invariants hold; only the accent turns. Flip the toolbar swatches to steer the whole console live.',
+        },
+      };
+      const views = [...document.querySelectorAll('.xp-view')];
+      const insps = [...document.querySelectorAll('.xp-insp-body')];
+      const links = [...document.querySelectorAll('.xp-link')];
+      const tour = [...document.querySelectorAll('.proto-picker button')];
+      const canvas = document.querySelector('.xp-canvas');
+      const cap = document.getElementById('cap');
+      const route = document.getElementById('insp-route');
+
+      function select(entry, fromLink) {
+        views.forEach((v) =>
+          v.classList.toggle('is-on', v.dataset.entry === entry),
+        );
+        insps.forEach((v) =>
+          v.classList.toggle('is-on', v.dataset.entry === entry),
+        );
+        links.forEach((l) => l.toggleAttribute('aria-current', l === fromLink));
+        if (!fromLink) {
+          // the tour: light the FIRST rail link that maps to this entry
+          const first = links.find((l) => l.dataset.entry === entry);
+          links.forEach((l) => l.toggleAttribute('aria-current', l === first));
+        }
+        tour.forEach((t) =>
+          t.classList.toggle('is-active', t.dataset.entry === entry),
+        );
+        route.textContent = ROUTES[entry].route;
+        cap.innerHTML = ROUTES[entry].cap;
+        canvas.scrollTop = 0;
+      }
+
+      links.forEach((l) =>
+        l.addEventListener('click', () => select(l.dataset.entry, l)),
+      );
+      tour.forEach((t) =>
+        t.addEventListener('click', () => select(t.dataset.entry, null)),
+      );
+
+      /* copy affordance — serialize the source block (a real catalog behavior) */
+      document.querySelectorAll('.xp-copy').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const src = btn.parentElement.querySelector('.xp-src').textContent;
+          navigator.clipboard?.writeText(src);
+          const was = btn.textContent;
+          btn.textContent = 'copied';
+          setTimeout(() => (btn.textContent = was), 1400);
+        }),
+      );
+
+      select('palette', null);
+    </script>
+  </body>
+</html>

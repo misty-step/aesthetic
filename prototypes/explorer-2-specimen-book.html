@@ -1,0 +1,957 @@
+<!doctype html>
+<!--
+  LAB explorer · 2 — THE SPECIMEN BOOK. The editorial bet: the entire kit
+  as ONE scrolling engineering manual of numbered live plates, read front to
+  back. The antithesis of the console — no tool chrome, no three panes. A
+  fixed masthead + a sticky numbered contents rail beside a single scrolling
+  stage; every facet (foundation · primitives · data · archetypes · themes)
+  is a PLATE: a kicker, a live specimen rendered by the file it documents, a
+  caption, and a foldaway source. This is aesthetic's native idiom — the
+  document archetype — turned on itself: the system set as its own beautiful
+  manual. The page never scrolls; the stage does (screens-not-pages law for
+  a long document).
+  TRADE-OFF: linear — you read or scan, you don't pivot/filter/compare across
+  the kit the way a tool does; deep per-entry inspection (every token a
+  primitive reads, full state matrix) wants more room than a reading column
+  gives. Strongest as a public showcase, weakest as an operator reference.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · explorer 2 · the specimen book</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+
+         THE PROPOSAL: an EXPLORER built as the DOCUMENT archetype — a fixed
+         masthead, a sticky numbered contents rail, and one scrolling stage
+         of live plates. Everything below composes existing primitives
+         (.ae-bar, .ae-stage, .ae-table, .ae-plate, .ae-meter, .ae-button*,
+         .ae-choice, .ae-tag, .ae-fold, status .ae-icon) and only adds the
+         PLATE rhythm + the contents-rail layout. No new color, no new size,
+         no fill. */
+
+      body {
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* the masthead: the real .ae-bar, flush across the top */
+      .book-bar {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.4em;
+        padding: 0 2em;
+        height: 3.2em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .book-bar .ae-name {
+        letter-spacing: 0.24em;
+        color: var(--ae-ink);
+      }
+      .book-bar-end {
+        display: inline-flex;
+        align-items: center;
+        gap: 1.3em;
+      }
+      .book-bar-end .ae-chrome a {
+        margin-left: 1.2em;
+      }
+
+      /* the book body: a contents rail beside the scrolling stage */
+      .book {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 13rem minmax(0, 1fr);
+      }
+
+      /* CONTENTS — a still rail; the stage scrolls against it. Mono numerals
+         like the manual's TOC. The active plate is tracked by scroll-spy. */
+      .book-toc {
+        border-right: 1px solid var(--ae-line);
+        padding: 1.8em 1.4em 2em;
+        overflow-y: auto;
+        min-height: 0;
+      }
+      .book-toc-h {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-faint);
+        margin: 1.6em 0 0.7em;
+      }
+      .book-toc-h:first-child {
+        margin-top: 0;
+      }
+      .book-toc a {
+        display: flex;
+        gap: 0.7em;
+        padding: 0.26em 0;
+        color: var(--ae-ink-muted);
+        text-decoration: none;
+        margin-block: 0;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .book-toc a:hover {
+        color: var(--ae-ink);
+      }
+      .book-toc a .no {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        color: var(--ae-ink-faint);
+      }
+      .book-toc a[aria-current='true'] {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .book-toc a[aria-current='true'] .no {
+        color: var(--ae-ink-muted);
+      }
+
+      /* THE STAGE — the one scroller. Plates flow down it. */
+      .book-stage {
+        overflow-y: auto;
+        min-height: 0;
+        padding: 0 4em;
+      }
+      .book-inner {
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 3em 0 6em;
+      }
+
+      /* a PLATE — hairline-topped, generous breath. A kicker, the title by
+         weight, the live specimen, a caption. The numbered-figure rhythm of
+         a technical manual. */
+      .plate {
+        border-top: 1px solid var(--ae-line);
+        padding: 3em 0 0.6em;
+      }
+      .plate:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .plate-kicker {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        color: var(--ae-ink-faint);
+        margin-bottom: 0.7em;
+      }
+      .plate-kicker .no {
+        color: var(--ae-ink-muted);
+      }
+      .plate-title {
+        font-weight: var(--ae-w-black);
+        margin: 0 0 0.5em;
+      }
+      .plate-lede {
+        color: var(--ae-ink-muted);
+        max-width: 38em;
+        margin: 0 0 1.8em;
+      }
+      /* the specimen sits in air; only space frames it */
+      .plate-demo {
+        margin: 1.6em 0;
+      }
+      .plate-cap {
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        max-width: 40em;
+        margin-top: 1.2em;
+      }
+      /* the foldaway source: .ae-fold tuned to the chrome register */
+      .plate-src {
+        margin-top: 1.4em;
+      }
+      .plate-src summary {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-faint);
+        cursor: pointer;
+        padding: 0.5em 0;
+      }
+      .plate-src summary:hover {
+        color: var(--ae-ink);
+      }
+      .plate-src pre {
+        background: var(--ae-wash);
+        padding: 1.1em 1.3em;
+        margin: 0.4em 0 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--ae-ink);
+        overflow-x: auto;
+      }
+
+      /* the register grid (foundation plate) */
+      .reg {
+        display: grid;
+        grid-template-columns: auto repeat(3, minmax(0, 6em));
+        gap: 0.4em 2em;
+        align-items: baseline;
+      }
+      .reg .rh {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ae-ink-faint);
+      }
+      .reg .w4 {
+        font-weight: 400;
+      }
+      .reg .w5 {
+        font-weight: 550;
+      }
+      .reg .w8 {
+        font-weight: 800;
+      }
+
+      /* the palette band (foundation plate) */
+      .pal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.4em 1.8em;
+      }
+      .pal-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+      }
+      .pal-chip i {
+        width: 1.6em;
+        height: 1.6em;
+        border: 1px solid var(--ae-line);
+        flex: none;
+      }
+      .pal-chip .v {
+        color: var(--ae-ink-muted);
+      }
+
+      /* the steering row (themes plate): one row, four schemes */
+      .steer {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
+        gap: 1.6em;
+      }
+      .steer-cell {
+        border: 1px solid var(--ae-line);
+        padding: 1.2em;
+      }
+      .steer-cell h5 {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-faint);
+        font-weight: 400;
+        margin: 0 0 0.9em;
+      }
+      .steer-cell .ae-meter {
+        margin-top: 0.9em;
+      }
+
+      /* a simple two-column specimen row (label · demo) for compact plates */
+      .spec-row {
+        display: grid;
+        grid-template-columns: 8em minmax(0, 1fr);
+        gap: 1.2em;
+        align-items: center;
+        padding: 0.5em 0;
+      }
+      .spec-row .lab {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+      }
+
+      /* ── shared LAB chrome ─────────────────────────────────────────── */
+      .proto-cap {
+        flex: none;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ae-ink-muted);
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.55em 4em;
+        margin: 0;
+        text-align: center;
+      }
+      .proto-cap b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .proto-picker {
+        position: fixed;
+        bottom: 1.1em;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        display: flex;
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        background: #fff;
+        color: #151515;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .proto-picker button {
+        font: inherit;
+        letter-spacing: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #737373;
+        padding: 0.8em 1.1em;
+        transition: color 160ms ease;
+      }
+      .proto-picker button:hover {
+        color: #151515;
+      }
+      .proto-picker button.is-active {
+        color: #fff;
+        background: #151515;
+      }
+
+      @media (max-width: 760px) {
+        .book {
+          grid-template-columns: 1fr;
+        }
+        .book-toc {
+          display: none;
+        }
+        .book-stage {
+          padding: 0 1.4em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-up" viewBox="0 0 24 24">
+        <path d="M12 19V5" />
+        <path d="m5 12 7-7 7 7" />
+      </symbol>
+    </svg>
+
+    <p class="ae-chrome proto-cap" id="cap">
+      <b>THE SPECIMEN BOOK</b> — the whole kit as one scrolling engineering
+      manual of numbered live plates. Scroll the stage; the masthead and
+      contents rail never move. The picker jumps to a section.
+    </p>
+
+    <div class="book-bar">
+      <a class="ae-name" href="#p-00">AESTHETIC</a>
+      <span class="book-bar-end">
+        <span class="ae-chrome"
+          >the design system, set as its own specimen book</span
+        >
+        <button class="ae-mode js-mode" aria-label="toggle color mode">
+          <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+          <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+        </button>
+      </span>
+    </div>
+
+    <div class="book">
+      <!-- CONTENTS RAIL -->
+      <nav class="book-toc ae-chrome" aria-label="contents">
+        <p class="book-toc-h">FOUNDATION</p>
+        <a href="#p-01"><span class="no">01</span>color</a>
+        <a href="#p-02"><span class="no">02</span>registers</a>
+        <a href="#p-03"><span class="no">03</span>motion</a>
+        <p class="book-toc-h">PRIMITIVES</p>
+        <a href="#p-04"><span class="no">04</span>button</a>
+        <a href="#p-05"><span class="no">05</span>status</a>
+        <a href="#p-06"><span class="no">06</span>choice</a>
+        <a href="#p-07"><span class="no">07</span>meter · spark</a>
+        <a href="#p-08"><span class="no">08</span>table</a>
+        <p class="book-toc-h">ARCHETYPES</p>
+        <a href="#p-09"><span class="no">09</span>themes</a>
+      </nav>
+
+      <!-- THE SCROLLING STAGE OF PLATES -->
+      <main class="book-stage" id="stage">
+        <div class="book-inner">
+          <!-- 00 · COVER -->
+          <section class="plate" id="p-00">
+            <p class="plate-kicker">THE MISTY STEP DESIGN SYSTEM · v2.6.0</p>
+            <h1 class="plate-title">One stylesheet, set as its own manual.</h1>
+            <p class="plate-lede">
+              Ink on paper, hairline rules, hard corners, one font size on every
+              surface. Every plate below is rendered live by the file it
+              documents — view source, and the markup is the documentation.
+              Hierarchy comes from ink and weight, never from scale.
+            </p>
+            <p class="plate-demo">
+              <code>pnpm add github:misty-step/aesthetic#v2.6.0</code>
+            </p>
+          </section>
+
+          <!-- 01 · COLOR -->
+          <section class="plate" id="p-01">
+            <p class="plate-kicker">
+              <span class="no">PLATE 01</span> · FOUNDATION
+            </p>
+            <h2 class="plate-title">Color</h2>
+            <p class="plate-lede">
+              Ten intent-named inks. The accent is yours to steer; everything
+              else is the shared identity. Faint ink is decoration only — it
+              never carries interactive meaning.
+            </p>
+            <div class="plate-demo pal">
+              <span class="pal-chip"
+                ><i style="background: #151515"></i>ink
+                <span class="v">#151515</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #737373"></i>muted
+                <span class="v">#737373</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #a3a3a3"></i>faint
+                <span class="v">#a3a3a3</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #e9e9e9"></i>line
+                <span class="v">#e9e9e9</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #2643d0"></i>accent
+                <span class="v">#2643d0</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #15714b"></i>ok
+                <span class="v">#15714b</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #8a5f32"></i>warn
+                <span class="v">#8a5f32</span></span
+              >
+              <span class="pal-chip"
+                ><i style="background: #a84138"></i>err
+                <span class="v">#a84138</span></span
+              >
+            </div>
+            <p class="plate-cap">
+              Each ink ships a light and a dark value; the toggle swaps the
+              whole set in one 700ms breath. Radius 0 on every swatch — a square
+              of the literal value.
+            </p>
+            <details class="plate-src ae-fold">
+              <summary>SOURCE</summary>
+              <pre>
+--ae-ink: #151515;  --ae-accent: #2643d0;
+--ae-line: #e9e9e9; --ae-ok: #15714b;</pre
+              >
+            </details>
+          </section>
+
+          <!-- 02 · REGISTERS -->
+          <section class="plate" id="p-02">
+            <p class="plate-kicker">
+              <span class="no">PLATE 02</span> · FOUNDATION
+            </p>
+            <h2 class="plate-title">Nine registers</h2>
+            <p class="plate-lede">
+              Three inks by three weights make nine registers. The headline is
+              heavier and blacker, never larger — the whole hierarchy at one
+              size.
+            </p>
+            <div class="plate-demo reg">
+              <span class="rh"></span><span class="rh">400</span
+              ><span class="rh">550</span><span class="rh">800</span>
+              <span class="rh">ink</span><span class="w4">quiet</span
+              ><span class="w5">steady</span><span class="w8">loud</span>
+              <span class="rh">muted</span><span class="ae-dim w4">quiet</span
+              ><span class="ae-dim w5">steady</span
+              ><span class="ae-dim w8">loud</span> <span class="rh">faint</span
+              ><span class="w4" style="color: var(--ae-ink-faint)">quiet</span
+              ><span class="w5" style="color: var(--ae-ink-faint)">steady</span
+              ><span class="w8" style="color: var(--ae-ink-faint)">loud</span>
+            </div>
+            <p class="plate-cap">
+              Every word on this plate is the same 16px. Loud is weight 800,
+              quiet is muted ink — scale never enters the system.
+            </p>
+          </section>
+
+          <!-- 03 · MOTION -->
+          <section class="plate" id="p-03">
+            <p class="plate-kicker">
+              <span class="no">PLATE 03</span> · FOUNDATION
+            </p>
+            <h2 class="plate-title">Motion is feedback</h2>
+            <p class="plate-lede">
+              Never decoration: small, brief, eased. State resolutions are
+              gentler (480ms) and resolve exactly once — success persists, it is
+              never rewound. The send button below resolves and stays resolved.
+            </p>
+            <form
+              class="plate-demo"
+              data-ae-anticipate
+              data-ae-demo
+              style="max-width: 26em"
+            >
+              <label class="ae-label" for="email">Email</label>
+              <input
+                class="ae-input"
+                id="email"
+                type="email"
+                placeholder="you@misty-step.com"
+              />
+              <button
+                class="ae-button ae-send"
+                type="submit"
+                style="margin-top: 1em"
+              >
+                <span class="ae-send-label">Send message</span>
+                <span class="ae-send-done" aria-hidden="true"
+                  >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                ></span>
+              </button>
+            </form>
+            <p class="plate-cap">
+              Under <code>prefers-reduced-motion</code> the same resolution is
+              instant. Nothing changes size while it animates; nothing loops.
+            </p>
+          </section>
+
+          <!-- 04 · BUTTON -->
+          <section class="plate" id="p-04">
+            <p class="plate-kicker">
+              <span class="no">PLATE 04</span> · PRIMITIVE
+            </p>
+            <h2 class="plate-title">The button</h2>
+            <p class="plate-lede">
+              A contained ink shape that acts — never a styled link. Solid
+              primary, hairline secondary, a compact register for toolbars.
+            </p>
+            <div class="plate-demo spec-row">
+              <span class="lab">PRIMARY</span>
+              <span
+                ><button class="ae-button" type="button">Deploy</button></span
+              >
+            </div>
+            <div class="spec-row">
+              <span class="lab">QUIET</span>
+              <span
+                ><button class="ae-button ae-button-quiet" type="button">
+                  Cancel
+                </button></span
+              >
+            </div>
+            <div class="spec-row">
+              <span class="lab">COMPACT</span>
+              <span
+                ><button class="ae-button ae-button-compact" type="button">
+                  Run trial
+                </button></span
+              >
+            </div>
+            <div class="spec-row">
+              <span class="lab">DISABLED</span>
+              <span
+                ><button class="ae-button" type="button" disabled>
+                  Deploy
+                </button></span
+              >
+            </div>
+            <details class="plate-src ae-fold">
+              <summary>SOURCE</summary>
+              <pre>
+&lt;button class="ae-button"&gt;Deploy&lt;/button&gt;
+&lt;button class="ae-button ae-button-quiet"&gt;Cancel&lt;/button&gt;</pre
+              >
+            </details>
+          </section>
+
+          <!-- 05 · STATUS -->
+          <section class="plate" id="p-05">
+            <p class="plate-kicker">
+              <span class="no">PLATE 05</span> · PRIMITIVE
+            </p>
+            <h2 class="plate-title">Status rides the glyph</h2>
+            <p class="plate-lede">
+              Danger, success, and warning color the icon — never the sentence,
+              never a filled pill. The word stays ink; the hue rides the mark.
+            </p>
+            <div class="plate-demo">
+              <p>
+                <svg class="ae-icon ae-err"><use href="#i-x" /></svg> Deploy
+                4118 failed on preview.
+              </p>
+              <p>
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg> Deploy
+                4120 resolved on production.
+              </p>
+              <p>
+                <svg class="ae-icon ae-warn"><use href="#i-tri" /></svg>
+                Certificate expires in 14 days.
+              </p>
+            </div>
+            <p class="plate-demo">
+              A badge is a mono word, not a colored box:
+              <span class="ae-tag">v2.6.0</span>
+              <span class="ae-tag">sonnet</span>
+            </p>
+          </section>
+
+          <!-- 06 · CHOICE -->
+          <section class="plate" id="p-06">
+            <p class="plate-kicker">
+              <span class="no">PLATE 06</span> · PRIMITIVE
+            </p>
+            <h2 class="plate-title">Choice marks are squares</h2>
+            <p class="plate-lede">
+              A circle would be the only curve in the system, so there isn't
+              one. The checkbox fills with ink, the radio holds an ink core, the
+              switch slides a thumb along a hairline channel — state reads from
+              position and fill, never from a green pill.
+            </p>
+            <div class="plate-demo">
+              <label class="ae-choice"
+                ><input class="ae-check" type="checkbox" checked /> Email me on
+                deploy</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-radio" type="radio" name="b-vis" checked />
+                Public</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-radio" type="radio" name="b-vis" />
+                Internal</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-switch" type="checkbox" checked />
+                Auto-deploy</label
+              >
+            </div>
+          </section>
+
+          <!-- 07 · METER -->
+          <section class="plate" id="p-07">
+            <p class="plate-kicker"><span class="no">PLATE 07</span> · DATA</p>
+            <h2 class="plate-title">Meter, spark, delta</h2>
+            <p class="plate-lede">
+              Data is drawn in ink. Gauges are ruled lines with an optional warn
+              mark; figures are tabular numerals, loud by weight; deltas put the
+              hue on the arrow; trends are pen strokes.
+            </p>
+            <div class="plate-demo">
+              <p class="ae-chrome" style="margin-bottom: 0.4em">
+                turn spend · <span class="ae-num">62%</span> · warn at 80
+              </p>
+              <div
+                class="ae-meter"
+                role="meter"
+                aria-valuenow="62"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="turn spend"
+              >
+                <span class="ae-meter-fill" style="width: 62%"></span>
+                <span class="ae-meter-mark" style="left: 80%"></span>
+              </div>
+              <p style="margin-top: 1.2em">
+                <span class="ae-num ae-strong">48,211</span>
+                <span class="ae-delta ae-num ae-dim">
+                  <svg
+                    class="ae-icon ae-ok"
+                    viewBox="0 0 24 24"
+                    style="width: 0.9em; height: 0.9em"
+                  >
+                    <path d="M12 19V5" />
+                    <path d="m5 12 7-7 7 7" /></svg
+                  >4.2%</span
+                >
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                  />
+                </svg>
+              </p>
+            </div>
+          </section>
+
+          <!-- 08 · TABLE -->
+          <section class="plate" id="p-08">
+            <p class="plate-kicker"><span class="no">PLATE 08</span> · DATA</p>
+            <h2 class="plate-title">Tables are instruments</h2>
+            <p class="plate-lede">
+              13px mono, lowercase headers on a wash band, hairline row rules —
+              framed as numbered plates. Status rides the glyph here too.
+            </p>
+            <div class="plate-demo ae-plate">
+              <p class="ae-plate-cap">TABLE 1 · CONSUMERS RIDING THE SYSTEM</p>
+              <table class="ae-table">
+                <thead>
+                  <tr>
+                    <th>consumer</th>
+                    <th class="num">pin</th>
+                    <th>status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">misty-step.com</td>
+                    <td class="num">v2.6.0</td>
+                    <td>
+                      <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                      current
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">phrazzld.com</td>
+                    <td class="num">v2.2.0</td>
+                    <td>
+                      <svg class="ae-icon ae-warn"><use href="#i-tri" /></svg>
+                      two tags behind
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">next</td>
+                    <td class="num">—</td>
+                    <td>
+                      <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                      unpinned
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 09 · THEMES -->
+          <section class="plate" id="p-09">
+            <p class="plate-kicker">
+              <span class="no">PLATE 09</span> · STEERING
+            </p>
+            <h2 class="plate-title">One system, every brand</h2>
+            <p class="plate-lede">
+              The invariants never move; only the dials turn. One composition,
+              four schemes — the accent is the consumer's, the identity stays
+              ours.
+            </p>
+            <div class="plate-demo steer">
+              <div class="steer-cell" style="--ae-accent: #2643d0">
+                <h5>ULTRAMARINE</h5>
+                <p><span class="ae-accent">running</span></p>
+                <div class="ae-meter" role="meter" aria-label="house">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button
+                  class="ae-button ae-button-compact"
+                  type="button"
+                  style="margin-top: 0.9em"
+                >
+                  Deploy
+                </button>
+              </div>
+              <div class="steer-cell" style="--ae-accent: #c2410c">
+                <h5>EMBER</h5>
+                <p><span class="ae-accent">running</span></p>
+                <div class="ae-meter" role="meter" aria-label="ember">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button
+                  class="ae-button ae-button-compact"
+                  type="button"
+                  style="margin-top: 0.9em"
+                >
+                  Deploy
+                </button>
+              </div>
+              <div class="steer-cell" style="--ae-accent: #2f6b3f">
+                <h5>PINE</h5>
+                <p><span class="ae-accent">running</span></p>
+                <div class="ae-meter" role="meter" aria-label="pine">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button
+                  class="ae-button ae-button-compact"
+                  type="button"
+                  style="margin-top: 0.9em"
+                >
+                  Deploy
+                </button>
+              </div>
+              <div class="steer-cell" style="--ae-accent: #7c3aed">
+                <h5>VIOLET</h5>
+                <p><span class="ae-accent">running</span></p>
+                <div class="ae-meter" role="meter" aria-label="violet">
+                  <span class="ae-meter-fill" style="width: 64%"></span>
+                </div>
+                <button
+                  class="ae-button ae-button-compact"
+                  type="button"
+                  style="margin-top: 0.9em"
+                >
+                  Deploy
+                </button>
+              </div>
+            </div>
+            <p class="plate-cap">
+              Steer downstream: override <code>--ae-accent</code> and every
+              surface follows. The worked blocks live in docs/ADOPTING.md.
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <footer
+      class="ae-chrome"
+      style="
+        position: fixed;
+        bottom: 0.9em;
+        left: 1.2em;
+        z-index: 25;
+        pointer-events: none;
+      "
+    >
+      prototype — never ships
+    </footer>
+
+    <nav class="proto-picker" aria-label="jump to section">
+      <button data-to="p-01" class="is-active">foundation</button>
+      <button data-to="p-04">primitives</button>
+      <button data-to="p-07">data</button>
+      <button data-to="p-09">themes</button>
+    </nav>
+
+    <script>
+      /* mode toggle */
+      const root = document.documentElement;
+      const isDark = () =>
+        root.classList.contains('dark')
+          ? true
+          : root.classList.contains('light')
+            ? false
+            : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelectorAll('.js-mode').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const dark = isDark();
+          root.classList.toggle('dark', !dark);
+          root.classList.toggle('light', dark);
+          root.style.colorScheme = dark ? 'light' : 'dark';
+          try {
+            localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
+          } catch (e) {}
+        }),
+      );
+
+      /* the stage is the scroller; scroll-spy tracks the contents rail and
+         the picker/links scroll the stage (smooth unless reduced motion) */
+      const stage = document.getElementById('stage');
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+      const toc = [...document.querySelectorAll('.book-toc a')];
+      const plates = [...document.querySelectorAll('.plate')].filter(
+        (p) => p.id !== 'p-00',
+      );
+
+      const mark = (id) =>
+        toc.forEach((a) =>
+          a.toggleAttribute(
+            'aria-current',
+            a.getAttribute('href') === '#' + id,
+          ),
+        );
+
+      const seen = new Map();
+      const spy = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => seen.set(e.target, e.isIntersecting));
+          const here = plates.filter((p) => seen.get(p));
+          if (here.length) mark(here[0].id);
+        },
+        { root: stage, rootMargin: '0px 0px -68% 0px' },
+      );
+      plates.forEach((p) => spy.observe(p));
+
+      function scrollToId(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({
+          behavior: reduced.matches ? 'auto' : 'smooth',
+          block: 'start',
+        });
+        mark(id);
+      }
+      toc.forEach((a) =>
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          scrollToId(a.getAttribute('href').slice(1));
+        }),
+      );
+      const picker = [...document.querySelectorAll('.proto-picker button')];
+      picker.forEach((b) =>
+        b.addEventListener('click', () => {
+          scrollToId(b.dataset.to);
+          picker.forEach((x) => x.classList.toggle('is-active', x === b));
+        }),
+      );
+    </script>
+  </body>
+</html>
