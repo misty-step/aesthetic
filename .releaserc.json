@@ -22,9 +22,11 @@
           "docs/ADOPTING.md",
           "site/index.html",
           "site/primitives.html",
+          "site/steering.html",
+          "site/gauntlet/docs.html",
+          "site/gauntlet/settings.html",
           "site/r/**",
-          "recipes/recipes.js",
-          "docs/releases/**"
+          "recipes/recipes.js"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }

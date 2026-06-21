@@ -6,6 +6,8 @@
    <button popovertarget="menu">Options</button>
    <div id="menu" popover class="ae-pop">…</div> */
 (() => {
+  if (window.aePop) return;
+  window.aePop = true;
   document.addEventListener(
     'toggle',
     (e) => {
@@ -27,7 +29,9 @@
          open, then arrow-key through the menu */
       const menu = pop.querySelector('.ae-menu');
       if (!menu) return;
-      const items = [...menu.querySelectorAll('button')];
+      const items = [...menu.querySelectorAll('button')].filter(
+        (b) => !b.disabled,
+      );
       if (items.length === 0) return;
       items.forEach((b) => (b.tabIndex = -1));
       const sel = menu.querySelector('button.is-sel') || items[0];
@@ -42,7 +46,9 @@
     if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
     const menu = e.target.closest('.ae-menu');
     if (!menu) return;
-    const items = [...menu.querySelectorAll('button')];
+    const items = [...menu.querySelectorAll('button')].filter(
+      (b) => !b.disabled,
+    );
     if (items.length === 0) return;
     const i = items.indexOf(e.target);
     let next;

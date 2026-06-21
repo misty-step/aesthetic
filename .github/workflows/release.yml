@@ -47,7 +47,26 @@ jobs:
       # build artifacts (registry, feed, recipes, tokens) BEFORE the git
       # commit + tag. This keeps all pins in sync with the release version.
       - name: Run Landmark
+        id: landmark
         uses: misty-step/landmark@v1
         with:
           github-token: ${{ secrets.GH_RELEASE_TOKEN }}
           llm-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+
+      # Landmark writes release notes (docs/releases/*.md/.txt/.html/.json)
+      # AFTER semantic-release commits, so they're not in the release commit.
+      # Commit them back so links from the feed/site resolve on master.
+      - name: Commit release notes artifacts
+        if: steps.landmark.outcome == 'success'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GH_RELEASE_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git add docs/releases/ || true
+          if git diff --cached --quiet; then
+            echo "No release notes artifacts to commit"
+            exit 0
+          fi
+          git commit -m "chore(release): publish release notes artifacts [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

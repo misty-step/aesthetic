@@ -166,6 +166,17 @@ for (const route of STATE_ROUTES) {
         page.locator(`[data-route="${route}"] .states`),
       ).toBeVisible();
 
+      // the matrix is actually a matrix — more than one state cell.
+      // A regression to single-state happy-path would pass the law
+      // checks but fail here, preventing the rubber-stamp the gate
+      // exists to prevent.
+      const stateCount = await page
+        .locator(`[data-route="${route}"] .states .state`)
+        .count();
+      expect(stateCount, `${route} must show multiple states`).toBeGreaterThan(
+        1,
+      );
+
       expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
       expect(await nonZeroRadii(page)).toEqual([]);
 
@@ -272,7 +283,7 @@ test('the catalog index filters by query, and / focuses the field', async ({
   await page.goto('/site/primitives.html');
   const field = page.locator('.idx-filter');
   await expect(field).toBeVisible(); // JS-injected; no-JS keeps the full table
-  const rows = page.locator('.idx tbody tr');
+  const rows = page.locator('.idx > tbody > tr');
   const total = await rows.count();
 
   // `/` focuses the filter from the index

@@ -333,6 +333,8 @@
    <button popovertarget="menu">Options</button>
    <div id="menu" popover class="ae-pop">…</div> */
 (() => {
+  if (window.aePop) return;
+  window.aePop = true;
   document.addEventListener(
     'toggle',
     (e) => {
@@ -354,7 +356,9 @@
          open, then arrow-key through the menu */
       const menu = pop.querySelector('.ae-menu');
       if (!menu) return;
-      const items = [...menu.querySelectorAll('button')];
+      const items = [...menu.querySelectorAll('button')].filter(
+        (b) => !b.disabled,
+      );
       if (items.length === 0) return;
       items.forEach((b) => (b.tabIndex = -1));
       const sel = menu.querySelector('button.is-sel') || items[0];
@@ -369,7 +373,9 @@
     if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
     const menu = e.target.closest('.ae-menu');
     if (!menu) return;
-    const items = [...menu.querySelectorAll('button')];
+    const items = [...menu.querySelectorAll('button')].filter(
+      (b) => !b.disabled,
+    );
     if (items.length === 0) return;
     const i = items.indexOf(e.target);
     let next;
@@ -423,7 +429,11 @@
   }
 
   function label(dialog) {
-    if (dialog.hasAttribute('aria-labelledby')) return;
+    if (
+      dialog.hasAttribute('aria-labelledby') ||
+      dialog.hasAttribute('aria-label')
+    )
+      return;
     const title = dialog.querySelector('.ae-dialog-title');
     if (!title) return;
     if (!title.id)
@@ -452,26 +462,34 @@
 
   /* wire one invoker → dialog pair. Returns a cleanup function. */
   function aeDialog(invoker, dialog) {
-    let lastFocused = null;
+    if (invoker._aeDialog) return invoker._aeDialog.cleanup;
 
+    let lastFocused = null;
     label(dialog);
     if (!dialog.hasAttribute('tabindex')) dialog.tabIndex = -1;
 
-    invoker.addEventListener('click', () => {
+    const onKey = (e) => trap(dialog, e);
+    const open = () => {
       lastFocused = invoker;
       dialog.showModal();
-    });
-
-    dialog.addEventListener('keydown', (e) => trap(dialog, e));
-
-    dialog.addEventListener('close', () => {
+    };
+    const onClose = () => {
       if (lastFocused) lastFocused.focus();
       lastFocused = null;
-    });
-
-    return () => {
-      dialog.removeEventListener('keydown', trap);
     };
+
+    invoker.addEventListener('click', open);
+    dialog.addEventListener('keydown', onKey);
+    dialog.addEventListener('close', onClose);
+
+    const cleanup = () => {
+      invoker.removeEventListener('click', open);
+      dialog.removeEventListener('keydown', onKey);
+      dialog.removeEventListener('close', onClose);
+      delete invoker._aeDialog;
+    };
+    invoker._aeDialog = { open, cleanup };
+    return cleanup;
   }
 
   /* auto-wire: <button data-ae-dialog="#dlg-id">Open</button> */
@@ -480,7 +498,14 @@
     if (!invoker) return;
     const sel = invoker.getAttribute('data-ae-dialog');
     const dialog = document.querySelector(sel);
-    if (dialog instanceof HTMLDialogElement) aeDialog(invoker, dialog);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    if (!invoker._aeDialog) {
+      aeDialog(invoker, dialog);
+      // first click: the invoker's listener was added during dispatch and
+      // won't fire for this event, so open the dialog directly
+      invoker._aeDialog.open();
+    }
+    // subsequent clicks: the invoker's own listener handles opening
   });
 
   window.aeDialog = aeDialog;

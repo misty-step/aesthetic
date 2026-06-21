@@ -269,13 +269,11 @@ footer.ae-bar a:hover {
   color: var(--ae-ink-faint);
 }
 
-/* specimen overrides: specimens show the look, not the behavior. Clip all
-   child overflow so no inline scrollbars appear and no content escapes the
-   cell to inflate the stage's scrollWidth. The detail view has the real
-   interactive primitive. */
-.idx .specimen * {
-  overflow: hidden !important;
-}
+/* specimen overrides: specimens show the look, not the behavior. The
+   cell clips at its boundary (line 224) so no inline scrollbars appear
+   and no content escapes to inflate the stage's scrollWidth. Don't clip
+   descendants universally — that destroys internal overflow semantics
+   (e.g. [data-ae-tip] tooltips). The detail view has the real primitive. */
 
 .idx .specimen .ae-table {
   width: 100%;

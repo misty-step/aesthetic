@@ -6,15 +6,17 @@
    release.mjs via git directly). */
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const sh = (cmd) => execSync(cmd, { cwd: root, stdio: 'inherit' });
 
 /* every surface that states the version, swept by anchored replacement.
-   Only replaces version pins (vX.Y.Z or "X.Y.Z" or 'X.Y.Z'), not bare
-   occurrences of the string in unrelated prose. */
+   Matches vX.Y.Z (git tags, URLs), "X.Y.Z" (JSON), 'X.Y.Z' (quoted),
+   or bare X.Y.Z at a word boundary (CSS comments, install snippets).
+   The bare branch has a negative lookbehind for range operators (>=, <=,
+   ^, ~) so semver ranges are not corrupted. */
 const pinFiles = [
   'package.json',
   'aesthetic.css',
@@ -23,6 +25,9 @@ const pinFiles = [
   'docs/ADOPTING.md',
   'site/index.html',
   'site/primitives.html',
+  'site/steering.html',
+  'site/gauntlet/docs.html',
+  'site/gauntlet/settings.html',
 ];
 
 export function prepareRelease(next) {
@@ -30,13 +35,12 @@ export function prepareRelease(next) {
   const prev = pkg.version;
 
   const prevEsc = prev.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const nextEsc = next.replace(/\$/g, '$$$$');
-  /* match: v2.6.0 (git tags, URLs), "2.6.0" (JSON), '2.6.0' (quoted),
-     or 2.6.0 at a word boundary in CSS comments */
-  const versionRe = new RegExp(
-    `(v${prevEsc})|"${prevEsc}"|'${prevEsc}'|(?<=\\b)${prevEsc}(?=\\b)`,
-    'g',
-  );
+  const nextEsc = next;
+  /* match only v-prefixed (v2.6.0, #v2.6.0, @v2.6.0) and quoted
+     ("2.6.0" JSON, '2.6.0' single) pins. No bare-word branch: every
+     version reference in the repo uses one of these forms, and dropping
+     the bare branch eliminates any risk of corrupting semver ranges. */
+  const versionRe = new RegExp(`(v${prevEsc})|"${prevEsc}"|'${prevEsc}'`, 'g');
 
   for (const f of pinFiles) {
     const p = join(root, f);
@@ -46,9 +50,7 @@ export function prepareRelease(next) {
         ? `v${nextEsc}`
         : m.startsWith('"')
           ? `"${nextEsc}"`
-          : m.startsWith("'")
-            ? `'${nextEsc}'`
-            : nextEsc,
+          : `'${nextEsc}'`,
     );
     if (before !== after) writeFileSync(p, after);
   }
@@ -66,7 +68,7 @@ export function prepareRelease(next) {
 
 /* when run directly (semantic-release prepare hook), read the version from
    the SR_NEXT_RELEASE_VERSION env var that @semantic-release/exec sets */
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   const next = process.env.SR_NEXT_RELEASE_VERSION || process.argv[2];
   if (!next || !/^\d+\.\d+\.\d+$/.test(next)) {
     console.error(
