@@ -3057,13 +3057,12 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
 
     <script src="recipes.js"></script>
     <script>
-      /* the dialog specimen: the quiet button asks, both actions close */
+      /* the dialog specimen: the recipe handles focus, trap, and restore */
       (() => {
         const dlg = document.getElementById('dlg-demo');
-        if (!dlg) return;
-        document
-          .getElementById('dlg-open')
-          .addEventListener('click', () => dlg.showModal());
+        const opener = document.getElementById('dlg-open');
+        if (!dlg || !opener) return;
+        window.aeDialog(opener, dlg);
         document
           .getElementById('dlg-cancel')
           .addEventListener('click', () => dlg.close());
