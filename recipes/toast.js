@@ -4,6 +4,7 @@
    dismissed or pushed out (the tray keeps four); pass { timeout: ms }
    to opt into self-dismissal — it is never the default. */
 (() => {
+  if (window.aeToast) return;
   const ICONS = {
     ok: '<path d="M20 6 9 17l-5-5"/>',
     warn: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',

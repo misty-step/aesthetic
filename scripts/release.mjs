@@ -17,8 +17,9 @@ const sh = (cmd) => execSync(cmd, { cwd: root, stdio: 'inherit' });
 
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const prev = pkg.version;
-
-/* every surface that states the version, swept by exact match */
+/* every surface that states the version, swept by anchored replacement.
+   Only replaces version pins (vX.Y.Z or "X.Y.Z" or 'X.Y.Z'), not bare
+   occurrences of the string in unrelated prose. */
 const pinFiles = [
   'package.json',
   'aesthetic.css',
@@ -29,10 +30,27 @@ const pinFiles = [
   'site/primitives.html',
 ];
 
+const prevEsc = prev.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const nextEsc = next.replace(/\$/g, '$$$$');
+/* match: v2.6.0 (git tags, URLs), "2.6.0" (JSON), '2.6.0' (quoted),
+   or 2.6.0 at a word boundary in CSS comments */
+const versionRe = new RegExp(
+  `(v${prevEsc})|"${prevEsc}"|'${prevEsc}'|(?<=\\b)${prevEsc}(?=\\b)`,
+  'g',
+);
+
 for (const f of pinFiles) {
   const p = join(root, f);
   const before = readFileSync(p, 'utf8');
-  const after = before.replaceAll(prev, next);
+  const after = before.replace(versionRe, (m) =>
+    m.startsWith('v')
+      ? `v${nextEsc}`
+      : m.startsWith('"')
+        ? `"${nextEsc}"`
+        : m.startsWith("'")
+          ? `'${nextEsc}'`
+          : nextEsc,
+  );
   if (before !== after) writeFileSync(p, after);
 }
 

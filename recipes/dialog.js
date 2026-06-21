@@ -24,6 +24,7 @@
    Open it: aeDialog(document.getElementById('open'), dialogEl)
    — or let the recipe auto-wire every [data-ae-dialog] invoker. */
 (() => {
+  if (window.aeDialog) return;
   const FOCUSABLE =
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 

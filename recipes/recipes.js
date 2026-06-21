@@ -70,6 +70,7 @@
    that swap views and need the indicator re-placed after a display
    change. Works for .ae-nav and .ae-tabs alike. */
 (() => {
+  if (window.aePlaceInds) return;
   const placeInd = (nav) => {
     const active = nav.querySelector(
       '[aria-current], [aria-selected="true"], .is-active',
@@ -135,6 +136,7 @@
    the site's demo hook; real consumers call aeSend from their own
    submit handling. */
 (() => {
+  if (window.aeSend) return;
   const live = document.createElement('span');
   live.className = 'ae-sr';
   live.setAttribute('role', 'status');
@@ -272,6 +274,7 @@
    dismissed or pushed out (the tray keeps four); pass { timeout: ms }
    to opt into self-dismissal — it is never the default. */
 (() => {
+  if (window.aeToast) return;
   const ICONS = {
     ok: '<path d="M20 6 9 17l-5-5"/>',
     warn: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
@@ -409,6 +412,7 @@
    Open it: aeDialog(document.getElementById('open'), dialogEl)
    — or let the recipe auto-wire every [data-ae-dialog] invoker. */
 (() => {
+  if (window.aeDialog) return;
   const FOCUSABLE =
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 

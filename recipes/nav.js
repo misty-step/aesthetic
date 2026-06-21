@@ -4,6 +4,7 @@
    that swap views and need the indicator re-placed after a display
    change. Works for .ae-nav and .ae-tabs alike. */
 (() => {
+  if (window.aePlaceInds) return;
   const placeInd = (nav) => {
     const active = nav.querySelector(
       '[aria-current], [aria-selected="true"], .is-active',
