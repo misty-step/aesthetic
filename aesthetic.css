@@ -66,6 +66,23 @@
   --ae-measure-wide: 68rem;
   --ae-radius: 0;
 
+  /* the spacing scale: consumers use these instead of ad-hoc em values.
+     The token-guard (015) will enforce them. Off-scale internal values
+     are left as literals — the scale is the vocabulary going forward. */
+  --ae-space-0: 0.1em; /* micro — tag padding, chrome adjustments */
+  --ae-space-1: 0.25em; /* tight — icon gaps, control insets */
+  --ae-space-2: 0.5em; /* small — button padding, small gaps */
+  --ae-space-3: 0.75em; /* medium — control padding, row gaps */
+  --ae-space-4: 1em; /* base — group padding, standard gap */
+  --ae-space-5: 1.5em; /* comfortable — section internals */
+  --ae-space-6: 2em; /* spacious — section gaps, stage padding */
+  --ae-space-7: 2.5em; /* large — document section spacing */
+  --ae-space-8: 3em; /* section — top-level margins */
+
+  /* z-index scale: named layers so consumers don't guess at magic numbers */
+  --ae-z-tip: 10; /* tooltips, hover whispers */
+  --ae-z-toast: 100; /* toasts, persistent notifications */
+
   /* motion: feedback, never decoration */
   --ae-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --ae-quick: 160ms;
@@ -255,13 +272,13 @@ a:hover {
 
 .ae-stage > * {
   margin-block: auto;
-  padding-block: 1.5em;
+  padding-block: var(--ae-space-5);
 }
 
 /* long documents: top-aligned instead of centered */
 .ae-stage-scroll > * {
   margin-block: 0;
-  padding-block: 2em;
+  padding-block: var(--ae-space-6);
 }
 
 /* a wide screen: catalog, specimen, and dashboard shapes that cannot
@@ -301,7 +318,7 @@ a:hover {
 .ae-tabs {
   position: relative;
   display: flex;
-  gap: 2em;
+  gap: var(--ae-space-6);
 }
 
 .ae-nav a,
@@ -364,11 +381,11 @@ a:hover {
   font-size: 13px;
   color: var(--ae-ink-muted);
   border-top: 1px solid var(--ae-line);
-  padding-top: 1em;
+  padding-top: var(--ae-space-4);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1em 2em;
+  gap: var(--ae-space-4) var(--ae-space-6);
   flex-wrap: wrap;
 }
 
@@ -383,7 +400,7 @@ a:hover {
 
 .ae-foot-links {
   display: inline-flex;
-  gap: 1.5em;
+  gap: var(--ae-space-5);
   align-items: center;
 }
 
@@ -464,7 +481,7 @@ a:hover {
 /* a panel: soft depth for dense content (forms). Radius stays 0. */
 .ae-panel {
   background: var(--ae-surface);
-  padding: 2em;
+  padding: var(--ae-space-6);
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.04),
     0 8px 28px rgba(0, 0, 0, 0.06);
@@ -523,7 +540,7 @@ dialog.ae-dialog {
   color: var(--ae-ink);
   width: min(26em, calc(100vw - 3em));
   box-sizing: border-box;
-  padding: 2em;
+  padding: var(--ae-space-6);
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.05),
     0 12px 36px rgba(0, 0, 0, 0.09);
@@ -551,12 +568,12 @@ dialog.ae-dialog::backdrop {
 /* the dialog's title and action row */
 .ae-dialog-title {
   font-weight: var(--ae-w-black);
-  margin-bottom: 0.5em;
+  margin-bottom: var(--ae-space-2);
 }
 
 .ae-dialog-acts {
   display: flex;
-  gap: 1em;
+  gap: var(--ae-space-4);
   justify-content: flex-end;
   margin-top: 1.8em;
 }
@@ -625,10 +642,9 @@ dialog.ae-dialog::backdrop {
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  z-index: 10;
+  z-index: var(--ae-z-tip);
   transition: opacity var(--ae-quick) var(--ae-ease);
 }
-
 [data-ae-tip]:hover::after {
   opacity: 1;
   transition-delay: 450ms;
@@ -651,7 +667,7 @@ dialog.ae-dialog::backdrop {
   position: fixed;
   right: 1.4em;
   bottom: 1.4em;
-  z-index: 100;
+  z-index: var(--ae-z-toast);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -806,7 +822,7 @@ kbd {
 .ae-label {
   display: block;
   font-weight: var(--ae-w-medium);
-  margin-bottom: 0.1em;
+  margin-bottom: var(--ae-space-0);
 }
 
 .ae-input {
@@ -861,7 +877,7 @@ textarea.ae-input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
+  gap: var(--ae-space-2);
   background: var(--ae-ink);
   border: 1px solid var(--ae-ink);
   border-radius: var(--ae-radius);
@@ -927,7 +943,7 @@ textarea.ae-input {
 .ae-send .ae-send-done {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: var(--ae-space-2);
   transition:
     opacity var(--ae-gentle) var(--ae-ease),
     transform var(--ae-gentle) var(--ae-ease);
@@ -1139,7 +1155,7 @@ input.ae-switch:checked::before {
   font-size: 11px;
   letter-spacing: 0.14em;
   color: var(--ae-ink-muted);
-  margin-bottom: 1em;
+  margin-bottom: var(--ae-space-4);
 }
 
 .ae-plate-note {
@@ -1308,7 +1324,7 @@ input.ae-switch:checked::before {
   transform: translateY(-50%);
   display: inline-flex;
   align-items: baseline;
-  gap: 0.5em;
+  gap: var(--ae-space-2);
   padding: 0.1em 0.2em 0.1em 0.7em;
   background: var(--ae-surface);
   font-family: var(--ae-font-mono);
@@ -1543,7 +1559,7 @@ input.ae-switch:checked::before {
   width: 100%;
   justify-content: space-between;
   align-items: baseline;
-  gap: 1.5em;
+  gap: var(--ae-space-5);
   background: transparent;
   border: 0;
   border-top: 1px solid var(--ae-line);
@@ -1649,7 +1665,7 @@ details.ae-fold:last-of-type {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 1.5em;
+  gap: var(--ae-space-5);
   padding: 0.8em 0;
   font-weight: var(--ae-w-medium);
   cursor: pointer;
@@ -1672,7 +1688,7 @@ details.ae-fold:last-of-type {
 }
 
 .ae-fold > :not(summary) {
-  padding-bottom: 1em;
+  padding-bottom: var(--ae-space-4);
 }
 
 /* ── structure: paths, waiting, and absence ───────────────────────── */
@@ -1998,7 +2014,7 @@ details.ae-fold:last-of-type {
 }
 
 .ae-findings-title {
-  margin-bottom: 1em;
+  margin-bottom: var(--ae-space-4);
   font-family: var(--ae-font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -2057,7 +2073,7 @@ details.ae-fold:last-of-type {
   }
 
   .ae-group {
-    margin-bottom: 2em;
+    margin-bottom: var(--ae-space-6);
   }
 
   /* the shell folds to one column; compose a bar for the places the

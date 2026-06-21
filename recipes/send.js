@@ -8,6 +8,7 @@
    the site's demo hook; real consumers call aeSend from their own
    submit handling. */
 (() => {
+  if (window.aeSend) return;
   const live = document.createElement('span');
   live.className = 'ae-sr';
   live.setAttribute('role', 'status');

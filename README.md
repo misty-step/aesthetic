@@ -244,11 +244,12 @@ puts the status hue on the arrow while the figure stays ink;
 Every JS-implying primitive has one canonical, dependency-free recipe
 in [`recipes/`](recipes/): `mode.js`, `nav.js`, `views.js`, `send.js`
 (announces the resolved state to screen readers via an `.ae-sr` live
-region), `settings.js`, `anticipate.js`, `toast.js`, `pop.js` — and
-`recipes.js`, the combined file the site itself runs. Load it without
-a build step from jsDelivr, copy the singles into your project, or
-port them to your framework; they are documentation that happens to
-execute.
+region), `settings.js`, `anticipate.js`, `toast.js`, `pop.js`
+(geometry + roving tabindex for `.ae-menu`), `dialog.js` (focus trap,
+focus restoration, `aria-labelledby` wiring) — and `recipes.js`, the
+combined file the site itself runs. Load it without a build step from
+jsDelivr, copy the singles into your project, or port them to your
+framework; they are documentation that happens to execute.
 
 ## Primitives
 

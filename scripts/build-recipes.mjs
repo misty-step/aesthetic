@@ -16,6 +16,7 @@ const ORDER = [
   'anticipate.js',
   'toast.js',
   'pop.js',
+  'dialog.js',
 ];
 
 const banner = `/* aesthetic recipes — the canonical behavior glue, combined.

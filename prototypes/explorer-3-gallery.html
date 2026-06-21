@@ -1,0 +1,1391 @@
+<!doctype html>
+<!--
+  LAB explorer · 3 — THE GALLERY (round 2, chosen direction). The kit as a
+  CONTACT SHEET: every facet a live tile, the whole system visible at once; a
+  filter narrows by facet, the ↗ pops a tile open large in the dialog costume
+  with its source. Round-2 incorporates the operator's review of the fan:
+
+    · HONEST COPY — no overstated claims. Tiles describe the idiom, not
+      capability we don't have.
+    · DE-CURB'D — examples are domain-neutral (Save/Cancel, generic figures),
+      not lifted from the curb dashboard (deploy / turn-spend / ok-warn-kill).
+    · STEERING TOLD STRAIGHT — not "one system, every brand." The accent is
+      the dial; the modal lets you steer a real little composition and watch
+      the accent move across a button, a gauge, an active tab and a link AT
+      ONCE while ink, hairlines, type, radius and motion hold. More than one
+      word changes — and the claim is only what's true.
+    · REPLAYABLE MOTION — a motion facet whose specimens use the REAL recipes
+      (recipes.js): the send moment, the interval draw-in, a toast, the mode
+      breath. Motion resolves once by law, so the modal carries a ↻ replay to
+      re-fire it.
+    · SCREENS & COMPOSITIONS FIT — they're wide tiles (span 2) and open in a
+      LARGE modal, so an app shell or a settings flow renders at usable size
+      instead of being crushed into a thumbnail. This is the contact sheet's
+      answer to "how do big things fit."
+
+  Tiles are <article>, never <button> — live interactive specimens can't nest
+  in a button (the parser hoists them out). The expand/replay are their own
+  controls. Law holds: one size, radius 0, status on the glyph, no page
+  scroll, both modes.
+  Sketch only — never ships. Serve repo root, open /prototypes/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — LAB · explorer 3 · the gallery</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      /* ── prototype glue: sketch only, never ships ──────────────────────
+         An EXPLORER as a contact sheet. Everything composes existing
+         primitives (.ae-button*, .ae-meter, .ae-ci, .ae-spark, .ae-choice,
+         .ae-tag, .ae-settings, .ae-rail/.ae-desk, .ae-tabs, .ae-dialog,
+         status .ae-icon) + the real recipes.js. The only new things are the
+         TILE FRAME, the auto-fill grid, and the lightbox. No new color, no
+         new size, no fill. */
+
+      body {
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* the filter strip: name · facet filter · count · mode */
+      .gal-bar {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 1.6em;
+        padding: 0 2em;
+        height: 3.4em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+      .gal-bar .ae-name {
+        letter-spacing: 0.24em;
+        color: var(--ae-ink);
+      }
+      .gal-filter {
+        display: flex;
+        gap: 1.4em;
+        position: relative;
+        align-items: center;
+      }
+      .gal-filter button {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        color: var(--ae-ink-muted);
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .gal-filter button:hover {
+        color: var(--ae-ink);
+      }
+      .gal-filter button[aria-pressed='true'] {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .gal-bar-end {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 1.1em;
+      }
+      .gal-count {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+      }
+
+      /* THE WALL — the one scroller. An auto-fill grid of specimen tiles. */
+      .gal-stage {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 1.8em 2em 4em;
+      }
+      .gal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+        gap: 1.4em;
+        grid-auto-flow: dense;
+      }
+
+      /* a TILE — a hairline-framed plate. A mono name + an expand control, a
+         live specimen well floored to a common height. Radius 0; the frame is
+         the only chrome. Compositions/screens span two columns (is-lg). */
+      .tile {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--ae-line);
+        overflow: hidden;
+        transition: border-color var(--ae-quick) var(--ae-ease);
+      }
+      .tile:hover {
+        border-color: var(--ae-ink-faint);
+      }
+      .tile.is-lg {
+        grid-column: span 2;
+      }
+      .tile-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1em;
+        padding: 0.8em 0.8em 0 1.1em;
+      }
+      .tile-name {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-muted);
+      }
+      .tile-head-end {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7em;
+      }
+      .tile-facet {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        color: var(--ae-ink-faint);
+      }
+      /* the expand control: a quiet chrome-register icon button. */
+      .tile-expand {
+        background: transparent;
+        border: 0;
+        padding: 0.2em;
+        margin: 0;
+        cursor: pointer;
+        color: var(--ae-ink-faint);
+        display: inline-flex;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+      .tile-expand:hover,
+      .tile-expand:focus-visible {
+        color: var(--ae-ink);
+      }
+      .tile-expand .ae-icon {
+        width: 1.05em;
+        height: 1.05em;
+        vertical-align: middle;
+      }
+      /* the live specimen well: a floored canvas so the wall stays even */
+      .tile-demo {
+        flex: 1;
+        min-height: 6.4em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.4em 1.1em 1.5em;
+        gap: 0.6em;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .tile-demo .ae-meter {
+        width: 100%;
+      }
+      .tile-demo .gal-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        width: 100%;
+      }
+      .tile-demo .gal-row {
+        display: flex;
+        gap: 0.7em;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* the mini register swatch row (foundation tiles) */
+      .gal-swrow {
+        display: flex;
+        gap: 0;
+      }
+      .gal-swrow i {
+        width: 1.7em;
+        height: 1.7em;
+        border: 1px solid var(--ae-line);
+        margin-left: -1px;
+      }
+      .gal-swrow i:first-child {
+        margin-left: 0;
+      }
+
+      /* hidden by the filter */
+      .tile.is-hidden {
+        display: none;
+      }
+
+      /* a small composition shown inside a tile/modal (settings, shell,
+         steering): a hairline frame holding real primitives at usable size */
+      .comp {
+        width: 100%;
+      }
+      /* the mini app-shell: a real rail beside a desk, bounded */
+      .comp-shell {
+        display: grid;
+        grid-template-columns: 7em minmax(0, 1fr);
+        border: 1px solid var(--ae-line);
+        min-height: 8em;
+        width: 100%;
+        font-size: 13px;
+      }
+      .comp-shell .cs-rail {
+        border-right: 1px solid var(--ae-line);
+        background: var(--ae-wash);
+        padding: 0.8em 0.9em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+      }
+      .comp-shell .cs-rail .cs-h {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--ae-ink-faint);
+      }
+      .comp-shell .cs-rail a {
+        color: var(--ae-ink-muted);
+        text-decoration: none;
+        margin: 0;
+      }
+      .comp-shell .cs-rail a[aria-current] {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+      .comp-shell .cs-desk {
+        padding: 1em 1.2em;
+      }
+      .comp-shell .cs-desk h4 {
+        font-weight: var(--ae-w-black);
+        margin: 0 0 0.6em;
+      }
+
+      /* the steering composition: the accent spent in several places at once,
+         all reading from one --ae-accent so a swatch moves them together */
+      .steer {
+        --ae-accent: #2643d0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+      .steer-tabs {
+        display: flex;
+        gap: 1.4em;
+        border-bottom: 1px solid var(--ae-line);
+        padding-bottom: 0;
+        font-size: 13px;
+      }
+      .steer-tabs span {
+        padding-bottom: 0.5em;
+        color: var(--ae-ink-muted);
+      }
+      .steer-tabs span.on {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+        box-shadow: inset 0 -2px 0 var(--ae-accent);
+      }
+      .steer-line {
+        font-size: 13px;
+      }
+      .steer-line a {
+        color: var(--ae-accent);
+        text-decoration: none;
+      }
+      .steer-btn {
+        align-self: flex-start;
+        background: var(--ae-accent);
+        color: #fff;
+        border: 0;
+        font: inherit;
+        font-weight: var(--ae-w-medium);
+        padding: 0.5em 1.1em;
+        cursor: pointer;
+      }
+      .steer .ae-meter {
+        width: 100%;
+      }
+      .steer .ae-meter .ae-meter-fill {
+        background: var(--ae-accent);
+      }
+      /* the accent picker (modal only): swatches that set --ae-accent live */
+      .steer-pick {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        margin-top: 0.4em;
+      }
+      .steer-pick .lab {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--ae-ink-faint);
+        margin-right: 0.2em;
+      }
+      .steer-sw {
+        width: 1.3em;
+        height: 1.3em;
+        padding: 0;
+        border: 1px solid var(--ae-line);
+        background: var(--sw);
+        cursor: pointer;
+        transition: transform var(--ae-quick) var(--ae-ease);
+      }
+      .steer-sw:hover {
+        transform: scale(1.12);
+      }
+      .steer-sw[aria-pressed='true'] {
+        outline: 1px solid var(--ae-ink);
+        outline-offset: 1px;
+      }
+
+      /* ── the lightbox: the panel costume, large specimen + source ─────── */
+      .gal-dialog {
+        max-width: 40rem;
+        width: calc(100vw - 4em);
+      }
+      .gal-dialog.is-lg {
+        max-width: 60rem;
+      }
+      .gal-dlg-kicker {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: var(--ae-ink-faint);
+        margin: 0 0 0.5em;
+      }
+      .gal-dlg-title {
+        font-weight: var(--ae-w-black);
+        margin: 0 0 0.4em;
+      }
+      .gal-dlg-lede {
+        color: var(--ae-ink-muted);
+        margin: 0 0 1.6em;
+        font-size: 13px;
+        max-width: 38em;
+      }
+      .gal-dlg-stage {
+        border-top: 1px solid var(--ae-line);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 2.2em 0;
+        margin-bottom: 1.4em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 6em;
+        gap: 0.8em;
+        flex-wrap: wrap;
+      }
+      .is-lg .gal-dlg-stage {
+        justify-content: stretch;
+      }
+      .gal-dlg-src {
+        background: var(--ae-wash);
+        padding: 1em 1.2em;
+        margin: 0;
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--ae-ink);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .gal-dlg-acts {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.8em;
+        margin-top: 1.4em;
+      }
+      .gal-dlg-acts .spacer {
+        margin-right: auto;
+        font-size: 13px;
+        color: var(--ae-ink-faint);
+        align-self: center;
+      }
+
+      /* ── shared LAB chrome ─────────────────────────────────────────── */
+      .proto-cap {
+        flex: none;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--ae-ink-muted);
+        background: var(--ae-wash);
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0.55em 4em;
+        margin: 0;
+        text-align: center;
+      }
+      .proto-cap b {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      @media (max-width: 640px) {
+        .gal-bar {
+          gap: 1em;
+          padding: 0 1.2em;
+        }
+        .gal-filter {
+          gap: 0.9em;
+          overflow-x: auto;
+        }
+        .tile.is-lg {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-tri" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24">
+        <path d="M15 3h6v6" />
+        <path d="M10 14 21 3" />
+        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+      </symbol>
+      <symbol id="i-replay" viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8" />
+        <path d="M3 3v5h5" />
+      </symbol>
+    </svg>
+
+    <p class="ae-chrome proto-cap" id="cap">
+      <b>THE GALLERY</b> — the whole kit as a contact sheet. Filter by facet;
+      the ↗ pops a tile open large with its source. Motion specimens replay;
+      screens and compositions open wide. The wall scrolls; the page never does.
+    </p>
+
+    <div class="gal-bar">
+      <a class="ae-name" href="#">AESTHETIC</a>
+      <div class="gal-filter" role="group" aria-label="filter by facet">
+        <button data-facet="all" aria-pressed="true">all</button>
+        <button data-facet="foundation" aria-pressed="false">foundation</button>
+        <button data-facet="primitive" aria-pressed="false">primitives</button>
+        <button data-facet="data" aria-pressed="false">data</button>
+        <button data-facet="motion" aria-pressed="false">motion</button>
+        <button data-facet="composition" aria-pressed="false">
+          compositions
+        </button>
+        <button data-facet="screen" aria-pressed="false">screens</button>
+        <button data-facet="theme" aria-pressed="false">themes</button>
+      </div>
+      <span class="gal-bar-end">
+        <span class="gal-count" id="count">19 specimens</span>
+        <button class="ae-mode" aria-label="toggle color mode">
+          <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+          <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+        </button>
+      </span>
+    </div>
+
+    <main class="gal-stage">
+      <div class="gal-grid" id="grid">
+        <!-- ── FOUNDATION ─────────────────────────────────────────────── -->
+        <article
+          class="tile"
+          data-facet="foundation"
+          data-facet-label="foundation"
+          data-kicker="FOUNDATION · COLOR"
+          data-title="The palette"
+          data-lede="Ten intent-named inks, each with a light and a dark value. Hierarchy is built from three inks by three weights; the accent is the one you steer."
+          data-src=":root {&#10;  --ae-ink:    #151515;&#10;  --ae-accent: #2643d0;&#10;  --ae-line:   #e9e9e9;&#10;}"
+        >
+          <span class="tile-head">
+            <span class="tile-name">COLOR</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">foundation</span>
+              <button class="tile-expand" aria-label="expand color">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-swrow">
+              <i style="background: #151515"></i
+              ><i style="background: #737373"></i>
+              <i style="background: #a3a3a3"></i
+              ><i style="background: #e9e9e9"></i>
+              <i style="background: #2643d0"></i
+              ><i style="background: #15714b"></i>
+              <i style="background: #a84138"></i>
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="foundation"
+          data-kicker="FOUNDATION · TYPE"
+          data-title="Nine registers"
+          data-lede="One font size on every surface. The headline is heavier and blacker, never larger — hierarchy from weight and ink, not scale."
+          data-src="font-size: 16px; /* every surface */&#10;font-weight: 400 | 550 | 800;"
+        >
+          <span class="tile-head">
+            <span class="tile-name">TYPE</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">foundation</span>
+              <button class="tile-expand" aria-label="expand type">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-stack" style="text-align: center">
+              <span style="font-weight: 800">loud</span>
+              <span style="font-weight: 550">steady</span>
+              <span class="ae-dim">quiet</span>
+            </span>
+          </div>
+        </article>
+
+        <!-- ── PRIMITIVES ─────────────────────────────────────────────── -->
+        <article
+          class="tile"
+          data-facet="primitive"
+          data-kicker="PRIMITIVE · BUTTON"
+          data-title="The button"
+          data-lede="A contained ink shape that acts. Solid primary, hairline secondary — never dressed as a link."
+          data-src='&lt;button class="ae-button"&gt;Save&lt;/button&gt;&#10;&lt;button class="ae-button ae-button-quiet"&gt;Cancel&lt;/button&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">BUTTON</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">primitive</span>
+              <button class="tile-expand" aria-label="expand button">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-row">
+              <button class="ae-button ae-button-compact" type="button">
+                Save
+              </button>
+              <button
+                class="ae-button ae-button-quiet ae-button-compact"
+                type="button"
+              >
+                Cancel
+              </button>
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="primitive"
+          data-kicker="PRIMITIVE · STATUS"
+          data-title="Status rides the glyph"
+          data-lede="Success, warning, and danger color the icon — never the sentence, never a filled pill."
+          data-src='&lt;svg class="ae-icon ae-ok"&gt;…&lt;/svg&gt; success&#10;&lt;svg class="ae-icon ae-err"&gt;…&lt;/svg&gt; error'
+        >
+          <span class="tile-head">
+            <span class="tile-name">STATUS</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">primitive</span>
+              <button class="tile-expand" aria-label="expand status">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-stack">
+              <span
+                ><svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                success</span
+              >
+              <span
+                ><svg class="ae-icon ae-warn"><use href="#i-tri" /></svg>
+                warning</span
+              >
+              <span
+                ><svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                error</span
+              >
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="primitive"
+          data-kicker="PRIMITIVE · CHOICE"
+          data-title="Choice marks are squares"
+          data-lede="The checkbox fills with ink, the radio holds an ink core, the switch slides along a hairline channel. No green pills."
+          data-src='&lt;input class="ae-check" type="checkbox"&gt;&#10;&lt;input class="ae-switch" type="checkbox"&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">CHOICE</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">primitive</span>
+              <button class="tile-expand" aria-label="expand choice">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-stack">
+              <label class="ae-choice"
+                ><input class="ae-check" type="checkbox" checked /> Notify
+                me</label
+              >
+              <label class="ae-choice"
+                ><input class="ae-switch" type="checkbox" checked />
+                Auto-save</label
+              >
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="primitive"
+          data-kicker="PRIMITIVE · INPUT"
+          data-title="Forms are lines"
+          data-lede="Not boxes: a label over a hairline-underlined field."
+          data-src='&lt;label class="ae-label"&gt;Email&lt;/label&gt;&#10;&lt;input class="ae-input" type="email"&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">INPUT</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">primitive</span>
+              <button class="tile-expand" aria-label="expand input">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-stack">
+              <label class="ae-label" for="g-email">Email</label>
+              <input
+                class="ae-input"
+                id="g-email"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="primitive"
+          data-kicker="PRIMITIVE · TAG"
+          data-title="A badge is a mono word"
+          data-lede="Never a filled pill — a bare mono label."
+          data-src='&lt;span class="ae-tag"&gt;v2.6.0&lt;/span&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">TAG</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">primitive</span>
+              <button class="tile-expand" aria-label="expand tag">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <span class="gal-row">
+              <span class="ae-tag">v2.6.0</span><span class="ae-tag">mono</span>
+            </span>
+          </div>
+        </article>
+
+        <!-- ── DATA ───────────────────────────────────────────────────── -->
+        <article
+          class="tile"
+          data-facet="data"
+          data-kicker="DATA · METER"
+          data-title="Gauges are ruled lines"
+          data-lede="A fill against a hairline track, with an optional mark — never a glowing pill."
+          data-src='&lt;div class="ae-meter"&gt;&#10;  &lt;span class="ae-meter-fill" style="width:62%"&gt;&lt;/span&gt;&#10;  &lt;span class="ae-meter-mark" style="left:80%"&gt;&lt;/span&gt;&#10;&lt;/div&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">METER</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">data</span>
+              <button class="tile-expand" aria-label="expand meter">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <div
+              class="ae-meter"
+              role="meter"
+              aria-label="level"
+              aria-valuenow="62"
+            >
+              <span class="ae-meter-fill" style="width: 62%"></span>
+              <span class="ae-meter-mark" style="left: 80%"></span>
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="data"
+          data-kicker="DATA · SPARK"
+          data-title="Trends are pen strokes"
+          data-lede="The shape of a series with no axes — a sparkline drawn in ink."
+          data-src='&lt;svg class="ae-spark" viewBox="0 0 100 24"&gt;&#10;  &lt;polyline points="0,18 …"/&gt;&#10;&lt;/svg&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">SPARK</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">data</span>
+              <button class="tile-expand" aria-label="expand spark">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <svg
+              class="ae-spark"
+              viewBox="0 0 100 24"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              style="width: 80%"
+            >
+              <polyline points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4" />
+            </svg>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="data"
+          data-kicker="DATA · PLOT"
+          data-title="A field is a plane"
+          data-lede="Two measures against each other, the frontier dashed, one point in accent. Round marks are the pen; radius 0 still governs rectangles."
+          data-src='&lt;div class="ae-plot"&gt; hairline axes,&#10;  ink dot marks, a dashed frontier &lt;/div&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">PLOT</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">data</span>
+              <button class="tile-expand" aria-label="expand plot">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <svg
+              viewBox="0 0 100 64"
+              style="width: 86%; height: auto"
+              aria-hidden="true"
+            >
+              <line
+                x1="10"
+                y1="4"
+                x2="10"
+                y2="54"
+                stroke="var(--ae-line)"
+                stroke-width="1"
+              />
+              <line
+                x1="10"
+                y1="54"
+                x2="96"
+                y2="54"
+                stroke="var(--ae-line)"
+                stroke-width="1"
+              />
+              <polyline
+                points="20,46 38,32 60,20 84,12"
+                fill="none"
+                stroke="var(--ae-ink-faint)"
+                stroke-width="1"
+                stroke-dasharray="3 3"
+              />
+              <circle cx="20" cy="46" r="2.4" fill="var(--ae-ink-faint)" />
+              <circle cx="38" cy="32" r="2.4" fill="var(--ae-ink)" />
+              <circle cx="60" cy="20" r="3" fill="var(--ae-accent)" />
+              <circle
+                cx="84"
+                cy="12"
+                r="2.4"
+                fill="none"
+                stroke="var(--ae-ink)"
+                stroke-width="1.4"
+              />
+            </svg>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="data"
+          data-kicker="DATA · TABLE"
+          data-title="Tables are instruments"
+          data-lede="Mono figures, lowercase headers on a wash band, hairline row rules."
+          data-src='&lt;table class="ae-table"&gt; … &lt;/table&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">TABLE</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">data</span>
+              <button class="tile-expand" aria-label="expand table">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo" style="padding: 0.8em">
+            <table class="ae-table" style="font-size: 11px">
+              <thead>
+                <tr>
+                  <th>metric</th>
+                  <th class="num">value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ae-item">rows scanned</td>
+                  <td class="num">1,284</td>
+                </tr>
+                <tr>
+                  <td class="ae-item">match rate</td>
+                  <td class="num">92%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- ── MOTION (replayable) ────────────────────────────────────── -->
+        <article
+          class="tile"
+          data-facet="motion"
+          data-replay
+          data-kicker="MOTION · THE SEND MOMENT"
+          data-title="Resolve once, persist"
+          data-lede="Submission resolves once and stays resolved — success is never rewound. Press Send, then ↻ replay to see it again."
+          data-src='&lt;form data-ae-demo&gt;&#10;  &lt;input class="ae-input"&gt;&#10;  &lt;button class="ae-button ae-send"&gt;…&lt;/button&gt;&#10;&lt;/form&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">SEND MOMENT</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">motion</span>
+              <button class="tile-expand" aria-label="expand send moment">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <form class="gal-stack" data-ae-demo style="gap: 0.7em">
+              <input
+                class="ae-input"
+                type="email"
+                placeholder="you@example.com"
+                aria-label="email"
+              />
+              <button
+                class="ae-button ae-button-compact ae-send"
+                type="submit"
+                style="align-self: flex-start"
+              >
+                <span class="ae-send-label">Send</span>
+                <span class="ae-send-done" aria-hidden="true"
+                  >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                ></span>
+              </button>
+            </form>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="motion"
+          data-replay
+          data-kicker="MOTION · THE INTERVAL"
+          data-title="The band draws in"
+          data-lede="A level and its spread; the band draws in from the mean, once. Hover for the exact figures; ↻ replay re-runs the draw-in."
+          data-src='&lt;div class="ae-ci is-lead"&gt;&#10;  &lt;span class="ae-ci-band"&gt;&lt;/span&gt;&#10;  &lt;span class="ae-ci-mean"&gt;&lt;/span&gt;&#10;&lt;/div&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">INTERVAL</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">motion</span>
+              <button class="tile-expand" aria-label="expand interval">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <div
+              class="ae-ci is-lead"
+              role="img"
+              aria-label="mean 86.9, 95% CI 83.1 to 90.7"
+              style="width: 100%"
+            >
+              <span class="ae-ci-band" style="left: 60%; width: 24%"></span>
+              <span class="ae-ci-mean" style="left: 72%"></span>
+              <span class="ae-ci-detail"
+                >μ 86.9 <span class="ae-ci-bound">[83.1, 90.7]</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="motion"
+          data-kicker="MOTION · THE TOAST"
+          data-title="News waits at the edge"
+          data-lede="News arrives at the edge on a soft enter and waits to be read. Press Notify — the toast settles in the corner; press again to replay."
+          data-src="window.aeToast('Saved.', { status: 'ok' });"
+        >
+          <span class="tile-head">
+            <span class="tile-name">TOAST</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">motion</span>
+              <button class="tile-expand" aria-label="expand toast">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <button
+              class="ae-button ae-button-quiet ae-button-compact"
+              type="button"
+              data-toast="Saved."
+              data-toast-status="ok"
+            >
+              Notify
+            </button>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="motion"
+          data-kicker="MOTION · THE MODE BREATH"
+          data-title="One soft breath"
+          data-lede="Light and dark are equals; the change is one soft 700ms view-transition breath. Press it — the whole page breathes; press again to replay."
+          data-src='/* one inlined boot + recipes/mode.js */&#10;&lt;button class="ae-mode"&gt;…&lt;/button&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">MODE BREATH</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">motion</span>
+              <button class="tile-expand" aria-label="expand mode breath">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo">
+            <button
+              class="ae-mode"
+              aria-label="toggle color mode"
+              style="border: 1px solid var(--ae-line)"
+            >
+              <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+              <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- ── COMPOSITIONS / SCREENS (wide, open large) ──────────────── -->
+        <article
+          class="tile is-lg"
+          data-facet="composition"
+          data-kicker="COMPOSITION · SETTINGS FLOW"
+          data-title="Settings rest as rows"
+          data-lede="Label on the left, current value on the right; a row folds a quiet chooser open when asked — one row open at a time. Progressive disclosure, no boxes."
+          data-src='&lt;div class="ae-settings"&gt;&#10;  &lt;button class="ae-setting"&gt;Region &lt;span class="ae-setting-val"&gt;…&lt;/span&gt;&lt;/button&gt;&#10;  &lt;div class="ae-setting-panel"&gt;…&lt;/div&gt;&#10;&lt;/div&gt;'
+        >
+          <span class="tile-head">
+            <span class="tile-name">SETTINGS FLOW</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">composition</span>
+              <button class="tile-expand" aria-label="expand settings flow">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo" style="align-items: stretch">
+            <div class="ae-settings comp">
+              <button class="ae-setting" type="button">
+                Region <span class="ae-setting-val">us-east-1</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button" class="is-sel">us-east-1</button>
+                  <button type="button">eu-west-1</button>
+                  <button type="button">ap-south-1</button>
+                </div>
+              </div>
+              <button class="ae-setting" type="button">
+                Visibility <span class="ae-setting-val">internal</span>
+              </button>
+              <div class="ae-setting-panel">
+                <div class="ae-menu">
+                  <button type="button">public</button>
+                  <button type="button" class="is-sel">internal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── SCREENS (a structural preview; the ↗ opens the real page) ──
+             A whole screen is bigger than any modal should hold, so the
+             gallery INDEXES screens and lets you ENTER them: the tile shows
+             the structure, the ↗ opens the actual rendered page in a new tab
+             (the gauntlet pages already exist). No crushed copy. -->
+        <article
+          class="tile is-lg"
+          data-facet="screen"
+          data-href="../site/gauntlet/dashboard.html"
+        >
+          <span class="tile-head">
+            <span class="tile-name">DASHBOARD</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">screen · opens live</span>
+              <button class="tile-expand" aria-label="open the live dashboard">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo" style="align-items: stretch">
+            <div class="comp-shell">
+              <nav class="cs-rail">
+                <span class="cs-h">PLACES</span>
+                <a href="#" aria-current="true">overview</a>
+                <a href="#">records</a>
+                <a href="#">settings</a>
+              </nav>
+              <div class="cs-desk">
+                <h4>Overview</h4>
+                <p class="ae-dim" style="margin: 0">
+                  The rail of places beside the working desk — open the live
+                  screen.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article
+          class="tile"
+          data-facet="screen"
+          data-href="../site/gauntlet/docs.html"
+        >
+          <span class="tile-head">
+            <span class="tile-name">DOCUMENT</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">screen · opens live</span>
+              <button class="tile-expand" aria-label="open the live document">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo" style="align-items: stretch">
+            <div
+              class="comp"
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 0.5em;
+                color: var(--ae-ink-faint);
+              "
+            >
+              <span style="font-weight: 800; color: var(--ae-ink)">Title</span>
+              <span
+                style="height: 1px; background: var(--ae-line); width: 70%"
+              ></span>
+              <span style="height: 1px; background: var(--ae-line)"></span>
+              <span
+                style="height: 1px; background: var(--ae-line); width: 85%"
+              ></span>
+              <span
+                style="height: 1px; background: var(--ae-line); width: 60%"
+              ></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── THEMES (honest steering, interactive in the modal) ─────── -->
+        <article
+          class="tile is-lg"
+          data-facet="theme"
+          data-kind="steering"
+          data-kicker="STEERING · THE ACCENT IS THE DIAL"
+          data-title="Steer the accent"
+          data-lede="The dial most consumers turn is the accent. Here a consumer has spent it on the primary button, the active tab, the gauge, and a link — open this and change the swatch: they move together, while ink, hairlines, type, radius and motion keep the identity."
+        >
+          <span class="tile-head">
+            <span class="tile-name">STEERING</span>
+            <span class="tile-head-end"
+              ><span class="tile-facet">theme</span>
+              <button class="tile-expand" aria-label="expand steering">
+                <svg class="ae-icon"><use href="#i-expand" /></svg>
+              </button>
+            </span>
+          </span>
+          <div class="tile-demo" style="align-items: stretch">
+            <div class="steer comp" style="--ae-accent: #2643d0">
+              <div class="steer-tabs">
+                <span class="on">arena</span><span>records</span
+                ><span>traces</span>
+              </div>
+              <p class="steer-line">
+                A <a href="#">linked reference</a> warms to the accent.
+              </p>
+              <div class="ae-meter" role="meter" aria-label="level">
+                <span class="ae-meter-fill" style="width: 64%"></span>
+              </div>
+              <button class="steer-btn" type="button">Primary action</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- the lightbox: the panel costume, large specimen + runnable source -->
+    <dialog class="ae-dialog gal-dialog" id="dlg">
+      <p class="gal-dlg-kicker" id="dlg-kicker">PRIMITIVE</p>
+      <h2 class="gal-dlg-title" id="dlg-title">Title</h2>
+      <p class="gal-dlg-lede" id="dlg-lede">Lede.</p>
+      <div class="gal-dlg-stage" id="dlg-stage"></div>
+      <pre class="gal-dlg-src" id="dlg-src"></pre>
+      <div class="gal-dlg-acts">
+        <span class="spacer" id="dlg-hint"></span>
+        <button
+          class="ae-button ae-button-quiet ae-button-compact"
+          type="button"
+          id="dlg-replay"
+          style="display: none"
+        >
+          <svg class="ae-icon" style="width: 0.95em; height: 0.95em">
+            <use href="#i-replay" />
+          </svg>
+          replay
+        </button>
+        <button
+          class="ae-button ae-button-quiet ae-button-compact"
+          type="button"
+          id="dlg-close"
+        >
+          Close
+        </button>
+      </div>
+    </dialog>
+
+    <footer
+      class="ae-chrome"
+      style="
+        position: fixed;
+        bottom: 0.9em;
+        left: 1.2em;
+        z-index: 25;
+        pointer-events: none;
+      "
+    >
+      prototype — never ships
+    </footer>
+
+    <!-- the REAL behavior layer: mode breath, send moment, toast, settings
+         fold all come from the shipped recipes, not hand-rolled fakes -->
+    <script src="../recipes/recipes.js"></script>
+    <script>
+      /* the facet filter: narrow the wall, update the count. The catalog's
+         content-driven narrowing pattern — no framework. */
+      const tiles = [...document.querySelectorAll('.tile')];
+      const filterBtns = [...document.querySelectorAll('.gal-filter button')];
+      const count = document.getElementById('count');
+      function filter(facet) {
+        let n = 0;
+        tiles.forEach((t) => {
+          const show = facet === 'all' || t.dataset.facet === facet;
+          t.classList.toggle('is-hidden', !show);
+          if (show) n++;
+        });
+        filterBtns.forEach((b) =>
+          b.setAttribute('aria-pressed', String(b.dataset.facet === facet)),
+        );
+        count.textContent = n + (n === 1 ? ' specimen' : ' specimens');
+      }
+      filterBtns.forEach((b) =>
+        b.addEventListener('click', () => filter(b.dataset.facet)),
+      );
+
+      /* toast triggers (originals, in the tiles): the real recipe. recipes.js
+         provides window.aeToast; wire the demo buttons to it. */
+      function wireToasts(root) {
+        root.querySelectorAll('[data-toast]').forEach((b) =>
+          b.addEventListener(
+            'click',
+            () =>
+              window.aeToast &&
+              window.aeToast(b.dataset.toast || 'Saved.', {
+                status: b.dataset.toastStatus || 'ok',
+              }),
+          ),
+        );
+      }
+      wireToasts(document);
+
+      /* ── the lightbox ──────────────────────────────────────────────────
+         Opening clones the tile's own live demo into the dialog at full
+         size; re-arming wires the cloned interactive bits (recipes.js only
+         wired the originals at load). Steering gets a bespoke accent picker.
+         Motion tiles show ↻ replay, which re-clones to re-fire the once-only
+         animation. */
+      const dlg = document.getElementById('dlg');
+      const dK = document.getElementById('dlg-kicker');
+      const dT = document.getElementById('dlg-title');
+      const dL = document.getElementById('dlg-lede');
+      const dStage = document.getElementById('dlg-stage');
+      const dSrc = document.getElementById('dlg-src');
+      const dReplay = document.getElementById('dlg-replay');
+      const dHint = document.getElementById('dlg-hint');
+      let current = null;
+
+      const ACCENTS = [
+        ['#2643d0', 'ultramarine'],
+        ['#c2410c', 'ember'],
+        ['#2f6b3f', 'pine'],
+        ['#7c3aed', 'violet'],
+        ['#0e7490', 'teal'],
+      ];
+
+      /* re-arm interactive specimens inside a cloned subtree (forms → aeSend,
+         toast buttons → aeToast). .ae-ci animates on insert via CSS. */
+      function armClone(root) {
+        root.querySelectorAll('form[data-ae-demo]').forEach((f) =>
+          f.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.aeSend && window.aeSend(f.querySelector('.ae-send'));
+          }),
+        );
+        wireToasts(root);
+      }
+
+      function buildSteering() {
+        const wrap = document.createElement('div');
+        wrap.style.width = '100%';
+        const comp = current.querySelector('.steer').cloneNode(true);
+        const pick = document.createElement('div');
+        pick.className = 'steer-pick';
+        pick.innerHTML = '<span class="lab">--ae-accent</span>';
+        ACCENTS.forEach(([hex, name], i) => {
+          const b = document.createElement('button');
+          b.className = 'steer-sw';
+          b.style.setProperty('--sw', hex);
+          b.setAttribute('aria-label', name);
+          b.setAttribute('aria-pressed', String(i === 0));
+          b.addEventListener('click', () => {
+            comp.style.setProperty('--ae-accent', hex);
+            pick
+              .querySelectorAll('.steer-sw')
+              .forEach((s) => s.setAttribute('aria-pressed', String(s === b)));
+          });
+          pick.appendChild(b);
+        });
+        wrap.append(comp, pick);
+        dStage.replaceChildren(wrap);
+      }
+
+      function fillStage() {
+        if (current.dataset.kind === 'steering') {
+          buildSteering();
+          return;
+        }
+        const demo = current.querySelector('.tile-demo').cloneNode(true);
+        demo.style.fontSize = '';
+        demo.style.minHeight = '0';
+        dStage.replaceChildren(...demo.childNodes);
+        armClone(dStage);
+      }
+
+      function openTile(t) {
+        current = t;
+        dK.textContent = t.dataset.kicker;
+        dT.textContent = t.dataset.title;
+        dL.textContent = t.dataset.lede;
+        dSrc.textContent = t.dataset.src || '';
+        dSrc.style.display = t.dataset.src ? '' : 'none';
+        const lg = t.classList.contains('is-lg');
+        dlg.classList.toggle('is-lg', lg);
+        const replay = t.hasAttribute('data-replay');
+        // .ae-button forces display:inline-flex, so the [hidden] attribute
+        // can't hide it — toggle inline display, which wins over the class
+        dReplay.style.display = replay ? '' : 'none';
+        dHint.textContent = replay
+          ? 'motion resolves once — replay to see it again'
+          : '';
+        fillStage();
+        dlg.showModal();
+      }
+
+      /* a screen tile carries data-href — its ↗ ENTERS the real rendered
+         page (a new tab) instead of cramming a whole screen into a modal.
+         Everything else opens the lightbox. */
+      document.querySelectorAll('.tile-expand').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const t = btn.closest('.tile');
+          if (t.dataset.href) window.open(t.dataset.href, '_blank');
+          else openTile(t);
+        }),
+      );
+      dReplay.addEventListener('click', fillStage);
+      document
+        .getElementById('dlg-close')
+        .addEventListener('click', () => dlg.close());
+
+      filter('all');
+    </script>
+  </body>
+</html>

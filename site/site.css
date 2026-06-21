@@ -163,50 +163,157 @@ footer.ae-bar a:hover {
 
 /* ── the catalog (primitives) ─────────────────────────────────────── */
 
-.idx {
+/* wide stages span the full viewport width so the scrollbar sits flush
+   at the browser edge; content is centered inside at the wide measure.
+   Applies to any direct child (.ae-view, .ae-group, etc.) so every wide
+   page — tokens, steering, catalog — gets the same flush scrollbar. */
+.ae-wide .ae-stage {
   width: 100%;
-  border-collapse: collapse;
+  margin-inline: 0;
 }
 
-.idx th {
-  text-align: left;
-  font-weight: var(--ae-w-medium);
-  letter-spacing: 0.14em;
-  color: var(--ae-ink-muted);
-  padding: 0 1.5em 0.6em 0;
+.ae-wide .ae-stage > * {
+  width: min(var(--ae-measure-wide), 100% - 5rem);
+  margin-inline: auto;
 }
 
-.idx td {
+.idx {
+  display: block;
+  width: 100%;
+}
+
+/* the gallery: every primitive rendered live as a specimen. The table
+   structure stays (it's the filter substrate); CSS turns it into a grid
+   of hairline-framed cells — the plate vocabulary, not card shadows. */
+.idx thead {
+  display: none;
+}
+
+.idx tbody {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1px;
+  background: var(--ae-line);
   border-top: 1px solid var(--ae-line);
-  padding: 0.5em 1.5em 0.5em 0;
+  border-bottom: 1px solid var(--ae-line);
 }
 
-.idx .cls {
+.idx tr {
+  display: flex;
+  flex-direction: column;
+  background: var(--ae-surface);
+  min-width: 0;
+}
+
+.idx tr[hidden] {
+  display: none;
+}
+
+/* the specimen: the live render on a wash ground, filling the cell.
+   min-width: 0 is the standard fix for flex/grid children that would
+   otherwise expand to their content's intrinsic width (tables, nav,
+   SVGs) and push the grid track wider, causing stage-level scroll. */
+.idx .specimen {
+  background: var(--ae-wash);
+  padding: 1.1em;
+  min-height: 4.5em;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.idx .specimen > * {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* the meta strip: class name, role, since — below the specimen on surface */
+.idx .spec-meta {
+  padding: 0.65em 1.1em 0.75em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05em;
+  border-top: 1px solid var(--ae-line);
+  min-width: 0;
+}
+
+.idx .spec-cls {
   font-family: var(--ae-font-mono);
-  white-space: nowrap;
-}
-
-.idx .cls a {
+  font-size: 13px;
   color: var(--ae-ink);
   text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.idx .cls a:hover {
+.idx .spec-cls:hover {
   color: var(--ae-accent);
 }
 
-.idx .role {
+.idx .spec-role {
   color: var(--ae-ink-muted);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.idx .since {
+.idx .spec-since {
   font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   color: var(--ae-ink-faint);
-  text-align: right;
-  padding-right: 0;
 }
 
-/* the index filter (search #5): a constrained input above the table */
+/* specimen overrides: specimens show the look, not the behavior. The
+   cell clips at its boundary (line 224) so no inline scrollbars appear
+   and no content escapes to inflate the stage's scrollWidth. Don't clip
+   descendants universally — that destroys internal overflow semantics
+   (e.g. [data-ae-tip] tooltips). The detail view has the real primitive. */
+
+.idx .specimen .ae-table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 11px;
+}
+
+.idx .specimen .ae-table th,
+.idx .specimen .ae-table td {
+  padding: 0.15em 0.4em;
+  white-space: nowrap;
+}
+
+.idx .specimen .ae-toast {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  max-width: none;
+  width: 100%;
+}
+
+.idx .specimen .ae-doc {
+  font-size: 13px;
+}
+
+.idx .specimen .ae-doc h2 {
+  margin: 0 0 0.2em;
+}
+
+.idx .specimen .ae-doc p {
+  margin: 0 0 0.2em;
+}
+
+.idx .specimen .ae-doc pre {
+  font-size: 11px;
+  padding: 0.3em 0.5em;
+  white-space: nowrap;
+}
+
+/* the index filter: a constrained input above the grid */
 .idx-filter {
   max-width: 20em;
   margin-bottom: 1.4em;

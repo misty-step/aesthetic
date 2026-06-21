@@ -1,0 +1,1022 @@
+<!doctype html>
+<!--
+  LAB program · Standby compositions. A program-specific fan for grounding
+  the local-first meeting command surface in misty-step/aesthetic.
+
+  The question: can the system support a live operational product without
+  abandoning the law? Four full applications share the same product truth:
+  local capture, newest-first transcript, explicit proposal approval,
+  visible worker execution, speaker distinction, and receipts.
+
+  The prototypes intentionally compose existing vocabulary first:
+  app shell, rail, desk, tabs, tables, plates, meters, settings rows,
+  flow diagrams, buttons, tags, and status glyphs. Any custom CSS below is
+  layout glue for the lab. It is not a new component contract.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic LAB · Standby program compositions</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../aesthetic.css" />
+    <style>
+      body {
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .pg-bar {
+        flex: none;
+        min-height: 3.3em;
+        display: flex;
+        align-items: center;
+        gap: 1.6em;
+        padding: 0 1.6em;
+        border-bottom: 1px solid var(--ae-line);
+        font-size: 13px;
+      }
+
+      .pg-bar .ae-name {
+        color: var(--ae-ink);
+        letter-spacing: 0.24em;
+        white-space: nowrap;
+      }
+
+      .pg-tabs {
+        display: flex;
+        align-items: center;
+        gap: 1.2em;
+        min-width: 0;
+      }
+
+      .pg-tabs button {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        color: var(--ae-ink-muted);
+        cursor: pointer;
+        font: inherit;
+        white-space: nowrap;
+        transition: color var(--ae-quick) var(--ae-ease);
+      }
+
+      .pg-tabs button:hover,
+      .pg-tabs button[aria-selected='true'] {
+        color: var(--ae-ink);
+      }
+
+      .pg-tabs button[aria-selected='true'] {
+        font-weight: var(--ae-w-medium);
+      }
+
+      .pg-bar-end {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 1em;
+        color: var(--ae-ink-muted);
+      }
+
+      .pg-stage {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .pg-view {
+        display: none;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .pg-view.is-on {
+        display: block;
+      }
+
+      .pg-grid {
+        height: 100%;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 13.5rem minmax(0, 1fr) 23rem;
+        overflow: hidden;
+      }
+
+      .pg-grid.is-two {
+        grid-template-columns: 15rem minmax(0, 1fr);
+      }
+
+      .pg-rail,
+      .pg-desk,
+      .pg-side {
+        min-height: 0;
+        min-width: 0;
+        overflow-y: auto;
+      }
+
+      .pg-rail {
+        border-right: 1px solid var(--ae-line);
+        padding: 1.4em;
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+
+      .pg-rail-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.18em;
+      }
+
+      .pg-rail-nav button,
+      .pg-rail-nav a {
+        border: 0;
+        background: transparent;
+        color: var(--ae-ink-muted);
+        cursor: pointer;
+        font: inherit;
+        padding: 0.24em 0;
+        text-align: left;
+        text-decoration: none;
+      }
+
+      .pg-rail-nav .is-active {
+        color: var(--ae-ink);
+        font-weight: var(--ae-w-medium);
+      }
+
+      .pg-rail-foot {
+        margin-top: 2em;
+        padding-top: 1.2em;
+        border-top: 1px solid var(--ae-line);
+      }
+
+      .pg-desk {
+        padding: 1.8em 2.2em 2.4em;
+      }
+
+      .pg-desk.is-framed {
+        padding: 0;
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr);
+        overflow: hidden;
+      }
+
+      .pg-head {
+        padding: 1.6em 2.2em 1.1em;
+        border-bottom: 1px solid var(--ae-line);
+      }
+
+      .pg-headline {
+        font-weight: var(--ae-w-black);
+        margin-top: 0.2em;
+      }
+
+      .pg-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.7em;
+        margin-top: 1.1em;
+      }
+
+      .pg-scroll {
+        min-height: 0;
+        overflow: auto;
+        padding: 1.4em 2.2em 2em;
+      }
+
+      .pg-side {
+        border-left: 1px solid var(--ae-line);
+        padding: 1.4em;
+      }
+
+      .pg-section {
+        border-top: 1px solid var(--ae-line);
+        padding-top: 1em;
+        margin-top: 1em;
+      }
+
+      .pg-section:first-child {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      .pg-row {
+        display: grid;
+        grid-template-columns: 6.8em minmax(0, 1fr);
+        gap: 0.25em 1.1em;
+        align-items: start;
+        border-top: 1px solid var(--ae-line);
+        padding: 0.65em 0;
+      }
+
+      .pg-row:first-child {
+        border-top: 0;
+      }
+
+      .pg-row > p {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        min-width: 0;
+      }
+
+      .pg-row > .pg-meta:last-child {
+        grid-column: 1;
+        color: var(--ae-ink-faint);
+      }
+
+      .pg-speaker {
+        font-weight: var(--ae-w-medium);
+      }
+
+      .pg-meta,
+      .pg-chrome {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+      }
+
+      .pg-dim {
+        color: var(--ae-ink-muted);
+      }
+
+      .pg-faint {
+        color: var(--ae-ink-faint);
+      }
+
+      .pg-status {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.45em;
+      }
+
+      .pg-status .ae-icon {
+        width: 1em;
+        height: 1em;
+      }
+
+      .pg-command {
+        border: 1px solid var(--ae-line);
+        padding: 1em 1.2em;
+        margin-top: 1em;
+      }
+
+      .pg-command textarea {
+        width: 100%;
+        min-height: 4.7em;
+        resize: vertical;
+        color: var(--ae-ink);
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid var(--ae-line);
+        padding: 0 0 0.7em;
+        margin: 0.7em 0 1em;
+        font: inherit;
+      }
+
+      .pg-command textarea:focus-visible {
+        outline: 0;
+        border-bottom-color: var(--ae-ink);
+      }
+
+      .pg-card {
+        border: 1px solid var(--ae-line);
+        padding: 1em 1.1em;
+      }
+
+      .pg-card + .pg-card {
+        margin-top: 0.9em;
+      }
+
+      .pg-card.is-selected {
+        box-shadow: inset 2px 0 0 var(--ae-ink);
+      }
+
+      .pg-split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+        gap: 1.4em;
+        align-items: start;
+      }
+
+      .pg-columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--ae-line);
+        border: 1px solid var(--ae-line);
+      }
+
+      .pg-column {
+        background: var(--ae-surface);
+        padding: 1em;
+        min-height: 12em;
+      }
+
+      .pg-list {
+        display: grid;
+        gap: 0.7em;
+      }
+
+      .pg-lane {
+        border-top: 1px solid var(--ae-line);
+        padding-top: 0.75em;
+      }
+
+      .pg-lane:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .pg-lane-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2em;
+      }
+
+      .pg-alias {
+        display: grid;
+        grid-template-columns: 7.2em minmax(0, 1fr) auto;
+        gap: 1em;
+        align-items: baseline;
+        border-top: 1px solid var(--ae-line);
+        padding: 0.7em 0;
+      }
+
+      .pg-alias:first-child {
+        border-top: 0;
+      }
+
+      .pg-receipt {
+        display: grid;
+        grid-template-columns: 8em minmax(0, 1fr);
+        gap: 1.2em;
+        border-top: 1px solid var(--ae-line);
+        padding: 0.75em 0;
+      }
+
+      .pg-receipt:first-child {
+        border-top: 0;
+      }
+
+      .pg-doc {
+        max-width: 54rem;
+        margin: 0 auto;
+      }
+
+      .pg-doc .ae-plate {
+        margin: 1.6em 0;
+      }
+
+      .pg-flow-wrap {
+        border: 1px solid var(--ae-line);
+        padding: 1.2em;
+        overflow: auto;
+      }
+
+      .pg-flow-wrap svg {
+        min-width: 44em;
+      }
+
+      @media (max-width: 980px) {
+        .pg-grid,
+        .pg-grid.is-two,
+        .pg-split,
+        .pg-lane-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .pg-rail,
+        .pg-side {
+          border: 0;
+          border-bottom: 1px solid var(--ae-line);
+        }
+
+        .pg-columns {
+          grid-template-columns: 1fr;
+        }
+
+        .pg-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m20 6-11 11-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+        <path
+          d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"
+        />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+    </svg>
+
+    <header class="pg-bar">
+      <span class="ae-name">STANDBY · PROGRAM LAB</span>
+      <nav class="pg-tabs ae-tabs" aria-label="prototype views">
+        <button
+          class="pg-tab"
+          type="button"
+          data-view="call"
+          aria-selected="true"
+        >
+          call
+        </button>
+        <button
+          class="pg-tab"
+          type="button"
+          data-view="dispatch"
+          aria-selected="false"
+        >
+          dispatch
+        </button>
+        <button
+          class="pg-tab"
+          type="button"
+          data-view="speakers"
+          aria-selected="false"
+        >
+          speaker
+        </button>
+        <button
+          class="pg-tab"
+          type="button"
+          data-view="dossier"
+          aria-selected="false"
+        >
+          dossier
+        </button>
+      </nav>
+      <div class="pg-bar-end">
+        <span class="pg-chrome"
+          >aesthetic v2.6 · local-first command surfaces</span
+        >
+        <button class="ae-mode js-mode" aria-label="toggle color mode">
+          <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+          <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="pg-stage">
+      <section class="pg-view is-on" data-view-panel="call">
+        <div class="pg-grid">
+          <aside class="pg-rail">
+            <p class="ae-h">meeting</p>
+            <div class="pg-rail-nav">
+              <button class="is-active" type="button">live feed</button>
+              <button type="button">proposals</button>
+              <button type="button">jobs</button>
+              <button type="button">receipts</button>
+            </div>
+            <p class="ae-h">capture</p>
+            <div class="pg-list">
+              <p class="pg-status">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                microphone active
+              </p>
+              <p class="pg-status">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                call audio active
+              </p>
+              <p class="pg-status">
+                <svg class="ae-icon ae-warn"><use href="#i-alert" /></svg>
+                speaker labels are buckets
+              </p>
+            </div>
+            <div class="pg-rail-foot">
+              <p class="pg-chrome">teams-live · 18m 42s</p>
+            </div>
+          </aside>
+
+          <section class="pg-desk is-framed">
+            <div class="pg-head">
+              <p class="pg-chrome">standby/call/workbench</p>
+              <h1 class="pg-headline">Live meeting command surface.</h1>
+              <div class="pg-toolbar">
+                <button class="ae-button ae-button-compact" type="button">
+                  start capture
+                </button>
+                <button
+                  class="ae-button ae-button-quiet ae-button-compact"
+                  type="button"
+                >
+                  stop
+                </button>
+                <span class="pg-status">
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  transcribing
+                </span>
+              </div>
+            </div>
+            <div class="ae-tabs pg-head">
+              <button type="button" aria-selected="true">transcript</button>
+              <button type="button" aria-selected="false">evidence</button>
+              <button type="button" aria-selected="false">artifacts</button>
+            </div>
+            <div class="pg-scroll">
+              <div class="pg-command">
+                <p class="ae-tag ae-tag-bare">ask standby</p>
+                <textarea>
+Use the last five minutes of transcript as context. Propose research, reconciliation, and follow-up work. Cite exact spans.</textarea
+                >
+                <button class="ae-button ae-button-compact" type="button">
+                  create proposals
+                </button>
+              </div>
+
+              <div class="pg-section">
+                <div class="pg-row">
+                  <span class="pg-meta">09:42:18</span>
+                  <p>
+                    <span class="pg-speaker">Nadia R.</span>
+                    <span class="pg-dim">
+                      The region split is still wrong. I need the capacity model
+                      checked against the sheet from this morning.
+                    </span>
+                  </p>
+                  <span class="pg-meta">seg_92</span>
+                </div>
+                <div class="pg-row">
+                  <span class="pg-meta">09:41:53</span>
+                  <p>
+                    <span class="pg-speaker">Mateo V.</span>
+                    <span class="pg-dim">
+                      Can someone research what local-first meeting tools
+                      already do here before we commit to a custom path?
+                    </span>
+                  </p>
+                  <span class="pg-meta">seg_88</span>
+                </div>
+                <div class="pg-row">
+                  <span class="pg-meta">09:41:28</span>
+                  <p>
+                    <span class="pg-speaker">Me</span>
+                    <span class="pg-dim">
+                      I want an easier way to force an action proposal and see
+                      the worker state.
+                    </span>
+                  </p>
+                  <span class="pg-meta">seg_87</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="pg-side">
+            <div class="pg-section">
+              <p class="ae-tag">proposal</p>
+              <h2 class="pg-headline">Research existing local-first tools.</h2>
+              <p class="pg-dim">
+                Evidence: seg_88 market scan request, seg_87 operator control
+                request.
+              </p>
+              <div class="pg-toolbar">
+                <button class="ae-button ae-button-compact" type="button">
+                  approve
+                </button>
+                <button
+                  class="ae-button ae-button-quiet ae-button-compact"
+                  type="button"
+                >
+                  edit
+                </button>
+              </div>
+            </div>
+            <div class="pg-section">
+              <p class="ae-tag">worker</p>
+              <p class="pg-status">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                local-research running
+              </p>
+              <div class="ae-meter" aria-label="worker progress">
+                <span class="ae-meter-fill" style="width: 62%"></span>
+                <span class="ae-meter-mark" style="left: 75%"></span>
+              </div>
+              <p class="ae-plate-note">
+                scratch only · network denied · receipt pending
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="pg-view" data-view-panel="dispatch">
+        <div class="pg-grid is-two">
+          <aside class="pg-rail">
+            <p class="ae-h">queue</p>
+            <div class="pg-rail-nav">
+              <button class="is-active" type="button">proposal queue</button>
+              <button type="button">running jobs</button>
+              <button type="button">blocked</button>
+              <button type="button">receipts</button>
+            </div>
+            <p class="ae-h">profiles</p>
+            <p class="pg-status">
+              <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+              local-research accepted
+            </p>
+            <p class="pg-status">
+              <svg class="ae-icon ae-warn"><use href="#i-alert" /></svg>
+              cloud workers gated
+            </p>
+          </aside>
+          <section class="pg-desk">
+            <div class="pg-split">
+              <div>
+                <p class="pg-chrome">standby/dispatch/approval</p>
+                <h1 class="pg-headline">
+                  Approval is the bridge, not the model.
+                </h1>
+                <p class="pg-dim">
+                  The board shows the exact path from operator request to
+                  proposal, approval, worker start, artifact, and failure.
+                  Transcript text is evidence only.
+                </p>
+              </div>
+              <div class="pg-card">
+                <p class="ae-tag">next decision</p>
+                <p class="pg-headline">Approve pr_31 or keep listening.</p>
+                <p class="pg-dim">
+                  Three cited spans, one editable prompt, one deterministic
+                  action.
+                </p>
+              </div>
+            </div>
+
+            <div class="pg-flow-wrap pg-section">
+              <svg
+                class="ae-flow"
+                viewBox="0 0 760 180"
+                aria-label="approval to worker flow"
+              >
+                <path class="ae-wire is-reached" d="M118 88H212" />
+                <path class="ae-wire is-active" d="M332 88H426" />
+                <path class="ae-wire" d="M546 88H640" />
+                <rect
+                  class="ae-node is-done"
+                  x="24"
+                  y="48"
+                  width="94"
+                  height="80"
+                />
+                <text class="ae-node-kicker" x="42" y="76">SPAN</text>
+                <text class="ae-node-label" x="42" y="101">evidence</text>
+                <rect
+                  class="ae-node is-active"
+                  x="212"
+                  y="48"
+                  width="120"
+                  height="80"
+                />
+                <text class="ae-node-kicker" x="232" y="76">CARD</text>
+                <text class="ae-node-label is-active" x="232" y="101">
+                  proposal
+                </text>
+                <rect class="ae-node" x="426" y="48" width="120" height="80" />
+                <text class="ae-node-kicker" x="446" y="76">POST</text>
+                <text class="ae-node-label" x="446" y="101">approval</text>
+                <rect class="ae-node" x="640" y="48" width="96" height="80" />
+                <text class="ae-node-kicker" x="660" y="76">JOB</text>
+                <text class="ae-node-label" x="660" y="101">receipt</text>
+              </svg>
+            </div>
+
+            <div class="pg-section">
+              <table class="ae-table">
+                <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>state</th>
+                    <th>work</th>
+                    <th>evidence</th>
+                    <th class="num">age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">pr_31</td>
+                    <td>
+                      <span class="pg-status">
+                        <svg class="ae-icon ae-warn">
+                          <use href="#i-alert" />
+                        </svg>
+                        proposed
+                      </span>
+                    </td>
+                    <td>research local-first meeting tools</td>
+                    <td>seg_88 req_17</td>
+                    <td class="num">01:12</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">job_8f24</td>
+                    <td>
+                      <span class="pg-status">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                        running
+                      </span>
+                    </td>
+                    <td>capacity model reconciliation</td>
+                    <td>seg_92 req_15</td>
+                    <td class="num">04:38</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">job_8e91</td>
+                    <td>
+                      <span class="pg-status">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                        receipt
+                      </span>
+                    </td>
+                    <td>draft customer follow-up</td>
+                    <td>seg_74 seg_81</td>
+                    <td class="num">12:03</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="pg-view" data-view-panel="speakers">
+        <div class="pg-grid">
+          <aside class="pg-rail">
+            <p class="ae-h">attribution</p>
+            <p class="pg-dim">
+              Local buckets first. Human names arrive only from provider data or
+              user aliases.
+            </p>
+            <div class="pg-rail-foot">
+              <p class="pg-status">
+                <svg class="ae-icon ae-warn"><use href="#i-alert" /></svg>
+                no fake names
+              </p>
+            </div>
+          </aside>
+          <section class="pg-desk">
+            <p class="pg-chrome">standby/speaker-attribution/lab</p>
+            <h1 class="pg-headline">Turn call audio into stable speakers.</h1>
+            <p class="pg-dim">
+              The composition tests whether aesthetic can make uncertainty
+              legible without resorting to colored pills: buckets, evidence,
+              confidence, and aliases are all line-based.
+            </p>
+
+            <div class="pg-lane-grid pg-section">
+              <div class="ae-plate">
+                <p class="ae-plate-cap">AUDIO LANES</p>
+                <div class="pg-lane">
+                  <p class="pg-status">
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    microphone · Me
+                  </p>
+                  <div class="ae-meter">
+                    <span class="ae-meter-fill" style="width: 48%"></span>
+                  </div>
+                </div>
+                <div class="pg-lane">
+                  <p class="pg-status">
+                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                    call audio · remote buckets
+                  </p>
+                  <div class="ae-meter">
+                    <span class="ae-meter-fill" style="width: 72%"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="ae-plate">
+                <p class="ae-plate-cap">ALIAS ASSIGNMENT</p>
+                <div class="pg-alias">
+                  <span class="pg-meta">remote_1</span>
+                  <span>Nadia R.</span>
+                  <button
+                    class="ae-button ae-button-quiet ae-button-compact"
+                    type="button"
+                  >
+                    edit
+                  </button>
+                </div>
+                <div class="pg-alias">
+                  <span class="pg-meta">remote_2</span>
+                  <span>Mateo V.</span>
+                  <button
+                    class="ae-button ae-button-quiet ae-button-compact"
+                    type="button"
+                  >
+                    edit
+                  </button>
+                </div>
+                <div class="pg-alias">
+                  <span class="pg-meta">remote_3</span>
+                  <span class="pg-dim">Speaker 3</span>
+                  <button
+                    class="ae-button ae-button-quiet ae-button-compact"
+                    type="button"
+                  >
+                    name
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pg-section">
+              <table class="ae-table">
+                <thead>
+                  <tr>
+                    <th>speaker</th>
+                    <th>last evidence</th>
+                    <th>source</th>
+                    <th class="num">confidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ae-item">remote_1</td>
+                    <td>west region capacity mismatch</td>
+                    <td>diarization bucket</td>
+                    <td class="num">0.84</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">remote_2</td>
+                    <td>local-first market scan</td>
+                    <td>diarization bucket</td>
+                    <td class="num">0.79</td>
+                  </tr>
+                  <tr>
+                    <td class="ae-item">remote_3</td>
+                    <td>audio lane failure language</td>
+                    <td>provider adapter</td>
+                    <td class="num">0.66</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <aside class="pg-side">
+            <p class="ae-tag">gap exposed</p>
+            <p class="pg-headline">
+              The kit has no named speaker lane primitive.
+            </p>
+            <p class="pg-dim">
+              This surface wants a reusable lane row: source label, status
+              glyph, meter, alias control, and evidence count.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="pg-view" data-view-panel="dossier">
+        <div class="pg-grid is-two">
+          <aside class="pg-rail">
+            <p class="ae-h">dossier</p>
+            <div class="pg-rail-nav">
+              <a class="is-active" href="#summary">summary</a>
+              <a href="#actions">actions</a>
+              <a href="#receipts">receipts</a>
+              <a href="#audio">audio</a>
+            </div>
+          </aside>
+          <section class="pg-desk">
+            <article class="ae-doc pg-doc">
+              <p class="pg-chrome">standby/dossier/customer-forecast-review</p>
+              <h1 id="summary">Meeting receipt, not meeting notes.</h1>
+              <p class="ae-lede">
+                Standby should leave the call with a short operator-grade
+                dossier: what happened, what was approved, which worker ran,
+                what artifact exists, and what remains uncertain.
+              </p>
+
+              <div class="ae-plate">
+                <p class="ae-plate-cap">FIGURE · ACTION OUTCOME</p>
+                <table class="ae-table">
+                  <thead>
+                    <tr>
+                      <th>item</th>
+                      <th>state</th>
+                      <th>receipt</th>
+                      <th class="num">age</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">research local-first tools</td>
+                      <td>
+                        <span class="pg-status">
+                          <svg class="ae-icon ae-ok">
+                            <use href="#i-check" />
+                          </svg>
+                          complete
+                        </span>
+                      </td>
+                      <td>standby-job-8f24.md</td>
+                      <td class="num">03:18</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">capacity reconciliation</td>
+                      <td>
+                        <span class="pg-status">
+                          <svg class="ae-icon ae-warn">
+                            <use href="#i-alert" />
+                          </svg>
+                          waiting
+                        </span>
+                      </td>
+                      <td>needs sheet path</td>
+                      <td class="num">01:02</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="ae-plate-note">
+                  Approved work appears here only after the deterministic
+                  approval endpoint starts a worker.
+                </p>
+              </div>
+
+              <h2 id="actions">Approved actions</h2>
+              <div class="pg-receipt">
+                <span class="pg-meta">pr_31</span>
+                <p>
+                  Research existing local-first meeting tools. Cites Mateo's
+                  request and the operator's visibility requirement.
+                </p>
+              </div>
+              <div class="pg-receipt">
+                <span class="pg-meta">pr_32</span>
+                <p>
+                  Reconcile west-region capacity assumptions against the morning
+                  sheet. Waiting on the sheet path, so no worker was started.
+                </p>
+              </div>
+
+              <h2 id="audio">Audio and attribution</h2>
+              <p>
+                Microphone and call audio both captured. Remote speech rendered
+                as three stable buckets. Human names were applied only where the
+                operator provided aliases.
+              </p>
+            </article>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="../recipes/mode.js"></script>
+    <script>
+      const tabs = Array.from(document.querySelectorAll('.pg-tab'));
+      const panels = Array.from(document.querySelectorAll('[data-view-panel]'));
+
+      function showView(name) {
+        tabs.forEach((tab) =>
+          tab.setAttribute('aria-selected', String(tab.dataset.view === name)),
+        );
+        panels.forEach((panel) =>
+          panel.classList.toggle('is-on', panel.dataset.viewPanel === name),
+        );
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => showView(tab.dataset.view));
+      });
+    </script>
+  </body>
+</html>

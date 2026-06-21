@@ -1,0 +1,25 @@
+product:
+  name: aesthetic
+  description: 'The Misty Step design system. One CSS file — tokens, base styles, and a small set of primitives.'
+audience: developer
+voice: Clear, concrete, and design-system friendly. Speak to developers adopting the kit.
+changelog:
+  source: auto
+artifacts:
+  markdown: docs/releases/{version}.md
+  plaintext: docs/releases/{version}.txt
+  html: docs/releases/{version}.html
+  json: docs/releases/releases.json
+  rss: docs/releases/feed.xml
+release:
+  profile: full
+model:
+  policy: balanced
+  primary: anthropic/claude-sonnet-4
+  fallbacks:
+    - google/gemini-2.5-flash
+    - openai/gpt-4o-mini
+budget:
+  max_input_tokens: 12000
+  max_output_tokens: 1200
+  max_usd: 0.25

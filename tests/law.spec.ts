@@ -135,7 +135,17 @@ for (const route of INSTRUMENT_ROUTES) {
 // against the whole fan, so an off-law state — a filled pill, a rounded box,
 // a second size — fails. A catalog that only shows the happy path lets the
 // drift land exactly where the gate never looks (012).
-const STATE_ROUTES = ['buttons', 'choice', 'validation', 'toast'];
+const STATE_ROUTES = [
+  'buttons',
+  'choice',
+  'validation',
+  'toast',
+  'meter',
+  'table',
+  'settings',
+  'waiting',
+  'interval',
+];
 for (const route of STATE_ROUTES) {
   for (const mode of MODES) {
     test(`catalog #${route} states · ${mode} · the law holds`, async ({
@@ -155,6 +165,17 @@ for (const route of STATE_ROUTES) {
       await expect(
         page.locator(`[data-route="${route}"] .states`),
       ).toBeVisible();
+
+      // the matrix is actually a matrix — more than one state cell.
+      // A regression to single-state happy-path would pass the law
+      // checks but fail here, preventing the rubber-stamp the gate
+      // exists to prevent.
+      const stateCount = await page
+        .locator(`[data-route="${route}"] .states .state`)
+        .count();
+      expect(stateCount, `${route} must show multiple states`).toBeGreaterThan(
+        1,
+      );
 
       expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
       expect(await nonZeroRadii(page)).toEqual([]);
@@ -262,7 +283,7 @@ test('the catalog index filters by query, and / focuses the field', async ({
   await page.goto('/site/primitives.html');
   const field = page.locator('.idx-filter');
   await expect(field).toBeVisible(); // JS-injected; no-JS keeps the full table
-  const rows = page.locator('.idx tbody tr');
+  const rows = page.locator('.idx > tbody > tr');
   const total = await rows.count();
 
   // `/` focuses the filter from the index

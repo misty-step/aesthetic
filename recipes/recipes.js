@@ -70,6 +70,7 @@
    that swap views and need the indicator re-placed after a display
    change. Works for .ae-nav and .ae-tabs alike. */
 (() => {
+  if (window.aePlaceInds) return;
   const placeInd = (nav) => {
     const active = nav.querySelector(
       '[aria-current], [aria-selected="true"], .is-active',
@@ -135,6 +136,7 @@
    the site's demo hook; real consumers call aeSend from their own
    submit handling. */
 (() => {
+  if (window.aeSend) return;
   const live = document.createElement('span');
   live.className = 'ae-sr';
   live.setAttribute('role', 'status');
@@ -272,6 +274,7 @@
    dismissed or pushed out (the tray keeps four); pass { timeout: ms }
    to opt into self-dismissal — it is never the default. */
 (() => {
+  if (window.aeToast) return;
   const ICONS = {
     ok: '<path d="M20 6 9 17l-5-5"/>',
     warn: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
@@ -322,14 +325,16 @@
   };
 })();
 
-/* the popover: geometry for the slip. Native [popover] owns the top
-   layer, light dismiss, and Escape; this recipe only places the open
-   slip by its invoker — below and start-aligned, stepping above or
-   inward when the viewport says so.
+/* the popover: geometry for the slip + roving tabindex for its menu.
+   Native [popover] owns the top layer, light dismiss, and Escape; this
+   recipe places the open slip by its invoker and wires arrow-key
+   navigation for any .ae-menu inside.
 
    <button popovertarget="menu">Options</button>
    <div id="menu" popover class="ae-pop">…</div> */
 (() => {
+  if (window.aePop) return;
+  window.aePop = true;
   document.addEventListener(
     'toggle',
     (e) => {
@@ -346,7 +351,162 @@
       const left = Math.min(r.left, innerWidth - pr.width - 8);
       pop.style.top = `${Math.max(8, top)}px`;
       pop.style.left = `${Math.max(8, left)}px`;
+
+      /* roving tabindex: focus the selected item or the first item on
+         open, then arrow-key through the menu */
+      const menu = pop.querySelector('.ae-menu');
+      if (!menu) return;
+      const items = [...menu.querySelectorAll('button')].filter(
+        (b) => !b.disabled,
+      );
+      if (items.length === 0) return;
+      items.forEach((b) => (b.tabIndex = -1));
+      const sel = menu.querySelector('button.is-sel') || items[0];
+      sel.tabIndex = 0;
+      sel.focus();
     },
     true,
   );
+
+  /* arrow-key roving for .ae-menu inside popovers */
+  document.addEventListener('keydown', (e) => {
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+    const menu = e.target.closest('.ae-menu');
+    if (!menu) return;
+    const items = [...menu.querySelectorAll('button')].filter(
+      (b) => !b.disabled,
+    );
+    if (items.length === 0) return;
+    const i = items.indexOf(e.target);
+    let next;
+    if (e.key === 'ArrowDown') next = items[(i + 1) % items.length];
+    else if (e.key === 'ArrowUp')
+      next = items[(i - 1 + items.length) % items.length];
+    else if (e.key === 'Home') next = items[0];
+    else if (e.key === 'End') next = items[items.length - 1];
+    if (!next) return;
+    e.preventDefault();
+    items.forEach((b) => (b.tabIndex = -1));
+    next.tabIndex = 0;
+    next.focus();
+  });
+})();
+
+/* the dialog: focus, labeling, and restoration for <dialog class="ae-dialog">.
+
+   The native <dialog> + showModal() owns the top layer and Escape.
+   This recipe fills the accessibility gaps the browser doesn't:
+   — focus moves into the dialog on open (the first focusable control,
+     or the dialog itself as fallback)
+   — focus is trapped inside while open (Tab cycles within)
+   — focus returns to the invoker on close (the button that opened it)
+   — if the dialog has an aria-labelledby, it is honored; otherwise the
+     .ae-dialog-title is wired as the label if neither is set
+
+   Pair with: a button that calls dialog.showModal(), and both actions
+   (cancel + confirm) call dialog.close().
+
+   <button id="open">Open</button>
+   <dialog class="ae-dialog" aria-labelledby="dlg-title">
+     <p class="ae-dialog-title" id="dlg-title">Archive this project?</p>
+     <div class="ae-dialog-acts">
+       <button class="ae-button ae-button-quiet">Cancel</button>
+       <button class="ae-button">Confirm</button>
+     </div>
+   </dialog>
+
+   Open it: aeDialog(document.getElementById('open'), dialogEl)
+   — or let the recipe auto-wire every [data-ae-dialog] invoker. */
+(() => {
+  if (window.aeDialog) return;
+  const FOCUSABLE =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+  function focusables(dialog) {
+    return [...dialog.querySelectorAll(FOCUSABLE)].filter(
+      (el) => !el.disabled && el.offsetParent !== null,
+    );
+  }
+
+  function label(dialog) {
+    if (
+      dialog.hasAttribute('aria-labelledby') ||
+      dialog.hasAttribute('aria-label')
+    )
+      return;
+    const title = dialog.querySelector('.ae-dialog-title');
+    if (!title) return;
+    if (!title.id)
+      title.id = `ae-dlg-title-${Math.random().toString(36).slice(2, 9)}`;
+    dialog.setAttribute('aria-labelledby', title.id);
+  }
+
+  function trap(dialog, e) {
+    if (e.key !== 'Tab') return;
+    const items = focusables(dialog);
+    if (items.length === 0) {
+      e.preventDefault();
+      dialog.focus();
+      return;
+    }
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  /* wire one invoker → dialog pair. Returns a cleanup function. */
+  function aeDialog(invoker, dialog) {
+    if (invoker._aeDialog) return invoker._aeDialog.cleanup;
+
+    let lastFocused = null;
+    label(dialog);
+    if (!dialog.hasAttribute('tabindex')) dialog.tabIndex = -1;
+
+    const onKey = (e) => trap(dialog, e);
+    const open = () => {
+      lastFocused = invoker;
+      dialog.showModal();
+    };
+    const onClose = () => {
+      if (lastFocused) lastFocused.focus();
+      lastFocused = null;
+    };
+
+    invoker.addEventListener('click', open);
+    dialog.addEventListener('keydown', onKey);
+    dialog.addEventListener('close', onClose);
+
+    const cleanup = () => {
+      invoker.removeEventListener('click', open);
+      dialog.removeEventListener('keydown', onKey);
+      dialog.removeEventListener('close', onClose);
+      delete invoker._aeDialog;
+    };
+    invoker._aeDialog = { open, cleanup };
+    return cleanup;
+  }
+
+  /* auto-wire: <button data-ae-dialog="#dlg-id">Open</button> */
+  document.addEventListener('click', (e) => {
+    const invoker = e.target.closest('[data-ae-dialog]');
+    if (!invoker) return;
+    const sel = invoker.getAttribute('data-ae-dialog');
+    const dialog = document.querySelector(sel);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    if (!invoker._aeDialog) {
+      aeDialog(invoker, dialog);
+      // first click: the invoker's listener was added during dispatch and
+      // won't fire for this event, so open the dialog directly
+      invoker._aeDialog.open();
+    }
+    // subsequent clicks: the invoker's own listener handles opening
+  });
+
+  window.aeDialog = aeDialog;
 })();
