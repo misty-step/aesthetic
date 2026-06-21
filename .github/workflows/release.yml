@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows:
+      - ci
+    types:
+      - completed
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-fund --no-audit
+
+      # Landmark: Automated semantic-release pipeline
+      # https://github.com/misty-step/landmark
+      # The repo-local .releaserc.json adds a @semantic-release/exec prepare
+      # step that runs scripts/prepare-release.mjs — bumping every version
+      # pin (aesthetic.css, tokens.json, README.md, …) and regenerating
+      # build artifacts (registry, feed, recipes, tokens) BEFORE the git
+      # commit + tag. This keeps all pins in sync with the release version.
+      - name: Run Landmark
+        uses: misty-step/landmark@v1
+        with:
+          github-token: ${{ secrets.GH_RELEASE_TOKEN }}
+          llm-api-key: ${{ secrets.OPENROUTER_API_KEY }}

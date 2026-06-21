@@ -162,6 +162,7 @@ footer.ae-bar a:hover {
 }
 
 /* ── the catalog (primitives) ─────────────────────────────────────── */
+
 /* wide stages span the full viewport width so the scrollbar sits flush
    at the browser edge; content is centered inside at the wide measure.
    Applies to any direct child (.ae-view, .ae-group, etc.) so every wide
@@ -180,6 +181,7 @@ footer.ae-bar a:hover {
   display: block;
   width: 100%;
 }
+
 /* the gallery: every primitive rendered live as a specimen. The table
    structure stays (it's the filter substrate); CSS turns it into a grid
    of hairline-framed cells — the plate vocabulary, not card shadows. */
