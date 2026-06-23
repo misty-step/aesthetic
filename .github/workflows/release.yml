@@ -50,7 +50,7 @@ jobs:
         id: landmark
         uses: misty-step/landmark@v1
         with:
-          github-token: ${{ secrets.GH_RELEASE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           llm-api-key: ${{ secrets.OPENROUTER_API_KEY }}
 
       # Landmark writes release notes (docs/releases/*.md/.txt/.html/.json)
@@ -62,7 +62,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.GH_RELEASE_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git add docs/releases/ || true
           if git diff --cached --quiet; then
             echo "No release notes artifacts to commit"
