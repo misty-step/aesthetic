@@ -4,11 +4,23 @@
 <title>misty-step/aesthetic</title>
 <link>https://github.com/misty-step/aesthetic</link>
 <description>Release notes for misty-step/aesthetic</description>
-<lastBuildDate>Tue, 23 Jun 2026 17:53:13 +0000</lastBuildDate>
-<item><title>misty-step/aesthetic v2.7.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.7.1</link><guid>v2.7.1</guid><description><![CDATA[<h2>Bug Fixes</h2>
+<lastBuildDate>Tue, 23 Jun 2026 21:06:11 +0000</lastBuildDate>
+<item><title>misty-step/aesthetic v2.8.0</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.8.0</link><guid>v2.8.0</guid><description><![CDATA[<h2>New Features</h2>
+<ul>
+<li>You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page</li>
+<li>You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states</li>
+<li>You can now search the component catalog client-side for faster primitive discovery</li>
+<li>You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling</li>
+</ul>
+<h2>Improvements</h2>
+<ul>
+<li>The catalog source blocks now include copy-to-clipboard functionality for easier code integration</li>
+</ul>
+]]></description><pubDate>Tue, 23 Jun 2026 21:06:11 +0000</pubDate></item>
+<item><title>misty-step/aesthetic v2.7.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.7.1</link><guid>v2.7.1</guid><description><![CDATA[<![CDATA[<h2>Bug Fixes</h2>
 <ul>
 <li>Fixed missing token documentation that was out of sync with the latest design system updates.</li>
 </ul>
-]]></description><pubDate>Tue, 23 Jun 2026 17:53:13 +0000</pubDate></item>
+]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 17:53:13 +0000</pubDate></item>
 </channel>
 </rss>
