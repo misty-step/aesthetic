@@ -7,7 +7,7 @@
       "name": "aesthetic",
       "type": "registry:item",
       "title": "aesthetic",
-      "description": "The Misty Step design system, v2.7.0: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
+      "description": "The Misty Step design system, v2.7.1: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
       "files": [
         {
           "path": "aesthetic.css",
@@ -25,7 +25,7 @@
       "name": "recipes",
       "type": "registry:item",
       "title": "aesthetic recipes",
-      "description": "The canonical behavior glue for aesthetic v2.7.0: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, toasts, popovers. Dependency-free.",
+      "description": "The canonical behavior glue for aesthetic v2.7.1: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, toasts, popovers. Dependency-free.",
       "files": [
         {
           "path": "recipes/recipes.js",

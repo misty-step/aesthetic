@@ -1,3 +1,9 @@
+## [2.7.1](https://github.com/misty-step/aesthetic/compare/v2.7.0...v2.7.1) (2026-06-23)
+
+### Bug Fixes
+
+- **build:** regenerate tokens.html for v2.7.0 pin ([152e728](https://github.com/misty-step/aesthetic/commit/152e728e86d165b8d9341257580c7a8de3ef08a4))
+
 # [2.7.0](https://github.com/misty-step/aesthetic/compare/v2.6.0...v2.7.0) (2026-06-23)
 
 ### Bug Fixes
