@@ -1,0 +1,23 @@
+[
+  {
+    "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed missing token documentation that was out of sync with the latest design system updates.</li>\n</ul>\n",
+    "markdown": "## Bug Fixes\n\n- Fixed missing token documentation that was out of sync with the latest design system updates.",
+    "notes": "## Bug Fixes\n\n- Fixed missing token documentation that was out of sync with the latest design system updates.",
+    "plaintext": "Bug Fixes\nFixed missing token documentation that was out of sync with the latest design system updates.",
+    "published_at": "2026-06-23T17:53:13.192896466+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Fixed missing token documentation that was out of sync with the latest design system updates."
+          }
+        ],
+        "title": "Bug Fixes"
+      }
+    ],
+    "slack": "## Bug Fixes\n\n- Fixed missing token documentation that was out of sync with the latest design system updates.",
+    "tag": "v2.7.1",
+    "version": "2.7.1"
+  }
+]
