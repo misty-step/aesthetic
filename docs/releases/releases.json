@@ -1,5 +1,47 @@
 [
   {
+    "html": "<h2>New Features</h2>\n<ul>\n<li>You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page</li>\n<li>You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states</li>\n<li>You can now search the component catalog client-side for faster primitive discovery</li>\n<li>You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling</li>\n</ul>\n<h2>Improvements</h2>\n<ul>\n<li>The catalog source blocks now include copy-to-clipboard functionality for easier code integration</li>\n</ul>\n",
+    "markdown": "## New Features\n\n- You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page\n- You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states\n- You can now search the component catalog client-side for faster primitive discovery\n- You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling\n\n## Improvements\n\n- The catalog source blocks now include copy-to-clipboard functionality for easier code integration",
+    "notes": "## New Features\n\n- You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page\n- You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states\n- You can now search the component catalog client-side for faster primitive discovery\n- You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling\n\n## Improvements\n\n- The catalog source blocks now include copy-to-clipboard functionality for easier code integration",
+    "plaintext": "New Features\nYou can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page\nYou can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states\nYou can now search the component catalog client-side for faster primitive discovery\nYou can now integrate with the machine composition feed to automatically adopt design system updates in your tooling\nImprovements\nThe catalog source blocks now include copy-to-clipboard functionality for easier code integration",
+    "published_at": "2026-06-23T21:06:11.441679245+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page"
+          },
+          {
+            "links": [],
+            "text": "You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states"
+          },
+          {
+            "links": [],
+            "text": "You can now search the component catalog client-side for faster primitive discovery"
+          },
+          {
+            "links": [],
+            "text": "You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling"
+          }
+        ],
+        "title": "New Features"
+      },
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "The catalog source blocks now include copy-to-clipboard functionality for easier code integration"
+          }
+        ],
+        "title": "Improvements"
+      }
+    ],
+    "slack": "## New Features\n\n- You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page\n- You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states\n- You can now search the component catalog client-side for faster primitive discovery\n- You can now integrate with the machine composition feed to automatically adopt design system updates in your tooling\n\n## Improvements\n\n- The catalog source blocks now include copy-to-clipboard functionality for easier code integration",
+    "tag": "v2.8.0",
+    "version": "2.8.0"
+  },
+  {
     "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed missing token documentation that was out of sync with the latest design system updates.</li>\n</ul>\n",
     "markdown": "## Bug Fixes\n\n- Fixed missing token documentation that was out of sync with the latest design system updates.",
     "notes": "## Bug Fixes\n\n- Fixed missing token documentation that was out of sync with the latest design system updates.",
