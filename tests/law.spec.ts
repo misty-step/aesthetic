@@ -1,4 +1,10 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import {
+  assertLaw,
+  collectConsoleErrors,
+  checkRadius,
+  checkFontSize,
+} from '../law/index.js';
 
 /* the law, mechanically: every stable page, both modes —
    · nothing renders larger than the one size (heavier, never larger)
@@ -6,7 +12,11 @@ import { test, expect, type Page } from '@playwright/test';
    · the page itself never scrolls (stages and desks scroll inside)
    · static text keeps the default cursor
    · the console stays clean
-   Screenshots of every page×mode land in test-results/ as evidence. */
+   Screenshots of every page×mode land in test-results/ as evidence.
+
+   The five invariants live in law/ — the shipped consumer gate. This
+   test dogfoods the same code consumers import via
+   '@misty-step/aesthetic/law'. */
 
 const PAGES = [
   { path: '/site/', name: 'manual' },
@@ -20,71 +30,25 @@ const PAGES = [
 
 const MODES = ['light', 'dark'] as const;
 
-const maxFontPx = (page: Page) =>
-  page.evaluate(() => {
-    let max = 0;
-    for (const el of document.querySelectorAll('body *')) {
-      if (!(el instanceof HTMLElement)) continue;
-      if (!el.offsetParent && el.tagName !== 'BODY') continue; // unrendered
-      const size = parseFloat(getComputedStyle(el).fontSize);
-      if (size > max) max = size;
-    }
-    return max;
-  });
-
-const nonZeroRadii = (page: Page) =>
-  page.evaluate(() => {
-    const offenders: string[] = [];
-    for (const el of document.querySelectorAll('body *')) {
-      const r = getComputedStyle(el).borderRadius;
-      if (r && r !== '0px') {
-        offenders.push(`${el.tagName.toLowerCase()}.${el.className} → ${r}`);
-        if (offenders.length > 5) break;
-      }
-    }
-    return offenders;
-  });
-
 for (const { path, name } of PAGES) {
   for (const mode of MODES) {
     test(`${name} · ${mode} · the law holds`, async ({ page }) => {
-      const errors: string[] = [];
-      page.on('console', (msg) => {
-        if (msg.type() === 'error') errors.push(msg.text());
-      });
-      page.on('pageerror', (err) => errors.push(String(err)));
+      const errors = collectConsoleErrors(page);
 
-      await page.addInitScript((m) => {
+      await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
       await page.goto(path);
       await page.waitForLoadState('networkidle');
 
-      // one size: nothing larger than 16px, anywhere
-      expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
+      // the law (5 invariants from the shipped gate)
+      await assertLaw(page, { consoleErrors: errors });
 
-      // radius 0 everywhere
-      expect(await nonZeroRadii(page)).toEqual([]);
-
-      // the page never scrolls; inner stages do
-      const pageScrolls = await page.evaluate(
-        () =>
-          document.scrollingElement!.scrollHeight >
-          document.scrollingElement!.clientHeight + 1,
-      );
-      expect(pageScrolls, 'page-level scroll is outlawed').toBe(false);
-
-      // static text: no I-beam
-      await expect(page.locator('body')).toHaveCSS('cursor', 'default');
-
-      // the mode actually resolved
+      // the mode actually resolved (aesthetic-specific, not a law invariant)
       const dark = await page.evaluate(() =>
         document.documentElement.classList.contains('dark'),
       );
       expect(dark).toBe(mode === 'dark');
-
-      // clean console
-      expect(errors).toEqual([]);
 
       await page.screenshot({
         path: `test-results/screens/${name}-${mode}.png`,
@@ -102,30 +66,16 @@ const INSTRUMENT_ROUTES = ['interval', 'plot', 'flow', 'report'];
 for (const route of INSTRUMENT_ROUTES) {
   for (const mode of MODES) {
     test(`catalog #${route} · ${mode} · the law holds`, async ({ page }) => {
-      const errors: string[] = [];
-      page.on('console', (msg) => {
-        if (msg.type() === 'error') errors.push(msg.text());
-      });
-      page.on('pageerror', (err) => errors.push(String(err)));
+      const errors = collectConsoleErrors(page);
 
-      await page.addInitScript((m) => {
+      await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
       await page.goto(`/site/primitives.html#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(page.locator(`[data-route="${route}"]`)).toBeVisible();
 
-      expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
-      expect(await nonZeroRadii(page)).toEqual([]);
-
-      const pageScrolls = await page.evaluate(
-        () =>
-          document.scrollingElement!.scrollHeight >
-          document.scrollingElement!.clientHeight + 1,
-      );
-      expect(pageScrolls, 'page-level scroll is outlawed').toBe(false);
-
-      expect(errors).toEqual([]);
+      await assertLaw(page, { consoleErrors: errors });
     });
   }
 }
@@ -151,13 +101,9 @@ for (const route of STATE_ROUTES) {
     test(`catalog #${route} states · ${mode} · the law holds`, async ({
       page,
     }) => {
-      const errors: string[] = [];
-      page.on('console', (msg) => {
-        if (msg.type() === 'error') errors.push(msg.text());
-      });
-      page.on('pageerror', (err) => errors.push(String(err)));
+      const errors = collectConsoleErrors(page);
 
-      await page.addInitScript((m) => {
+      await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
       await page.goto(`/site/primitives.html#${route}`);
@@ -177,16 +123,7 @@ for (const route of STATE_ROUTES) {
         1,
       );
 
-      expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
-      expect(await nonZeroRadii(page)).toEqual([]);
-
-      const pageScrolls = await page.evaluate(
-        () =>
-          document.scrollingElement!.scrollHeight >
-          document.scrollingElement!.clientHeight + 1,
-      );
-      expect(pageScrolls, 'page-level scroll is outlawed').toBe(false);
-      expect(errors).toEqual([]);
+      await assertLaw(page, { consoleErrors: errors });
     });
   }
 }
@@ -197,12 +134,14 @@ test('the state-matrix gate catches a planted off-law state', async ({
   await page.goto('/site/primitives.html#buttons');
   await expect(page.locator('[data-route="buttons"] .states')).toBeVisible();
   // baseline: the fan is clean
-  expect(await nonZeroRadii(page)).toEqual([]);
-  expect(await maxFontPx(page)).toBeLessThanOrEqual(16.01);
+  expect((await checkRadius(page)).pass).toBe(true);
+  expect((await checkFontSize(page)).pass).toBe(true);
 
   // plant an off-law state into the fan: a rounded, oversized button
   await page.evaluate(() => {
-    const demo = document.querySelector('[data-route="buttons"] .state-demo')!;
+    const demo = document.querySelector(
+      '[data-route="buttons"] .state-demo',
+    ) as HTMLElement;
     const bad = document.createElement('button');
     bad.className = 'ae-button';
     bad.style.borderRadius = '9px';
@@ -212,8 +151,8 @@ test('the state-matrix gate catches a planted off-law state', async ({
   });
 
   // the gate must now flag both violations — it is not theater
-  expect(await nonZeroRadii(page)).not.toEqual([]);
-  expect(await maxFontPx(page)).toBeGreaterThan(16.01);
+  expect((await checkRadius(page)).pass).toBe(false);
+  expect((await checkFontSize(page)).pass).toBe(false);
 });
 
 test('the send moment resolves once and announces', async ({ page }) => {

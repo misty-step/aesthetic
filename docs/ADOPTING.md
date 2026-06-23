@@ -218,6 +218,32 @@ React apps: treat the recipes as reference implementations — port the
 ones you need into components, or style Base UI / Radix primitives
 with the `ae-` classes and let them own focus management.
 
+## 7 · Enforce the law in CI
+
+The law — one font size, radius 0, no page scroll, default cursor, clean
+console — ships as a Playwright fixture you import in your own tests.
+No build step; Playwright's runner handles the TypeScript natively.
+
+```bash
+pnpm add github:misty-step/aesthetic#v2.7.0
+pnpm add -D @playwright/test
+```
+
+```typescript
+import { assertLaw, collectConsoleErrors } from '@misty-step/aesthetic/law';
+import { test } from '@playwright/test';
+
+test('dashboard holds the law', async ({ page }) => {
+  const errors = collectConsoleErrors(page);
+  await page.goto('/dashboard');
+  await assertLaw(page, { consoleErrors: errors });
+});
+```
+
+On failure, `assertLaw` throws with named offenders — which invariant
+broke and which elements caused it. See `law/README.md` for the full
+API (route sweeps, mode support, skipping invariants).
+
 ## The adoption checklist
 
 - [ ] Stylesheet pinned to a tag; no second design system imported.
@@ -228,3 +254,5 @@ with the `ae-` classes and let them own focus management.
 - [ ] Hand-rolled glue replaced by recipes (or ported verbatim).
 - [ ] The law holds on every screen: one size per surface, hairlines,
       radius 0, status on glyphs, motion as feedback, buttons ≠ links.
+- [ ] The law gate runs in CI on every screen (`assertLaw` from
+      `@misty-step/aesthetic/law`).
