@@ -25,7 +25,7 @@ stylesheet, unmodified.
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.6.0
+pnpm add github:misty-step/aesthetic#v2.7.0
 ```
 
 ```css
@@ -41,7 +41,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.6.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.7.0/aesthetic.css"
 />
 ```
 
