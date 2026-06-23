@@ -1,3 +1,9 @@
+## [2.8.1](https://github.com/misty-step/aesthetic/compare/v2.8.0...v2.8.1) (2026-06-23)
+
+### Bug Fixes
+
+- **release:** add site/tokens.html to semantic-release git assets ([8739c7d](https://github.com/misty-step/aesthetic/commit/8739c7d30caeb14e1e100e0bd20df9251583bd6e))
+
 # [2.8.0](https://github.com/misty-step/aesthetic/compare/v2.7.1...v2.8.0) (2026-06-23)
 
 ### Bug Fixes
