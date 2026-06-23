@@ -26,6 +26,7 @@
           "site/gauntlet/docs.html",
           "site/gauntlet/settings.html",
           "site/r/**",
+          "site/tokens.html",
           "recipes/recipes.js"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
