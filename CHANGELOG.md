@@ -1,3 +1,14 @@
+# [2.8.0](https://github.com/misty-step/aesthetic/compare/v2.7.1...v2.8.0) (2026-06-23)
+
+### Bug Fixes
+
+- **build:** format release notes artifacts ([5c5dd45](https://github.com/misty-step/aesthetic/commit/5c5dd453001417ab641d0523f80cd3e5117efcab))
+- **build:** regenerate tokens.html for v2.7.1 pin ([a671b34](https://github.com/misty-step/aesthetic/commit/a671b349dc7161149a0a6b1efa3842b82c4f9675))
+
+### Features
+
+- **law:** ship the law as a consumer-enforceable Playwright gate (015) ([205ef10](https://github.com/misty-step/aesthetic/commit/205ef10da942aa591db01393768f1988604eebc3))
+
 ## [2.7.1](https://github.com/misty-step/aesthetic/compare/v2.7.0...v2.7.1) (2026-06-23)
 
 ### Bug Fixes
