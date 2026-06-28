@@ -48,13 +48,12 @@ vs dials — lives in `docs/ADOPTING.md`.
 Run before any commit that touches CSS/HTML/JS:
 
 ```sh
-npx prettier --check .
-npx stylelint aesthetic.css site/site.css
-node scripts/build-recipes.mjs --check
+npm run ci
 ```
 
-CI (`.github/workflows/ci.yml`) enforces these plus the Playwright
-law gates (`tests/law.spec.ts` — font sizes, radius 0, no page
+CI (`.github/workflows/ci.yml`) runs the same command after installing
+Playwright's Chromium browser. It includes the Playwright law gates
+(`tests/law.spec.ts` — font sizes, radius 0, no page
 scroll, console cleanliness on every stable page, both modes) on
 every push. Do not loosen `.stylelintrc.json` or the law spec to get
 green; the disabled rules there are deliberate house-style
