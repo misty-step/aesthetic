@@ -38,6 +38,7 @@
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:feed": "node scripts/build-feed.mjs",
     "check": "prettier --check . && stylelint aesthetic.css site/site.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check",
+    "ci": "npm run check && npm test",
     "test": "playwright test",
     "release": "node scripts/release.mjs"
   },
