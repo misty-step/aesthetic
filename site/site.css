@@ -188,39 +188,25 @@ footer.ae-bar a:hover {
   min-height: 0;
   width: min(var(--ae-measure-wide), 100% - 5rem);
   margin-inline: auto;
-  display: grid;
-  grid-template-columns: 13rem minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
-/* the rail never scrolls: every primitive + section group + the
-   tokens/steering/law/gauntlet links must fit. Tight leading and the
-   13px chrome register carry the density. */
-.gal-rail {
-  overflow: hidden;
-  font-size: 13px;
-  line-height: 1;
-  padding-block: 0.3em;
+/* the desk scrolls; its scrollbar never shows. The chrome stands
+   still and the content moves under it, like paper behind a window. */
+.gal-mid .ae-desk {
+  scrollbar-width: none;
 }
 
-.gal-rail .ae-h {
-  font-size: 11px;
-  margin-top: 0.22em;
+.gal-mid .ae-desk::-webkit-scrollbar {
+  display: none;
 }
 
-.gal-rail .ae-h:first-child {
-  margin-top: 0;
-}
-
-.gal-rail a,
-.gal-rail button:not(.ae-mode) {
-  padding: 0.03em 0;
-}
-
-.gal-rail-sep {
-  border: 0;
-  border-top: 1px solid var(--ae-line);
-  margin: 0.8em 0 0.6em;
+/* a focused plate heading is a screen-reader landing, not a control —
+   no ring on programmatic focus */
+.ae-view h2.ae-h:focus {
+  outline: none;
 }
 
 /* skip link: visually hidden until focused, first in the DOM */
@@ -549,8 +535,12 @@ footer.ae-bar a:hover {
   color: var(--ae-ink-muted);
 }
 
+/* plate-to-plate steps ride the back-link line, right-aligned */
 .back-link {
   margin-bottom: 1.6em;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.6em;
 }
 
 /* small structural mock for the shell detail */

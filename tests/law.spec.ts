@@ -20,12 +20,7 @@ import {
 
 const PAGES = [
   { path: '/site/', name: 'gallery' },
-  { path: '/site/law.html', name: 'law' },
-  { path: '/site/steering.html', name: 'steering' },
   { path: '/site/tokens.html', name: 'tokens' },
-  { path: '/site/gauntlet/dashboard.html', name: 'dashboard' },
-  { path: '/site/gauntlet/docs.html', name: 'docs' },
-  { path: '/site/gauntlet/settings.html', name: 'settings' },
 ];
 
 const MODES = ['light', 'dark'] as const;
@@ -156,13 +151,15 @@ test('the state-matrix gate catches a planted off-law state', async ({
 });
 
 test('the send moment resolves once and announces', async ({ page }) => {
-  await page.goto('/site/law.html');
-  const email = page.locator('#email');
-  await email.scrollIntoViewIfNeeded();
-  await email.fill('reader@example.com');
-  await page.locator('.ae-send').click();
-  await expect(page.locator('.ae-send')).toBeDisabled();
-  await expect(page.locator('.ae-send')).toHaveClass(/is-sent/);
+  await page.goto('/site/#buttons');
+  // the live demo form's control, not the static states-strip specimen
+  const send = page.locator(
+    '[data-route="buttons"] form[data-ae-demo] .ae-send',
+  );
+  await send.scrollIntoViewIfNeeded();
+  await send.click();
+  await expect(send).toBeDisabled();
+  await expect(send).toHaveClass(/is-sent/);
   // two role="status" live regions exist on this page now: the send
   // recipe's own (no aria-live attribute — role="status" implies polite)
   // and the copy-button's ack (explicit aria-live="polite"). Disambiguate.
@@ -221,21 +218,21 @@ test('the catalog copy button copies the clean canonical markup', async ({
   await expect(btn).toHaveText('copy', { timeout: 2500 });
 });
 
-test('the rail lists every primitive and marks the active route', async ({
+test('the specimen grid lists every primitive and navigates', async ({
   page,
 }) => {
   await page.goto('/site/primitives.html');
 
-  // the sidebar taxonomy is the navigation: overview + all 33 primitives
-  const railLinks = page.locator('.gal-nav a[href^="#"]');
-  await expect(railLinks).toHaveCount(34);
+  // the grid is the navigation: one live card per primitive
+  const cards = page.locator('.gal-card[href^="#"]');
+  await expect(cards).toHaveCount(33);
 
-  // clicking a rail item swaps the desk to that view and marks it current
-  await page.locator('.gal-nav a[href="#meter"]').click();
+  // clicking a card swaps the desk to that plate, which carries
+  // prev/next steps wired from the grid's own order
+  await page.locator('.gal-card[href="#meter"]').click();
   await expect(page.locator('[data-route="meter"]')).toBeVisible();
   await expect(page.locator('[data-route="index"]')).toBeHidden();
-  await expect(page.locator('.gal-nav a[href="#meter"]')).toHaveAttribute(
-    'aria-current',
-    'page',
+  await expect(page.locator('[data-route="meter"] .plate-steps a')).toHaveCount(
+    2,
   );
 });

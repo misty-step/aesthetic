@@ -77,10 +77,7 @@
         <a class="ae-name" href="./">AESTHETIC</a>
         <span class="bar-end">
           <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
-            <a href="./" aria-current="page">primitives</a>
             <a href="tokens.html">tokens</a>
-            <a href="steering.html">steering</a>
-            <a href="law.html">law</a>
             <a href="https://github.com/misty-step/aesthetic">github</a>
           </nav>
           <button class="ae-mode" aria-label="toggle color mode">
@@ -90,73 +87,17 @@
         </span>
       </header>
       <div class="gal-mid">
-        <aside class="ae-rail gal-rail">
-          <nav class="gal-nav" aria-label="primitives">
-            <a href="#">Overview</a>
-
-            <p class="ae-h">FOUNDATIONS</p>
-            <a href="#registers">Registers</a>
-            <a href="#chrome">Chrome</a>
-            <a href="#icons">Icon</a>
-            <a href="#sr">Screen reader</a>
-
-            <p class="ae-h">LAYOUT</p>
-            <a href="#shell">Screen</a>
-            <a href="#scroll">Stage scroll</a>
-            <a href="#panel">Panel</a>
-            <a href="#nav">Nav</a>
-            <a href="#rows">Row link</a>
-            <a href="#crumbs">Breadcrumbs</a>
-            <a href="#shellapp">App shell</a>
-
-            <p class="ae-h">FORMS</p>
-            <a href="#form">Input</a>
-            <a href="#buttons">Button</a>
-            <a href="#choice">Choice</a>
-            <a href="#settings">Settings</a>
-            <a href="#validation">Validation</a>
-            <a href="#tabs">Tabs</a>
-            <a href="#fold">Fold</a>
-
-            <p class="ae-h">FEEDBACK</p>
-            <a href="#status">Status</a>
-            <a href="#dialog">Dialog</a>
-            <a href="#tag">Tag</a>
-            <a href="#tip">Tooltip</a>
-            <a href="#pop">Popover</a>
-            <a href="#toast">Toast</a>
-            <a href="#waiting">Waiting</a>
-
-            <p class="ae-h">DATA</p>
-            <a href="#table">Table</a>
-            <a href="#meter">Meter</a>
-            <a href="#figures">Figures</a>
-            <a href="#interval">Interval</a>
-            <a href="#plot">Plot</a>
-            <a href="#flow">Flow</a>
-
-            <p class="ae-h">CONTENT</p>
-            <a href="#doc">Document</a>
-            <a href="#report">Report</a>
-          </nav>
-        </aside>
         <main class="ae-desk" id="gal-main">
           <div class="ae-view is-on" data-route="index">
-            <div class="ae-group">
+            <div class="ae-group gal-lede">
               <h2 class="ae-h" tabindex="-1">PRIMITIVES</h2>
               <p>
                 <span class="ae-item"
-                  >Thirty-three primitives, rendered live by the file that
-                  documents them.</span
+                  >One stylesheet, thirty-three primitives,</span
                 >
                 <span class="ae-dim"
-                  >Pick one from the rail — or a card below — to open its view:
-                  the full render beside the canonical markup, every state
-                  included.</span
+                  >rendered live by the file that documents them.</span
                 >
-              </p>
-              <p class="man-demo">
-                <code>pnpm add github:misty-step/aesthetic#v2.8.1</code>
               </p>
             </div>
 
@@ -2761,8 +2702,7 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
               <p class="ae-dim">
                 The app shell: one viewport, hairline-divided — a 13px rail for
                 places, a desk for work. The desk scrolls inside itself; the
-                page never moves. See it composed:
-                <a href="gauntlet/dashboard.html">the dashboard gauntlet</a>.
+                page never moves.
               </p>
             </div>
             <div class="src-split">
@@ -2803,8 +2743,7 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
               <p class="ae-dim">
                 The document archetype: rendered markdown drops in unclassed.
                 Headings are weight, never size; rules are hairlines; quotes are
-                inset. See it composed:
-                <a href="gauntlet/docs.html">the docs gauntlet</a>.
+                inset.
               </p>
             </div>
             <div class="src-split">
@@ -2932,43 +2871,40 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
         </main>
       </div>
       <footer class="ae-bar">
-        <span>
-          <p class="ae-chrome">
-            <code>pnpm add github:misty-step/aesthetic#v2.8.1</code>
-          </p>
-          <p class="ae-chrome">
-            gauntlet:
-            <a href="gauntlet/dashboard.html">dashboard</a> ·
-            <a href="gauntlet/docs.html">docs</a> ·
-            <a href="gauntlet/settings.html">settings</a>
-          </p>
-        </span>
+        <p class="ae-chrome">v2.8.1 · MIT</p>
         <p class="ae-chrome">
-          the aesthetic powering
-          <a href="https://mistystep.io">Misty Step</a>
+          by <a href="https://mistystep.io">Misty Step</a>
         </p>
       </footer>
     </div>
 
     <script src="recipes.js"></script>
     <script>
-      /* rail active state + focus management: mark the sidebar link for
-         the current route, and move focus to the view's heading so
-         keyboard/screen-reader users land somewhere sensible after a
-         hash-route change instead of staying wherever they were. */
+      /* focus management + plate-to-plate nav: the specimen grid is the
+         navigation, so each plate gets prev/next wired from the grid's
+         own card order, and a hash-route change moves focus to the
+         view's heading so keyboard/screen-reader users land somewhere
+         sensible instead of staying wherever they were. */
       (() => {
-        const links = [...document.querySelectorAll('.gal-nav a')];
-        if (!links.length) return;
+        const order = [
+          ...document.querySelectorAll('.gal-card[href^="#"]'),
+        ].map((a) => a.getAttribute('href').slice(1));
+        for (const [i, route] of order.entries()) {
+          const back = document.querySelector(
+            `.ae-view[data-route="${route}"] .back-link`,
+          );
+          if (!back) continue;
+          const prev = order[(i + order.length - 1) % order.length];
+          const next = order[(i + 1) % order.length];
+          back.insertAdjacentHTML(
+            'beforeend',
+            ` <span class="plate-steps"><a href="#${prev}">‹ prev</a> · <a href="#${next}">next ›</a></span>`,
+          );
+        }
         let first = true;
         const sync = () => {
-          const route = location.hash.slice(1) || 'index';
-          for (const a of links) {
-            const href = a.getAttribute('href');
-            const target = href === '#' ? 'index' : href.slice(1);
-            if (target === route) a.setAttribute('aria-current', 'page');
-            else a.removeAttribute('aria-current');
-          }
           if (!first) {
+            const route = location.hash.slice(1) || 'index';
             const heading = document.querySelector(
               `.ae-view[data-route="${route}"] h2.ae-h`,
             );

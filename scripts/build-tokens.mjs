@@ -212,10 +212,7 @@ const body = `<!doctype html>
         <a class="ae-name" href="./">AESTHETIC</a>
         <span class="bar-end">
           <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
-            <a href="./">primitives</a>
             <a href="tokens.html" aria-current="page">tokens</a>
-            <a href="steering.html">steering</a>
-            <a href="law.html">law</a>
             <a href="https://github.com/misty-step/aesthetic">github</a>
           </nav>
           <button class="ae-mode" aria-label="toggle color mode">
@@ -225,56 +222,6 @@ const body = `<!doctype html>
         </span>
       </header>
       <div class="gal-mid">
-        <aside class="ae-rail gal-rail">
-          <nav class="gal-nav" aria-label="primitives">
-            <a href="./">Overview</a>
-
-            <p class="ae-h">FOUNDATIONS</p>
-            <a href="./#registers">Registers</a>
-            <a href="./#chrome">Chrome</a>
-            <a href="./#icons">Icon</a>
-            <a href="./#sr">Screen reader</a>
-
-            <p class="ae-h">LAYOUT</p>
-            <a href="./#shell">Screen</a>
-            <a href="./#scroll">Stage scroll</a>
-            <a href="./#panel">Panel</a>
-            <a href="./#nav">Nav</a>
-            <a href="./#rows">Row link</a>
-            <a href="./#crumbs">Breadcrumbs</a>
-            <a href="./#shellapp">App shell</a>
-
-            <p class="ae-h">FORMS</p>
-            <a href="./#form">Input</a>
-            <a href="./#buttons">Button</a>
-            <a href="./#choice">Choice</a>
-            <a href="./#settings">Settings</a>
-            <a href="./#validation">Validation</a>
-            <a href="./#tabs">Tabs</a>
-            <a href="./#fold">Fold</a>
-
-            <p class="ae-h">FEEDBACK</p>
-            <a href="./#status">Status</a>
-            <a href="./#dialog">Dialog</a>
-            <a href="./#tag">Tag</a>
-            <a href="./#tip">Tooltip</a>
-            <a href="./#pop">Popover</a>
-            <a href="./#toast">Toast</a>
-            <a href="./#waiting">Waiting</a>
-
-            <p class="ae-h">DATA</p>
-            <a href="./#table">Table</a>
-            <a href="./#meter">Meter</a>
-            <a href="./#figures">Figures</a>
-            <a href="./#interval">Interval</a>
-            <a href="./#plot">Plot</a>
-            <a href="./#flow">Flow</a>
-
-            <p class="ae-h">CONTENT</p>
-            <a href="./#doc">Document</a>
-            <a href="./#report">Report</a>
-          </nav>
-        </aside>
         <main class="ae-desk ae-stage-scroll" id="gal-main">
         <div class="ae-group">
           <p>
@@ -377,20 +324,9 @@ const body = `<!doctype html>
         </main>
       </div>
       <footer class="ae-bar">
-        <span>
-          <p class="ae-chrome">
-            <code>pnpm add github:misty-step/aesthetic#v${version}</code>
-          </p>
-          <p class="ae-chrome">
-            gauntlet:
-            <a href="gauntlet/dashboard.html">dashboard</a> ·
-            <a href="gauntlet/docs.html">docs</a> ·
-            <a href="gauntlet/settings.html">settings</a>
-          </p>
-        </span>
+        <p class="ae-chrome">v${version} · MIT · generated from <code>tokens.json</code></p>
         <p class="ae-chrome">
-          generated from <code>tokens.json</code> ·
-          <a href="https://mistystep.io">Misty Step</a>
+          by <a href="https://mistystep.io">Misty Step</a>
         </p>
       </footer>
     </div>

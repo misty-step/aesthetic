@@ -320,7 +320,7 @@
     {
       "route": "shellapp",
       "title": "App shell",
-      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. See it composed: the dashboard gauntlet.",
+      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves.",
       "classes": [".ae-shell / .ae-rail / .ae-desk"],
       "role": "",
       "since": "",
@@ -330,7 +330,7 @@
     {
       "route": "doc",
       "title": "Document",
-      "summary": "The document archetype: rendered markdown drops in unclassed. Headings are weight, never size; rules are hairlines; quotes are inset. See it composed: the docs gauntlet.",
+      "summary": "The document archetype: rendered markdown drops in unclassed. Headings are weight, never size; rules are hairlines; quotes are inset.",
       "classes": [".ae-doc"],
       "role": "",
       "since": "",
