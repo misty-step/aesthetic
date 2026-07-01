@@ -4,8 +4,17 @@
 <title>misty-step/aesthetic</title>
 <link>https://github.com/misty-step/aesthetic</link>
 <description>Release notes for misty-step/aesthetic</description>
-<lastBuildDate>Tue, 23 Jun 2026 21:12:43 +0000</lastBuildDate>
-<item><title>misty-step/aesthetic v2.8.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.8.1</link><guid>v2.8.1</guid><description><![CDATA[<h2>New Features</h2>
+<lastBuildDate>Wed, 1 Jul 2026 20:06:43 +0000</lastBuildDate>
+<item><title>misty-step/aesthetic v2.9.0</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.9.0</link><guid>v2.9.0</guid><description><![CDATA[<h2>New Features</h2>
+<ul>
+<li>You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines</li>
+</ul>
+<h2>Bug Fixes</h2>
+<ul>
+<li>Fixed release artifact formatting to ensure proper distribution of design tokens and documentation</li>
+</ul>
+]]></description><pubDate>Wed, 1 Jul 2026 20:06:43 +0000</pubDate></item>
+<item><title>misty-step/aesthetic v2.8.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.8.1</link><guid>v2.8.1</guid><description><![CDATA[<![CDATA[<h2>New Features</h2>
 <ul>
 <li>You can now enforce design system compliance in your test suite using the included Playwright gate that validates adherence to design tokens and component usage patterns.</li>
 </ul>
@@ -13,8 +22,8 @@
 <ul>
 <li>Fixed token documentation generation to ensure the latest design token reference is properly included in releases.</li>
 </ul>
-]]></description><pubDate>Tue, 23 Jun 2026 21:12:43 +0000</pubDate></item>
-<item><title>misty-step/aesthetic v2.8.0</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.8.0</link><guid>v2.8.0</guid><description><![CDATA[<![CDATA[<h2>New Features</h2>
+]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 21:12:43 +0000</pubDate></item>
+<item><title>misty-step/aesthetic v2.8.0</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.8.0</link><guid>v2.8.0</guid><description><![CDATA[<![CDATA[<![CDATA[<h2>New Features</h2>
 <ul>
 <li>You can now reference all design tokens programmatically through the generated tokens.json file and browse them on the new token reference page</li>
 <li>You can now access interactive state matrices for all catalog primitives, showing hover, focus, disabled, and validation states</li>
@@ -25,11 +34,11 @@
 <ul>
 <li>The catalog source blocks now include copy-to-clipboard functionality for easier code integration</li>
 </ul>
-]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 21:06:11 +0000</pubDate></item>
-<item><title>misty-step/aesthetic v2.7.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.7.1</link><guid>v2.7.1</guid><description><![CDATA[<![CDATA[<![CDATA[<h2>Bug Fixes</h2>
+]]]]]]><![CDATA[><![CDATA[>]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 21:06:11 +0000</pubDate></item>
+<item><title>misty-step/aesthetic v2.7.1</title><link>https://github.com/misty-step/aesthetic/releases/tag/v2.7.1</link><guid>v2.7.1</guid><description><![CDATA[<![CDATA[<![CDATA[<![CDATA[<h2>Bug Fixes</h2>
 <ul>
 <li>Fixed missing token documentation that was out of sync with the latest design system updates.</li>
 </ul>
-]]]]]]><![CDATA[><![CDATA[>]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 17:53:13 +0000</pubDate></item>
+]]]]]]]]><![CDATA[><![CDATA[><![CDATA[>]]]]]]><![CDATA[><![CDATA[>]]]]><![CDATA[>]]></description><pubDate>Tue, 23 Jun 2026 17:53:13 +0000</pubDate></item>
 </channel>
 </rss>
