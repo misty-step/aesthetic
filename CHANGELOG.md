@@ -1,3 +1,9 @@
+# [2.9.0](https://github.com/misty-step/aesthetic/compare/v2.8.1...v2.9.0) (2026-07-01)
+
+### Features
+
+- **site:** make the rail the catalog navigation and fix the feed's classes ([5627c13](https://github.com/misty-step/aesthetic/commit/5627c13463d4e41bf0f5c54f44142876d5cf9877))
+
 ## [2.8.1](https://github.com/misty-step/aesthetic/compare/v2.8.0...v2.8.1) (2026-06-23)
 
 ### Bug Fixes

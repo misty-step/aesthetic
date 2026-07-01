@@ -1,6 +1,6 @@
 {
   "name": "@misty-step/aesthetic",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "note": "The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/primitives.html (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.",
   "law": {
     "size": "Exactly one font size on every surface; the headline is heavier and blacker, never larger.",
@@ -63,7 +63,7 @@
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<footer class=\"ae-foot\">\n  <span>v2.8.1 · MIT</span>\n  <span class=\"ae-foot-links\">\n    <a href=\"…\">github</a><a href=\"…\">npm</a>\n  </span>\n</footer>"
+      "markup": "<footer class=\"ae-foot\">\n  <span>v2.9.0 · MIT</span>\n  <span class=\"ae-foot-links\">\n    <a href=\"…\">github</a><a href=\"…\">npm</a>\n  </span>\n</footer>"
     },
     {
       "route": "icons",
