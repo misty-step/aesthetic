@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="../site.css" />
   </head>
   <body>
+    <a class="gal-skip" href="#main">Skip to content</a>
+    <h1 class="ae-sr">settings gauntlet — aesthetic</h1>
     <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="4" />
@@ -61,7 +63,7 @@
         <a class="ae-name" href="../">AESTHETIC</a>
         <span class="bar-end">
           <span class="ae-chrome bar-links"
-            ><a href="../primitives.html">primitives</a
+            ><a href="../">primitives</a
             ><a href="https://github.com/misty-step/aesthetic">github</a></span
           >
           <button class="ae-mode" aria-label="toggle color mode">
@@ -70,7 +72,7 @@
           </button>
         </span>
       </header>
-      <main class="ae-stage">
+      <main class="ae-stage" id="main">
         <div class="ae-view">
           <div class="ae-group">
             <h2 class="ae-h">SETTINGS</h2>
@@ -220,8 +222,8 @@
       </footer>
     </div>
 
-    <dialog class="ae-dialog" id="dlg-reset">
-      <p class="ae-dialog-title">Reset to defaults?</p>
+    <dialog class="ae-dialog" id="dlg-reset" aria-labelledby="dlg-reset-title">
+      <p class="ae-dialog-title" id="dlg-reset-title">Reset to defaults?</p>
       <p class="ae-dim">
         Every choice above returns to the house value. Invites already sent are
         kept.
@@ -236,13 +238,14 @@
 
     <script src="../recipes.js"></script>
     <script>
-      /* the dialog: the quiet button asks, both actions close */
+      /* the dialog: routed through window.aeDialog for focus, trap, and
+         restore — a raw showModal() leaves the dialog with no accessible
+         name; aeDialog wires aria-labelledby to .ae-dialog-title. */
       (() => {
         const dlg = document.getElementById('dlg-reset');
-        if (!dlg) return;
-        document
-          .getElementById('dlg-open')
-          .addEventListener('click', () => dlg.showModal());
+        const opener = document.getElementById('dlg-open');
+        if (!dlg || !opener) return;
+        window.aeDialog(opener, dlg);
         document
           .getElementById('dlg-cancel')
           .addEventListener('click', () => dlg.close());

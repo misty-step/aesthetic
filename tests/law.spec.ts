@@ -19,8 +19,8 @@ import {
    '@misty-step/aesthetic/law'. */
 
 const PAGES = [
-  { path: '/site/', name: 'manual' },
-  { path: '/site/primitives.html', name: 'catalog' },
+  { path: '/site/', name: 'gallery' },
+  { path: '/site/law.html', name: 'law' },
   { path: '/site/steering.html', name: 'steering' },
   { path: '/site/tokens.html', name: 'tokens' },
   { path: '/site/gauntlet/dashboard.html', name: 'dashboard' },
@@ -71,7 +71,7 @@ for (const route of INSTRUMENT_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/primitives.html#${route}`);
+      await page.goto(`/site/#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(page.locator(`[data-route="${route}"]`)).toBeVisible();
 
@@ -106,7 +106,7 @@ for (const route of STATE_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/primitives.html#${route}`);
+      await page.goto(`/site/#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(
         page.locator(`[data-route="${route}"] .states`),
@@ -131,7 +131,7 @@ for (const route of STATE_ROUTES) {
 test('the state-matrix gate catches a planted off-law state', async ({
   page,
 }) => {
-  await page.goto('/site/primitives.html#buttons');
+  await page.goto('/site/#buttons');
   await expect(page.locator('[data-route="buttons"] .states')).toBeVisible();
   // baseline: the fan is clean
   expect((await checkRadius(page)).pass).toBe(true);
@@ -156,20 +156,25 @@ test('the state-matrix gate catches a planted off-law state', async ({
 });
 
 test('the send moment resolves once and announces', async ({ page }) => {
-  await page.goto('/site/');
+  await page.goto('/site/law.html');
   const email = page.locator('#email');
   await email.scrollIntoViewIfNeeded();
   await email.fill('reader@example.com');
   await page.locator('.ae-send').click();
   await expect(page.locator('.ae-send')).toBeDisabled();
   await expect(page.locator('.ae-send')).toHaveClass(/is-sent/);
-  await expect(page.locator('.ae-sr[role="status"]')).toHaveText(/sent/i);
+  // two role="status" live regions exist on this page now: the send
+  // recipe's own (no aria-live attribute — role="status" implies polite)
+  // and the copy-button's ack (explicit aria-live="polite"). Disambiguate.
+  await expect(
+    page.locator('.ae-sr[role="status"]:not([aria-live])'),
+  ).toHaveText(/sent/i);
 });
 
 test('the catalog routes by hash and the toggle flips the mode', async ({
   page,
 }) => {
-  await page.goto('/site/primitives.html#meter');
+  await page.goto('/site/#meter');
   await expect(page.locator('[data-route="meter"]')).toBeVisible();
   await expect(page.locator('[data-route="index"]')).toBeHidden();
 
@@ -194,7 +199,7 @@ test('the catalog copy button copies the clean canonical markup', async ({
   context,
 }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('/site/primitives.html#buttons');
+  await page.goto('/site/#buttons');
   const view = page.locator('[data-route="buttons"]');
   await expect(view).toBeVisible();
 

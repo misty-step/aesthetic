@@ -185,6 +185,8 @@ const body = `<!doctype html>
     <link rel="stylesheet" href="site.css" />
   </head>
   <body>
+    <a class="gal-skip" href="#gal-main">Skip to content</a>
+    <h1 class="ae-sr">tokens — aesthetic</h1>
     <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="4" />
@@ -209,18 +211,71 @@ const body = `<!doctype html>
       <header class="ae-bar">
         <a class="ae-name" href="./">AESTHETIC</a>
         <span class="bar-end">
-          <span class="ae-chrome bar-links"
-            ><a href="./">home</a
-            ><a href="primitives.html">primitives</a
-            ><a href="https://github.com/misty-step/aesthetic">github</a></span
-          >
+          <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
+            <a href="./">primitives</a>
+            <a href="tokens.html" aria-current="page">tokens</a>
+            <a href="steering.html">steering</a>
+            <a href="law.html">law</a>
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </nav>
           <button class="ae-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
           </button>
         </span>
       </header>
-      <main class="ae-stage ae-stage-scroll">
+      <div class="gal-mid">
+        <aside class="ae-rail gal-rail">
+          <nav class="gal-nav" aria-label="primitives">
+            <a href="./">Overview</a>
+
+            <p class="ae-h">FOUNDATIONS</p>
+            <a href="./#registers">Registers</a>
+            <a href="./#chrome">Chrome</a>
+            <a href="./#icons">Icon</a>
+            <a href="./#sr">Screen reader</a>
+
+            <p class="ae-h">LAYOUT</p>
+            <a href="./#shell">Screen</a>
+            <a href="./#scroll">Stage scroll</a>
+            <a href="./#panel">Panel</a>
+            <a href="./#nav">Nav</a>
+            <a href="./#rows">Row link</a>
+            <a href="./#crumbs">Breadcrumbs</a>
+            <a href="./#shellapp">App shell</a>
+
+            <p class="ae-h">FORMS</p>
+            <a href="./#form">Input</a>
+            <a href="./#buttons">Button</a>
+            <a href="./#choice">Choice</a>
+            <a href="./#settings">Settings</a>
+            <a href="./#validation">Validation</a>
+            <a href="./#tabs">Tabs</a>
+            <a href="./#fold">Fold</a>
+
+            <p class="ae-h">FEEDBACK</p>
+            <a href="./#status">Status</a>
+            <a href="./#dialog">Dialog</a>
+            <a href="./#tag">Tag</a>
+            <a href="./#tip">Tooltip</a>
+            <a href="./#pop">Popover</a>
+            <a href="./#toast">Toast</a>
+            <a href="./#waiting">Waiting</a>
+
+            <p class="ae-h">DATA</p>
+            <a href="./#table">Table</a>
+            <a href="./#meter">Meter</a>
+            <a href="./#figures">Figures</a>
+            <a href="./#interval">Interval</a>
+            <a href="./#plot">Plot</a>
+            <a href="./#flow">Flow</a>
+
+            <p class="ae-h">CONTENT</p>
+            <a href="./#doc">Document</a>
+            <a href="./#report">Report</a>
+          </nav>
+        </aside>
+        <main class="ae-desk ae-stage-scroll" id="gal-main">
         <div class="ae-group">
           <p>
             <span class="ae-item">The tokens.</span>
@@ -229,10 +284,6 @@ const body = `<!doctype html>
               <code>tokens.json</code>; this page is generated from it, so it
               cannot drift — what you see is what you ship.</span
             >
-          </p>
-          <p class="ae-chrome">
-            the primitives: <a href="primitives.html">catalog</a> · steering:
-            <a href="steering.html">the volume knob</a>
           </p>
         </div>
 
@@ -323,11 +374,20 @@ const body = `<!doctype html>
             ${contrastPlate('dark', 2)}
           </div>
         </section>
-      </main>
+        </main>
+      </div>
       <footer class="ae-bar">
-        <p class="ae-chrome">
-          <code>pnpm add github:misty-step/aesthetic#v${version}</code>
-        </p>
+        <span>
+          <p class="ae-chrome">
+            <code>pnpm add github:misty-step/aesthetic#v${version}</code>
+          </p>
+          <p class="ae-chrome">
+            gauntlet:
+            <a href="gauntlet/dashboard.html">dashboard</a> ·
+            <a href="gauntlet/docs.html">docs</a> ·
+            <a href="gauntlet/settings.html">settings</a>
+          </p>
+        </span>
         <p class="ae-chrome">
           generated from <code>tokens.json</code> ·
           <a href="https://mistystep.io">Misty Step</a>
