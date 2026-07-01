@@ -40,25 +40,14 @@ const first = (body, re) => {
   return m ? m[1] : '';
 };
 
-/* the index table maps each route to its class names, role, and since-version
-   (a route can list several classes). */
-const idx = {};
-const table = html.match(/<table class="idx[^>]*>[\s\S]*?<\/table>/)[0];
-for (const [, tr] of table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
-  // prettier wraps long anchors so the `>` and `</a>` can land on their own
-  // lines — tolerate that, or routes like #plot lose their role/since.
-  const a = tr.match(
-    /<td class="cls">\s*<a href="#([^"]+)"[^>]*>([\s\S]*?)<\/a\s*>/,
-  );
-  if (!a) continue;
-  const route = a[1];
-  idx[route] ||= { classes: [], role: '', since: '' };
-  idx[route].classes.push(text(a[2]));
-  if (!idx[route].role)
-    idx[route].role = text(first(tr, /<td class="role">([\s\S]*?)<\/td>/));
-  if (!idx[route].since)
-    idx[route].since = text(first(tr, /<td class="since">([\s\S]*?)<\/td>/));
-}
+/* each detail view is headed by the primitive's real name; the selectors it
+   composes from ride just below in .gal-cls — that line is the feed's
+   `classes` (one combined selector string, or none for conceptual primitives
+   like the registers). */
+const classesOf = (body) => {
+  const m = body.match(/<p class="gal-cls">([\s\S]*?)<\/p>/);
+  return m ? [text(m[1])] : [];
+};
 
 /* the recipe a primitive needs is inferred from its own markup — the trigger
    class/attribute that the behavior glue binds to. No parallel hand-kept map. */
@@ -115,14 +104,13 @@ for (const [, route, body] of views) {
         .trim();
     }
   }
-  const meta = idx[route] || { classes: [], role: '', since: '' };
   const entry = {
     route,
     title: text(first(body, /<h2 class="ae-h">([\s\S]*?)<\/h2>/)),
     summary: text(first(body, /<p class="ae-dim">([\s\S]*?)<\/p>/)),
-    classes: meta.classes,
-    role: meta.role,
-    since: meta.since,
+    classes: classesOf(body),
+    role: '',
+    since: '',
     recipes: RECIPE_SIGNALS.filter(([re]) => re.test(markup + note)).map(
       ([, r]) => r,
     ),

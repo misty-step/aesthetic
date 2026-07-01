@@ -216,28 +216,21 @@ test('the catalog copy button copies the clean canonical markup', async ({
   await expect(btn).toHaveText('copy', { timeout: 2500 });
 });
 
-test('the catalog index filters by query, and / focuses the field', async ({
+test('the rail lists every primitive and marks the active route', async ({
   page,
 }) => {
   await page.goto('/site/primitives.html');
-  const field = page.locator('.idx-filter');
-  await expect(field).toBeVisible(); // JS-injected; no-JS keeps the full table
-  const rows = page.locator('.idx > tbody > tr');
-  const total = await rows.count();
 
-  // `/` focuses the filter from the index
-  await page.keyboard.press('/');
-  await expect(field).toBeFocused();
+  // the sidebar taxonomy is the navigation: overview + all 33 primitives
+  const railLinks = page.locator('.gal-nav a[href^="#"]');
+  await expect(railLinks).toHaveCount(34);
 
-  // typing narrows the table
-  await field.fill('meter');
-  const hits = () =>
-    rows.evaluateAll((trs) => trs.filter((t) => !t.hidden).length);
-  const narrowed = await hits();
-  expect(narrowed).toBeGreaterThan(0);
-  expect(narrowed).toBeLessThan(total);
-
-  // clearing restores every row
-  await field.fill('');
-  expect(await hits()).toBe(total);
+  // clicking a rail item swaps the desk to that view and marks it current
+  await page.locator('.gal-nav a[href="#meter"]').click();
+  await expect(page.locator('[data-route="meter"]')).toBeVisible();
+  await expect(page.locator('[data-route="index"]')).toBeHidden();
+  await expect(page.locator('.gal-nav a[href="#meter"]')).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
 });
