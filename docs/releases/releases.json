@@ -1,5 +1,35 @@
 [
   {
+    "html": "<h2>New Features</h2>\n<ul>\n<li>You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines</li>\n</ul>\n<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed release artifact formatting to ensure proper distribution of design tokens and documentation</li>\n</ul>\n",
+    "markdown": "## New Features\n\n- You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines\n\n## Bug Fixes\n\n- Fixed release artifact formatting to ensure proper distribution of design tokens and documentation",
+    "notes": "## New Features\n\n- You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines\n\n## Bug Fixes\n\n- Fixed release artifact formatting to ensure proper distribution of design tokens and documentation",
+    "plaintext": "New Features\nYou can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines\nBug Fixes\nFixed release artifact formatting to ensure proper distribution of design tokens and documentation",
+    "published_at": "2026-07-01T20:06:43.101346472+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines"
+          }
+        ],
+        "title": "New Features"
+      },
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Fixed release artifact formatting to ensure proper distribution of design tokens and documentation"
+          }
+        ],
+        "title": "Bug Fixes"
+      }
+    ],
+    "slack": "## New Features\n\n- You can now enforce design system consistency using the included Playwright testing gate that validates component usage against Misty Step guidelines\n\n## Bug Fixes\n\n- Fixed release artifact formatting to ensure proper distribution of design tokens and documentation",
+    "tag": "v2.9.0",
+    "version": "2.9.0"
+  },
+  {
     "html": "<h2>New Features</h2>\n<ul>\n<li>You can now enforce design system compliance in your test suite using the included Playwright gate that validates adherence to design tokens and component usage patterns.</li>\n</ul>\n<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed token documentation generation to ensure the latest design token reference is properly included in releases.</li>\n</ul>\n",
     "markdown": "## New Features\n\n- You can now enforce design system compliance in your test suite using the included Playwright gate that validates adherence to design tokens and component usage patterns.\n\n## Bug Fixes\n\n- Fixed token documentation generation to ensure the latest design token reference is properly included in releases.",
     "notes": "## New Features\n\n- You can now enforce design system compliance in your test suite using the included Playwright gate that validates adherence to design tokens and component usage patterns.\n\n## Bug Fixes\n\n- Fixed token documentation generation to ensure the latest design token reference is properly included in releases.",
