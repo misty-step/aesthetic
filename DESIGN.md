@@ -39,7 +39,11 @@ glows, nothing floats, nothing bounces.
 - Buttons are not links: links are inked text that navigates; buttons
   are contained ink shapes that act. They never share a costume.
 - Status rides the glyph: danger, success, and warning color the icon
-  (✕ ✓ !), never the sentence, never a filled pill.
+  (✕ ✓ !), never the sentence, never a filled pill. Categorical color
+  is a different axis — identity, not judgment. N agents, N series, N
+  actors need N distinguishable hues with no severity meaning; that
+  color is allowed to ride the word (`.ae-chip` + `.ae-cat-0`–`.ae-cat-7`),
+  because there's no glyph to carry it and nothing is being judged.
 - Light and dark are equals, defaulting to the system preference. The
   change itself is one soft 700ms breath (view transition).
 
@@ -63,8 +67,8 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
   the lone sanctioned family), no gradients-as-paint, no
   glassmorphism.
 - No rounded corners. Radius is 0 everywhere.
-- No filled colored pills or badges: status color rides glyphs and
-  words, never boxes.
+- No filled colored pills or badges: status color rides the glyph
+  only — never the word, never a box.
 - No font-size hierarchy, no oversized hero type.
 - No ambient or looping animation; nothing moves unprompted.
 - No link-styled buttons or button-styled links.

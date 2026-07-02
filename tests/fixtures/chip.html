@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — fixture · .ae-chip</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      body {
+        max-width: 40rem;
+        margin: 3em auto;
+        padding: 0 1.5em;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6em;
+        margin-bottom: 0.6em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- standalone fixture, not the catalog: proves .ae-chip holds the
+         law on its own without depending on site/. Register this in
+         site/primitives.html when that catalog next gets a pass. -->
+    <div class="row" data-testid="chips">
+      <span class="ae-chip ae-cat-0"
+        >canary-ui<span class="ae-chip-sub">codex-5.5</span></span
+      >
+      <span class="ae-chip ae-cat-1"
+        >triage-build<span class="ae-chip-sub">glm-5.2</span></span
+      >
+      <span class="ae-chip ae-cat-2"
+        >landmark<span class="ae-chip-sub">sonnet-5</span></span
+      >
+      <span class="ae-chip ae-cat-3"
+        >supervisor<span class="ae-chip-sub">fable-5</span></span
+      >
+      <span class="ae-chip ae-cat-4"
+        >crucible<span class="ae-chip-sub">sonnet-5</span></span
+      >
+      <span class="ae-chip ae-cat-5"
+        >bitterblossom<span class="ae-chip-sub">codex-5.5</span></span
+      >
+      <span class="ae-chip ae-cat-6"
+        >cerberus<span class="ae-chip-sub">sonnet-5</span></span
+      >
+      <span class="ae-chip ae-cat-7"
+        >weave<span class="ae-chip-sub">sonnet-5</span></span
+      >
+    </div>
+  </body>
+</html>

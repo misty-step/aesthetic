@@ -43,6 +43,20 @@
   --ae-warn: #8a5f32;
   --ae-err: #a84138;
 
+  /* categorical inks: identity, not judgment — N agents, N series, N
+     actors need N distinguishable hues with no severity meaning. Ride
+     the word on .ae-chip (see below); this is the one place a hue is
+     allowed to color text, because there is no glyph to carry it and
+     nothing is being judged. */
+  --ae-cat-0: #8c2f1f;
+  --ae-cat-1: #2c6e62;
+  --ae-cat-2: #a67c1e;
+  --ae-cat-3: #6b4c86;
+  --ae-cat-4: #46586b;
+  --ae-cat-5: #5b7444;
+  --ae-cat-6: #3d5a80;
+  --ae-cat-7: #a1452e;
+
   /* dark counterparts, resolved by the mode blocks below */
   --ae-surface-dark: #121212;
   --ae-wash-dark: #1b1b1b;
@@ -54,6 +68,14 @@
   --ae-ok-dark: #6fd2a8;
   --ae-warn-dark: #c49d72;
   --ae-err-dark: #e58379;
+  --ae-cat-0-dark: #d06a4f;
+  --ae-cat-1-dark: #54bba4;
+  --ae-cat-2-dark: #d8b25a;
+  --ae-cat-3-dark: #b98fe0;
+  --ae-cat-4-dark: #93a8c2;
+  --ae-cat-5-dark: #9bc47a;
+  --ae-cat-6-dark: #7ea1d1;
+  --ae-cat-7-dark: #e08a6a;
 
   --ae-font: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --ae-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -105,6 +127,14 @@
     --ae-ok: var(--ae-ok-dark);
     --ae-warn: var(--ae-warn-dark);
     --ae-err: var(--ae-err-dark);
+    --ae-cat-0: var(--ae-cat-0-dark);
+    --ae-cat-1: var(--ae-cat-1-dark);
+    --ae-cat-2: var(--ae-cat-2-dark);
+    --ae-cat-3: var(--ae-cat-3-dark);
+    --ae-cat-4: var(--ae-cat-4-dark);
+    --ae-cat-5: var(--ae-cat-5-dark);
+    --ae-cat-6: var(--ae-cat-6-dark);
+    --ae-cat-7: var(--ae-cat-7-dark);
   }
 }
 
@@ -129,6 +159,14 @@
   --ae-ok: var(--ae-ok-dark);
   --ae-warn: var(--ae-warn-dark);
   --ae-err: var(--ae-err-dark);
+  --ae-cat-0: var(--ae-cat-0-dark);
+  --ae-cat-1: var(--ae-cat-1-dark);
+  --ae-cat-2: var(--ae-cat-2-dark);
+  --ae-cat-3: var(--ae-cat-3-dark);
+  --ae-cat-4: var(--ae-cat-4-dark);
+  --ae-cat-5: var(--ae-cat-5-dark);
+  --ae-cat-6: var(--ae-cat-6-dark);
+  --ae-cat-7: var(--ae-cat-7-dark);
 }
 
 /* ── base ─────────────────────────────────────────────────────────── */
@@ -814,6 +852,63 @@ a.ae-name {
 .ae-tag-bare {
   border: 0;
   padding: 0;
+}
+
+/* the chip: a categorical tag — N agents, N series, N actors need N
+   distinguishable hues with no severity meaning. This is not status
+   (.ae-ok/.ae-warn/.ae-err never apply here); the hue identifies, it
+   doesn't judge, so it's the one place the law lets a hue ride the
+   word instead of a glyph. Same grammar as .ae-tag — mono, hairline,
+   no fill — with the category's hue on both the border and the word
+   (currentColor ties them). Compose with .ae-cat-0 through .ae-cat-7;
+   .ae-chip-sub holds an optional muted trailing detail. */
+.ae-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  border: 1px solid currentColor;
+  padding: 0.12em 0.55em;
+  color: var(--ae-ink-muted);
+}
+
+.ae-chip-sub {
+  opacity: 0.75;
+}
+
+.ae-cat-0 {
+  color: var(--ae-cat-0);
+}
+
+.ae-cat-1 {
+  color: var(--ae-cat-1);
+}
+
+.ae-cat-2 {
+  color: var(--ae-cat-2);
+}
+
+.ae-cat-3 {
+  color: var(--ae-cat-3);
+}
+
+.ae-cat-4 {
+  color: var(--ae-cat-4);
+}
+
+.ae-cat-5 {
+  color: var(--ae-cat-5);
+}
+
+.ae-cat-6 {
+  color: var(--ae-cat-6);
+}
+
+.ae-cat-7 {
+  color: var(--ae-cat-7);
 }
 
 /* the keycap: a quiet square of wash around the key's name */
