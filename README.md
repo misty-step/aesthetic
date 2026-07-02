@@ -156,6 +156,12 @@ Use `.ae-status` for inline status lines and `.ae-icon-row` /
 Use `.ae-logo` with `.ae-app-mark` for app identity in headers and
 sidebars.
 
+Use `.ae-list-rows` / `.ae-list-row` / `.ae-list-cell` when a feed row
+has several fields that need to be compared at a glance. The incident
+shape is time, app, type, status: labels and values align into cells,
+Lucide/app marks give each field a scan target, and the status word
+still stays ink.
+
 ```html
 <p class="ae-status">
   <svg class="ae-icon ae-err" data-lucide="circle-x">…</svg>
@@ -289,6 +295,7 @@ framework; they are documentation that happens to execute.
 | `.ae-icon`                                              | Lucide icon sizing: 1.5px stroke, round caps, rides with text                                |
 | `.ae-status` / `.ae-icon-row` / `.ae-list-icon`         | Icon-forward status lines and list rows; the glyph scans first, text stays ink               |
 | `.ae-logo` / `.ae-app-mark`                             | App identity slot: a Lucide project mark sized for headers and rails                         |
+| `.ae-list-rows` / `.ae-list-row` / `.ae-list-cell`      | Multi-field feed rows: time, app, type, status decomposed into aligned cells                 |
 | `.ae-mode`                                              | Icon mode toggle: sun/moon rotate-crossfade                                                  |
 | `.ae-panel`                                             | Soft depth for dense content: light shadow in light mode, wash in dark, radius 0             |
 | `.ae-name`                                              | The name: weight 800, letterspaced, never large                                              |

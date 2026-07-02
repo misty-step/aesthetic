@@ -502,6 +502,88 @@ a:hover {
   color: var(--ae-ink-muted);
 }
 
+/* decomposed list rows: incident feeds and dense activity lists should not
+   collapse into "time · app · type · status" prose. Each field gets a
+   label, a value, and an optional Lucide/app mark; status hue still rides
+   only the glyph. Compose .ae-row-link when the whole row navigates. */
+.ae-list-rows {
+  display: grid;
+  border-block: 1px solid var(--ae-line);
+}
+
+.ae-list-row {
+  display: grid;
+  grid-template-columns:
+    minmax(5.5em, 0.8fr) minmax(9em, 1.25fr) minmax(9em, 1fr)
+    minmax(7em, 0.9fr);
+  align-items: center;
+  gap: var(--ae-space-4);
+  padding: 0.68em 0;
+  border-bottom: 1px solid var(--ae-line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ae-list-row:last-child {
+  border-bottom: 0;
+}
+
+.ae-list-row:hover {
+  color: inherit;
+}
+
+.ae-list-cell {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--ae-space-2);
+  align-items: center;
+}
+
+.ae-list-cell > .ae-icon,
+.ae-list-cell > .ae-app-mark {
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.ae-list-cell > .ae-icon:not(.ae-ok):not(.ae-warn):not(.ae-err) {
+  flex: none;
+  color: var(--ae-ink-muted);
+}
+
+.ae-list-label {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  color: var(--ae-ink-faint);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ae-list-value {
+  min-width: 0;
+  color: var(--ae-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ae-list-time .ae-list-value {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ae-ink-muted);
+}
+
+.ae-list-status {
+  justify-self: end;
+}
+
+.ae-list-status .ae-list-value {
+  font-weight: var(--ae-w-medium);
+}
+
 /* app identity: a Lucide project mark sized by the register it lives
    in. The same mark works in a 13px rail and a 16px header. */
 .ae-logo {
@@ -2484,6 +2566,14 @@ details.ae-fold:last-of-type {
 
   .ae-wall-figure {
     text-align: left;
+  }
+
+  .ae-list-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ae-list-status {
+    justify-self: stretch;
   }
 }
 
