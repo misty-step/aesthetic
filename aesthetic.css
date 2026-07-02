@@ -1246,6 +1246,67 @@ input.ae-switch:checked::before {
   color: var(--ae-ink-muted);
 }
 
+/* the wall: a grid of instrument cards for many-of-a-kind status —
+   services, agents, targets. Each card is a hairline plate; status
+   rides the glyph (.ae-ok/.ae-warn/.ae-err on .ae-wall-mark), never a
+   filled tile or a colored border. The right column is optional: a
+   figure, a timestamp, a trace of recent readings. */
+.ae-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: var(--ae-space-6);
+}
+
+.ae-wall-card {
+  border: 1px solid var(--ae-line);
+  padding: var(--ae-space-4) var(--ae-space-5);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--ae-space-4);
+}
+
+.ae-wall-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--ae-space-2) var(--ae-space-3);
+}
+
+.ae-wall-mark {
+  font-family: var(--ae-font-mono);
+  font-weight: var(--ae-w-black);
+}
+
+.ae-wall-meta {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+  margin-top: 0.2em;
+}
+
+.ae-wall-figure {
+  text-align: right;
+}
+
+.ae-wall-figure .ae-num {
+  display: block;
+}
+
+.ae-wall-time {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
+/* a trace: the wall figure's recent-readings strip — glyphs, not a
+   sparkline; the discrete cousin of .ae-spark */
+.ae-wall-trace {
+  display: block;
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--ae-ink-muted);
+  white-space: nowrap;
+}
+
 /* ── instruments: ink on a ruled line ─────────────────────────────── */
 
 /* the meter: a wash channel and an ink fill — a ruled line, never a
@@ -2168,6 +2229,14 @@ details.ae-fold:last-of-type {
 
   .ae-desk {
     padding: 1.6em 1.2rem;
+  }
+
+  .ae-wall-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ae-wall-figure {
+    text-align: left;
   }
 }
 

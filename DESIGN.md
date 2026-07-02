@@ -105,7 +105,11 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    stage in accent). A history is a spine (`.ae-trail` — a hairline
    run, a square tick per entry, time and actor in the instrument
    register, the body in prose; not a table, because entries carry
-   variable-length bodies and states that columns can't hold).
+   variable-length bodies and states that columns can't hold). Many of
+   a kind is a wall (`.ae-wall` — an auto-fit grid of hairline cards;
+   each carries its status on a glyph, never a filled tile, with an
+   optional right column for a figure, a timestamp, and a trace of
+   recent readings — the discrete cousin of `.ae-spark`).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed; opt-in report registers add a lede,
