@@ -1,3 +1,9 @@
+# [2.14.0](https://github.com/misty-step/aesthetic/compare/v2.13.0...v2.14.0) (2026-07-02)
+
+### Features
+
+- **primitives:** add icon-forward status patterns ([#12](https://github.com/misty-step/aesthetic/issues/12)) ([662acd1](https://github.com/misty-step/aesthetic/commit/662acd12b647a2f0d9e9f9f419e1654b96f9512a))
+
 # [2.13.0](https://github.com/misty-step/aesthetic/compare/v2.12.0...v2.13.0) (2026-07-02)
 
 ### Features
