@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — fixture · .ae-stat-badges</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      body {
+        max-width: 48rem;
+        margin: 3em auto;
+        padding: 0 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- standalone fixture: the canary header summary expressed as
+         structured badges rather than "9 apps · 7 up · 2 down …". -->
+    <div class="ae-stat-badges" aria-label="Canary summary">
+      <span class="ae-stat-badge">
+        <span class="ae-stat-value">9</span>
+        <span class="ae-stat-label">apps</span>
+      </span>
+      <span class="ae-stat-badge">
+        <span class="ae-stat-mark ae-ok" aria-hidden="true">✓</span>
+        <span class="ae-stat-value">7</span>
+        <span class="ae-stat-label">up</span>
+      </span>
+      <span class="ae-stat-badge">
+        <span class="ae-stat-mark ae-err" aria-hidden="true">×</span>
+        <span class="ae-stat-value">2</span>
+        <span class="ae-stat-label">down</span>
+      </span>
+      <span class="ae-stat-badge">
+        <span class="ae-stat-value">2</span>
+        <span class="ae-stat-label">open incidents</span>
+      </span>
+      <span class="ae-stat-badge">
+        <span class="ae-stat-mark ae-err" aria-hidden="true">!</span>
+        <span class="ae-stat-value">3</span>
+        <span class="ae-stat-label">errors/24h</span>
+      </span>
+    </div>
+  </body>
+</html>
