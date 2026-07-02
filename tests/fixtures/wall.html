@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — fixture · .ae-wall</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      body {
+        max-width: 60rem;
+        margin: 3em auto;
+        padding: 0 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- standalone fixture, not the catalog: proves .ae-wall holds the
+         law on its own without depending on site/. Register this in
+         site/primitives.html when that catalog next gets a pass. -->
+    <div class="ae-wall" data-testid="wall">
+      <article class="ae-wall-card">
+        <div>
+          <div class="ae-wall-head">
+            <span class="ae-wall-mark ae-err" aria-hidden="true">&#10007;</span>
+            <span class="ae-strong">billing-service</span>
+            <span class="ae-tag">down</span>
+          </div>
+          <div class="ae-wall-meta">
+            0 targets &middot; 1 monitors &middot; 0 errors
+          </div>
+        </div>
+        <div class="ae-wall-figure">
+          <span class="ae-num">n/a</span>
+          <span class="ae-wall-time">last 14:43:20</span>
+        </div>
+      </article>
+      <article class="ae-wall-card">
+        <div>
+          <div class="ae-wall-head">
+            <span class="ae-wall-mark ae-err" aria-hidden="true">&#10007;</span>
+            <span class="ae-strong">checkout-service</span>
+            <span class="ae-tag">down</span>
+          </div>
+          <div class="ae-wall-meta">
+            1 targets &middot; 0 monitors &middot; 3 errors
+          </div>
+        </div>
+        <div class="ae-wall-figure">
+          <span class="ae-num">0%</span>
+          <span class="ae-wall-time">last 14:51:18</span>
+          <span class="ae-wall-trace"
+            >&#10007;&#10007;&#10007;&#10007;&#10007;</span
+          >
+        </div>
+      </article>
+      <article class="ae-wall-card">
+        <div>
+          <div class="ae-wall-head">
+            <span class="ae-wall-mark ae-ok" aria-hidden="true">&#10003;</span>
+            <span class="ae-strong">canary</span>
+            <span class="ae-tag">up</span>
+          </div>
+          <div class="ae-wall-meta">
+            1 targets &middot; 0 monitors &middot; 0 errors
+          </div>
+        </div>
+        <div class="ae-wall-figure">
+          <span class="ae-num">100%</span>
+          <span class="ae-wall-time">last 14:51:16</span>
+          <span class="ae-wall-trace"
+            >&#10003;&#10003;&#10003;&#10003;&#10003;</span
+          >
+        </div>
+      </article>
+    </div>
+  </body>
+</html>
