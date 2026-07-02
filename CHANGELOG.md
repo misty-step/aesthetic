@@ -1,3 +1,9 @@
+# [2.13.0](https://github.com/misty-step/aesthetic/compare/v2.12.0...v2.13.0) (2026-07-02)
+
+### Features
+
+- **primitives:** add stat badges ([#11](https://github.com/misty-step/aesthetic/issues/11)) ([891c4fa](https://github.com/misty-step/aesthetic/commit/891c4fa1abd66a11d9b8d00227d1cbabc51aa231))
+
 # [2.12.0](https://github.com/misty-step/aesthetic/compare/v2.11.0...v2.12.0) (2026-07-02)
 
 ### Features
