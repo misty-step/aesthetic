@@ -1,3 +1,13 @@
+# [2.10.0](https://github.com/misty-step/aesthetic/compare/v2.9.0...v2.10.0) (2026-07-02)
+
+### Bug Fixes
+
+- **release:** drop steering.html/gauntlet from the version-pin sweep ([#8](https://github.com/misty-step/aesthetic/issues/8)) ([9c20d68](https://github.com/misty-step/aesthetic/commit/9c20d681a7d21af54e4afb0218eb1c68254f95bc)), closes [#7](https://github.com/misty-step/aesthetic/issues/7) [#6](https://github.com/misty-step/aesthetic/issues/6) [#7](https://github.com/misty-step/aesthetic/issues/7)
+
+### Features
+
+- **primitives:** add the trail — a hairline-spine activity/timeline primitive ([#7](https://github.com/misty-step/aesthetic/issues/7)) ([c9b14fa](https://github.com/misty-step/aesthetic/commit/c9b14fa86d20cfb80867063b41ae2d482a0e3a22))
+
 # [2.9.0](https://github.com/misty-step/aesthetic/compare/v2.8.1...v2.9.0) (2026-07-01)
 
 ### Features
