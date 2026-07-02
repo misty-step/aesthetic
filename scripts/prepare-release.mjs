@@ -25,9 +25,6 @@ const pinFiles = [
   'docs/ADOPTING.md',
   'site/index.html',
   'site/primitives.html',
-  'site/steering.html',
-  'site/gauntlet/docs.html',
-  'site/gauntlet/settings.html',
 ];
 
 export function prepareRelease(next) {
