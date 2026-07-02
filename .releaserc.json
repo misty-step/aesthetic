@@ -22,9 +22,6 @@
           "docs/ADOPTING.md",
           "site/index.html",
           "site/primitives.html",
-          "site/steering.html",
-          "site/gauntlet/docs.html",
-          "site/gauntlet/settings.html",
           "site/r/**",
           "site/tokens.html",
           "recipes/recipes.js"

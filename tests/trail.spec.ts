@@ -22,5 +22,13 @@ for (const mode of MODES) {
     // the spine renders with three entries, one marked active
     await expect(page.locator('.ae-trail-item')).toHaveCount(3);
     await expect(page.locator('.ae-trail-item.is-active')).toHaveCount(1);
+
+    // .ae-trail is an <ol> — it must not carry the browser's default
+    // numbered markers or list indent
+    await expect(page.locator('.ae-trail')).toHaveCSS(
+      'list-style-type',
+      'none',
+    );
+    await expect(page.locator('.ae-trail')).toHaveCSS('padding-left', '0px');
   });
 }
