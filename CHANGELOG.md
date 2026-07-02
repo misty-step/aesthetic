@@ -1,3 +1,9 @@
+## [2.14.1](https://github.com/misty-step/aesthetic/compare/v2.14.0...v2.14.1) (2026-07-02)
+
+### Bug Fixes
+
+- **recipes:** make mode toggle rapid and interruptible ([#13](https://github.com/misty-step/aesthetic/issues/13)) ([6fe43f2](https://github.com/misty-step/aesthetic/commit/6fe43f23b02fd6e2d3d750d9ea43eca25ca4a3b6))
+
 # [2.14.0](https://github.com/misty-step/aesthetic/compare/v2.13.0...v2.14.0) (2026-07-02)
 
 ### Features
