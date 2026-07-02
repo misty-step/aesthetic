@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>lab-charts — Observable Plot skinned to the system</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <script src="./vendor/d3.min.js"></script>
+    <script src="./vendor/plot.umd.min.js"></script>
+    <style>
+      body {
+        padding: var(--ae-space-8) var(--ae-space-6) var(--ae-space-8);
+        max-width: 68rem;
+        margin: 0 auto;
+      }
+      .lab-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: var(--ae-space-6);
+        border-bottom: 1px solid var(--ae-line);
+        padding-bottom: var(--ae-space-4);
+      }
+      .lab-title {
+        font-weight: var(--ae-w-black);
+      }
+      .lab-mode {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        border: 1px solid var(--ae-line);
+        background: none;
+        padding: 0.35em 0.8em;
+        cursor: pointer;
+      }
+      .lab-mode:hover {
+        color: var(--ae-ink);
+        border-color: var(--ae-ink-faint);
+      }
+      .lab-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--ae-space-6);
+        margin-bottom: var(--ae-space-8);
+      }
+      .lab-cell {
+        border: 1px solid var(--ae-line);
+        padding: var(--ae-space-5);
+      }
+      .lab-cap {
+        font-family: var(--ae-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--ae-ink-muted);
+        text-transform: uppercase;
+        margin-bottom: var(--ae-space-4);
+        display: flex;
+        justify-content: space-between;
+      }
+      .lab-cap .lab-tag {
+        color: var(--ae-ink-faint);
+      }
+      .lab-figure {
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lab-note {
+        font-size: 13px;
+        color: var(--ae-ink-faint);
+        border-top: 1px solid var(--ae-line);
+        padding-top: 0.8em;
+        margin-top: var(--ae-space-4);
+      }
+      section.lab-section {
+        margin-bottom: var(--ae-space-8);
+      }
+      .lab-section > h2 {
+        font-weight: var(--ae-w-black);
+        margin-bottom: 0.3em;
+      }
+      .lab-section > p.lab-dek {
+        color: var(--ae-ink-muted);
+        margin-bottom: var(--ae-space-5);
+      }
+      @media (max-width: 900px) {
+        .lab-pair {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── plot theming: kill every default chrome the library ships ──
+         no rounded marks, no fills-as-paint, no legend swatches, no
+         box-shadow tooltip. This is the entire skin. */
+      .aeplot-fig svg {
+        overflow: visible;
+      }
+      .aeplot-fig text {
+        font-family: var(--ae-font-mono);
+        fill: var(--ae-ink-faint);
+      }
+      .aeplot-fig .aeplot-axislabel text {
+        fill: var(--ae-ink-muted);
+        letter-spacing: 0.06em;
+      }
+      /* Plot's own tip mark renders a <g> with a rect + text; we hairline it */
+      .aeplot-fig g[aria-label='tip'] path {
+        fill: var(--ae-surface);
+        stroke: var(--ae-ink-faint);
+        stroke-width: 1;
+        filter: none;
+      }
+      .aeplot-fig g[aria-label='tip'] text {
+        fill: var(--ae-ink);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lab-head">
+      <div>
+        <p class="ae-chrome" style="color: var(--ae-ink-muted)">
+          prototypes / lab-charts
+        </p>
+        <p class="lab-title">Chart library evaluation — Observable Plot</p>
+      </div>
+      <button class="lab-mode" id="modeToggle" type="button">
+        toggle mode
+      </button>
+    </div>
+
+    <p style="max-width: 42rem; color: var(--ae-ink-muted)">
+      Each pair sets the current CSS-only instrument beside the same data drawn
+      by
+      <a href="https://observablehq.com/plot/" target="_blank" rel="noopener"
+        >Observable Plot</a
+      >, skinned to the law: ink on paper, hairlines, radius 0, one 13px mono
+      register, tabular numerals, accent spent once. See
+      <code>README.md</code> in this directory for the full evaluation.
+    </p>
+
+    <section class="lab-section">
+      <h2>1 · trend</h2>
+      <p class="lab-dek">
+        <code>.ae-spark</code> draws a pen stroke with no axes — perfect for an
+        inline figure, but it cannot carry ticks, multiple series, or a hover
+        readout. Plot's <code>line</code> mark gives the same ink stroke plus a
+        real axis when the surface needs one.
+      </p>
+      <div class="lab-pair">
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>css-only</span><span class="lab-tag">.ae-spark</span>
+          </p>
+          <div class="lab-figure">
+            <div style="display: flex; flex-direction: column; gap: 1.2em">
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.4em">
+                  spend · today
+                </p>
+                <svg
+                  class="ae-spark"
+                  viewBox="0 0 100 24"
+                  preserveAspectRatio="none"
+                  style="width: 14em; height: 2.4em"
+                >
+                  <polyline
+                    points="0,18 10,17 20,14 30,15 40,10 50,12 60,7 70,9 80,4 90,6 100,2"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <p class="lab-note">
+            No axis, no scale, no legend — a glance figure only.
+          </p>
+        </div>
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>observable plot</span><span class="lab-tag">line + dot</span>
+          </p>
+          <div class="lab-figure aeplot-fig" id="chart-trend"></div>
+          <p class="lab-note">Two named series, ticked axis, hover readout.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <h2>2 · bar</h2>
+      <p class="lab-dek">
+        The kit has no bar primitive today — <code>.ae-meter</code> is a
+        single-value gauge, not a categorical comparison. Plot's
+        <code>barY</code> mark fills the gap: square corners, ink fill, a status
+        ink only where the value crosses a threshold.
+      </p>
+      <div class="lab-pair">
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>css-only</span
+            ><span class="lab-tag">.ae-meter × 5 (closest today)</span>
+          </p>
+          <div class="lab-figure">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.9em;
+              "
+            >
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.3em">pathfinder</p>
+                <div class="ae-meter">
+                  <span class="ae-meter-fill" style="width: 41%"></span>
+                </div>
+              </div>
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.3em">mason</p>
+                <div class="ae-meter">
+                  <span class="ae-meter-fill ae-warn" style="width: 96%"></span>
+                </div>
+              </div>
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.3em">scribe</p>
+                <div class="ae-meter">
+                  <span class="ae-meter-fill" style="width: 9%"></span>
+                </div>
+              </div>
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.3em">bursar</p>
+                <div class="ae-meter">
+                  <span class="ae-meter-fill ae-err" style="width: 12%"></span>
+                </div>
+              </div>
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.3em">courier</p>
+                <div class="ae-meter">
+                  <span class="ae-meter-fill" style="width: 5%"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="lab-note">
+            Meters stacked to fake a bar chart — no shared baseline axis, no
+            category ticks.
+          </p>
+        </div>
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>observable plot</span><span class="lab-tag">barY</span>
+          </p>
+          <div class="lab-figure aeplot-fig" id="chart-bar"></div>
+          <p class="lab-note">
+            Shared baseline, ticked value axis, square bars — no radius, no
+            gradient fill.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <h2>3 · scatter + frontier</h2>
+      <p class="lab-dek">
+        <code>.ae-plot</code> is hand-authored SVG — the consumer computes the
+        projection and the frontier path themselves. Plot computes the scales
+        and can still leave the frontier line and glyph styling to us; the
+        markup shape (ticks, dashed frontier, accent pick, dominated fade)
+        carries over almost verbatim.
+      </p>
+      <div class="lab-pair">
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>css-only</span
+            ><span class="lab-tag">.ae-plot (hand-authored svg)</span>
+          </p>
+          <div class="lab-figure">
+            <svg
+              class="ae-plot"
+              viewBox="0 0 320 260"
+              role="img"
+              aria-label="cost by quality scatter with pareto frontier"
+              style="max-width: 320px"
+            >
+              <path class="ae-plot-axis" d="M 40 10 L 40 230 L 300 230" />
+              <line class="ae-plot-tick" x1="40" y1="230" x2="40" y2="234" />
+              <line class="ae-plot-tick" x1="170" y1="230" x2="170" y2="234" />
+              <line class="ae-plot-tick" x1="300" y1="230" x2="300" y2="234" />
+              <text
+                class="ae-plot-ticklabel"
+                x="40"
+                y="246"
+                text-anchor="middle"
+              >
+                0
+              </text>
+              <text
+                class="ae-plot-ticklabel"
+                x="170"
+                y="246"
+                text-anchor="middle"
+              >
+                3
+              </text>
+              <text
+                class="ae-plot-ticklabel"
+                x="300"
+                y="246"
+                text-anchor="middle"
+              >
+                6
+              </text>
+              <path class="ae-plot-frontier" d="M 70 150 L 140 70 L 260 30" />
+              <circle class="ae-plot-dot" cx="70" cy="150" r="4" />
+              <circle
+                class="ae-plot-dot is-dominated"
+                cx="170"
+                cy="110"
+                r="4"
+              />
+              <circle class="ae-plot-dot is-dominated" cx="220" cy="90" r="4" />
+              <circle class="ae-plot-dot is-chosen" cx="140" cy="70" r="4" />
+              <circle class="ae-plot-dot" cx="260" cy="30" r="4" />
+              <text class="ae-plot-label is-chosen" x="148" y="73">pick</text>
+            </svg>
+          </div>
+          <p class="lab-note">Frontier and projection computed by hand.</p>
+        </div>
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>observable plot</span
+            ><span class="lab-tag">dot + line + text</span>
+          </p>
+          <div class="lab-figure aeplot-fig" id="chart-scatter"></div>
+          <p class="lab-note">Same visual grammar; scales computed for us.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <h2>4 · interval / range band</h2>
+      <p class="lab-dek">
+        <code>.ae-ci</code> composes a wash band, an ink mean tick, and a
+        hover-revealed exact readout on a single-row track. Plot's
+        <code>rectY</code> + <code>ruleY</code> marks give the same band-and-
+        tick grammar across a shared axis when several intervals need to sit on
+        one scale.
+      </p>
+      <div class="lab-pair">
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>css-only</span><span class="lab-tag">.ae-ci</span>
+          </p>
+          <div class="lab-figure">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1.4em;
+              "
+            >
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.4em">
+                  sonnet · v4
+                </p>
+                <div
+                  class="ae-ci is-lead"
+                  role="img"
+                  aria-label="score 86.9, interval 83.1 to 90.7"
+                >
+                  <span class="ae-ci-band" style="left: 66%; width: 22%"></span>
+                  <span class="ae-ci-mean" style="left: 77%"></span>
+                  <span class="ae-ci-detail"
+                    >μ 86.9 <span class="ae-ci-bound">[83.1, 90.7]</span></span
+                  >
+                </div>
+              </div>
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.4em">opus · v4</p>
+                <div
+                  class="ae-ci"
+                  role="img"
+                  aria-label="score 85.6, interval 82.9 to 88.3"
+                >
+                  <span class="ae-ci-band" style="left: 65%; width: 16%"></span>
+                  <span class="ae-ci-mean" style="left: 73%"></span>
+                  <span class="ae-ci-detail"
+                    >μ 85.6 <span class="ae-ci-bound">[82.9, 88.3]</span></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="lab-note">Each interval is its own row/track.</p>
+        </div>
+        <div class="lab-cell">
+          <p class="lab-cap">
+            <span>observable plot</span
+            ><span class="lab-tag">rectY + ruleY</span>
+          </p>
+          <div class="lab-figure aeplot-fig" id="chart-ci"></div>
+          <p class="lab-note">
+            All intervals share one scale — direct comparison.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function tok(name) {
+        return getComputedStyle(document.documentElement)
+          .getPropertyValue(name)
+          .trim();
+      }
+
+      function reducedMotion() {
+        return matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      function fadeInOnce(node) {
+        if (reducedMotion()) return;
+        node.style.opacity = 0;
+        node.style.transition = 'opacity 240ms cubic-bezier(0.23,1,0.32,1)';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            node.style.opacity = 1;
+          });
+        });
+      }
+
+      function renderCharts() {
+        const ink = tok('--ae-ink');
+        const inkMuted = tok('--ae-ink-muted');
+        const inkFaint = tok('--ae-ink-faint');
+        const line = tok('--ae-line');
+        const accent = tok('--ae-accent');
+        const err = tok('--ae-err');
+        const mono = 'Geist Mono, ui-monospace, monospace';
+        const sans = 'Geist, system-ui, sans-serif';
+
+        const base = {
+          width: 460,
+          height: 220,
+          style: {
+            fontFamily: mono,
+            fontSize: '11px',
+            background: 'transparent',
+            overflow: 'visible',
+          },
+          x: { label: null, tickSize: 4, stroke: line },
+          y: { label: null, tickSize: 4, stroke: line, grid: false },
+        };
+
+        // ── 1 · trend: two named series, ink + accent ──
+        const trendA = [
+          [0, 41],
+          [1, 39],
+          [2, 44],
+          [3, 42],
+          [4, 48],
+          [5, 46],
+          [6, 52],
+          [7, 50],
+          [8, 55],
+          [9, 53],
+          [10, 58],
+        ].map(([x, y]) => ({ x, y, series: 'this week' }));
+        const trendB = [
+          [0, 30],
+          [1, 31],
+          [2, 29],
+          [3, 33],
+          [4, 32],
+          [5, 35],
+          [6, 34],
+          [7, 37],
+          [8, 36],
+          [9, 38],
+          [10, 39],
+        ].map(([x, y]) => ({ x, y, series: 'last week' }));
+
+        const trend = Plot.plot({
+          ...base,
+          color: {
+            domain: ['this week', 'last week'],
+            range: [accent, inkFaint],
+          },
+          marks: [
+            Plot.ruleY([0], { stroke: line }),
+            Plot.line(trendB, {
+              x: 'x',
+              y: 'y',
+              stroke: 'series',
+              strokeWidth: 1.5,
+              strokeDasharray: '3,3',
+            }),
+            Plot.line(trendA, {
+              x: 'x',
+              y: 'y',
+              stroke: 'series',
+              strokeWidth: 1.5,
+            }),
+            Plot.dot(trendA.slice(-1), { x: 'x', y: 'y', fill: accent, r: 3 }),
+            Plot.text(trendA.slice(-1), {
+              x: 'x',
+              y: 'y',
+              text: (d) => ` ${d.y}`,
+              dx: 8,
+              fill: ink,
+              fontFamily: mono,
+              fontSize: 11,
+            }),
+            Plot.tip(
+              trendA.concat(trendB),
+              Plot.pointerX({
+                x: 'x',
+                y: 'y',
+                title: (d) => `${d.series}\n${d.y}`,
+              }),
+            ),
+          ],
+        });
+        mount('chart-trend', trend);
+
+        // ── 2 · bar: category comparison, status ink over threshold ──
+        const bars = [
+          { name: 'pathfinder', value: 41 },
+          { name: 'mason', value: 96 },
+          { name: 'scribe', value: 9 },
+          { name: 'bursar', value: 12 },
+          { name: 'courier', value: 5 },
+        ];
+        const barChart = Plot.plot({
+          ...base,
+          x: { ...base.x, label: null },
+          y: { ...base.y, domain: [0, 100] },
+          marks: [
+            Plot.ruleY([0], { stroke: line }),
+            Plot.barY(bars, {
+              x: 'name',
+              y: 'value',
+              fill: (d) => (d.value >= 90 ? err : ink),
+              insetLeft: 6,
+              insetRight: 6,
+            }),
+            Plot.text(bars, {
+              x: 'name',
+              y: 'value',
+              text: (d) => d.value,
+              dy: -8,
+              fill: ink,
+              fontFamily: mono,
+              fontSize: 11,
+            }),
+          ],
+        });
+        mount('chart-bar', barChart);
+
+        // ── 3 · scatter + pareto frontier ──
+        const points = [
+          { cost: 0.7, quality: 62, name: 'haiku' },
+          { cost: 3.0, quality: 78, name: 'sonnet·v3' },
+          { cost: 4.6, quality: 84, name: 'opus·v3' },
+          { cost: 3.2, quality: 88, name: 'sonnet·v4', chosen: true },
+          { cost: 6.0, quality: 96, name: 'opus·v4' },
+        ];
+        const frontier = points.filter((d) =>
+          ['haiku', 'sonnet·v4', 'opus·v4'].includes(d.name),
+        );
+        const scatter = Plot.plot({
+          ...base,
+          height: 240,
+          x: { ...base.x, label: 'cost · $/1k →' },
+          y: { ...base.y, label: '↑ quality' },
+          marks: [
+            Plot.line(frontier, {
+              x: 'cost',
+              y: 'quality',
+              stroke: ink,
+              strokeWidth: 1.5,
+              strokeDasharray: '5,4',
+            }),
+            Plot.dot(points, {
+              x: 'cost',
+              y: 'quality',
+              r: 4,
+              fill: (d) =>
+                d.chosen ? accent : frontier.includes(d) ? ink : inkFaint,
+            }),
+            Plot.text(
+              points.filter((d) => d.chosen),
+              {
+                x: 'cost',
+                y: 'quality',
+                text: 'name',
+                dx: 10,
+                fill: accent,
+                fontFamily: mono,
+                fontSize: 11,
+                textAnchor: 'start',
+              },
+            ),
+            Plot.tip(
+              points,
+              Plot.pointer({
+                x: 'cost',
+                y: 'quality',
+                title: (d) => `${d.name}\n$${d.cost} · ${d.quality}`,
+              }),
+            ),
+          ],
+        });
+        mount('chart-scatter', scatter);
+
+        // ── 4 · CI / range band on a shared scale ──
+        const intervals = [
+          { name: 'sonnet · v4', lo: 83.1, hi: 90.7, mean: 86.9, lead: true },
+          { name: 'opus · v4', lo: 82.9, hi: 88.3, mean: 85.6 },
+          { name: 'haiku · v4', lo: 71.2, hi: 79.4, mean: 75.3 },
+        ];
+        const ci = Plot.plot({
+          ...base,
+          height: 200,
+          marginLeft: 90,
+          x: { ...base.x, domain: [65, 95], label: 'score →' },
+          y: { label: null, domain: intervals.map((d) => d.name).reverse() },
+          marks: [
+            Plot.ruleY(intervals, { y: 'name', stroke: line }),
+            Plot.rectY(intervals, {
+              y1: 'name',
+              y2: 'name',
+              x1: 'lo',
+              x2: 'hi',
+              y: 'name',
+              fill: 'none',
+              stroke: inkFaint,
+              interval: null,
+            }),
+            Plot.ruleX(intervals, {
+              x1: 'lo',
+              x2: 'hi',
+              y: 'name',
+              stroke: inkFaint,
+              strokeWidth: 8,
+            }),
+            Plot.dot(intervals, {
+              x: 'mean',
+              y: 'name',
+              r: 3,
+              fill: (d) => (d.lead ? accent : ink),
+            }),
+            Plot.text(intervals, {
+              x: 'hi',
+              y: 'name',
+              text: (d) => ` ${d.mean.toFixed(1)}`,
+              dx: 8,
+              fill: ink,
+              fontFamily: mono,
+              fontSize: 11,
+              textAnchor: 'start',
+            }),
+          ],
+        });
+        mount('chart-ci', ci);
+      }
+
+      function mount(id, node) {
+        const host = document.getElementById(id);
+        host.innerHTML = '';
+        host.appendChild(node);
+        node.querySelectorAll('text').forEach((t) => {
+          t.setAttribute('fill', t.getAttribute('fill') || 'currentColor');
+        });
+        fadeInOnce(node);
+      }
+
+      renderCharts();
+
+      document.getElementById('modeToggle').addEventListener('click', () => {
+        const html = document.documentElement;
+        const next = html.classList.contains('dark') ? 'light' : 'dark';
+        html.classList.remove('light', 'dark');
+        html.classList.add(next);
+        html.style.colorScheme = next;
+        try {
+          localStorage.setItem('ae-mode', next);
+        } catch (e) {}
+        renderCharts();
+      });
+    </script>
+  </body>
+</html>

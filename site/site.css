@@ -177,146 +177,201 @@ footer.ae-bar a:hover {
   margin-inline: auto;
 }
 
-.idx {
-  display: block;
-  width: 100%;
-}
-
-/* the gallery: every primitive rendered live as a specimen. The table
-   structure stays (it's the filter substrate); CSS turns it into a grid
-   of hairline-framed cells — the plate vocabulary, not card shadows. */
-.idx thead {
-  display: none;
-}
-
-.idx tbody {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 1px;
-  background: var(--ae-line);
-  border-top: 1px solid var(--ae-line);
-  border-bottom: 1px solid var(--ae-line);
-}
-
-.idx tr {
+/* ── the gallery shell: sticky header + rail/desk band + sticky footer.
+   Every persistent-nav page (gallery, tokens, steering, law) composes
+   this way: .ae-screen (no page scroll) wraps a header .ae-bar, this
+   middle band, and a footer .ae-bar. The band reuses .ae-rail/.ae-desk
+   from the app-shell archetype — .gal-rail/.gal-desk only add the
+   width/fit rules this composition needs. ────────────────────────── */
+.gal-mid {
+  flex: 1;
+  min-height: 0;
+  width: min(var(--ae-measure-wide), 100% - 5rem);
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  background: var(--ae-surface);
-  min-width: 0;
+  overflow: hidden;
 }
 
-.idx tr[hidden] {
+/* the desk scrolls; its scrollbar never shows. The chrome stands
+   still and the content moves under it, like paper behind a window. */
+.gal-mid .ae-desk {
+  scrollbar-width: none;
+}
+
+.gal-mid .ae-desk::-webkit-scrollbar {
   display: none;
 }
 
-/* the specimen: the live render on a wash ground, filling the cell.
-   min-width: 0 is the standard fix for flex/grid children that would
-   otherwise expand to their content's intrinsic width (tables, nav,
-   SVGs) and push the grid track wider, causing stage-level scroll. */
-.idx .specimen {
-  background: var(--ae-wash);
-  padding: 1.1em;
-  min-height: 4.5em;
-  min-width: 0;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  box-sizing: border-box;
+/* a focused plate heading is a screen-reader landing, not a control —
+   no ring on programmatic focus */
+.ae-view h2.ae-h:focus {
+  outline: none;
 }
 
-.idx .specimen > * {
+/* skip link: visually hidden until focused, first in the DOM */
+.gal-skip {
+  position: fixed;
+  top: -3em;
+  left: 1em;
+  z-index: var(--ae-z-toast);
+  background: var(--ae-surface);
+  color: var(--ae-ink);
+  border: 1px solid var(--ae-ink);
+  padding: 0.6em 1em;
+  transition: top var(--ae-quick) var(--ae-ease);
+}
+
+.gal-skip:focus {
+  top: 1em;
+}
+
+/* the topnav rides the header's chrome register, next to the toggle */
+.gal-topnav a[aria-current] {
+  color: var(--ae-ink);
+  text-decoration-color: var(--ae-ink);
+}
+
+/* ── the overview: a live specimen grid, grouped like the rail ────── */
+.gal-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2em;
+}
+
+.gal-group-h {
+  margin-bottom: 0.8em;
+}
+
+/* hairlines ride the cards, not the container: a short last row leaves
+   plain surface behind it, never a wash slab of exposed grid ground. */
+.gal-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  border-top: 1px solid var(--ae-line);
+  border-left: 1px solid var(--ae-line);
+}
+
+.gal-card {
+  background: var(--ae-surface);
+  border-right: 1px solid var(--ae-line);
+  border-bottom: 1px solid var(--ae-line);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+  animation-delay: calc(var(--gal-i, 0) * 25ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gal-card {
+    animation: none;
+  }
+}
+
+.gal-card:focus-visible {
+  outline: 2px solid var(--ae-ink);
+  outline-offset: -2px;
+}
+
+/* the specimen: the live render on a wash ground, a fixed-height stage
+   so every card in a band reads at the same size regardless of how
+   little or much content its primitive needs — no card stretches into
+   dead wash, none look empty. Content that would overflow crops rather
+   than inflating the card (min-width: 0 keeps intrinsically-wide
+   children — tables, nav, SVGs — from pushing the grid track wider and
+   causing stage-level scroll). pointer-events: none — the card is the
+   link; the specimen only shows the look, never the behavior (the
+   detail view has the real thing). */
+.gal-specimen {
+  background: var(--ae-wash);
+  padding: 1.1em;
+  height: 6.5em;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.gal-specimen > * {
   max-width: 100%;
   min-width: 0;
 }
 
-/* the meta strip: class name, role, since — below the specimen on surface */
-.idx .spec-meta {
-  padding: 0.65em 1.1em 0.75em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.05em;
+.gal-meta {
+  padding: 0.6em 1.1em 0.7em;
   border-top: 1px solid var(--ae-line);
-  min-width: 0;
+
+  /* absorbs row-height variance so neighbors never expose grid ground */
+  flex: 1;
 }
 
-.idx .spec-cls {
+.gal-meta-cls {
   font-family: var(--ae-font-mono);
   font-size: 13px;
   color: var(--ae-ink);
-  text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.idx .spec-cls:hover {
+.gal-card:hover .gal-meta-cls,
+.gal-card:focus-visible .gal-meta-cls {
   color: var(--ae-accent);
 }
 
-.idx .spec-role {
-  color: var(--ae-ink-muted);
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.idx .spec-since {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ae-ink-faint);
-}
-
-/* specimen overrides: specimens show the look, not the behavior. The
-   cell clips at its boundary (line 224) so no inline scrollbars appear
-   and no content escapes to inflate the stage's scrollWidth. Don't clip
-   descendants universally — that destroys internal overflow semantics
-   (e.g. [data-ae-tip] tooltips). The detail view has the real primitive. */
-
-.idx .specimen .ae-table {
+/* specimen overrides: shrink dense primitives to fit the card */
+.gal-specimen .ae-table {
   width: 100%;
   table-layout: fixed;
   font-size: 11px;
 }
 
-.idx .specimen .ae-table th,
-.idx .specimen .ae-table td {
+.gal-specimen .ae-table th,
+.gal-specimen .ae-table td {
   padding: 0.15em 0.4em;
   white-space: nowrap;
 }
 
-.idx .specimen .ae-toast {
+.gal-specimen .ae-toast {
   position: relative;
   bottom: auto;
   right: auto;
   max-width: none;
   width: 100%;
+  animation: none;
 }
 
-.idx .specimen .ae-doc {
+.gal-specimen .ae-doc {
   font-size: 13px;
 }
 
-.idx .specimen .ae-doc h2 {
+.gal-specimen .ae-doc h2 {
   margin: 0 0 0.2em;
 }
 
-.idx .specimen .ae-doc p {
+.gal-specimen .ae-doc p {
   margin: 0 0 0.2em;
 }
 
-.idx .specimen .ae-doc pre {
+.gal-specimen .ae-doc pre {
   font-size: 11px;
   padding: 0.3em 0.5em;
   white-space: nowrap;
 }
 
-/* the index filter: a constrained input above the grid */
-.idx-filter {
-  max-width: 20em;
-  margin-bottom: 1.4em;
+.gal-specimen .ae-flow,
+.gal-specimen .ae-plot {
+  width: 100%;
+  height: auto;
+}
+
+.gal-specimen .ae-panel,
+.gal-specimen .ae-plate {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* detail views: render beside canonical markup */
@@ -333,14 +388,27 @@ footer.ae-bar a:hover {
   }
 }
 
+/* soft-wrap: long lines wrap rather than clip or force a horizontal
+   scrollbar. A hanging indent keeps wrapped continuations legible
+   against the opening token. */
 .src-code {
   background: var(--ae-wash);
+  border: 1px solid var(--ae-line);
   padding: 1.6em;
   margin: 0;
   font-size: 13px;
   line-height: 1.75;
-  overflow-x: auto;
   color: var(--ae-ink-muted);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  padding-left: 2.4em;
+  text-indent: -0.8em;
+}
+
+.dark .src-code,
+[data-ae-mode='dark'] .src-code {
+  background: var(--ae-wash);
+  border-color: var(--ae-line);
 }
 
 .src-code .t {
@@ -348,7 +416,8 @@ footer.ae-bar a:hover {
 }
 
 /* copy affordance: a quiet chrome-register button per source block. The wrap
-   holds it fixed at the top-right while the pre scrolls under it. */
+   holds it fixed at the top-right. AA-contrast at rest (muted ink, not
+   faint) in both modes. */
 .src-codewrap {
   position: relative;
 }
@@ -357,13 +426,16 @@ footer.ae-bar a:hover {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
+  overflow: hidden;
   font-family: var(--ae-font-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--ae-ink-faint);
+  color: var(--ae-ink-muted);
   background: var(--ae-surface);
   border: 1px solid var(--ae-line);
-  padding: 0.25em 0.7em;
+  padding: 0.3em 0.8em;
+  min-width: 4.6em;
+  min-height: 24px;
   cursor: pointer;
 }
 
@@ -373,10 +445,53 @@ footer.ae-bar a:hover {
   border-color: var(--ae-ink-faint);
 }
 
-/* the ack: weight + the word, never a colored pill — status stays off the box */
+/* the copy confirm: the word itself flips to "copied" (so assistive tech
+   and toHaveText assertions read the real state, not a decorative
+   overlay) and a check glyph draws in beside it, once, then both revert
+   — the send-moment resolve, scoped to the site's own chrome. */
+.src-copy .cp-check {
+  display: inline-block;
+  width: 0;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  vertical-align: -0.15em;
+  transition:
+    opacity var(--ae-gentle) var(--ae-ease),
+    width var(--ae-gentle) var(--ae-ease),
+    margin-left var(--ae-gentle) var(--ae-ease);
+}
+
+.src-copy.is-copied .cp-check {
+  width: 1.1em;
+  margin-left: 0.35em;
+  opacity: 1;
+}
+
 .src-copy.is-copied {
   color: var(--ae-ink);
   font-weight: var(--ae-w-medium);
+  border-color: var(--ae-ink-faint);
+}
+
+/* a plate trigger: run the behavior the specimen is otherwise static
+   about (send moment, toast, meter fill, flow advance) — the chrome
+   register, never a second button costume. */
+.plate-run {
+  font-family: var(--ae-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ae-ink-muted);
+  background: transparent;
+  border: 1px solid var(--ae-line);
+  padding: 0.3em 0.8em;
+  min-height: 24px;
+  cursor: pointer;
+}
+
+.plate-run:hover,
+.plate-run:focus-visible {
+  color: var(--ae-ink);
   border-color: var(--ae-ink-faint);
 }
 
@@ -420,8 +535,12 @@ footer.ae-bar a:hover {
   color: var(--ae-ink-muted);
 }
 
+/* plate-to-plate steps ride the back-link line, right-aligned */
 .back-link {
   margin-bottom: 1.6em;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.6em;
 }
 
 /* small structural mock for the shell detail */

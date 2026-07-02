@@ -1,7 +1,7 @@
 {
   "name": "@misty-step/aesthetic",
   "version": "2.9.0",
-  "note": "The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/primitives.html (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.",
+  "note": "The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/index.html, the gallery (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.",
   "law": {
     "size": "Exactly one font size on every surface; the headline is heavier and blacker, never larger.",
     "registers": "Three inks by three weights (400 / 550 / 800): nine registers.",
@@ -63,7 +63,7 @@
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<footer class=\"ae-foot\">\n  <span>v2.9.0 · MIT</span>\n  <span class=\"ae-foot-links\">\n    <a href=\"…\">github</a><a href=\"…\">npm</a>\n  </span>\n</footer>"
+      "markup": "<footer class=\"ae-foot\">\n  <span>v2.8.1 · MIT</span>\n  <span class=\"ae-foot-links\">\n    <a href=\"…\">github</a><a href=\"…\">npm</a>\n  </span>\n</footer>"
     },
     {
       "route": "icons",
@@ -186,8 +186,9 @@
       "classes": [".ae-tabs"],
       "role": "",
       "since": "",
-      "recipes": ["nav.js", "views.js"],
-      "markup": "<div class=\"ae-tabs\" role=\"tablist\">\n  <button role=\"tab\" aria-selected=\"true\">readme</button>\n  <button role=\"tab\" aria-selected=\"false\">tokens</button>\n  <button role=\"tab\" aria-selected=\"false\">releases</button>\n  <span class=\"ae-nav-ind\"></span>\n</div>\n<div class=\"ae-view\" role=\"tabpanel\">…</div>"
+      "recipes": ["nav.js"],
+      "markup": "<div class=\"ae-tabs\">\n  <button aria-current=\"page\">readme</button>\n  <button>tokens</button>\n  <button>releases</button>\n  <span class=\"ae-nav-ind\"></span>\n</div>",
+      "note": "no wired panels here: drop role=\"tablist\"/\"tab\"\nunless you build the roving-tabindex keyboard pattern"
     },
     {
       "route": "tag",
@@ -319,7 +320,7 @@
     {
       "route": "shellapp",
       "title": "App shell",
-      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. See it composed: the dashboard gauntlet.",
+      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves.",
       "classes": [".ae-shell / .ae-rail / .ae-desk"],
       "role": "",
       "since": "",
@@ -329,7 +330,7 @@
     {
       "route": "doc",
       "title": "Document",
-      "summary": "The document archetype: rendered markdown drops in unclassed. Headings are weight, never size; rules are hairlines; quotes are inset. See it composed: the docs gauntlet.",
+      "summary": "The document archetype: rendered markdown drops in unclassed. Headings are weight, never size; rules are hairlines; quotes are inset.",
       "classes": [".ae-doc"],
       "role": "",
       "since": "",

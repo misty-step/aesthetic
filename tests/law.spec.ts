@@ -19,13 +19,8 @@ import {
    '@misty-step/aesthetic/law'. */
 
 const PAGES = [
-  { path: '/site/', name: 'manual' },
-  { path: '/site/primitives.html', name: 'catalog' },
-  { path: '/site/steering.html', name: 'steering' },
+  { path: '/site/', name: 'gallery' },
   { path: '/site/tokens.html', name: 'tokens' },
-  { path: '/site/gauntlet/dashboard.html', name: 'dashboard' },
-  { path: '/site/gauntlet/docs.html', name: 'docs' },
-  { path: '/site/gauntlet/settings.html', name: 'settings' },
 ];
 
 const MODES = ['light', 'dark'] as const;
@@ -71,7 +66,7 @@ for (const route of INSTRUMENT_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/primitives.html#${route}`);
+      await page.goto(`/site/#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(page.locator(`[data-route="${route}"]`)).toBeVisible();
 
@@ -106,7 +101,7 @@ for (const route of STATE_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/primitives.html#${route}`);
+      await page.goto(`/site/#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(
         page.locator(`[data-route="${route}"] .states`),
@@ -131,7 +126,7 @@ for (const route of STATE_ROUTES) {
 test('the state-matrix gate catches a planted off-law state', async ({
   page,
 }) => {
-  await page.goto('/site/primitives.html#buttons');
+  await page.goto('/site/#buttons');
   await expect(page.locator('[data-route="buttons"] .states')).toBeVisible();
   // baseline: the fan is clean
   expect((await checkRadius(page)).pass).toBe(true);
@@ -156,20 +151,27 @@ test('the state-matrix gate catches a planted off-law state', async ({
 });
 
 test('the send moment resolves once and announces', async ({ page }) => {
-  await page.goto('/site/');
-  const email = page.locator('#email');
-  await email.scrollIntoViewIfNeeded();
-  await email.fill('reader@example.com');
-  await page.locator('.ae-send').click();
-  await expect(page.locator('.ae-send')).toBeDisabled();
-  await expect(page.locator('.ae-send')).toHaveClass(/is-sent/);
-  await expect(page.locator('.ae-sr[role="status"]')).toHaveText(/sent/i);
+  await page.goto('/site/#buttons');
+  // the live demo form's control, not the static states-strip specimen
+  const send = page.locator(
+    '[data-route="buttons"] form[data-ae-demo] .ae-send',
+  );
+  await send.scrollIntoViewIfNeeded();
+  await send.click();
+  await expect(send).toBeDisabled();
+  await expect(send).toHaveClass(/is-sent/);
+  // two role="status" live regions exist on this page now: the send
+  // recipe's own (no aria-live attribute — role="status" implies polite)
+  // and the copy-button's ack (explicit aria-live="polite"). Disambiguate.
+  await expect(
+    page.locator('.ae-sr[role="status"]:not([aria-live])'),
+  ).toHaveText(/sent/i);
 });
 
 test('the catalog routes by hash and the toggle flips the mode', async ({
   page,
 }) => {
-  await page.goto('/site/primitives.html#meter');
+  await page.goto('/site/#meter');
   await expect(page.locator('[data-route="meter"]')).toBeVisible();
   await expect(page.locator('[data-route="index"]')).toBeHidden();
 
@@ -194,7 +196,7 @@ test('the catalog copy button copies the clean canonical markup', async ({
   context,
 }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('/site/primitives.html#buttons');
+  await page.goto('/site/#buttons');
   const view = page.locator('[data-route="buttons"]');
   await expect(view).toBeVisible();
 
@@ -216,21 +218,21 @@ test('the catalog copy button copies the clean canonical markup', async ({
   await expect(btn).toHaveText('copy', { timeout: 2500 });
 });
 
-test('the rail lists every primitive and marks the active route', async ({
+test('the specimen grid lists every primitive and navigates', async ({
   page,
 }) => {
   await page.goto('/site/primitives.html');
 
-  // the sidebar taxonomy is the navigation: overview + all 33 primitives
-  const railLinks = page.locator('.gal-nav a[href^="#"]');
-  await expect(railLinks).toHaveCount(34);
+  // the grid is the navigation: one live card per primitive
+  const cards = page.locator('.gal-card[href^="#"]');
+  await expect(cards).toHaveCount(33);
 
-  // clicking a rail item swaps the desk to that view and marks it current
-  await page.locator('.gal-nav a[href="#meter"]').click();
+  // clicking a card swaps the desk to that plate, which carries
+  // prev/next steps wired from the grid's own order
+  await page.locator('.gal-card[href="#meter"]').click();
   await expect(page.locator('[data-route="meter"]')).toBeVisible();
   await expect(page.locator('[data-route="index"]')).toBeHidden();
-  await expect(page.locator('.gal-nav a[href="#meter"]')).toHaveAttribute(
-    'aria-current',
-    'page',
+  await expect(page.locator('[data-route="meter"] .plate-steps a')).toHaveCount(
+    2,
   );
 });

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — the misty step design system, set as a manual</title>
+    <title>aesthetic — the misty step design system</title>
     <meta
       name="description"
-      content="One stylesheet, read as its own manual: eleven chapters — the law, nine registers, the accent, status on the glyph, controls, data instruments, the dialog, motion as feedback, steering — every demonstration rendered live by the file it documents."
+      content="Thirty-three primitives, rendered live by the file that documents them: the full render beside the canonical markup, every state included."
     />
     <script>
       try {
@@ -23,8 +23,24 @@
     />
     <link rel="stylesheet" href="aesthetic.css" />
     <link rel="stylesheet" href="site.css" />
+    <style>
+      /* gallery glue: layout only; the system supplies the rest. */
+      .gal-cls {
+        font-family: var(--ae-font-mono);
+        font-size: 13px;
+        color: var(--ae-ink-muted);
+        margin: 0.1em 0 0.9em;
+      }
+      /* views hold a comfortable content column rather than stretching the
+         full desk on wide screens */
+      .ae-desk > .ae-view {
+        max-width: var(--ae-measure-wide);
+      }
+    </style>
   </head>
   <body>
+    <a class="gal-skip" href="#gal-main">Skip to content</a>
+    <h1 class="ae-sr">aesthetic — the misty step design system</h1>
     <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="4" />
@@ -60,557 +76,2977 @@
       <header class="ae-bar">
         <a class="ae-name" href="./">AESTHETIC</a>
         <span class="bar-end">
-          <span class="ae-chrome bar-links"
-            ><a href="primitives.html">primitives</a
-            ><a href="https://github.com/misty-step/aesthetic">github</a></span
-          >
+          <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
+            <a href="tokens.html">tokens</a>
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </nav>
           <button class="ae-mode" aria-label="toggle color mode">
             <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
             <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
           </button>
         </span>
       </header>
-      <main class="ae-stage ae-stage-scroll">
-        <div class="ae-view">
-          <div class="man-doc">
-            <nav class="man-toc ae-chrome" aria-label="manual contents">
-              <p class="man-toc-h">CONTENTS</p>
-              <a href="#aesthetic"><span class="no">00</span>aesthetic</a>
-              <a href="#law"><span class="no">01</span>the law</a>
-              <a href="#registers"><span class="no">02</span>registers</a>
-              <a href="#accent"><span class="no">03</span>the accent</a>
-              <a href="#status"><span class="no">04</span>status</a>
-              <a href="#controls"><span class="no">05</span>controls</a>
-              <a href="#data"><span class="no">06</span>data</a>
-              <a href="#dialog"><span class="no">07</span>dialog</a>
-              <a href="#motion"><span class="no">08</span>motion</a>
-              <a href="#steering"><span class="no">09</span>steering</a>
-              <a href="#colophon"><span class="no">10</span>colophon</a>
-            </nav>
-            <div class="man-body">
-              <section class="ae-group man-ch" id="aesthetic">
-                <h2 class="ae-h">
-                  <span class="x-faint">00 · </span>AESTHETIC
-                </h2>
-                <p class="ae-lede">
-                  One stylesheet is the whole system: ink on paper, hairline
-                  rules, hard corners, one font size on every surface. This page
-                  is its manual — eleven chapters scrolling inside the stage,
-                  every demonstration rendered by the file it documents. View
-                  source; the markup is the documentation.
-                </p>
-                <p class="man-demo">
-                  <code>pnpm add github:misty-step/aesthetic#v2.9.0</code>
-                </p>
-                <p class="ae-dim man-cap">
-                  Pin the tag. Upgrades are deliberate; the file never moves
-                  under you.
-                </p>
-              </section>
+      <div class="gal-mid">
+        <main class="ae-desk" id="gal-main">
+          <div class="ae-view is-on" data-route="index">
+            <div class="ae-group gal-lede">
+              <h2 class="ae-h" tabindex="-1">PRIMITIVES</h2>
+              <p>
+                <span class="ae-item"
+                  >One stylesheet, thirty-three primitives,</span
+                >
+                <span class="ae-dim"
+                  >rendered live by the file that documents them.</span
+                >
+              </p>
+            </div>
 
-              <section class="ae-group man-ch" id="law">
-                <h2 class="ae-h"><span class="x-faint">01 · </span>THE LAW</h2>
-                <ul class="law-list">
-                  <li>
-                    <span class="ae-item">One size.</span> Exactly one font size
-                    on every surface; the headline is heavier and blacker, never
-                    larger.
-                  </li>
-                  <li>
-                    <span class="ae-item">Nine registers.</span> Three inks by
-                    three weights (400 / 550 / 800).
-                  </li>
-                  <li>
-                    <span class="ae-item">The accent is yours.</span> Define
-                    your scheme and use it with judgment; identity comes from
-                    ink, hairlines, type, and motion. Color earns its place; it
-                    is not ambient.
-                  </li>
-                  <li>
-                    <span class="ae-item">Status rides the glyph.</span>
-                    Danger, success, and warning color the icon — never the
-                    sentence, never a filled pill.
-                  </li>
-                  <li>
-                    <span class="ae-item">Screens, not pages.</span> Every view
-                    fits the viewport; when content exceeds one screen, a quiet
-                    nav swaps views — or the document scrolls inside the stage,
-                    like this one.
-                  </li>
-                  <li>
-                    <span class="ae-item">Motion is feedback.</span> Never
-                    decoration: small, brief, eased. State resolutions are
-                    gentler and resolve once — success persists, it is never
-                    rewound. Nothing changes size while it animates.
-                  </li>
-                  <li>
-                    <span class="ae-item">Buttons are not links.</span>
-                    Contained ink shapes. Links navigate, buttons act.
-                  </li>
-                  <li>
-                    <span class="ae-item">Light and dark.</span> Defaulting to
-                    the system, with a user toggle.
-                  </li>
-                </ul>
-              </section>
-
-              <section class="ae-group man-ch" id="registers">
-                <h2 class="ae-h">
-                  <span class="x-faint">02 · </span>REGISTERS
-                </h2>
-                <p>
-                  Hierarchy comes from ink and weight, never from scale. Three
-                  inks by three weights make nine registers; the headline is
-                  heavier and blacker, never larger.
-                </p>
-                <div class="man-demo">
-                  <div class="reg-grid">
-                    <span class="rh"></span><span class="rh">400</span
-                    ><span class="rh">550</span><span class="rh">800</span>
-                    <span class="rh">ink</span><span class="w4">quiet</span
-                    ><span class="w5">steady</span><span class="w8">loud</span>
-                    <span class="rh">muted</span
-                    ><span class="ae-dim w4">quiet</span
-                    ><span class="ae-dim w5">steady</span
-                    ><span class="ae-dim w8">loud</span>
-                    <span class="rh">faint</span
-                    ><span class="x-faint w4">quiet</span
-                    ><span class="x-faint w5">steady</span
-                    ><span class="x-faint w8">loud</span>
-                  </div>
-                </div>
-              </section>
-
-              <section class="ae-group man-ch" id="accent">
-                <h2 class="ae-h">
-                  <span class="x-faint">03 · </span>THE ACCENT
-                </h2>
-                <p>
-                  The accent is yours: define your scheme and use it with
-                  judgment. Identity comes from ink, hairlines, type, and motion
-                  — the system carries any hue without losing itself. Here it is
-                  under the house ultramarine:
-                </p>
-                <div class="man-demo">
-                  <p>
-                    <span class="ae-accent">running</span>
-                    <span class="ae-dim">· deploy 4121</span>
-                  </p>
-                  <p class="ae-dim">
-                    <a href="primitives.html#registers"
-                      >a link warms on hover</a
-                    >
-                  </p>
-                </div>
-                <p class="ae-dim man-cap">
-                  Steer it downstream: override <code>--ae-accent</code> /
-                  <code>--ae-accent-dark</code> and every surface follows.
-                </p>
-              </section>
-
-              <section class="ae-group man-ch" id="status">
-                <h2 class="ae-h"><span class="x-faint">04 · </span>STATUS</h2>
-                <p>
-                  Danger, success, and warning color the glyph — never the
-                  sentence, never a filled pill.
-                </p>
-                <div class="man-demo">
-                  <p>
-                    <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
-                    Deploy 4118 failed on preview.
-                  </p>
-                  <p>
-                    <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
-                    Deploy 4120 resolved on production.
-                  </p>
-                  <p>
-                    <svg class="ae-icon ae-warn">
-                      <use href="#i-triangle-alert" />
-                    </svg>
-                    Certificate expires in 14 days.
-                  </p>
-                </div>
-                <p class="ae-dim man-cap">
-                  The hue rides the glyph; the sentence stays ink.
-                </p>
-              </section>
-
-              <section class="ae-group man-ch" id="controls">
-                <h2 class="ae-h"><span class="x-faint">05 · </span>CONTROLS</h2>
-                <p>
-                  Settings rest as quiet hairline rows — label left, current
-                  value right — and fold a chooser open when asked. One row open
-                  at a time.
-                </p>
-                <div class="man-demo">
-                  <div class="ae-settings">
-                    <button class="ae-setting" type="button">
-                      Region <span class="ae-setting-val">us-east-1</span>
-                    </button>
-                    <div class="ae-setting-panel">
-                      <div class="ae-menu">
-                        <button type="button" class="is-sel">us-east-1</button>
-                        <button type="button">eu-west-1</button>
-                        <button type="button">ap-south-1</button>
+            <div class="gal-groups">
+              <section>
+                <h3 class="ae-h gal-group-h">FOUNDATIONS</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#registers" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <div style="text-align: center">
+                        <p class="w4" style="margin: 0">quiet</p>
+                        <p class="w5" style="margin: 0">steady</p>
+                        <p class="w8" style="margin: 0">loud</p>
                       </div>
                     </div>
-                    <button class="ae-setting" type="button">
-                      Visibility <span class="ae-setting-val">internal</span>
-                    </button>
-                    <div class="ae-setting-panel">
-                      <div class="ae-menu">
-                        <button type="button">public</button>
-                        <button type="button" class="is-sel">internal</button>
-                        <button type="button">private</button>
-                      </div>
-                    </div>
-                    <button class="ae-setting" type="button">
-                      Auto-deploy <span class="ae-setting-val">on</span>
-                    </button>
-                    <div class="ae-setting-panel">
-                      <div class="ae-menu">
-                        <button type="button" class="is-sel">on</button>
-                        <button type="button">off</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p class="man-gap">
-                  Choice marks are squares — a circle would be the only curve in
-                  the system, so there isn't one. The switch slides an ink thumb
-                  along a hairline channel; state reads from position and fill,
-                  never from a green pill.
-                </p>
-                <div class="man-demo">
-                  <label class="ae-choice"
-                    ><input class="ae-check" type="checkbox" checked /> Email me
-                    on deploy</label
-                  >
-                  <label class="ae-choice"
-                    ><input
-                      class="ae-radio"
-                      type="radio"
-                      name="man-vis"
-                      checked
-                    />
-                    Public</label
-                  >
-                  <label class="ae-choice"
-                    ><input class="ae-radio" type="radio" name="man-vis" />
-                    Internal</label
-                  >
-                  <label class="ae-choice"
-                    ><input class="ae-switch" type="checkbox" checked />
-                    Auto-deploy</label
-                  >
-                </div>
-                <p class="man-gap">
-                  Forms are lines, not boxes. The nearest field warms as the
-                  pointer approaches; sending resolves once and persists — it is
-                  never rewound.
-                </p>
-                <form class="man-demo man-form" data-ae-anticipate data-ae-demo>
-                  <label class="ae-label" for="email">Email</label>
-                  <input
-                    class="ae-input"
-                    id="email"
-                    type="email"
-                    placeholder="you@misty-step.com"
-                  />
-                  <button class="ae-button ae-send" type="submit">
-                    <span class="ae-send-label">Send message</span>
-                    <span class="ae-send-done" aria-hidden="true"
-                      >Sent <svg class="ae-icon"><use href="#i-check" /></svg
-                    ></span>
-                  </button>
-                </form>
-              </section>
-
-              <section class="ae-group man-ch" id="data">
-                <h2 class="ae-h"><span class="x-faint">06 · </span>DATA</h2>
-                <p>
-                  Tables are instruments: 13px mono, lowercase headers on a wash
-                  band, hairline row rules — framed as numbered plates.
-                </p>
-                <div class="man-demo">
-                  <div class="ae-plate">
-                    <p class="ae-plate-cap">
-                      TABLE 1 · CONSUMERS RIDING THE SYSTEM
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Registers</span>
                     </p>
-                    <table class="ae-table">
-                      <thead>
-                        <tr>
-                          <th>consumer</th>
-                          <th class="num">pin</th>
-                          <th>status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="ae-item">misty-step.com</td>
-                          <td class="num">v2.9.0</td>
-                          <td>
-                            <svg class="ae-icon ae-ok">
-                              <use href="#i-check" />
-                            </svg>
-                            current
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="ae-item">phrazzld.com</td>
-                          <td class="num">v2.2.0</td>
-                          <td>
-                            <svg class="ae-icon ae-warn">
-                              <use href="#i-triangle-alert" />
-                            </svg>
-                            two tags behind
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="ae-item">aesthetic site</td>
-                          <td class="num">HEAD</td>
-                          <td>
-                            <svg class="ae-icon ae-ok">
-                              <use href="#i-check" />
-                            </svg>
-                            rides HEAD
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="ae-item">next</td>
-                          <td class="num">—</td>
-                          <td>
-                            <svg class="ae-icon ae-err">
-                              <use href="#i-x" />
-                            </svg>
-                            unpinned
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <p class="ae-plate-note">
-                      The site is the only consumer on HEAD — view-source is
-                      documentation. Everyone else pins a tag and upgrades
-                      deliberately.
+                  </a>
+                  <a class="gal-card" href="#chrome" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <p class="ae-chrome" style="margin: 0">
+                        v2.8.1 · MIT ·
+                        <span style="text-decoration: underline">github</span>
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Chrome</span>
                     </p>
-                  </div>
+                  </a>
+                  <a class="gal-card" href="#icons" style="--gal-i: 2">
+                    <div class="gal-specimen">
+                      <p style="margin: 0">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                        <svg class="ae-icon ae-warn" style="margin-left: 0.5em">
+                          <use href="#i-triangle-alert" />
+                        </svg>
+                        <svg class="ae-icon ae-err" style="margin-left: 0.5em">
+                          <use href="#i-x" />
+                        </svg>
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Icon</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#sr" style="--gal-i: 3">
+                    <div class="gal-specimen">
+                      <p class="ae-dim" style="margin: 0; text-align: center">
+                        present to assistive tech,<br />invisible on paper
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Screen reader</span>
+                    </p>
+                  </a>
                 </div>
-                <p class="man-gap">
-                  Gauges are ruled lines, never glowing pills; figures are
-                  tabular numerals, loud by weight; trends are pen strokes.
-                </p>
-                <div class="man-demo">
-                  <p class="ae-chrome" style="margin-bottom: 0.4em">
-                    turn spend · <span class="ae-num">62%</span> · warn at 80
-                  </p>
-                  <div
-                    class="ae-meter"
-                    role="meter"
-                    aria-valuenow="62"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-label="turn spend"
-                  >
-                    <span class="ae-meter-fill" style="width: 62%"></span>
-                    <span class="ae-meter-mark" style="left: 80%"></span>
-                  </div>
-                  <p style="margin-top: 1em">
-                    <span class="ae-num ae-strong">48,211</span>
-                    <span class="ae-delta ae-num ae-dim"
-                      ><svg
-                        class="ae-icon ae-ok"
-                        viewBox="0 0 24 24"
-                        style="width: 0.9em; height: 0.9em"
+              </section>
+
+              <section>
+                <h3 class="ae-h gal-group-h">LAYOUT</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#shell" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <div class="mini-shell" style="width: 100%">
+                        <div class="ms-bar">
+                          <span>NAME</span><span>nav</span>
+                        </div>
+                        <div class="ms-stage" style="padding: 0.9em 1em">
+                          the stage
+                        </div>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Screen</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#scroll" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <div class="mini-shell" style="width: 100%">
+                        <div class="ms-bar" style="padding: 0.4em 0.8em">
+                          <span>chrome</span>
+                        </div>
+                        <div
+                          class="ms-stage"
+                          style="
+                            padding: 0.5em 0.8em;
+                            text-align: left;
+                            overflow: hidden;
+                            max-height: 2.6em;
+                          "
+                        >
+                          <p class="ae-dim" style="margin: 0; font-size: 12px">
+                            the document scrolls here — chrome never moves
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Stage scroll</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#panel" style="--gal-i: 2">
+                    <div class="gal-specimen">
+                      <div class="ae-panel" style="width: 100%">
+                        <p class="ae-item" style="margin: 0">Dense content</p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Panel</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#nav" style="--gal-i: 3">
+                    <div class="gal-specimen">
+                      <nav class="ae-nav">
+                        <button class="is-active" tabindex="-1">work</button>
+                        <button tabindex="-1">writing</button>
+                        <span
+                          class="ae-nav-ind"
+                          style="left: 0; width: 2.6em"
+                        ></span>
+                      </nav>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Nav</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#rows" style="--gal-i: 4">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <p style="margin: 0">
+                          <span class="ae-item">A project</span>
+                        </p>
+                        <p style="margin: 0">
+                          <span class="ae-dim">— its quiet description</span>
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Row link</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#crumbs" style="--gal-i: 5">
+                    <div class="gal-specimen">
+                      <nav
+                        class="ae-crumbs"
+                        aria-label="breadcrumb"
+                        tabindex="-1"
                       >
-                        <path d="M12 19V5" />
-                        <path d="m5 12 7-7 7 7" /></svg
-                      >4.2%</span
-                    >
-                    <svg
-                      class="ae-spark"
-                      viewBox="0 0 100 24"
-                      preserveAspectRatio="none"
-                      aria-hidden="true"
-                    >
-                      <polyline
-                        points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
-                      />
-                    </svg>
-                  </p>
+                        <ol>
+                          <li><span>projects</span></li>
+                          <li><span aria-current="page">deploys</span></li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Breadcrumbs</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#shellapp" style="--gal-i: 6">
+                    <div class="gal-specimen">
+                      <div class="mini-shell" style="width: 100%">
+                        <div
+                          style="display: grid; grid-template-columns: 4em 1fr"
+                        >
+                          <div
+                            style="
+                              border-right: 1px solid var(--ae-line);
+                              padding: 0.5em 0.7em;
+                            "
+                          >
+                            rail
+                          </div>
+                          <div style="padding: 0.5em 0.7em">desk</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">App shell</span>
+                    </p>
+                  </a>
                 </div>
               </section>
 
-              <section class="ae-group man-ch" id="dialog">
-                <h2 class="ae-h"><span class="x-faint">07 · </span>DIALOG</h2>
-                <p>
-                  A decision is asked in the panel costume, in the top layer,
-                  over a whisper of paper dim. Escape and the quiet button
-                  decline it.
-                </p>
-                <div class="man-demo">
-                  <button
-                    class="ae-button ae-button-quiet"
-                    type="button"
-                    id="dlg-open"
-                  >
-                    Delete the example
-                  </button>
+              <section>
+                <h3 class="ae-h gal-group-h">FORMS</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#form" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <label class="ae-label">Name</label>
+                        <input
+                          class="ae-input"
+                          tabindex="-1"
+                          placeholder="Phaedrus"
+                        />
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Input</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#buttons" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <button class="ae-button" tabindex="-1">Primary</button>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Button</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#choice" style="--gal-i: 2">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <label class="ae-choice"
+                          ><input
+                            class="ae-check"
+                            type="checkbox"
+                            tabindex="-1"
+                            checked
+                          />
+                          Email me</label
+                        >
+                        <label class="ae-choice"
+                          ><input
+                            class="ae-switch"
+                            type="checkbox"
+                            tabindex="-1"
+                            checked
+                          />
+                          Auto-deploy</label
+                        >
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Choice</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#settings" style="--gal-i: 3">
+                    <div class="gal-specimen">
+                      <div class="ae-settings" style="width: 100%">
+                        <button class="ae-setting" type="button" tabindex="-1">
+                          Theme <span class="ae-setting-val">system</span>
+                        </button>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Settings</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#validation" style="--gal-i: 4">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <label class="ae-label">Email</label>
+                        <input
+                          class="ae-input"
+                          tabindex="-1"
+                          value="phaedrus@"
+                          aria-invalid="true"
+                        />
+                        <p class="ae-field-note">
+                          <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                          Not a valid address.
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Validation</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#tabs" style="--gal-i: 5">
+                    <div class="gal-specimen">
+                      <div class="ae-tabs">
+                        <button aria-current="page" tabindex="-1">
+                          readme
+                        </button>
+                        <button tabindex="-1">tokens</button>
+                        <span
+                          class="ae-nav-ind"
+                          style="left: 0; width: 3.6em"
+                        ></span>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Tabs</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#fold" style="--gal-i: 6">
+                    <div class="gal-specimen">
+                      <details class="ae-fold" style="width: 100%">
+                        <summary>What does the import cost?</summary>
+                      </details>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Fold</span>
+                    </p>
+                  </a>
                 </div>
-                <dialog class="ae-dialog" id="dlg">
-                  <p class="ae-dialog-title">Delete example?</p>
-                  <p class="ae-dim">It only ever existed to be deleted.</p>
-                  <div class="ae-dialog-acts">
-                    <button class="ae-button ae-button-quiet" type="button">
-                      Cancel
-                    </button>
-                    <button class="ae-button" type="button">Delete</button>
-                  </div>
-                </dialog>
               </section>
 
-              <section class="ae-group man-ch" id="motion">
-                <h2 class="ae-h"><span class="x-faint">08 · </span>MOTION</h2>
-                <p>
-                  Motion is feedback, never decoration. The send moment above
-                  resolved once and persists; the chooser folded open because
-                  you asked it to. The mode change is one soft 700ms breath —
-                  flip the toggle above and watch the page breathe.
-                </p>
-                <p class="ae-dim man-cap">
-                  Under reduced motion, everything is instant.
-                </p>
+              <section>
+                <h3 class="ae-h gal-group-h">FEEDBACK</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#status" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <p style="margin: 0">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                        Deploy succeeded.
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Status</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#dialog" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <div class="ae-panel" style="width: 100%">
+                        <p class="ae-dialog-title" style="margin: 0">
+                          Archive this project?
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Dialog</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#tag" style="--gal-i: 2">
+                    <div class="gal-specimen">
+                      <span class="ae-tag">rust</span>
+                      <span class="ae-tag" style="margin-left: 0.5em"
+                        >fly.io</span
+                      >
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Tag</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#tip" style="--gal-i: 3">
+                    <div class="gal-specimen">
+                      <p style="margin: 0">
+                        <span class="ae-dim">chrome register</span>
+                        <span class="ae-tag">?</span>
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Tooltip</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#pop" style="--gal-i: 4">
+                    <div class="gal-specimen">
+                      <div
+                        class="ae-menu"
+                        style="width: 100%; border: 1px solid var(--ae-line)"
+                      >
+                        <button type="button" tabindex="-1">rename</button>
+                        <button type="button" tabindex="-1">duplicate</button>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Popover</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#toast" style="--gal-i: 5">
+                    <div class="gal-specimen">
+                      <div class="ae-toast">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                        Deploy resolved.
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Toast</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#waiting" style="--gal-i: 6">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <p class="ae-skeleton" style="max-width: 12em">
+                          loading title
+                        </p>
+                        <p class="ae-skeleton" style="max-width: 8em">
+                          loading meta
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Waiting</span>
+                    </p>
+                  </a>
+                </div>
               </section>
 
-              <section class="ae-group man-ch" id="steering">
-                <h2 class="ae-h"><span class="x-faint">09 · </span>STEERING</h2>
-                <p>
-                  Two strata. <span class="ae-item">Invariants</span> are never
-                  steered: one size, nine registers, hairlines, radius 0, motion
-                  as feedback, status on the glyph, buttons are not links.
-                  <span class="ae-item">Dials</span> are yours: the accent — one
-                  hue or several, named as project tokens — the status triplet,
-                  density, the mono ratio. A calm tool turns every dial down; a
-                  loud one turns up hue count and accent frequency — never
-                  radius, size scale, or ambient motion.
-                </p>
-                <p class="man-demo">
-                  <a href="steering.html"
-                    >Six consumers, one system — rendered side by side</a
-                  >
-                </p>
-                <p class="ae-dim man-cap">
-                  The worked steering blocks live in
-                  <a
-                    href="https://github.com/misty-step/aesthetic/blob/master/docs/ADOPTING.md"
-                    >docs/ADOPTING.md</a
-                  >.
-                </p>
+              <section>
+                <h3 class="ae-h gal-group-h">DATA</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#table" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <table class="ae-table">
+                        <thead>
+                          <tr>
+                            <th>endpoint</th>
+                            <th class="num">ms</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="ae-item">/send</td>
+                            <td class="num">412</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Table</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#meter" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <div style="width: 100%">
+                        <p class="ae-chrome" style="margin: 0 0 0.4em">
+                          turn spend · <span class="ae-num">62%</span>
+                        </p>
+                        <div
+                          class="ae-meter"
+                          role="meter"
+                          aria-valuenow="62"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          aria-label="turn spend"
+                        >
+                          <span class="ae-meter-fill" style="width: 62%"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Meter</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#figures" style="--gal-i: 2">
+                    <div class="gal-specimen">
+                      <p style="margin: 0">
+                        <span class="ae-num ae-strong">48,211</span>
+                        <span class="ae-delta ae-num ae-dim">4.2%</span>
+                      </p>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Figures</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#interval" style="--gal-i: 3">
+                    <div class="gal-specimen">
+                      <div
+                        class="ae-ci is-lead"
+                        role="img"
+                        aria-label="mean 86.9"
+                        style="width: 100%"
+                      >
+                        <span
+                          class="ae-ci-band"
+                          style="left: 30%; width: 22%"
+                        ></span>
+                        <span class="ae-ci-mean" style="left: 41%"></span>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Interval</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#plot" style="--gal-i: 4">
+                    <div class="gal-specimen">
+                      <svg
+                        class="ae-plot"
+                        viewBox="0 0 200 140"
+                        role="img"
+                        aria-hidden="true"
+                      >
+                        <path
+                          class="ae-plot-axis"
+                          d="M 20 8 L 20 128 L 190 128"
+                        />
+                        <path
+                          class="ae-plot-frontier"
+                          d="M 44 90 L 90 40 L 170 18"
+                        />
+                        <circle
+                          class="ae-plot-dot is-chosen"
+                          cx="90"
+                          cy="40"
+                          r="4"
+                        />
+                        <circle
+                          class="ae-plot-dot is-dominated"
+                          cx="130"
+                          cy="70"
+                          r="4"
+                        />
+                      </svg>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Plot</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#flow" style="--gal-i: 5">
+                    <div class="gal-specimen">
+                      <svg
+                        class="ae-flow"
+                        viewBox="0 0 300 60"
+                        role="img"
+                        aria-hidden="true"
+                      >
+                        <path class="ae-wire is-active" d="M 60 30 L 90 30" />
+                        <path class="ae-wire is-locked" d="M 210 30 L 240 30" />
+                        <rect
+                          class="ae-node is-done"
+                          x="0"
+                          y="12"
+                          width="60"
+                          height="36"
+                        />
+                        <rect
+                          class="ae-node is-active"
+                          x="90"
+                          y="12"
+                          width="60"
+                          height="36"
+                        />
+                        <rect
+                          class="ae-node is-locked"
+                          x="240"
+                          y="12"
+                          width="60"
+                          height="36"
+                        />
+                      </svg>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Flow</span>
+                    </p>
+                  </a>
+                </div>
               </section>
 
-              <section class="ae-group man-ch" id="colophon">
-                <h2 class="ae-h"><span class="x-faint">10 · </span>COLOPHON</h2>
-                <div class="ae-foot">
-                  <span>v2.9.0 · MIT</span>
-                  <span class="ae-foot-links"
-                    ><a href="https://github.com/misty-step/aesthetic">github</a
-                    ><a href="primitives.html">primitives</a></span
-                  >
+              <section>
+                <h3 class="ae-h gal-group-h">CONTENT</h3>
+                <div class="gal-cards">
+                  <a class="gal-card" href="#doc" style="--gal-i: 0">
+                    <div class="gal-specimen">
+                      <div class="ae-doc" style="width: 100%">
+                        <h2 style="margin: 0 0 0.2em">Install</h2>
+                        <p style="margin: 0">
+                          Pin the tag; upgrades are deliberate.
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Document</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#report" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <div class="ae-findings" style="width: 100%; margin: 0">
+                        <p class="ae-findings-title">FINDINGS</p>
+                        <p style="margin: 0">
+                          <span class="ae-strong">opus·hi wins 8 of 10</span>
+                        </p>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Report</span>
+                    </p>
+                  </a>
                 </div>
               </section>
             </div>
           </div>
-        </div>
-      </main>
+
+          <div class="ae-view" data-route="shell">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Screen</h2>
+              <p class="gal-cls">.ae-screen / .ae-bar / .ae-stage</p>
+              <p class="ae-dim">
+                One viewport, never scrolling: a bar, a centered stage, a bar.
+                Add
+                <code>.ae-wide</code> to the screen for the 68rem catalog
+                measure.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="mini-shell">
+                <div class="ms-bar">
+                  <span>NAME</span><span>nav · mode</span>
+                </div>
+                <div class="ms-stage">the stage — one view, centered</div>
+                <div class="ms-bar"><span>chrome</span><span>links</span></div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-screen</span>"&gt;
+  &lt;<span class="t">header</span> class="<span class="t">ae-bar</span>"&gt;
+    &lt;a class="<span class="t">ae-name</span>" href="/"&gt;NAME&lt;/a&gt;
+    &lt;nav class="<span class="t">ae-nav</span>"&gt;…&lt;/nav&gt;
+    &lt;button class="<span class="t">ae-mode</span>"&gt;…&lt;/button&gt;
+  &lt;/header&gt;
+  &lt;<span class="t">main</span> class="<span class="t">ae-stage</span>"&gt;
+    &lt;div class="<span class="t">ae-view</span>"&gt;…one screenful…&lt;/div&gt;
+  &lt;/main&gt;
+  &lt;<span class="t">footer</span> class="<span class="t">ae-bar</span>"&gt;…&lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="scroll">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Stage scroll</h2>
+              <p class="gal-cls">.ae-stage-scroll</p>
+              <p class="ae-dim">
+                For genuinely long documents: the document scrolls inside the
+                stage, the chrome stays put, the page itself never scrolls.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="scrollbox">
+                <p class="ae-dim">
+                  Legal pages, changelogs, long-form prose — the screen law
+                  holds, the inner column moves. This box scrolls; the bars
+                  around this page do not. The chrome register keeps utility
+                  text at 13px while content stays at the one size. Scroll on:
+                  nothing above or below this column will move, which is the
+                  entire point.
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">main</span> class="<span class="t">ae-stage ae-stage-scroll</span>"&gt;
+  &lt;article&gt;…the long document…&lt;/article&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="nav">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Nav</h2>
+              <p class="gal-cls">.ae-nav + .ae-nav-ind + .ae-view</p>
+              <p class="ae-dim">
+                Quiet words with a sliding ink underline. Views remount on swap
+                and replay their entrance.
+              </p>
+            </div>
+            <div class="src-split">
+              <nav class="ae-nav">
+                <button class="is-active">work</button>
+                <button>writing</button>
+                <button>contact</button>
+                <span class="ae-nav-ind"></span>
+              </nav>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">nav</span> class="<span class="t">ae-nav</span>"&gt;
+  &lt;button aria-current="page"&gt;work&lt;/button&gt;
+  &lt;button&gt;writing&lt;/button&gt;
+  &lt;button&gt;contact&lt;/button&gt;
+  &lt;span class="<span class="t">ae-nav-ind</span>"&gt;&lt;/span&gt;
+&lt;/nav&gt;
+<span class="t">// the site positions the indicator</span>
+<span class="t">// (left/width) on view change</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="rows">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Row link</h2>
+              <p class="gal-cls">.ae-row-link</p>
+              <p class="ae-dim">
+                In lists, the whole row is the link — the cursor never strobes
+                across dead bands between rows.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <a class="ae-row-link" href="#rows"
+                  ><span class="ae-item">A project that matters</span>
+                  <span class="ae-dim">— and its quiet description</span></a
+                >
+                <a class="ae-row-link" href="#rows"
+                  ><span class="ae-item">Another worth reading</span>
+                  <span class="ae-dim">— hover anywhere on the row</span></a
+                >
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">a</span> class="<span class="t">ae-row-link</span>" href="…"&gt;
+  &lt;span class="<span class="t">ae-item</span>"&gt;A project that matters&lt;/span&gt;
+  &lt;span class="<span class="t">ae-dim</span>"&gt;— and its description&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="chrome">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Chrome</h2>
+              <p class="gal-cls">.ae-chrome / .ae-foot</p>
+              <p class="ae-dim">
+                The one sanctioned second size: 13px, muted ink, for footers,
+                utility links, and metadata.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-foot">
+                <span>v2.8.1 · MIT</span>
+                <span class="ae-foot-links"
+                  ><a href="#chrome">github</a><a href="#chrome">npm</a></span
+                >
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">footer</span> class="<span class="t">ae-foot</span>"&gt;
+  &lt;span&gt;v2.8.1 · MIT&lt;/span&gt;
+  &lt;span class="<span class="t">ae-foot-links</span>"&gt;
+    &lt;a href="…"&gt;github&lt;/a&gt;&lt;a href="…"&gt;npm&lt;/a&gt;
+  &lt;/span&gt;
+&lt;/footer&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="icons">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Icon</h2>
+              <p class="gal-cls">.ae-icon / .ae-mode</p>
+              <p class="ae-dim">
+                Lucide, inlined as SVG symbols: 1.5px stroke, round caps, sized
+                to ride with text. The mode toggle rotate-crossfades sun and
+                moon.
+              </p>
+            </div>
+            <div class="src-split">
+              <p>
+                Icons ride with text
+                <svg class="ae-icon"><use href="#i-check" /></svg>, and the
+                toggle is live:
+                <button
+                  class="ae-mode"
+                  aria-label="toggle color mode"
+                  style="vertical-align: middle"
+                >
+                  <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+                  <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+                </button>
+              </p>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">button</span> class="<span class="t">ae-mode</span>" aria-label="toggle color mode"&gt;
+  &lt;svg class="<span class="t">ae-icon ae-sun</span>"&gt;…sun…&lt;/svg&gt;
+  &lt;svg class="<span class="t">ae-icon ae-moon</span>"&gt;…moon…&lt;/svg&gt;
+&lt;/button&gt;
+<span class="t">// toggle .dark/.light on the root;</span>
+<span class="t">// pin style.colorScheme to match</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="panel">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Panel</h2>
+              <p class="gal-cls">.ae-panel</p>
+              <p class="ae-dim">
+                Soft depth for genuinely dense content: light shadow in light
+                mode, wash in dark, radius 0. Forms on a stage stay naked.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-panel">
+                <p class="ae-item">Dense content lives here</p>
+                <p class="ae-dim">and earns its quiet lift off the surface.</p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-panel</span>"&gt;
+  …dense content…
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="registers">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Registers</h2>
+              <p class="ae-dim">
+                Hierarchy is ink and weight, never scale. Faint ink is
+                decoration only — placeholders and resting underlines.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-name">THE NAME</p>
+                <p class="ae-lede">
+                  The lede: the page's whole argument, plainly.
+                </p>
+                <p class="ae-item">An item that matters</p>
+                <p class="ae-dim">supporting matter, muted</p>
+                <p>
+                  The <span class="ae-accent">accent</span> — yours to steer.
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;p class="<span class="t">ae-name</span>"&gt;THE NAME&lt;/p&gt;
+&lt;p class="<span class="t">ae-lede</span>"&gt;The argument, plainly.&lt;/p&gt;
+&lt;p class="<span class="t">ae-item</span>"&gt;An item that matters&lt;/p&gt;
+&lt;p class="<span class="t">ae-dim</span>"&gt;supporting matter&lt;/p&gt;
+&lt;span class="<span class="t">ae-accent</span>"&gt;accent&lt;/span&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="form">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Input</h2>
+              <p class="gal-cls">.ae-label / .ae-input</p>
+              <p class="ae-dim">
+                A line, not a box. Placeholders are decorative supplements to
+                always-visible labels.
+              </p>
+            </div>
+            <div class="src-split">
+              <form>
+                <label class="ae-label" for="p-name">Name</label>
+                <input
+                  class="ae-input"
+                  id="p-name"
+                  type="text"
+                  placeholder="Phaedrus"
+                  style="margin-bottom: 1.2em"
+                />
+                <label class="ae-label" for="p-msg">Message</label>
+                <textarea
+                  class="ae-input"
+                  id="p-msg"
+                  placeholder="A line that grows"
+                ></textarea>
+              </form>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">label</span> class="<span class="t">ae-label</span>" for="name"&gt;Name&lt;/label&gt;
+&lt;<span class="t">input</span> class="<span class="t">ae-input</span>" id="name" type="text"&gt;
+
+&lt;<span class="t">textarea</span> class="<span class="t">ae-input</span>"&gt;&lt;/textarea&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="buttons">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Button</h2>
+              <p class="gal-cls">.ae-button / .ae-send</p>
+              <p class="ae-dim">
+                Contained ink shapes with a small press — links navigate,
+                buttons act. The send moment resolves exactly once; success
+                persists and the control disables.
+              </p>
+            </div>
+            <div class="src-split">
+              <form data-ae-demo>
+                <p
+                  style="
+                    display: flex;
+                    gap: 1em;
+                    flex-wrap: wrap;
+                    margin-bottom: 1.2em;
+                  "
+                >
+                  <button class="ae-button" type="button">Primary</button>
+                  <button class="ae-button ae-button-quiet" type="button">
+                    Quiet
+                  </button>
+                  <button class="ae-button ae-button-compact" type="button">
+                    Compact
+                  </button>
+                </p>
+                <button class="ae-button ae-send" type="submit">
+                  <span class="ae-send-label">Send message</span>
+                  <span class="ae-send-done" aria-hidden="true"
+                    >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                  ></span>
+                </button>
+              </form>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">button</span> class="<span class="t">ae-button ae-send</span>"&gt;
+  &lt;span class="<span class="t">ae-send-label</span>"&gt;Send message&lt;/span&gt;
+  &lt;span class="<span class="t">ae-send-done</span>" aria-hidden="true"&gt;
+    Sent &lt;svg class="<span class="t">ae-icon</span>"&gt;…check…&lt;/svg&gt;
+  &lt;/span&gt;
+&lt;/button&gt;
+<span class="t">// on success:</span> add .is-sent, set disabled</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">default</span>
+                  <div class="state-demo">
+                    <button class="ae-button" type="button">Primary</button>
+                  </div>
+                  <span class="state-note">the resting control.</span>
+                </div>
+                <div class="state">
+                  <span class="state-name">disabled</span>
+                  <div class="state-demo">
+                    <button class="ae-button" type="button" disabled>
+                      Primary
+                    </button>
+                  </div>
+                  <span class="state-note"
+                    >add <code>disabled</code> — 0.7 opacity, default cursor. No
+                    shadow, no new shape.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">resolved</span>
+                  <div class="state-demo">
+                    <button
+                      class="ae-button ae-send is-sent"
+                      type="button"
+                      disabled
+                    >
+                      <span class="ae-send-label">Send message</span>
+                      <span class="ae-send-done" aria-hidden="true"
+                        >Sent <svg class="ae-icon"><use href="#i-check" /></svg
+                      ></span>
+                    </button>
+                  </div>
+                  <span class="state-note"
+                    ><code>.is-sent</code> + disabled — the send moment,
+                    resolved once, success persists.</span
+                  >
+                </div>
+              </div>
+              <p class="state-note" style="margin-top: 1.4em">
+                Hover (0.9 opacity), active (a 1px press), and focus (a 2px ink
+                ring) are live on the controls — pseudo-states, never faked into
+                a class.
+              </p>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="status">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Status</h2>
+              <p class="gal-cls">.ae-ok / .ae-warn / .ae-err</p>
+              <p class="ae-dim">
+                Status rides the glyph: success, warning, and danger color the
+                icon — never the sentence, never a filled pill. The words stay
+                ink.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p>
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  Deploy succeeded.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-warn">
+                    <use href="#i-triangle-alert" />
+                  </svg>
+                  Certificate expires soon.
+                </p>
+                <p>
+                  <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                  Build failed.
+                </p>
+              </div>
+              <pre class="src-code"><code>&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…check…&lt;/svg&gt; Deploy succeeded.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-warn</span>"&gt;…triangle-alert…&lt;/svg&gt; Certificate expires soon.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-err</span>"&gt;…x…&lt;/svg&gt; Build failed.
+&lt;/p&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="table">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Table</h2>
+              <p class="gal-cls">.ae-table / .ae-plate</p>
+              <p class="ae-dim">
+                Terminal density: 13px mono, lowercase headers on a wash band,
+                hairline row rules — framed as a numbered plate. A column header
+                shares its column's alignment: put <code>.num</code> on the th
+                AND its tds.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-plate">
+                <p class="ae-plate-cap">TABLE 1 · EXAMPLE</p>
+                <table class="ae-table">
+                  <thead>
+                    <tr>
+                      <th>endpoint</th>
+                      <th>status</th>
+                      <th class="num">p99 ms</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">/send</td>
+                      <td>live</td>
+                      <td class="num">412</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">/verify</td>
+                      <td>live</td>
+                      <td class="num">88</td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">/archive</td>
+                      <td>draining</td>
+                      <td class="num">1204</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="ae-plate-note">p99 over the trailing 24 hours.</p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-plate</span>"&gt;
+  &lt;p class="<span class="t">ae-plate-cap</span>"&gt;TABLE 1 · EXAMPLE&lt;/p&gt;
+  &lt;<span class="t">table</span> class="<span class="t">ae-table</span>"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;endpoint&lt;/th&gt;&lt;th&gt;status&lt;/th&gt;
+          &lt;th class="<span class="t">num</span>"&gt;p99 ms&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td class="<span class="t">ae-item</span>"&gt;/send&lt;/td&gt;&lt;td&gt;live&lt;/td&gt;
+          &lt;td class="<span class="t">num</span>"&gt;412&lt;/td&gt;&lt;/tr&gt;
+      …
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;p class="<span class="t">ae-plate-note</span>"&gt;p99 over the trailing 24 hours.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">populated</span>
+                  <div class="state-demo">
+                    <table class="ae-table">
+                      <thead>
+                        <tr>
+                          <th>endpoint</th>
+                          <th class="num">ms</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="ae-item">/send</td>
+                          <td class="num">412</td>
+                        </tr>
+                        <tr>
+                          <td class="ae-item">/verify</td>
+                          <td class="num">88</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <span class="state-note"
+                    >13px mono, wash header band, hairline row rules — the
+                    instrument at rest.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">loading</span>
+                  <div class="state-demo">
+                    <table class="ae-table">
+                      <thead>
+                        <tr>
+                          <th>endpoint</th>
+                          <th class="num">ms</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="ae-skeleton">&nbsp;</td>
+                          <td class="ae-skeleton num">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td class="ae-skeleton">&nbsp;</td>
+                          <td class="ae-skeleton num">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="ae-chrome" role="status">loading endpoints…</p>
+                  </div>
+                  <span class="state-note"
+                    >skeleton holds the row shape — still wash, never a shimmer.
+                    Words to a status line.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">empty</span>
+                  <div class="state-demo">
+                    <div class="ae-empty">
+                      <p class="ae-item">No endpoints.</p>
+                      <p class="ae-dim">Add one to begin.</p>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >an honest sentence where the rows will be — no illustration
+                    party.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="dialog">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Dialog</h2>
+              <p class="gal-cls">.ae-dialog</p>
+              <p class="ae-dim">
+                The panel costume in the top layer: a decision asked in a
+                soft-depth panel over a whisper of paper dim. Escape and the
+                quiet button decline it. Pair with
+                <code>&lt;dialog&gt;</code> + <code>showModal()</code>.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <button
+                  class="ae-button ae-button-quiet"
+                  type="button"
+                  id="dlg-open"
+                >
+                  Archive project…
+                </button>
+                <dialog
+                  class="ae-dialog"
+                  id="dlg-demo"
+                  aria-labelledby="dlg-demo-title"
+                >
+                  <p class="ae-dialog-title" id="dlg-demo-title">
+                    Archive this project?
+                  </p>
+                  <p class="ae-dim">
+                    It leaves the index but keeps its history.
+                  </p>
+                  <div class="ae-dialog-acts">
+                    <button
+                      class="ae-button ae-button-quiet"
+                      type="button"
+                      id="dlg-cancel"
+                    >
+                      Cancel
+                    </button>
+                    <button class="ae-button" type="button" id="dlg-confirm">
+                      Confirm
+                    </button>
+                  </div>
+                </dialog>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">dialog</span> class="<span class="t">ae-dialog</span>"&gt;
+  &lt;p class="<span class="t">ae-dialog-title</span>"&gt;Archive this project?&lt;/p&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;It leaves the index but keeps its history.&lt;/p&gt;
+  &lt;div class="<span class="t">ae-dialog-acts</span>"&gt;
+    &lt;button class="<span class="t">ae-button ae-button-quiet</span>"&gt;Cancel&lt;/button&gt;
+    &lt;button class="<span class="t">ae-button</span>"&gt;Confirm&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+<span class="t">// open with dialog.showModal();</span>
+<span class="t">// both actions close()</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="settings">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Settings</h2>
+              <p class="gal-cls">.ae-settings / .ae-menu</p>
+              <p class="ae-dim">
+                A quiet hairline row — label left, current value right;
+                activating it folds a chooser open beneath. Choosing writes the
+                value and folds the menu; one row open at a time.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-settings">
+                <button class="ae-setting" type="button">
+                  Theme <span class="ae-setting-val">system</span>
+                </button>
+                <div class="ae-setting-panel">
+                  <div class="ae-menu">
+                    <button type="button" class="is-sel">system</button>
+                    <button type="button">light</button>
+                    <button type="button">dark</button>
+                  </div>
+                </div>
+                <button class="ae-setting" type="button">
+                  Region <span class="ae-setting-val">us-east</span>
+                </button>
+                <div class="ae-setting-panel">
+                  <div class="ae-menu">
+                    <button type="button" class="is-sel">us-east</button>
+                    <button type="button">eu-west</button>
+                    <button type="button">ap-south</button>
+                  </div>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-settings</span>"&gt;
+  &lt;button class="<span class="t">ae-setting</span>"&gt;
+    Theme &lt;span class="<span class="t">ae-setting-val</span>"&gt;system&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="<span class="t">ae-setting-panel</span>"&gt;
+    &lt;div class="<span class="t">ae-menu</span>"&gt;
+      &lt;button class="<span class="t">is-sel</span>"&gt;system&lt;/button&gt;
+      &lt;button&gt;light&lt;/button&gt;
+      &lt;button&gt;dark&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  …more rows…
+&lt;/div&gt;
+<span class="t">// recipes.js wires the fold, the choice,</span>
+<span class="t">// and the written value</span></code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">closed</span>
+                  <div class="state-demo">
+                    <div class="ae-settings">
+                      <button class="ae-setting" type="button">
+                        Theme <span class="ae-setting-val">system</span>
+                      </button>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >resting row — label left, value right in muted ink. The
+                    form is a column of lines.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">open</span>
+                  <div class="state-demo">
+                    <div class="ae-settings">
+                      <button class="ae-setting" type="button">
+                        Theme <span class="ae-setting-val">system</span>
+                      </button>
+                      <div class="ae-setting-panel is-open">
+                        <div class="ae-menu">
+                          <button type="button" class="is-sel">system</button>
+                          <button type="button">light</button>
+                          <button type="button">dark</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    ><code>.is-open</code> — the chooser folds open beneath. No
+                    box, no shadow — a grid-rows expand.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">written</span>
+                  <div class="state-demo">
+                    <div class="ae-settings">
+                      <button class="ae-setting" type="button">
+                        Theme <span class="ae-setting-val">dark</span>
+                      </button>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >after a choice — the value updates, the panel folds. One
+                    row open at a time.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="choice">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Choice</h2>
+              <p class="gal-cls">
+                .ae-choice / .ae-check / .ae-radio / .ae-switch
+              </p>
+              <p class="ae-dim">
+                Choice marks are squares — a circle would be the only curve in
+                the system, so there isn't one. The checkbox fills with ink and
+                draws its check in surface; the radio holds an ink core; the
+                switch slides an ink thumb along a hairline channel. State reads
+                from position and fill, never from a green pill.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <label class="ae-choice"
+                  ><input class="ae-check" type="checkbox" checked /> Email me
+                  on deploy</label
+                >
+                <label class="ae-choice"
+                  ><input class="ae-check" type="checkbox" /> Email me on
+                  failure only</label
+                >
+                <p style="margin-top: 1.4em"></p>
+                <label class="ae-choice"
+                  ><input class="ae-radio" type="radio" name="vis" checked />
+                  Public</label
+                >
+                <label class="ae-choice"
+                  ><input class="ae-radio" type="radio" name="vis" />
+                  Internal</label
+                >
+                <p style="margin-top: 1.4em"></p>
+                <label class="ae-choice"
+                  ><input class="ae-switch" type="checkbox" checked />
+                  Auto-deploy</label
+                >
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">label</span> class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-check</span>" type="checkbox" /&gt;
+  Email me on deploy
+&lt;/label&gt;
+
+&lt;label class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-radio</span>" type="radio" name="vis" /&gt;
+  Public
+&lt;/label&gt;
+
+&lt;label class="<span class="t">ae-choice</span>"&gt;
+  &lt;input class="<span class="t">ae-switch</span>" type="checkbox" /&gt;
+  Auto-deploy
+&lt;/label&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">switch · off</span>
+                  <div class="state-demo">
+                    <label class="ae-choice"
+                      ><input class="ae-switch" type="checkbox" />
+                      Auto-deploy</label
+                    >
+                  </div>
+                  <span class="state-note"
+                    >an ink thumb resting left on a hairline channel.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">switch · on</span>
+                  <div class="state-demo">
+                    <label class="ae-choice"
+                      ><input class="ae-switch" type="checkbox" checked />
+                      Auto-deploy</label
+                    >
+                  </div>
+                  <span class="state-note"
+                    >the thumb slides right — never a filled green pill.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">switch · disabled</span>
+                  <div class="state-demo">
+                    <label class="ae-choice"
+                      ><input
+                        class="ae-switch"
+                        type="checkbox"
+                        checked
+                        disabled
+                      />
+                      Locked on</label
+                    >
+                  </div>
+                  <span class="state-note"
+                    >add <code>disabled</code> — faded, the thumb holds.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">checkbox · disabled</span>
+                  <div class="state-demo">
+                    <label class="ae-choice"
+                      ><input
+                        class="ae-check"
+                        type="checkbox"
+                        checked
+                        disabled
+                      />
+                      Locked</label
+                    >
+                  </div>
+                  <span class="state-note">the ink fill intact, faded.</span>
+                </div>
+                <div class="state">
+                  <span class="state-name">radio · disabled</span>
+                  <div class="state-demo">
+                    <label class="ae-choice"
+                      ><input
+                        class="ae-radio"
+                        type="radio"
+                        name="s-vis"
+                        checked
+                        disabled
+                      />
+                      Locked</label
+                    >
+                  </div>
+                  <span class="state-note">the ink core intact, faded.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="validation">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Validation</h2>
+              <p class="gal-cls">.ae-field-note + [aria-invalid]</p>
+              <p class="ae-dim">
+                Validation keeps the status law: the field's own line confesses
+                in the status hue, the glyph carries it in the note, and the
+                sentence stays ink.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <label class="ae-label" for="v-email">Email</label>
+                <input
+                  class="ae-input"
+                  id="v-email"
+                  type="email"
+                  value="phaedrus@"
+                  aria-invalid="true"
+                  aria-describedby="v-email-note"
+                />
+                <p class="ae-field-note" id="v-email-note">
+                  <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                  Not a valid address.
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">label</span> class="<span class="t">ae-label</span>" for="email"&gt;Email&lt;/label&gt;
+&lt;<span class="t">input</span> class="<span class="t">ae-input</span>" id="email" type="email"
+       <span class="t">aria-invalid</span>="true"
+       aria-describedby="email-note" /&gt;
+&lt;p class="<span class="t">ae-field-note</span>" id="email-note"&gt;
+  &lt;svg class="<span class="t">ae-icon ae-err</span>"&gt;…x…&lt;/svg&gt; Not a valid address.
+&lt;/p&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">resting</span>
+                  <div class="state-demo">
+                    <label class="ae-label" for="s-rest">Email</label>
+                    <input
+                      class="ae-input"
+                      id="s-rest"
+                      type="email"
+                      value="reader@example.com"
+                    />
+                  </div>
+                  <span class="state-note"
+                    >a hairline underline; the label stays put.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">invalid</span>
+                  <div class="state-demo">
+                    <label class="ae-label" for="s-inv">Email</label>
+                    <input
+                      class="ae-input"
+                      id="s-inv"
+                      type="email"
+                      value="phaedrus@"
+                      aria-invalid="true"
+                      aria-describedby="s-inv-note"
+                    />
+                    <p class="ae-field-note" id="s-inv-note">
+                      <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                      Not a valid address.
+                    </p>
+                  </div>
+                  <span class="state-note"
+                    ><code>aria-invalid</code> — the line goes err, the glyph
+                    carries it, never a filled red box.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">disabled</span>
+                  <div class="state-demo">
+                    <label class="ae-label" for="s-dis">Email</label>
+                    <input
+                      class="ae-input"
+                      id="s-dis"
+                      type="email"
+                      value="reader@example.com"
+                      disabled
+                    />
+                  </div>
+                  <span class="state-note"
+                    >add <code>disabled</code> — the field rests, no edit.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="tabs">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Tabs</h2>
+              <p class="gal-cls">.ae-tabs</p>
+              <p class="ae-dim">
+                The nav instrument pointed at panels instead of views: the same
+                quiet words, the same sliding ink underline, aria-selected
+                marking the open one. Panels are views — remount to replay the
+                entrance.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <div class="ae-tabs">
+                  <button aria-current="page">readme</button>
+                  <button>tokens</button>
+                  <button>releases</button>
+                  <span class="ae-nav-ind"></span>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-tabs</span>"&gt;
+  &lt;button <span class="t">aria-current</span>="page"&gt;readme&lt;/button&gt;
+  &lt;button&gt;tokens&lt;/button&gt;
+  &lt;button&gt;releases&lt;/button&gt;
+  &lt;span class="<span class="t">ae-nav-ind</span>"&gt;&lt;/span&gt;
+&lt;/div&gt;
+<span class="t">// no wired panels here: drop role="tablist"/"tab"</span>
+<span class="t">// unless you build the roving-tabindex keyboard pattern</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="tag">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Tag</h2>
+              <p class="gal-cls">.ae-tag</p>
+              <p class="ae-dim">
+                The badge, refused. A tag is a word in the plate-caption voice —
+                mono, spaced, hairline at most, never a filled pill. If a tag
+                needs status, the glyph rides beside the word.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p>
+                  <span class="ae-item">canary</span>
+                  <span class="ae-tag">rust</span>
+                  <span class="ae-tag">fly.io</span>
+                  <span class="ae-tag-bare ae-tag">v1.18</span>
+                </p>
+                <p style="margin-top: 0.8em">
+                  <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                  <span class="ae-tag">deployed</span>
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;span class="<span class="t">ae-tag</span>"&gt;rust&lt;/span&gt;
+&lt;span class="<span class="t">ae-tag ae-tag-bare</span>"&gt;v1.18&lt;/span&gt;
+
+<span class="t">// status joins as a glyph, never a fill:</span>
+&lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…check…&lt;/svg&gt;
+&lt;span class="<span class="t">ae-tag</span>"&gt;deployed&lt;/span&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="tip">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Tooltip</h2>
+              <p class="gal-cls">[data-ae-tip]</p>
+              <p class="ae-dim">
+                A whisper that answers hover: chrome-register words in a
+                hairline slip, pure CSS. Patience built in — it waits a beat on
+                hover and answers focus at once. Keep the words short; anything
+                longer belongs in the prose.
+              </p>
+            </div>
+            <div class="src-split">
+              <p>
+                The
+                <a href="#tip" data-ae-tip="the one sanctioned 13px register"
+                  >chrome register</a
+                >
+                explains itself on hover.
+              </p>
+              <pre
+                class="src-code"
+              ><code>&lt;a href="…" <span class="t">data-ae-tip</span>="the one sanctioned 13px register"&gt;
+  chrome register
+&lt;/a&gt;
+<span class="t">// pure CSS — no recipe required</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="pop">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Popover</h2>
+              <p class="gal-cls">.ae-pop</p>
+              <p class="ae-dim">
+                The popover: a slip of surface anchored to its invoker, hairline
+                frame, soft depth, no dim. The native popover attribute owns the
+                top layer, light dismiss, and Escape; the recipe only does the
+                geometry.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <button
+                  class="ae-button ae-button-quiet"
+                  popovertarget="pop-demo"
+                >
+                  Options
+                </button>
+                <div id="pop-demo" popover class="ae-pop">
+                  <div class="ae-menu">
+                    <button type="button">rename</button>
+                    <button type="button">duplicate</button>
+                    <button type="button">archive</button>
+                  </div>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">button</span> popovertarget="menu"&gt;Options&lt;/button&gt;
+&lt;<span class="t">div</span> id="menu" <span class="t">popover</span> class="<span class="t">ae-pop</span>"&gt;
+  &lt;div class="<span class="t">ae-menu</span>"&gt;
+    &lt;button&gt;rename&lt;/button&gt;
+    &lt;button&gt;duplicate&lt;/button&gt;
+    &lt;button&gt;archive&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+<span class="t">// recipes/pop.js places the open slip</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="toast">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Toast</h2>
+              <p class="gal-cls">.ae-toasts / .ae-toast</p>
+              <p class="ae-dim">
+                News arrives at the edge and waits to be read: a slip with the
+                status on its glyph, stacked bottom-right. It persists until
+                dismissed or pushed out — never an anxious timer by default.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p style="display: flex; gap: 1em; flex-wrap: wrap">
+                  <button
+                    class="ae-button ae-button-quiet"
+                    type="button"
+                    id="toast-ok"
+                  >
+                    Toast success
+                  </button>
+                  <button
+                    class="ae-button ae-button-quiet"
+                    type="button"
+                    id="toast-err"
+                  >
+                    Toast failure
+                  </button>
+                  <button
+                    class="ae-button ae-button-quiet"
+                    type="button"
+                    id="toast-neutral"
+                  >
+                    Toast neutral
+                  </button>
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code><span class="t">// recipes/toast.js:</span>
+aeToast('Deploy 4121 resolved.', { status: '<span class="t">ok</span>' });
+aeToast('Build failed on preview.', { status: '<span class="t">err</span>' });
+<span class="t">// opt-in self-dismissal, never the default:</span>
+aeToast('Copied.', { timeout: 4000 });</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">success</span>
+                  <div class="state-demo">
+                    <div class="ae-toast">
+                      <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                      Deploy 4121 resolved.
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >a surface slip; the glyph carries the status.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">failure</span>
+                  <div class="state-demo">
+                    <div class="ae-toast">
+                      <svg class="ae-icon ae-err"><use href="#i-x" /></svg>
+                      Build failed on preview.
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >err on the glyph — never a filled red pill.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">neutral</span>
+                  <div class="state-demo">
+                    <div class="ae-toast">Working set updated.</div>
+                  </div>
+                  <span class="state-note"
+                    >no status, no glyph — just the slip.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="fold">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Fold</h2>
+              <p class="gal-cls">.ae-fold</p>
+              <p class="ae-dim">
+                Disclosure as a hairline row — native details in the settings
+                costume. The mono plus quarter-turns into a close; that turn is
+                the feedback, once per action.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <details class="ae-fold">
+                  <summary>What does the import cost?</summary>
+                  <p class="ae-dim">
+                    One request, one file, no JavaScript required. The recipes
+                    are optional and dependency-free.
+                  </p>
+                </details>
+                <details class="ae-fold">
+                  <summary>Can I change the accent?</summary>
+                  <p class="ae-dim">
+                    The accent is yours — define your scheme and use it with
+                    judgment.
+                  </p>
+                </details>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">details</span> class="<span class="t">ae-fold</span>"&gt;
+  &lt;summary&gt;What does the import cost?&lt;/summary&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;One request, one file…&lt;/p&gt;
+&lt;/details&gt;
+&lt;details class="<span class="t">ae-fold</span>"&gt;…&lt;/details&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="crumbs">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Breadcrumbs</h2>
+              <p class="gal-cls">.ae-crumbs</p>
+              <p class="ae-dim">
+                The path, in the chrome register: here is ink, the way back is
+                muted, the separators are faint.
+              </p>
+            </div>
+            <div class="src-split">
+              <nav class="ae-crumbs" aria-label="breadcrumb">
+                <ol>
+                  <li><a href="#crumbs">projects</a></li>
+                  <li><a href="#crumbs">canary</a></li>
+                  <li><span aria-current="page">deploys</span></li>
+                </ol>
+              </nav>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">nav</span> class="<span class="t">ae-crumbs</span>" aria-label="breadcrumb"&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;a href="…"&gt;projects&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="…"&gt;canary&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span <span class="t">aria-current</span>="page"&gt;deploys&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="waiting">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Waiting</h2>
+              <p class="gal-cls">.ae-skeleton / .ae-empty</p>
+              <p class="ae-dim">
+                Waiting is still wash, never a shimmer — motion is feedback and
+                waiting is not an action; the view's entrance acknowledges
+                arrival. Absence is an honest sentence with one quiet action,
+                not an illustration party.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-skeleton" style="max-width: 24em">loading title</p>
+                <p class="ae-skeleton" style="max-width: 18em">loading meta</p>
+                <p class="ae-chrome" role="status">loading projects…</p>
+                <div class="ae-empty" style="margin-top: 1.6em">
+                  <p class="ae-item">No projects yet.</p>
+                  <p class="ae-dim">The first one you archive lands here.</p>
+                  <p>
+                    <button class="ae-button ae-button-quiet" type="button">
+                      New project
+                    </button>
+                  </p>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code><span class="t">// waiting: blocks hold the layout, words go to a status line</span>
+&lt;p class="<span class="t">ae-skeleton</span>" style="max-width: 24em"&gt;loading title&lt;/p&gt;
+&lt;p class="<span class="t">ae-chrome</span>" role="status"&gt;loading projects…&lt;/p&gt;
+
+<span class="t">// absence: an honest sentence, one quiet action</span>
+&lt;div class="<span class="t">ae-empty</span>"&gt;
+  &lt;p class="<span class="t">ae-item</span>"&gt;No projects yet.&lt;/p&gt;
+  &lt;p class="<span class="t">ae-dim</span>"&gt;The first one you archive lands here.&lt;/p&gt;
+  &lt;p&gt;&lt;button class="<span class="t">ae-button ae-button-quiet</span>"&gt;New project&lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">loading</span>
+                  <div class="state-demo">
+                    <p class="ae-skeleton" style="max-width: 18em">
+                      loading title
+                    </p>
+                    <p class="ae-skeleton" style="max-width: 12em">
+                      loading meta
+                    </p>
+                    <p class="ae-chrome" role="status">loading…</p>
+                  </div>
+                  <span class="state-note"
+                    >still wash holds the layout — no shimmer, no spinner. Words
+                    to a status line.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">absent</span>
+                  <div class="state-demo">
+                    <div class="ae-empty">
+                      <p class="ae-item">Nothing here yet.</p>
+                      <p class="ae-dim">The first item lands here.</p>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >an honest sentence — muted words, one quiet action. No
+                    illustration party.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">arrived</span>
+                  <div class="state-demo">
+                    <p class="ae-item">Project Atlas</p>
+                    <p class="ae-dim">archived 2 days ago</p>
+                  </div>
+                  <span class="state-note"
+                    >content replaces the skeleton — the wash held this shape,
+                    now it's ink.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="meter">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Meter</h2>
+              <p class="gal-cls">.ae-meter / .ae-meter-mark</p>
+              <p class="ae-dim">
+                The gauge is a ruled line, never a glowing pill: a wash channel,
+                an ink fill, hairline threshold ticks. The fill takes a status
+                ink only when the level is the signal. Width changes are state
+                resolutions — gentle, once.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.4em">
+                  turn spend · <span class="ae-num">62%</span>
+                  <button class="plate-run" type="button" id="meter-run">
+                    ▸ run
+                  </button>
+                </p>
+                <div
+                  class="ae-meter"
+                  role="meter"
+                  aria-valuenow="62"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-label="turn spend"
+                  id="meter-demo"
+                >
+                  <span class="ae-meter-fill" style="width: 62%"></span>
+                  <span class="ae-meter-mark" style="left: 80%"></span>
+                </div>
+                <p class="ae-chrome" style="margin: 1.6em 0 0.4em">
+                  past the warn threshold
+                </p>
+                <div
+                  class="ae-meter"
+                  role="meter"
+                  aria-valuenow="91"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-label="budget"
+                >
+                  <span class="ae-meter-fill ae-warn" style="width: 91%"></span>
+                  <span class="ae-meter-mark" style="left: 80%"></span>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-meter</span>" role="meter"
+     aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"&gt;
+  &lt;span class="<span class="t">ae-meter-fill</span>" style="width: 62%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-meter-mark</span>" style="left: 80%"&gt;&lt;/span&gt;
+&lt;/div&gt;
+<span class="t">// the fill takes a status ink only when</span>
+<span class="t">// the level IS the signal:</span>
+&lt;span class="<span class="t">ae-meter-fill ae-warn</span>" style="width: 91%"&gt;&lt;/span&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">empty</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-meter"
+                      role="meter"
+                      aria-valuenow="0"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label="idle"
+                    >
+                      <span class="ae-meter-fill" style="width: 0%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >0% fill — the resting channel before data arrives. No
+                    shimmer, no spinner.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">partial</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-meter"
+                      role="meter"
+                      aria-valuenow="40"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label="load"
+                    >
+                      <span class="ae-meter-fill" style="width: 40%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >ink fill — the normal operational read. The level is not
+                    the signal, so no status ink.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">at threshold</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-meter"
+                      role="meter"
+                      aria-valuenow="62"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label="budget"
+                    >
+                      <span class="ae-meter-fill" style="width: 62%"></span>
+                      <span class="ae-meter-mark" style="left: 80%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >ink fill with a hairline threshold tick — approaching the
+                    limit, still ink.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">over limit</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-meter"
+                      role="meter"
+                      aria-valuenow="91"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label="budget"
+                    >
+                      <span
+                        class="ae-meter-fill ae-warn"
+                        style="width: 91%"
+                      ></span>
+                      <span class="ae-meter-mark" style="left: 80%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    ><code>.ae-warn</code> fill — the level IS the signal, so
+                    the fill takes the status ink. Never a colored pill.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="figures">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Figures</h2>
+              <p class="gal-cls">
+                .ae-num / .ae-strong / .ae-delta / .ae-spark
+              </p>
+              <p class="ae-dim">
+                Figures are tabular numerals that tick without jitter. The hero
+                figure is 800 and isolated — never larger: the instrument reads
+                loud through weight, not scale. Deltas put the hue on the arrow;
+                trends are pen strokes, no axes, no area fill.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-chrome">requests · trailing hour</p>
+                <p>
+                  <span class="ae-num ae-strong">48,211</span>
+                  <span class="ae-delta ae-num ae-dim"
+                    ><svg
+                      class="ae-icon ae-ok"
+                      viewBox="0 0 24 24"
+                      style="width: 0.9em; height: 0.9em"
+                    >
+                      <path d="M12 19V5" />
+                      <path d="m5 12 7-7 7 7" /></svg
+                    >4.2%</span
+                  >
+                  <svg
+                    class="ae-spark"
+                    viewBox="0 0 100 24"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <polyline
+                      points="0,18 14,15 28,16 42,11 56,13 70,8 84,9 100,4"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;span class="<span class="t">ae-num ae-strong</span>"&gt;48,211&lt;/span&gt;
+&lt;span class="<span class="t">ae-delta ae-num ae-dim</span>"&gt;
+  &lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…arrow-up…&lt;/svg&gt;4.2%
+&lt;/span&gt;
+&lt;svg class="<span class="t">ae-spark</span>" viewBox="0 0 100 24"
+     preserveAspectRatio="none" aria-hidden="true"&gt;
+  &lt;polyline points="0,18 14,15 … 100,4" /&gt;
+&lt;/svg&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="interval">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Interval</h2>
+              <p class="gal-cls">.ae-ci / .ae-ci-band / .ae-ci-mean</p>
+              <p class="ae-dim">
+                The interval is the meter with a spread: a ruled track carrying
+                a [lo,hi] range band and a mean tick, so a score reads as a
+                level and its confidence at once. Where two bands share a column
+                the lead is inside the spread — the certification read. The band
+                draws in once from the mean; hover (or focus) a track for the
+                exact figures. Every mark is a rectangle, so radius 0 holds.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.45em">
+                  cand·02 · <span class="ae-num">86.9</span> · the lead
+                </p>
+                <div
+                  class="ae-ci is-lead"
+                  role="img"
+                  aria-label="cand·02 mean 86.9, 95% CI 83.1 to 90.7"
+                >
+                  <span class="ae-ci-band" style="left: 66%; width: 22%"></span>
+                  <span class="ae-ci-mean" style="left: 77%"></span>
+                  <span class="ae-ci-detail"
+                    >μ 86.9 <span class="ae-ci-bound">[83.1, 90.7]</span></span
+                  >
+                </div>
+                <p class="ae-chrome" style="margin: 1.5em 0 0.45em">
+                  cand·05 · inside the spread
+                </p>
+                <div
+                  class="ae-ci"
+                  role="img"
+                  aria-label="cand·05 mean 85.6, 95% CI 82.9 to 88.3"
+                >
+                  <span class="ae-ci-band" style="left: 65%; width: 16%"></span>
+                  <span class="ae-ci-mean" style="left: 73%"></span>
+                  <span class="ae-ci-detail"
+                    >μ 85.6 <span class="ae-ci-bound">[82.9, 88.3]</span></span
+                  >
+                </div>
+                <p class="ae-chrome" style="margin: 1.5em 0 0.45em">
+                  cand·01 · whisker variant, no fill
+                </p>
+                <div
+                  class="ae-ci"
+                  role="img"
+                  aria-label="cand·01 mean 84.2, 95% CI 81.0 to 87.4"
+                >
+                  <span
+                    class="ae-ci-whisker"
+                    style="left: 60%; width: 18%"
+                  ></span>
+                  <span class="ae-ci-cap" style="left: 60%"></span>
+                  <span class="ae-ci-cap" style="left: 78%"></span>
+                  <span class="ae-ci-mean" style="left: 69%"></span>
+                  <span class="ae-ci-detail"
+                    >μ 84.2 <span class="ae-ci-bound">[81.0, 87.4]</span></span
+                  >
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-ci is-lead</span>" role="img"
+     aria-label="cand·02 mean 86.9, 95% CI 83.1 to 90.7"&gt;
+  &lt;span class="<span class="t">ae-ci-band</span>" style="left: 66%; width: 22%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-ci-mean</span>" style="left: 77%"&gt;&lt;/span&gt;
+  &lt;span class="<span class="t">ae-ci-detail</span>"&gt;μ 86.9 &lt;span class="<span class="t">ae-ci-bound</span>"&gt;[83.1, 90.7]&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;
+<span class="t">// the no-fill variant: a lo→hi rule with end caps</span>
+&lt;span class="<span class="t">ae-ci-whisker</span>" style="left: 60%; width: 18%"&gt;&lt;/span&gt;
+&lt;span class="<span class="t">ae-ci-cap</span>" style="left: 60%"&gt;&lt;/span&gt;
+&lt;span class="<span class="t">ae-ci-cap</span>" style="left: 78%"&gt;&lt;/span&gt;</code></pre>
+            </div>
+            <div class="ae-group">
+              <p class="states-cap">STATES · the law holds in every one</p>
+              <div class="states">
+                <div class="state">
+                  <span class="state-name">default</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-ci"
+                      role="img"
+                      aria-label="mean 84, CI 80 to 88"
+                    >
+                      <span
+                        class="ae-ci-band"
+                        style="left: 60%; width: 16%"
+                      ></span>
+                      <span class="ae-ci-mean" style="left: 68%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >band + mean — a score and its confidence. Ink throughout,
+                    no accent.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">lead</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-ci is-lead"
+                      role="img"
+                      aria-label="mean 87, CI 83 to 91"
+                    >
+                      <span
+                        class="ae-ci-band"
+                        style="left: 66%; width: 22%"
+                      ></span>
+                      <span class="ae-ci-mean" style="left: 77%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    ><code>.is-lead</code> — the mean tick takes the accent. One
+                    accent role per view.</span
+                  >
+                </div>
+                <div class="state">
+                  <span class="state-name">whisker</span>
+                  <div class="state-demo">
+                    <div
+                      class="ae-ci"
+                      role="img"
+                      aria-label="mean 84, CI 81 to 87"
+                    >
+                      <span
+                        class="ae-ci-whisker"
+                        style="left: 60%; width: 18%"
+                      ></span>
+                      <span class="ae-ci-cap" style="left: 60%"></span>
+                      <span class="ae-ci-cap" style="left: 78%"></span>
+                      <span class="ae-ci-mean" style="left: 69%"></span>
+                    </div>
+                  </div>
+                  <span class="state-note"
+                    >no-fill variant — a lo→hi rule with end caps. Points, not
+                    mass.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="plot">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Plot</h2>
+              <p class="gal-cls">.ae-plot / .ae-plot-frontier / .ae-plot-dot</p>
+              <p class="ae-dim">
+                The plane draws two dimensions at once: cost against quality,
+                the candidates as round dots, the Pareto frontier — nobody both
+                cheaper and better — as a dashed guide. Like the spark, the kit
+                dresses a consumer-authored SVG; the dots are the pen, so radius
+                0 still governs the frame, axes, and ticks. The default
+                composition is the frontier: the pick is the lone accent dot,
+                the dominated drop to faint. The parts compose — an open
+                .ae-plot-ring marks a reference baseline, a colored
+                .ae-plot-glyph sits where a gate-failed datum would (status
+                rides the glyph).
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.45em">
+                  arena · cost × quality · the frontier
+                </p>
+                <svg
+                  class="ae-plot"
+                  viewBox="0 0 440 360"
+                  role="img"
+                  aria-label="cost by quality scatter of six candidates; the Pareto frontier is dashed, the chosen pick is the accent dot, a gate-failed candidate is a crossed glyph"
+                >
+                  <path class="ae-plot-axis" d="M 46 16 L 46 320 L 422 320" />
+                  <line
+                    class="ae-plot-tick"
+                    x1="46"
+                    y1="320"
+                    x2="46"
+                    y2="324"
+                  />
+                  <line
+                    class="ae-plot-tick"
+                    x1="153"
+                    y1="320"
+                    x2="153"
+                    y2="324"
+                  />
+                  <line
+                    class="ae-plot-tick"
+                    x1="261"
+                    y1="320"
+                    x2="261"
+                    y2="324"
+                  />
+                  <line
+                    class="ae-plot-tick"
+                    x1="368"
+                    y1="320"
+                    x2="368"
+                    y2="324"
+                  />
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="46"
+                    y="336"
+                    text-anchor="middle"
+                  >
+                    0
+                  </text>
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="153"
+                    y="336"
+                    text-anchor="middle"
+                  >
+                    2
+                  </text>
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="261"
+                    y="336"
+                    text-anchor="middle"
+                  >
+                    4
+                  </text>
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="368"
+                    y="336"
+                    text-anchor="middle"
+                  >
+                    6
+                  </text>
+                  <line
+                    class="ae-plot-tick"
+                    x1="42"
+                    y1="320"
+                    x2="46"
+                    y2="320"
+                  />
+                  <line
+                    class="ae-plot-tick"
+                    x1="42"
+                    y1="168"
+                    x2="46"
+                    y2="168"
+                  />
+                  <line class="ae-plot-tick" x1="42" y1="16" x2="46" y2="16" />
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="39"
+                    y="323"
+                    text-anchor="end"
+                  >
+                    60
+                  </text>
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="39"
+                    y="171"
+                    text-anchor="end"
+                  >
+                    80
+                  </text>
+                  <text
+                    class="ae-plot-ticklabel"
+                    x="39"
+                    y="19"
+                    text-anchor="end"
+                  >
+                    100
+                  </text>
+                  <text
+                    class="ae-plot-axislabel"
+                    x="422"
+                    y="350"
+                    text-anchor="end"
+                  >
+                    COST · $/1K
+                  </text>
+                  <text
+                    class="ae-plot-axislabel"
+                    x="12"
+                    y="168"
+                    text-anchor="middle"
+                    transform="rotate(-90 12 168)"
+                  >
+                    QUALITY
+                  </text>
+                  <path
+                    class="ae-plot-frontier"
+                    d="M 100 206 L 186 100 L 358 46"
+                  />
+                  <circle class="ae-plot-dot" cx="100" cy="206" r="4.5" />
+                  <circle
+                    class="ae-plot-dot is-dominated"
+                    cx="239"
+                    cy="153"
+                    r="4.5"
+                  />
+                  <circle
+                    class="ae-plot-dot is-dominated"
+                    cx="315"
+                    cy="107"
+                    r="4.5"
+                  />
+                  <circle class="ae-plot-dot" cx="358" cy="46" r="4.5" />
+                  <g class="ae-plot-glyph ae-err">
+                    <line x1="277" y1="178" x2="288" y2="189" />
+                    <line x1="277" y1="189" x2="288" y2="178" />
+                  </g>
+                  <circle
+                    class="ae-plot-dot is-chosen"
+                    cx="186"
+                    cy="100"
+                    r="4.5"
+                  />
+                  <text class="ae-plot-label is-chosen" x="195" y="103.5">
+                    sonnet·v4
+                  </text>
+                </svg>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">svg</span> class="<span class="t">ae-plot</span>" viewBox="0 0 440 360" role="img"&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-plot-axis</span>" d="M 46 16 L 46 320 L 422 320"/&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-plot-frontier</span>" d="M 100 206 L 186 100 L 358 46"/&gt;
+  &lt;<span class="t">circle</span> class="<span class="t">ae-plot-dot is-chosen</span>" cx="186" cy="100" r="4.5"/&gt;
+  &lt;<span class="t">circle</span> class="<span class="t">ae-plot-dot is-dominated</span>" cx="239" cy="153" r="4.5"/&gt;
+<span class="t">// a gate-failed datum: status rides the glyph</span>
+  &lt;<span class="t">g</span> class="<span class="t">ae-plot-glyph ae-err</span>"&gt;…&lt;/<span class="t">g</span>&gt;
+&lt;/<span class="t">svg</span>&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="flow">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Flow</h2>
+              <p class="gal-cls">.ae-flow / .ae-node / .ae-wire</p>
+              <p class="ae-dim">
+                The flow draws a system: hairline-framed stages (hard corners,
+                radius 0) joined by orthogonal ink wires, so a pipeline reads as
+                a diagram. State rides the frame and a glyph — a cleared stage
+                carries ✓, the running stage takes the accent, locked stages go
+                dashed-faint. Like the plot, the kit dresses a consumer-authored
+                SVG so nodes and wires share one coordinate space, and
+                non-scaling strokes hold the hairline at any fit. The default is
+                the spine — the gate/lineage backbone; the same nodes compose
+                into stations, ported nodes, or a branching DAG.
+              </p>
+            </div>
+            <div class="src-split">
+              <div>
+                <p class="ae-chrome" style="margin-bottom: 0.45em">
+                  foundry · cache-key-collision · the spine
+                  <button class="plate-run" type="button" id="flow-advance">
+                    ▸ advance
+                  </button>
+                </p>
+                <svg
+                  class="ae-flow"
+                  id="flow-demo"
+                  viewBox="0 0 684 140"
+                  role="img"
+                  aria-label="a four-stage pipeline spine: arena cleared, search running in accent, gates and launch locked, joined by orthogonal wires"
+                >
+                  <path class="ae-wire is-active" d="M 138 70 L 194 70" />
+                  <path class="ae-wire is-locked" d="M 314 70 L 370 70" />
+                  <path class="ae-wire is-locked" d="M 490 70 L 546 70" />
+                  <rect
+                    class="ae-node is-done"
+                    x="18"
+                    y="43"
+                    width="120"
+                    height="54"
+                  />
+                  <text
+                    class="ae-node-kicker"
+                    x="78"
+                    y="61"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    01
+                  </text>
+                  <text
+                    class="ae-node-label"
+                    x="78"
+                    y="80"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    arena
+                  </text>
+                  <path class="ae-icon ae-ok" d="M 117 54 L 120 57 L 126 49" />
+                  <rect
+                    class="ae-node is-active"
+                    x="194"
+                    y="43"
+                    width="120"
+                    height="54"
+                  />
+                  <text
+                    class="ae-node-kicker"
+                    x="254"
+                    y="61"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    02
+                  </text>
+                  <text
+                    class="ae-node-label is-active"
+                    x="254"
+                    y="80"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    search
+                  </text>
+                  <rect
+                    class="ae-node is-locked"
+                    x="370"
+                    y="43"
+                    width="120"
+                    height="54"
+                  />
+                  <text
+                    class="ae-node-kicker"
+                    x="430"
+                    y="61"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    03
+                  </text>
+                  <text
+                    class="ae-node-label is-locked"
+                    x="430"
+                    y="80"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    gates
+                  </text>
+                  <rect
+                    class="ae-node is-locked"
+                    x="546"
+                    y="43"
+                    width="120"
+                    height="54"
+                  />
+                  <text
+                    class="ae-node-kicker"
+                    x="606"
+                    y="61"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    04
+                  </text>
+                  <text
+                    class="ae-node-label is-locked"
+                    x="606"
+                    y="80"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                  >
+                    launch
+                  </text>
+                </svg>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">svg</span> class="<span class="t">ae-flow</span>" viewBox="0 0 684 140" role="img"&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-wire is-active</span>" d="M 138 70 L 194 70"/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-done</span>" x="18" y="43" width="120" height="54"/&gt;
+  &lt;<span class="t">text</span> class="<span class="t">ae-node-label</span>" x="78" y="80"&gt;arena&lt;/text&gt;
+  &lt;<span class="t">path</span> class="<span class="t">ae-icon ae-ok</span>" d="M 117 54 L 120 57 L 126 49"/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-active</span>" x="194" y="43" …/&gt;
+  &lt;<span class="t">rect</span> class="<span class="t">ae-node is-locked</span>" x="370" y="43" …/&gt;
+&lt;/<span class="t">svg</span>&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="shellapp">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">App shell</h2>
+              <p class="gal-cls">.ae-shell / .ae-rail / .ae-desk</p>
+              <p class="ae-dim">
+                The app shell: one viewport, hairline-divided — a 13px rail for
+                places, a desk for work. The desk scrolls inside itself; the
+                page never moves.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="mini-shell">
+                <div style="display: grid; grid-template-columns: 7em 1fr">
+                  <div
+                    style="
+                      border-right: 1px solid var(--ae-line);
+                      padding: 0.8em 1em;
+                    "
+                  >
+                    rail<br />· places<br />· mode
+                  </div>
+                  <div style="padding: 0.8em 1em">
+                    the desk — meters, plates, work
+                  </div>
+                </div>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-shell</span>"&gt;
+  &lt;<span class="t">aside</span> class="<span class="t">ae-rail</span>"&gt;
+    &lt;p class="<span class="t">ae-h</span>"&gt;PLACES&lt;/p&gt;
+    &lt;a aria-current="page" href="…"&gt;agents&lt;/a&gt;
+    &lt;a href="…"&gt;history&lt;/a&gt;
+    &lt;div class="<span class="t">ae-rail-foot</span>"&gt;…mode toggle…&lt;/div&gt;
+  &lt;/aside&gt;
+  &lt;<span class="t">main</span> class="<span class="t">ae-desk</span>"&gt;…the work…&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="doc">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Document</h2>
+              <p class="gal-cls">.ae-doc</p>
+              <p class="ae-dim">
+                The document archetype: rendered markdown drops in unclassed.
+                Headings are weight, never size; rules are hairlines; quotes are
+                inset.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-doc">
+                <h2>Install</h2>
+                <p>Pin the tag; upgrades are deliberate.</p>
+                <blockquote>One request, one file, no build step.</blockquote>
+                <pre><code>pnpm add github:misty-step/aesthetic</code></pre>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">article</span> class="<span class="t">ae-doc</span>"&gt;
+  &lt;h2&gt;Install&lt;/h2&gt;
+  &lt;p&gt;Pin the tag; upgrades are deliberate.&lt;/p&gt;
+  &lt;blockquote&gt;One request, one file…&lt;/blockquote&gt;
+  &lt;pre&gt;&lt;code&gt;pnpm add …&lt;/code&gt;&lt;/pre&gt;
+&lt;/article&gt;
+<span class="t">// markdown output needs no classes inside</span></code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="report">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Report</h2>
+              <p class="gal-cls">.ae-lede / .ae-findings / .ae-pull</p>
+              <p class="ae-dim">
+                The report sub-registers: opt-in additions for a generated
+                document that is read and shared — all weight, space, and
+                hairlines, never a new size or a serif. A
+                <code>&lt;figure&gt;</code> in a doc auto-numbers (FIG n); the
+                lede lifts the standfirst to a way in; the findings box is a
+                hairline frame (never a filled card) with the recommendation on
+                the one accent rule; the pull-quote is the closest call to the
+                one-size law, held on the right side of it. The plain
+                <a href="#doc">.ae-doc</a> stays the default.
+              </p>
+            </div>
+            <div class="src-split">
+              <article class="ae-doc">
+                <p class="ae-lede">
+                  Across ten correctness hypotheses, opus·hi wins eight and
+                  clears every gate — but at 2.4× the field-median cost; the
+                  ensemble matches it within the spread at 40% of the cost.
+                </p>
+                <figure>
+                  <figcaption>
+                    gate-weighted pass rate, winner per row in weight
+                  </figcaption>
+                  <div class="ae-plate">
+                    <p class="ae-plate-note" style="margin: 0">
+                      opus·hi <span class="ae-strong">93</span> · ensemble 89 ·
+                      sonnet·v4 90 ·
+                      <span style="color: var(--ae-ink-faint)"
+                        >haiku·rag 44</span
+                      >
+                    </p>
+                  </div>
+                </figure>
+                <div class="ae-findings">
+                  <p class="ae-findings-title">FINDINGS</p>
+                  <p>
+                    <span class="ae-strong">opus·hi wins 8 of 10</span> and
+                    clears all five gates, at 2.41× cost; the lead is inside the
+                    spread on six hypotheses.
+                  </p>
+                  <div class="ae-rec">
+                    <p class="ae-findings-title" style="margin: 0 0 0.3em">
+                      RECOMMENDATION
+                    </p>
+                    Ship the ensemble as the default; reserve opus·hi for runs
+                    where the cost and latency tail are acceptable.
+                  </div>
+                </div>
+                <p class="ae-pull">
+                  Where the lead is inside the spread, the ensemble delivers the
+                  same quality at 40% of the cost — and cost becomes the
+                  deciding axis.
+                  <span class="ae-pull-by"
+                    >— gate-weighted spread analysis</span
+                  >
+                </p>
+              </article>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">article</span> class="<span class="t">ae-doc</span>"&gt;
+  &lt;<span class="t">p</span> class="<span class="t">ae-lede</span>"&gt;… the conclusion, up front …&lt;/p&gt;
+  &lt;<span class="t">figure</span>&gt;
+    &lt;<span class="t">figcaption</span>&gt;gate-weighted pass rate&lt;/figcaption&gt;
+    &lt;<span class="t">div</span> class="<span class="t">ae-plate</span>"&gt;…&lt;/div&gt;
+  &lt;/<span class="t">figure</span>&gt;
+<span class="t">// the &lt;figure&gt; auto-numbers: FIG 1 ·</span>
+  &lt;<span class="t">div</span> class="<span class="t">ae-findings</span>"&gt;
+    &lt;<span class="t">p</span> class="<span class="t">ae-findings-title</span>"&gt;FINDINGS&lt;/p&gt;
+    &lt;<span class="t">div</span> class="<span class="t">ae-rec</span>"&gt;… the one accent rule …&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;<span class="t">p</span> class="<span class="t">ae-pull</span>"&gt;… by weight + space …&lt;/p&gt;
+&lt;/<span class="t">article</span>&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="sr">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Screen reader</h2>
+              <p class="gal-cls">.ae-sr</p>
+              <p class="ae-dim">
+                Present to assistive tech, invisible on paper: live regions and
+                labels the layout has no room to speak. The send recipe uses one
+                to announce the resolved state.
+              </p>
+            </div>
+            <div class="src-split">
+              <p class="ae-dim">
+                There is an .ae-sr live region on this very page — you cannot
+                see it, and that is the point.
+              </p>
+              <pre
+                class="src-code"
+              ><code>&lt;span class="<span class="t">ae-sr</span>" role="status"&gt;&lt;/span&gt;
+<span class="t">// recipes/send.js writes "Sent" into it</span>
+<span class="t">// when the send moment resolves</span></code></pre>
+            </div>
+          </div>
+        </main>
+      </div>
       <footer class="ae-bar">
+        <p class="ae-chrome">v2.8.1 · MIT</p>
         <p class="ae-chrome">
-          <code>pnpm add github:misty-step/aesthetic#v2.9.0</code>
-        </p>
-        <p class="ae-chrome">
-          the aesthetic powering
-          <a href="https://mistystep.io">Misty Step</a>
+          by <a href="https://mistystep.io">Misty Step</a>
         </p>
       </footer>
     </div>
 
     <script src="recipes.js"></script>
     <script>
-      /* page glue: the contents rail and the dialog. Everything else on
-         this page is wired by recipes.js. */
+      /* focus management + plate-to-plate nav: the specimen grid is the
+         navigation, so each plate gets prev/next wired from the grid's
+         own card order, and a hash-route change moves focus to the
+         view's heading so keyboard/screen-reader users land somewhere
+         sensible instead of staying wherever they were. */
       (() => {
-        const stage = document.querySelector('.ae-stage');
-        const toc = document.querySelectorAll('.man-toc a');
-        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-
-        /* scroll-spy: the rail tracks the chapter at the reading line —
-           the deepest chapter whose top has entered the upper stage */
-        const mark = (id) => {
-          toc.forEach((a) => {
-            if (a.hash === '#' + id) a.setAttribute('aria-current', 'true');
-            else a.removeAttribute('aria-current');
-          });
+        const order = [
+          ...document.querySelectorAll('.gal-card[href^="#"]'),
+        ].map((a) => a.getAttribute('href').slice(1));
+        for (const [i, route] of order.entries()) {
+          const back = document.querySelector(
+            `.ae-view[data-route="${route}"] .back-link`,
+          );
+          if (!back) continue;
+          const prev = order[(i + order.length - 1) % order.length];
+          const next = order[(i + 1) % order.length];
+          back.insertAdjacentHTML(
+            'beforeend',
+            ` <span class="plate-steps"><a href="#${prev}">‹ prev</a> · <a href="#${next}">next ›</a></span>`,
+          );
+        }
+        let first = true;
+        const sync = () => {
+          if (!first) {
+            const route = location.hash.slice(1) || 'index';
+            const heading = document.querySelector(
+              `.ae-view[data-route="${route}"] h2.ae-h`,
+            );
+            if (heading) heading.focus();
+          }
+          first = false;
         };
-        const chapters = [...document.querySelectorAll('.man-ch')];
-        const last = chapters[chapters.length - 1];
-        const seen = new Map();
-        let atEnd = false;
-        const place = () => {
-          if (atEnd) return mark(last.id);
-          const here = chapters.filter((ch) => seen.get(ch));
-          if (here.length) mark(here[here.length - 1].id);
-        };
-        const spy = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((en) => seen.set(en.target, en.isIntersecting));
-            place();
-          },
-          { root: stage, rootMargin: '0px 0px -72% 0px' },
-        );
-        chapters.forEach((ch) => spy.observe(ch));
+        addEventListener('hashchange', sync);
+        sync();
+      })();
 
-        /* the last chapter is short and never reaches the reading line;
-           while it is fully in view the document has ended — mark it */
-        const endSpy = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((en) => {
-              atEnd = en.isIntersecting;
-            });
-            place();
-          },
-          { root: stage, threshold: 1 },
-        );
-        endSpy.observe(last);
+      /* the dialog specimen: the recipe handles focus, trap, and restore */
+      (() => {
+        const dlg = document.getElementById('dlg-demo');
+        const opener = document.getElementById('dlg-open');
+        if (!dlg || !opener) return;
+        window.aeDialog(opener, dlg);
+        document
+          .getElementById('dlg-cancel')
+          .addEventListener('click', () => dlg.close());
+        document
+          .getElementById('dlg-confirm')
+          .addEventListener('click', () => dlg.close());
+      })();
 
-        /* clicking a chapter scrolls the stage — smoothly, except under
-           reduced motion, where everything is instant */
-        toc.forEach((a) => {
-          a.addEventListener('click', (e) => {
-            const ch = document.getElementById(a.hash.slice(1));
-            if (!ch) return;
-            e.preventDefault();
-            ch.scrollIntoView({
-              behavior: reduced.matches ? 'auto' : 'smooth',
-            });
-            history.replaceState(null, '', a.hash);
-            mark(ch.id);
+      /* the toast specimen: two buttons, two slips */
+      (() => {
+        const ok = document.getElementById('toast-ok');
+        const err = document.getElementById('toast-err');
+        if (!ok || !window.aeToast) return;
+        ok.addEventListener('click', () =>
+          aeToast('Deploy 4121 resolved.', { status: 'ok' }),
+        );
+        err.addEventListener('click', () =>
+          aeToast('Build failed on preview.', { status: 'err' }),
+        );
+        const neutral = document.getElementById('toast-neutral');
+        neutral &&
+          neutral.addEventListener('click', () =>
+            aeToast('Working set updated.'),
+          );
+      })();
+
+      /* the meter specimen: ▸ run resets the fill to 0 and lets the
+         built-in width transition (.ae-meter-fill) carry it back up —
+         a state resolution, once per click. */
+      (() => {
+        const btn = document.getElementById('meter-run');
+        const meter = document.getElementById('meter-demo');
+        if (!btn || !meter) return;
+        const fill = meter.querySelector('.ae-meter-fill');
+        const target = fill.style.width;
+        btn.addEventListener('click', () => {
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+          void fill.offsetWidth;
+          fill.style.transition = '';
+          requestAnimationFrame(() => {
+            fill.style.width = target;
           });
         });
+      })();
 
-        /* the stage is the scroller: re-broadcast its scroll so the
-           anticipation recipe re-measures field positions */
-        stage.addEventListener(
-          'scroll',
-          () => dispatchEvent(new Event('scroll')),
-          { passive: true },
-        );
+      /* the flow specimen: ▸ advance steps which stage is running — the
+         frame and glyph carry the state, never a new shape. */
+      (() => {
+        const svg = document.getElementById('flow-demo');
+        const btn = document.getElementById('flow-advance');
+        if (!svg || !btn) return;
+        const nodes = [...svg.querySelectorAll('.ae-node')];
+        const labels = [...svg.querySelectorAll('.ae-node-label')];
+        const wires = [...svg.querySelectorAll('.ae-wire')];
+        const check = svg.querySelector('.ae-icon.ae-ok');
+        let active = 1;
+        const paint = () => {
+          nodes.forEach((n, i) => {
+            n.classList.remove('is-done', 'is-active', 'is-locked');
+            n.classList.add(
+              i < active ? 'is-done' : i === active ? 'is-active' : 'is-locked',
+            );
+          });
+          labels.forEach((l, i) => {
+            l.classList.remove('is-active', 'is-locked');
+            if (i === active) l.classList.add('is-active');
+            else if (i > active) l.classList.add('is-locked');
+          });
+          wires.forEach((w, i) => {
+            w.classList.remove('is-active', 'is-locked');
+            w.classList.add(i === active - 1 ? 'is-active' : 'is-locked');
+          });
+          if (check) check.style.display = active > 0 ? '' : 'none';
+        };
+        btn.addEventListener('click', () => {
+          active = (active + 1) % nodes.length;
+          paint();
+        });
+        paint();
+      })();
 
-        /* the dialog: open with showModal(); both actions close it */
-        const dlg = document.getElementById('dlg');
-        document
-          .getElementById('dlg-open')
-          .addEventListener('click', () => dlg.showModal());
-        dlg
-          .querySelectorAll('.ae-dialog-acts button')
-          .forEach((b) => b.addEventListener('click', () => dlg.close()));
+      /* copy-to-clipboard: each source block gets a quiet button that copies
+         the clean, unescaped canonical markup — textContent flattens the
+         syntax-highlight spans back to plain text. The ack morphs the label
+         to a drawn check (the .ae-send pattern, scoped to site chrome),
+         resolves once, then reverts so you can copy again — nothing loops. */
+      (() => {
+        if (!navigator.clipboard) return;
+        const status = document.createElement('span');
+        status.className = 'ae-sr';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        document.body.appendChild(status);
+        document.querySelectorAll('pre.src-code').forEach((pre) => {
+          const wrap = document.createElement('div');
+          wrap.className = 'src-codewrap';
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'src-copy';
+          btn.innerHTML =
+            'copy<svg class="ae-icon cp-check" aria-hidden="true"><use href="#i-check"/></svg>';
+          wrap.appendChild(btn);
+          let timer;
+          btn.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(
+                pre.textContent.replace(/\s+$/, '') + '\n',
+              );
+              btn.firstChild.textContent = 'copied';
+              btn.classList.add('is-copied');
+              status.textContent = 'Copied';
+              clearTimeout(timer);
+              timer = setTimeout(() => {
+                btn.firstChild.textContent = 'copy';
+                btn.classList.remove('is-copied');
+                status.textContent = '';
+              }, 1500);
+            } catch (e) {
+              /* clipboard unavailable (insecure context or denied) — no-op */
+            }
+          });
+        });
       })();
     </script>
   </body>

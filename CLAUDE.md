@@ -29,8 +29,8 @@ vs dials — lives in `docs/ADOPTING.md`.
   `docs/IMAGES.md` is the extended image-language canon;
   `docs/ADOPTING.md` is the consumer-facing adoption guide with the
   worked steering blocks.
-- `site/` — the public site (manual homepage + primitives catalog +
-  steering page + `gauntlet/` archetype proofs), built only with the
+- `site/` — the public site: one simple gallery of the primitives
+  (plus the generated tokens page), built only with the
   system itself: zero build step, zero framework. It is the ONLY
   consumer that rides HEAD; `site/aesthetic.css` and
   `site/recipes.js` are symlinks to the root artifacts. View-source
@@ -76,6 +76,5 @@ calibrations, documented by their grouping.
 
 The site is the proof surface: serve the repo root
 (`python3 -m http.server`) and walk `site/` in a browser — both modes,
-the send moment, the nav indicator, a catalog detail route, the
-gauntlet pages (dashboard, docs, settings), and the steering page.
-Tests pass ≠ verified; render it.
+the specimen grid, a few plate routes (send moment, toast, dialog),
+and the tokens page. Tests pass ≠ verified; render it.

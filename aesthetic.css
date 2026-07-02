@@ -345,6 +345,7 @@ a:hover {
 
 .ae-nav [aria-current],
 .ae-nav .is-active,
+.ae-tabs [aria-current],
 .ae-tabs [aria-selected='true'],
 .ae-tabs .is-active {
   color: var(--ae-ink);
@@ -701,6 +702,11 @@ dialog.ae-dialog::backdrop {
   border: 0;
   padding: 0;
   margin-left: 0.4em;
+  min-width: 24px;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13px;
   line-height: inherit;
   color: var(--ae-ink-faint);
@@ -835,7 +841,7 @@ kbd {
   border: 0;
   border-bottom: 1px solid var(--ae-line);
   border-radius: var(--ae-radius);
-  padding: 0.4em 0;
+  padding: 0.4em 0 calc(0.4em - 1px);
   transition: border-color var(--ae-quick) var(--ae-ease);
 }
 
@@ -843,8 +849,12 @@ kbd {
   color: var(--ae-ink-faint);
 }
 
+/* the focus ring: a 2px underline (not 1px) so the state reads at a
+   glance, never a glow. padding-bottom compensates the extra px so
+   the field doesn't shift height on focus. */
 .ae-input:focus-visible {
   outline: none;
+  border-bottom-width: 2px;
   border-bottom-color: var(--ae-ink);
 }
 
@@ -1121,7 +1131,7 @@ input.ae-switch:checked::before {
   text-align: left;
   font-weight: var(--ae-w-regular);
   letter-spacing: 0.08em;
-  color: var(--ae-ink-muted);
+  color: var(--ae-ink);
   background: var(--ae-wash);
   padding: 0.45em 1.4em 0.45em 0.7em;
 }
