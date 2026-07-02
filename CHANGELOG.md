@@ -1,3 +1,9 @@
+# [2.12.0](https://github.com/misty-step/aesthetic/compare/v2.11.0...v2.12.0) (2026-07-02)
+
+### Features
+
+- **primitives:** add the chip — categorical identity color, docs reconcile ([#10](https://github.com/misty-step/aesthetic/issues/10)) ([936d339](https://github.com/misty-step/aesthetic/commit/936d339611c7cae1e1fe2849db7e984f4f14af07)), closes [#7](https://github.com/misty-step/aesthetic/issues/7) [#9](https://github.com/misty-step/aesthetic/issues/9)
+
 # [2.11.0](https://github.com/misty-step/aesthetic/compare/v2.10.0...v2.11.0) (2026-07-02)
 
 ### Features
