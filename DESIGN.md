@@ -46,7 +46,8 @@ glows, nothing floats, nothing bounces.
   to ride the word (`.ae-chip` + `.ae-cat-0`–`.ae-cat-7`), because
   there's no glyph to carry it and nothing is being judged.
 - Light and dark are equals, defaulting to the system preference. The
-  change itself is one soft 700ms breath (view transition).
+  change itself is quick and interruptible: the toggle never disables,
+  and a second click cuts the in-flight animation instead of waiting.
 
 ## The volume knob
 

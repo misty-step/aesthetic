@@ -588,8 +588,8 @@ a:hover {
   width: 1.25em;
   height: 1.25em;
   transition:
-    opacity var(--ae-soft) var(--ae-ease),
-    transform var(--ae-soft) var(--ae-ease);
+    opacity var(--ae-quick) var(--ae-ease),
+    transform var(--ae-quick) var(--ae-ease);
 }
 
 .ae-mode .ae-sun {
@@ -2181,28 +2181,29 @@ details.ae-fold:last-of-type {
   border-bottom-color: var(--ae-ink);
 }
 
-/* ── the mode change: one soft breath ─────────────────────────────── */
+/* ── the mode change: quick and interruptible ─────────────────────── */
 
 /* the recipe wraps the flip in document.startViewTransition and sets
-   .ae-vt-mode on the root for the duration (700ms, the house ease) */
+   .ae-vt-mode on the root for one quick beat. Rapid toggles call
+   skipTransition() and cut the in-flight animation. */
 .ae-vt-mode::view-transition-old(root),
 .ae-vt-mode::view-transition-new(root) {
-  animation-duration: 700ms;
+  animation-duration: var(--ae-quick);
   animation-timing-function: var(--ae-ease);
 }
 
 /* fallback where view transitions are unsupported: every surface
-   eases its colors together for one gentle beat */
+   eases its colors together for one quick beat */
 .ae-mode-easing,
 .ae-mode-easing *,
 .ae-mode-easing *::before,
 .ae-mode-easing *::after {
   transition:
-    background-color var(--ae-gentle) var(--ae-ease),
-    color var(--ae-gentle) var(--ae-ease),
-    border-color var(--ae-gentle) var(--ae-ease),
-    fill var(--ae-gentle) var(--ae-ease),
-    stroke var(--ae-gentle) var(--ae-ease) !important;
+    background-color var(--ae-quick) var(--ae-ease),
+    color var(--ae-quick) var(--ae-ease),
+    border-color var(--ae-quick) var(--ae-ease),
+    fill var(--ae-quick) var(--ae-ease),
+    stroke var(--ae-quick) var(--ae-ease) !important;
 }
 
 /* ── the app shell: a chrome rail beside the working desk ─────────── */

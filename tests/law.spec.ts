@@ -191,6 +191,54 @@ test('the catalog routes by hash and the toggle flips the mode', async ({
     .not.toBe('none');
 });
 
+test('the mode toggle stays enabled and honors rapid toggles', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('ae-mode', 'light');
+  });
+  await page.goto('/site/#meter');
+
+  const mode = page.locator('.ae-mode').first();
+  await expect(mode).toBeEnabled();
+  await expect(mode).not.toHaveAttribute('disabled', /.*/);
+
+  const started = Date.now();
+  await mode.evaluate((btn) => {
+    (btn as HTMLButtonElement).click();
+    (btn as HTMLButtonElement).click();
+  });
+  await expect(mode).toBeEnabled();
+
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => ({
+          dark: document.documentElement.classList.contains('dark'),
+          light: document.documentElement.classList.contains('light'),
+          stored: localStorage.getItem('ae-mode'),
+          easing:
+            document.documentElement.classList.contains('ae-vt-mode') ||
+            document.documentElement.classList.contains('ae-mode-easing'),
+          disabled:
+            document.querySelector('.ae-mode')?.hasAttribute('disabled') ??
+            true,
+        })),
+      {
+        timeout: 320,
+        intervals: [40, 80, 120],
+      },
+    )
+    .toMatchObject({
+      dark: false,
+      light: true,
+      stored: 'light',
+      easing: false,
+      disabled: false,
+    });
+  expect(Date.now() - started).toBeLessThan(360);
+});
+
 test('the catalog copy button copies the clean canonical markup', async ({
   page,
   context,

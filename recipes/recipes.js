@@ -20,13 +20,18 @@
 
    The toggle below pins the opposite of the effective scheme. Pinning
    color-scheme keeps UA widgets (scrollbars, form controls) on the
-   pinned side even when the OS disagrees. The change itself is the
-   locked choreography: one soft 700ms view-transition breath, a 480ms
-   uniform color ease where unsupported, instant under reduced motion.
+   pinned side even when the OS disagrees. The change itself is quick
+   and interruptible: a new click cuts any in-flight transition and
+   applies the newest mode immediately. Unsupported view transitions
+   get the same quick color ease; reduced motion is instant.
    next-themes consumers: keep attribute="class" and skip this file —
    the classes match. */
 (() => {
   const root = document.documentElement;
+  let activeTransition = null;
+  let easingTimer = 0;
+  let runId = 0;
+  let targetDark = null;
 
   const isDark = () =>
     root.classList.contains('dark')
@@ -37,28 +42,64 @@
 
   const reducedMode = matchMedia('(prefers-reduced-motion: reduce)');
 
+  const clearAnimation = () => {
+    if (activeTransition && activeTransition.skipTransition) {
+      activeTransition.skipTransition();
+    }
+    activeTransition = null;
+    if (easingTimer) {
+      clearTimeout(easingTimer);
+      easingTimer = 0;
+    }
+    root.classList.remove('ae-vt-mode', 'ae-mode-easing');
+  };
+
+  const applyMode = (dark) => {
+    root.classList.toggle('dark', dark);
+    root.classList.toggle('light', !dark);
+    root.style.colorScheme = dark ? 'dark' : 'light';
+    try {
+      localStorage.setItem('ae-mode', dark ? 'dark' : 'light');
+    } catch (e) {}
+  };
+
   document.querySelectorAll('.ae-mode').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const dark = isDark();
+      const nextDark = !(targetDark ?? isDark());
+      const id = ++runId;
+      targetDark = nextDark;
       const flip = () => {
-        root.classList.toggle('dark', !dark);
-        root.classList.toggle('light', dark);
-        root.style.colorScheme = dark ? 'light' : 'dark';
-        try {
-          localStorage.setItem('ae-mode', dark ? 'light' : 'dark');
-        } catch (e) {}
+        if (id !== runId) return;
+        applyMode(nextDark);
       };
+      clearAnimation();
       if (reducedMode.matches) {
         flip();
       } else if (document.startViewTransition) {
         root.classList.add('ae-vt-mode');
-        document
-          .startViewTransition(flip)
-          .finished.finally(() => root.classList.remove('ae-vt-mode'));
+        activeTransition = document.startViewTransition(flip);
+        easingTimer = setTimeout(() => {
+          if (id !== runId) return;
+          root.classList.remove('ae-vt-mode');
+          easingTimer = 0;
+        }, 180);
+        activeTransition.finished.finally(() => {
+          if (id !== runId) return;
+          root.classList.remove('ae-vt-mode');
+          activeTransition = null;
+          if (easingTimer) {
+            clearTimeout(easingTimer);
+            easingTimer = 0;
+          }
+        });
       } else {
         root.classList.add('ae-mode-easing');
         flip();
-        setTimeout(() => root.classList.remove('ae-mode-easing'), 520);
+        easingTimer = setTimeout(() => {
+          if (id !== runId) return;
+          root.classList.remove('ae-mode-easing');
+          easingTimer = 0;
+        }, 180);
       }
     });
   });
