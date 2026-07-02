@@ -283,6 +283,7 @@ framework; they are documentation that happens to execute.
 | `.ae-button-compact`                                    | The chrome-register button scale for toolbars, rows, and rails                               |
 | `.ae-tabs`                                              | The nav instrument pointed at panels; `aria-selected` marks the open one                     |
 | `.ae-tag` / `.ae-tag-bare`                              | The badge, refused: a mono word, hairline at most, never a filled pill                       |
+| `.ae-stat-badges` / `.ae-stat-badge`                    | Header summaries as compact hairline stat badges, not dot-separated prose                    |
 | `[data-ae-tip]`                                         | The tip: chrome-register whisper on hover/focus, pure CSS                                    |
 | `.ae-pop`                                               | The popover slip: native `popover` + `recipes/pop.js` geometry                               |
 | `.ae-toasts` / `.ae-toast`                              | News at the edge: persists until dismissed, status on the glyph                              |

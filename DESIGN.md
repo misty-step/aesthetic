@@ -106,14 +106,17 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    and a field is a plane (`.ae-plot` — cost against quality, the
    Pareto frontier dashed, the pick in accent), and a system is a
    diagram (`.ae-flow` — hairline nodes, orthogonal wires, the running
-   stage in accent). A history is a spine (`.ae-trail` — a hairline
-   run, a square tick per entry, time and actor in the instrument
-   register, the body in prose; not a table, because entries carry
-   variable-length bodies and states that columns can't hold). Many of
-   a kind is a wall (`.ae-wall` — an auto-fit grid of hairline cards;
-   each carries its status on a glyph, never a filled tile, with an
-   optional right column for a figure, a timestamp, and a trace of
-   recent readings — the discrete cousin of `.ae-spark`).
+   stage in accent). A header summary is a stat band
+   (`.ae-stat-badges` — compact hairline badges with a tabular value
+   and quiet label; status may add a glyph, but the words stay ink).
+   A history is a spine (`.ae-trail` — a hairline run, a square tick
+   per entry, time and actor in the instrument register, the body in
+   prose; not a table, because entries carry variable-length bodies
+   and states that columns can't hold). Many of a kind is a wall
+   (`.ae-wall` — an auto-fit grid of hairline cards; each carries its
+   status on a glyph, never a filled tile, with an optional right
+   column for a figure, a timestamp, and a trace of recent readings —
+   the discrete cousin of `.ae-spark`).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed; opt-in report registers add a lede,

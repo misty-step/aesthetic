@@ -879,6 +879,47 @@ a.ae-name {
   opacity: 0.75;
 }
 
+/* stat badges: a compact header summary, not a prose run. Values are
+   tabular and strong; labels are quiet; status, when needed, rides the
+   optional mark slot with .ae-ok/.ae-warn/.ae-err. Compose .ae-chip
+   inside only for categorical side-detail, never severity. */
+.ae-stat-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--ae-space-2);
+}
+
+.ae-stat-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ae-space-2);
+  border: 1px solid var(--ae-line);
+  padding: 0.34em 0.65em;
+  color: var(--ae-ink);
+  white-space: nowrap;
+}
+
+.ae-stat-mark {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  font-weight: var(--ae-w-black);
+}
+
+.ae-stat-value {
+  font-family: var(--ae-font-mono);
+  font-weight: var(--ae-w-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.ae-stat-label {
+  color: var(--ae-ink-muted);
+}
+
+.ae-stat-badge .ae-chip {
+  margin-left: var(--ae-space-1);
+}
+
 .ae-cat-0 {
   color: var(--ae-cat-0);
 }
