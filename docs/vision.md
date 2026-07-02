@@ -3,7 +3,7 @@
 The durable north star. The law and the visual identity live in
 `aesthetic.css`, `tokens.json`, and `DESIGN.md`; the agent contract lives in
 `CLAUDE.md`. This file is the product strategy those serve — the frame that
-ranks the backlog (`backlog.d/011`–`016`) and decides what is in and out.
+ranks the backlog (`backlog.d/011`–`021`) and decides what is in and out.
 
 ## One sentence
 
@@ -59,13 +59,74 @@ aesthetic already embodies this; the backlog finishes it.
   cannot be built from primitives with no escape hatch, no consumer can —
   that is the acceptance bar for every channel the kit names.
 
+## The layer model
+
+Six layers, each with a name, an owner, and a stated brand-flexibility
+verdict. This is the architecture the fleet mandate (below) actually
+adopts — not "a CSS file," a stack:
+
+| #   | Layer                       | What it is today                                                                                                                                                                                                          | Owner                                                | Consumer may override?                                                                                                                                                                                                                       |
+| --- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **DNA / principles**        | The law: one size, nine ink×weight registers, hairlines, radius 0, motion-as-feedback-resolves-once, status-on-glyph, buttons-are-not-links, screens-not-pages (`tokens.json` `law`, `aesthetic.css` header, `DESIGN.md`) | Misty Step                                           | **No.** This is the invariant tier — the thing that makes the fleet recognizably one family. Fixed by construction, enforced by the render gate (015).                                                                                       |
+| 2   | **Tokens (semantic)**       | Color/type/motion/space/z roles: `surface`, `ink`, `ok`/`warn`/`err`, `--ae-space-*` (013 foundation pass)                                                                                                                | Misty Step                                           | **No.** The role names, the scale steps, and the AA contrast floor are law — only their _values_ move, and only on the dials below.                                                                                                          |
+| 3   | **Tokens (brand)**          | The steerable subset: `--ae-accent(-dark)`, the status triplet when the domain needs it, density (measure/chrome/shell), the mono ratio, project-scoped extra hues (`--sploot-coral`)                                     | Consumer                                             | **Yes — this is the entire brand surface.** Everything a consumer's identity needs to say lives here. No other layer is where brand expression belongs.                                                                                      |
+| 4   | **Primitives**              | The 33 `.ae-*` classes: buttons, tables, dialogs, choice marks, meters, plot/flow/report registers                                                                                                                        | Misty Step                                           | **No new primitives**, but **yes to selection** — a consumer uses the subset that fits its product; it does not invent siblings.                                                                                                             |
+| 5   | **Components (registry)**   | Copy-paste installable units: today two coarse items (`aesthetic`, `recipes` in `site/r/registry.json`); the granular shadcn-style per-primitive tier is a gap (019)                                                      | Misty Step ships, consumer forks-by-copy             | **Consumer owns the copy** once installed — that's the shadcn model (code lands in the consumer's repo, not a runtime dependency) — but a forked primitive that drifts from the law stops being "aesthetic" and the render gate will say so. |
+| 6   | **Compositions / patterns** | Archetypes (screen, shell, document, workbench) + recipes (`recipes/*.js` — canonical behavior glue)                                                                                                                      | Misty Step names the archetype, consumer arranges it | **Yes, freely** — which primitives go on which screen, in what order, is 100% product judgment. The archetype is the only constraint (a workbench is still three panes; it is not required to _have_ a workbench).                           |
+| —   | **Motion**                  | Cross-cutting, not a tier of its own: `--ae-ease` + three durations today (013/020 formalizes the vocabulary)                                                                                                             | Misty Step                                           | **No.** Durations, easing, and the "resolves once, never rewound" grammar are DNA-tier, applied wherever layers 4–6 animate.                                                                                                                 |
+
+**The brand-flexibility contract, stated once:** a consumer's entire brand
+identity is expressed through **layer 3 (brand tokens)** plus **which**
+primitives and archetypes it selects and how it arranges them (layers 4–6
+as _choices_, not new _values_). Layers 1, 2, and motion are Misty Step DNA
+and are never dials. This is the same invariants/dials split `README.md`
+and `DESIGN.md` already state in prose — the layer model makes it a table a
+consumer (or an agent) can check itself against, and gives 018/019/020 a
+named slot instead of ad-hoc scope.
+
+## Consumption faces
+
+**Operator ruling (2026-07-02): harness-kit is the only kit-not-a-service
+exception. aesthetic does not inherit it and must be spec'd honestly against
+the five-faces law (API, CLI, MCP, SDK, skill), same as every other repo in
+the weave.** This retires the "same exception class as harness-kit" argument
+carried in the 2026-06 fleet assessment. What follows is the honest current
+state and the sequencing to close the gap — not a claim that the gap is
+already closed.
+
+| Face      | State today                                                                                                                                                                 | Verdict                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **SDK**   | `law/` — a real typed Playwright import (`import { assertLaw } from '@misty-step/aesthetic/law'`)                                                                           | **Shipped.** This is a genuine SDK face, not a rebrand of "just a package."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **API**   | `site/r/*.json` (registry, primitives, recipes, the full `aesthetic.json` feed) — static, versioned, fetchable over plain HTTP from the Pages-hosted site, no server to run | **Shipped, under-named.** It behaves exactly like an API (a stable machine-readable contract over HTTP) and should be _called_ the API face in every doc, not left implicit as "the registry." Zero-cost to claim; costs only a naming pass.                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **CLI**   | None of its own — install reuses `pnpm`/`npx shadcn`/a raw `<link>` tag                                                                                                     | **Gap.** No `scaffold` (bootstrap a screen/shell/doc archetype), `lint` (015's source token-guard, packaged as a runnable command), or `sync` (pull one registry component into a consumer repo — the mechanical form of layer 5). File as 019/021-adjacent scope.                                                                                                                                                                                                                                                                                                                                                                             |
+| **MCP**   | None                                                                                                                                                                        | **Gap, sequenced last.** An MCP face would serve tokens + component specs + law invariants to an agent mid-session without it grepping `aesthetic.css`. Real value for the "adopting agent" audience named above, but it is the most expensive face (a running or documented resource server, not a static file) and its job is largely covered today by the API feed + a skill that teaches an agent to fetch it. Ship the cheap faces, watch for agents actually hitting the ceiling of "read the JSON once," then build the MCP face on that evidence — same discipline the repo already applies to the typed-React-companion non-decision. |
+| **Skill** | None                                                                                                                                                                        | **Gap, cheapest, ship first.** A skill (`.claude/skills/aesthetic` or equivalent, mirroring how every other Harness Kit repo is consumed) that teaches an agent the layer model, which face answers which question, and the steering doctrine — so an agent reaches for the API feed and the law gate instead of reinventing a rounded card. This is prose + a pointer, not new product surface, and it is the single highest-leverage face given the audience section above already names the agent as a first-class consumer.                                                                                                                |
+
+**Sequencing argument:** skill → CLI → MCP. The skill is nearly free (it
+documents faces that already exist) and immediately raises agent adoption
+quality without shipping code. The CLI is mechanical and unlocks the
+registry-tier `sync` workflow that 019 needs anyway. MCP is deferred on
+purpose — building a resource-serving face before anything has outgrown a
+one-time JSON fetch would be scope for its own sake, the same objection the
+vision already raises against Bet A tooling. Track as backlog 018–021 below;
+the skill and API-naming pass are folded into 021 (cheap, ship alongside the
+adoption wave); CLI and MCP get their own line once a first consumer asks
+for `sync` or live queries in practice.
+
 ## Non-goals
 
 - No build step, no framework, no runtime in the product.
 - No component library as the product (classes + recipes are the library).
+  The registry tier (layer 5) is copy-paste-to-own, same as shadcn — it is
+  not a runtime dependency and does not reopen the Bet A question.
 - No token tiering / aliasing layer until a consumer needs alias-recoloring
-  — the flat, intent-named token set is deliberate, not unfinished.
+  — the flat, intent-named token set is deliberate, not unfinished. (018
+  adds a semantic/brand _split_, not an aliasing/recoloring layer — the
+  distinction matters: 018 is DTCG shape and a firmer role boundary, not a
+  new indirection a consumer chains through.)
 - No new font size, no serif display face, no ambient motion, ever.
+- No MCP face until a skill + the API feed have been tried and found
+  insufficient — see Consumption faces above.
 
 ## What excellent looks like (6–12 months)
 
@@ -81,13 +142,32 @@ aesthetic already embodies this; the backlog finishes it.
 4. **Density and the lab are in-kit.** The workbench, comparison matrix, and
    measurement instruments (012–014) are all composable from primitives — the
    kit serves a dense agent lab, not just a marketing page.
+5. **The faces are honest.** SDK and API are named and documented as faces
+   (not left implicit); a skill teaches an agent to consume the kit; CLI
+   `scaffold`/`lint`/`sync` exist; MCP ships only once a real consumer has
+   outgrown the API feed (Consumption faces, above).
 
 ## Backchain
 
-- **011** advances #1 (fleet resemblance).
+- **011** advances #1 (fleet resemblance) — 2026-07-02: census corrected
+  from 7 to 18 tracked repos, bb-dashboard's stale comic-ops-pivot pin
+  flagged, powder's kanban surface added.
 - **013** advances #4 (name the channels: workbench, matrix, foundation).
 - **014** advances #4 (the lab instruments — largely shipped in v2.6.0).
-- **015** advances #2 (the law as a consumer-runnable gate + machine spec).
-- **016** advances #3 (the catalog becomes a world-class explorer + rendered
-  token reference) and serves #1 (a findable, copyable, state-complete
-  catalog makes every 011 adoption PR cheaper).
+- **015** advances #2 (the law as a consumer-runnable gate + machine spec)
+  and half of #5 (the DTCG token export is the data layer 018 builds the
+  semantic/brand split on top of).
+- **016**/**017** advance #3 (the catalog becomes a world-class explorer +
+  rendered token reference) and serve #1 (a findable, copyable,
+  state-complete catalog makes every 011 adoption PR cheaper).
+- **018** (token architecture v3) hardens layers 2–3 of the layer model —
+  the semantic/brand split the table above states as policy, made real in
+  `tokens.json`'s shape.
+- **019** (component registry tier) hardens layer 5 — turns the two coarse
+  registry items into a real per-primitive install unit, closing the
+  "component library beyond CSS" question the operator raised directly.
+- **020** (motion language) hardens the cross-cutting motion row — names
+  the vocabulary instead of leaving it three ad-hoc duration tokens.
+- **021** (faces + npm decision) advances #5 — ships the skill, the
+  API-naming pass, and resolves whether `@misty-step/aesthetic` publishes
+  to the npm registry or stays tag/CDN-only.
