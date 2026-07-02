@@ -38,12 +38,13 @@ glows, nothing floats, nothing bounces.
   animates. Reduced motion makes everything instant.
 - Buttons are not links: links are inked text that navigates; buttons
   are contained ink shapes that act. They never share a costume.
-- Status rides the glyph: danger, success, and warning color the icon
-  (✕ ✓ !), never the sentence, never a filled pill. Categorical color
-  is a different axis — identity, not judgment. N agents, N series, N
-  actors need N distinguishable hues with no severity meaning; that
-  color is allowed to ride the word (`.ae-chip` + `.ae-cat-0`–`.ae-cat-7`),
-  because there's no glyph to carry it and nothing is being judged.
+- Status rides the glyph: danger, success, and warning color the
+  Lucide icon (`circle-x`, `circle-check`, `triangle-alert`), never
+  the sentence, never a filled pill. Categorical color is a different
+  axis — identity, not judgment. N agents, N series, N actors need N
+  distinguishable hues with no severity meaning; that color is allowed
+  to ride the word (`.ae-chip` + `.ae-cat-0`–`.ae-cat-7`), because
+  there's no glyph to carry it and nothing is being judged.
 - Light and dark are equals, defaulting to the system preference. The
   change itself is one soft 700ms breath (view transition).
 
@@ -97,7 +98,9 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
 6. Choice marks are squares — checkbox fills with ink, radio holds an
    ink core, the switch slides along a hairline channel
    (`.ae-choice`). A badge is a mono word (`.ae-tag`), never a filled
-   pill. Waiting is still wash (`.ae-skeleton`), never a shimmer.
+   pill. Status lines are icon-first (`.ae-status`): the Lucide glyph
+   carries `.ae-ok`, `.ae-warn`, or `.ae-err`; the label stays ink.
+   Waiting is still wash (`.ae-skeleton`), never a shimmer.
 7. Data is drawn in ink: gauges are ruled lines (`.ae-meter`), figures
    are tabular numerals (`.ae-num`, loud by weight via `.ae-strong`),
    deltas put the hue on the arrow (`.ae-delta`), trends are pen
@@ -106,7 +109,10 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    and a field is a plane (`.ae-plot` — cost against quality, the
    Pareto frontier dashed, the pick in accent), and a system is a
    diagram (`.ae-flow` — hairline nodes, orthogonal wires, the running
-   stage in accent). A header summary is a stat band
+   stage in accent). App identity is an icon slot, not a text-only
+   prefix (`.ae-logo` + `.ae-app-mark`): a Lucide project mark sized
+   for headers and rails, paired with the name in ink. A header summary
+   is a stat band
    (`.ae-stat-badges` — compact hairline badges with a tabular value
    and quiet label; status may add a glyph, but the words stay ink).
    A history is a spine (`.ae-trail` — a hairline run, a square tick

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — fixture · icon-forward patterns</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      body {
+        max-width: 52rem;
+        margin: 3em auto;
+        padding: 0 1.5em;
+      }
+      .fixture-grid {
+        display: grid;
+        grid-template-columns: 13rem minmax(0, 1fr);
+        gap: 2em;
+      }
+      .fixture-stack {
+        display: grid;
+        gap: 0.75em;
+      }
+      @media (max-width: 720px) {
+        .fixture-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position: absolute">
+      <symbol id="i-circle-check" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="i-circle-x" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="m15 9-6 6" />
+        <path d="m9 9 6 6" />
+      </symbol>
+      <symbol id="i-info" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4" />
+        <path d="M12 8h.01" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24">
+        <path
+          d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"
+        />
+      </symbol>
+      <symbol id="i-aperture" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="m14.31 8 5.74 9.94" />
+        <path d="M9.69 8h11.48" />
+        <path d="m7.38 12 5.74-9.94" />
+        <path d="M9.69 16 3.95 6.06" />
+        <path d="M14.31 16H2.83" />
+        <path d="m16.62 12-5.74 9.94" />
+      </symbol>
+      <symbol id="i-bird" viewBox="0 0 24 24">
+        <path d="M16 7h.01" />
+        <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20" />
+        <path d="m20 7 2 .5-2 .5" />
+        <path d="M10 18v3" />
+        <path d="M14 17.75V21" />
+        <path d="M7 18a6 6 0 0 0 3.84-10.61" />
+      </symbol>
+      <symbol id="i-kanban" viewBox="0 0 24 24">
+        <path d="M6 5v11" />
+        <path d="M12 5v6" />
+        <path d="M18 5v14" />
+      </symbol>
+    </svg>
+
+    <div class="fixture-grid">
+      <aside class="fixture-stack">
+        <a class="ae-logo ae-logo-compact" href="#">
+          <span class="ae-app-mark" aria-hidden="true">
+            <svg class="ae-icon" data-lucide="aperture">
+              <use href="#i-aperture" />
+            </svg>
+          </span>
+          <span class="ae-name">AESTHETIC</span>
+        </a>
+        <a class="ae-icon-row ae-row-link" href="#">
+          <svg class="ae-icon ae-list-icon" data-lucide="activity">
+            <use href="#i-activity" />
+          </svg>
+          <span class="ae-icon-row-main">
+            <span class="ae-item">all incidents</span>
+            <span class="ae-icon-row-meta">global feed</span>
+          </span>
+        </a>
+        <a class="ae-icon-row ae-row-link" href="#">
+          <svg class="ae-icon ae-list-icon" data-lucide="bird">
+            <use href="#i-bird" />
+          </svg>
+          <span class="ae-icon-row-main">
+            <span class="ae-item">canary</span>
+            <span class="ae-icon-row-meta">2 open</span>
+          </span>
+        </a>
+        <a class="ae-icon-row ae-row-link" href="#">
+          <svg class="ae-icon ae-list-icon" data-lucide="kanban">
+            <use href="#i-kanban" />
+          </svg>
+          <span class="ae-icon-row-main">
+            <span class="ae-item">powder</span>
+            <span class="ae-icon-row-meta">board</span>
+          </span>
+        </a>
+      </aside>
+
+      <main class="fixture-stack">
+        <a class="ae-logo" href="#">
+          <span class="ae-app-mark" aria-hidden="true">
+            <svg class="ae-icon" data-lucide="bird">
+              <use href="#i-bird" />
+            </svg>
+          </span>
+          <span class="ae-name">CANARY</span>
+        </a>
+        <p class="ae-status" data-testid="status-ok">
+          <svg class="ae-icon ae-ok" data-lucide="circle-check">
+            <use href="#i-circle-check" />
+          </svg>
+          <span class="ae-status-label">7 apps up</span>
+        </p>
+        <p class="ae-status" data-testid="status-warn">
+          <svg class="ae-icon ae-warn" data-lucide="triangle-alert">
+            <use href="#i-triangle-alert" />
+          </svg>
+          <span class="ae-status-label">1 certificate expires soon</span>
+        </p>
+        <p class="ae-status" data-testid="status-err">
+          <svg class="ae-icon ae-err" data-lucide="circle-x">
+            <use href="#i-circle-x" />
+          </svg>
+          <span class="ae-status-label">2 apps down</span>
+        </p>
+        <p class="ae-status" data-testid="status-info">
+          <svg class="ae-icon ae-dim" data-lucide="info">
+            <use href="#i-info" />
+          </svg>
+          <span class="ae-status-label">origin context attached</span>
+        </p>
+        <p class="ae-status" data-testid="status-waiting">
+          <svg class="ae-icon ae-dim" data-lucide="clock">
+            <use href="#i-clock" />
+          </svg>
+          <span class="ae-status-label">probe due in 2 min</span>
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
