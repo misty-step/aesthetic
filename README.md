@@ -109,7 +109,9 @@ Two more archetypes compose from the same parts:
 Light and dark ship together and default to the system preference. A
 toggle sets `.dark` / `.light` (next-themes compatible) or
 `data-ae-mode="dark|light"` on the root element; style the control with
-`.ae-mode`.
+`.ae-mode`. The toggle stays enabled during the flip; rapid clicks cut
+the in-flight animation and apply the newest mode immediately. The
+visual transition uses `--ae-quick` so it feels below 200ms.
 
 ## Steering
 

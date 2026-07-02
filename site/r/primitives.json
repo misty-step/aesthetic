@@ -9,7 +9,7 @@
     "status": "Status rides the glyph: danger, success, and warning color the icon, never the sentence, never a filled pill.",
     "layout": "Every view fits the viewport. 100dvh screens, no page scrolling; a quiet nav swaps views when content exceeds one screen.",
     "motion": "Motion is feedback, never decoration: small, brief, eased, and gone under prefers-reduced-motion. State resolutions are gentler and resolve once; success persists, nothing changes size.",
-    "modes": "Light and dark, defaulting to the system, with a user toggle. The change itself is one soft 700ms breath (view transition), uniform color ease where unsupported.",
+    "modes": "Light and dark, defaulting to the system, with a user toggle. The change itself is quick and interruptible: the toggle stays enabled, rapid clicks cut any in-flight animation, and the visual transition uses --ae-quick.",
     "steering": "Downstream projects steer the scheme: --ae-accent / --ae-accent-dark, and the status triplet when the domain needs different hues. Everything else is the shared identity.",
     "buttons": "Buttons are not links: contained ink shapes, solid primary and hairline secondary."
   },
