@@ -10,7 +10,7 @@
      identity comes from ink, hairlines, type, and motion — never from
      a color-counting rule. Color earns its place; it is not ambient.
    · Status rides the glyph: danger, success, and warning color the
-     icon (✕ ✓ !), never the sentence, never a filled pill.
+     Lucide icon, never the sentence, never a filled pill.
    · Every view fits the viewport. 100dvh screens, no page scrolling;
      when content exceeds one screen, a quiet nav swaps views.
    · Motion is feedback, never decoration: small, brief, eased, and
@@ -454,6 +454,103 @@ a:hover {
   stroke-linejoin: round;
   fill: none;
   vertical-align: -0.2em;
+}
+
+/* icon-forward rows: Lucide gives the eye a scan target, but the law
+   stays unchanged — status hue rides the SVG, words stay ink. */
+.ae-status {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ae-space-2);
+  color: var(--ae-ink);
+}
+
+.ae-status .ae-icon {
+  flex: none;
+}
+
+.ae-status-label {
+  color: var(--ae-ink);
+}
+
+.ae-icon-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--ae-space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ae-list-icon {
+  flex: none;
+  color: var(--ae-ink-muted);
+}
+
+.ae-icon-row:hover .ae-list-icon {
+  color: var(--ae-ink);
+}
+
+.ae-icon-row-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ae-icon-row-meta {
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
+/* app identity: a Lucide project mark sized by the register it lives
+   in. The same mark works in a 13px rail and a 16px header. */
+.ae-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ae-space-3);
+  color: inherit;
+  text-decoration: none;
+  padding-block: 0.2em;
+  margin-block: 0;
+}
+
+.ae-logo:hover {
+  color: inherit;
+}
+
+.ae-logo .ae-name {
+  transition: color var(--ae-quick) var(--ae-ease);
+}
+
+.ae-logo:hover .ae-name {
+  color: var(--ae-accent);
+}
+
+.ae-logo-compact {
+  gap: var(--ae-space-2);
+  font-size: 13px;
+}
+
+.ae-app-mark {
+  width: 2em;
+  height: 2em;
+  border: 1px solid var(--ae-line);
+  color: var(--ae-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.ae-app-mark .ae-icon {
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: 0;
+}
+
+.ae-logo-compact .ae-app-mark {
+  width: 1.8em;
+  height: 1.8em;
 }
 
 /* the mode toggle: an icon button; sun and moon rotate-crossfade.
@@ -1411,6 +1508,13 @@ input.ae-switch:checked::before {
 .ae-wall-mark {
   font-family: var(--ae-font-mono);
   font-weight: var(--ae-w-black);
+  flex: none;
+}
+
+.ae-wall-mark.ae-icon {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.18em;
 }
 
 .ae-wall-meta {
@@ -1435,12 +1539,18 @@ input.ae-switch:checked::before {
 /* a trace: the wall figure's recent-readings strip — glyphs, not a
    sparkline; the discrete cousin of .ae-spark */
 .ae-wall-trace {
-  display: block;
-  font-family: var(--ae-font-mono);
-  font-size: 13px;
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.18em;
   color: var(--ae-ink-muted);
   white-space: nowrap;
+}
+
+.ae-wall-trace .ae-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: 0;
 }
 
 /* ── instruments: ink on a ruled line ─────────────────────────────── */

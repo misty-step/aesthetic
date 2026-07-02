@@ -138,13 +138,35 @@ side by side: the site's steering page.
 
 ## Status
 
-Status rides the glyph: color the icon (`✕ ✓ !` as Lucide strokes),
-never the sentence, never a filled pill.
+Status rides the glyph: color the Lucide icon, never the sentence,
+never a filled pill. The kit mapping is:
+
+| State    | Lucide icon      | Class            |
+| -------- | ---------------- | ---------------- |
+| ok       | `circle-check`   | `.ae-ok`         |
+| warn     | `triangle-alert` | `.ae-warn`       |
+| err/down | `circle-x`       | `.ae-err`        |
+| info     | `info`           | ink or `.ae-dim` |
+| waiting  | `clock`          | ink or `.ae-dim` |
+
+Use `.ae-status` for inline status lines and `.ae-icon-row` /
+`.ae-list-icon` when a list row needs a leading Lucide scan target.
+Use `.ae-logo` with `.ae-app-mark` for app identity in headers and
+sidebars.
 
 ```html
-<p><svg class="ae-icon ae-err">…x…</svg> Not a valid address.</p>
-<p><svg class="ae-icon ae-ok">…check…</svg> Deploy complete.</p>
-<p><svg class="ae-icon ae-warn">…triangle…</svg> Certificate expires soon.</p>
+<p class="ae-status">
+  <svg class="ae-icon ae-err" data-lucide="circle-x">…</svg>
+  <span>Not a valid address.</span>
+</p>
+<p class="ae-status">
+  <svg class="ae-icon ae-ok" data-lucide="circle-check">…</svg>
+  <span>Deploy complete.</span>
+</p>
+<p class="ae-status">
+  <svg class="ae-icon ae-warn" data-lucide="triangle-alert">…</svg>
+  <span>Certificate expires soon.</span>
+</p>
 ```
 
 `--ae-ok` / `--ae-warn` / `--ae-err` pass AA on both surfaces and are
@@ -263,6 +285,8 @@ framework; they are documentation that happens to execute.
 | `.ae-row-link`                                          | List rows where the whole row is the link (kills cursor strobing between rows)               |
 | `.ae-chrome` / `.ae-foot`                               | The 13px chrome register; hairline-topped two-end footer                                     |
 | `.ae-icon`                                              | Lucide icon sizing: 1.5px stroke, round caps, rides with text                                |
+| `.ae-status` / `.ae-icon-row` / `.ae-list-icon`         | Icon-forward status lines and list rows; the glyph scans first, text stays ink               |
+| `.ae-logo` / `.ae-app-mark`                             | App identity slot: a Lucide project mark sized for headers and rails                         |
 | `.ae-mode`                                              | Icon mode toggle: sun/moon rotate-crossfade                                                  |
 | `.ae-panel`                                             | Soft depth for dense content: light shadow in light mode, wash in dark, radius 0             |
 | `.ae-name`                                              | The name: weight 800, letterspaced, never large                                              |
