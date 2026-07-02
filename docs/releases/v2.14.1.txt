@@ -1,0 +1,6 @@
+Bug Fixes
+Mode toggle animations now respond immediately to rapid user interaction instead of queueing up multiple transitions that could delay the visual state change.
+<details>
+<summary>Release classification notes</summary>
+Landmark classification notice: deterministic release signals (conventional:chore, conventional:fix) disagreed with model classification; synthesis proceeded. deterministic floor prevented low-significance skip
+</details>
