@@ -1,3 +1,9 @@
+# [2.11.0](https://github.com/misty-step/aesthetic/compare/v2.10.0...v2.11.0) (2026-07-02)
+
+### Features
+
+- **primitives:** add the wall — a status-card grid for many-of-a-kind ([#9](https://github.com/misty-step/aesthetic/issues/9)) ([b86387e](https://github.com/misty-step/aesthetic/commit/b86387e7e55a963b7f9342b2a19c09f76ce12070)), closes [#7](https://github.com/misty-step/aesthetic/issues/7)
+
 # [2.10.0](https://github.com/misty-step/aesthetic/compare/v2.9.0...v2.10.0) (2026-07-02)
 
 ### Bug Fixes
