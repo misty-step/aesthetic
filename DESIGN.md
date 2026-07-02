@@ -102,7 +102,10 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    and a field is a plane (`.ae-plot` — cost against quality, the
    Pareto frontier dashed, the pick in accent), and a system is a
    diagram (`.ae-flow` — hairline nodes, orthogonal wires, the running
-   stage in accent).
+   stage in accent). A history is a spine (`.ae-trail` — a hairline
+   run, a square tick per entry, time and actor in the instrument
+   register, the body in prose; not a table, because entries carry
+   variable-length bodies and states that columns can't hold).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk), the document (`.ae-doc` —
    markdown drops in unclassed; opt-in report registers add a lede,

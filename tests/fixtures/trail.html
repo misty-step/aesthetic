@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic — fixture · .ae-trail</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      body {
+        max-width: 32rem;
+        margin: 3em auto;
+        padding: 0 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- standalone fixture, not the catalog: proves .ae-trail holds the
+         law on its own without depending on site/, which is mid-reconcile
+         (see docs/backlog.d for the split-brain ticket). Register this in
+         site/primitives.html once that lands. -->
+    <ol class="ae-trail" data-testid="trail">
+      <li class="ae-trail-item">
+        <div class="ae-trail-head">
+          <span class="ae-trail-time">14:43:20</span>
+          <span class="ae-trail-who">incident.updated</span>
+        </div>
+        <p class="ae-trail-body">
+          checkout-service: incident opened, medium severity.
+        </p>
+      </li>
+      <li class="ae-trail-item">
+        <div class="ae-trail-head">
+          <span class="ae-trail-time">14:43:30</span>
+          <span class="ae-trail-who">remediation_claim.created</span>
+        </div>
+        <p class="ae-trail-body">
+          canary-ui-drill claimed incident INC-ax930sr2p9i6.
+        </p>
+      </li>
+      <li class="ae-trail-item is-active">
+        <div class="ae-trail-head">
+          <span class="ae-trail-time">14:43:31</span>
+          <span class="ae-trail-who">remediation_claim.updated</span>
+        </div>
+        <p class="ae-trail-body">
+          canary-ui-drill set incident to
+          <span class="ae-dim">investigating</span>.
+          <span class="ae-err" aria-hidden="true">&#10007;</span> 3 occurrences
+          of CheckoutPoolExhausted.
+        </p>
+      </li>
+    </ol>
+  </body>
+</html>
