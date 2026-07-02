@@ -1,4 +1,4 @@
-# Daedalus instrument channels — plotting, uncertainty, flow, report
+# Threshold instrument channels — plotting, uncertainty, flow, report
 
 Priority: P1 · Status: in-progress · Estimate: S (re-baselined)
 
@@ -30,14 +30,14 @@ belong to 013's comparison-matrix + workbench children. Tracked there now.
 
 Extend the flexibility arc (013) with the variation channels a measurement
 **lab** needs that the workbench/matrix work does not yet name. Driven by
-Daedalus's operator UI (012): four design directions for the candidate-
+Threshold's operator UI (012): four design directions for the candidate-
 comparison screen were built, then rebuilt strictly in-kit. Rebuilding three
 of them (a dense operator screen, a generated report, a pipeline diagram)
 forced escapes from aesthetic — each escape is a channel the kit is silent in.
 Same framing as 013: not less identity, but **name the channels consumers
 hand-roll**, in the house idiom (hairlines, ink, one size, status on the
 glyph). Off-kit evidence lives in
-`daedalus/docs/daedalus-ui-lab/round-2/{terminal,atlas,schematic}-offkit.html`
+`threshold/docs/threshold-ui-lab/round-2/{terminal,atlas,schematic}-offkit.html`
 (what we wanted) vs the in-kit rebuilds at the same names (what the kit could
 express).
 
@@ -66,7 +66,7 @@ express).
    entirely (grid background, custom routing). In-idiom answer: hairline-framed
    nodes (radius 0), orthogonal ink connectors, the current stage in the accent,
    locked stages dashed-faint, mono port labels. The gate spine and lineage
-   spine Daedalus hand-rolled are the 1D degenerate case of this.
+   spine Threshold hand-rolled are the 1D degenerate case of this.
 
 4. **Document → a report/dossier register.** The document archetype carries
    prose, but a _generated_ artifact — a foundry report, a launch packet, a
@@ -81,7 +81,7 @@ express).
 
 5. **Density, re-raised by the eval grid (evidence, not a re-litigation).**
    013 explored the compact/operator dial and dropped it — "comfortable only."
-   Daedalus's comparison is the hard counterexample: a 6-candidate × 8-task
+   Threshold's comparison is the hard counterexample: a 6-candidate × 8-task
    matrix + the cost/quality plot + the read + the gate row genuinely want to
    coexist in one viewport, and at comfortable density they spill. The locked
    answer (comfortable + horizontal scroll inside the workbench) may well hold;
@@ -110,7 +110,7 @@ express).
       _shipped v2.6.0: opt-in `.ae-doc` registers (lede, figure counters,
       findings, pull-quote)._
 - [ ] The density decision is recorded against the densest real surface (the
-      Daedalus operator screen), with the in-kit artifact linked as evidence;
+      Threshold operator screen), with the in-kit artifact linked as evidence;
       keep or revisit "comfortable only" on that basis.
 
 ## Notes
@@ -119,9 +119,9 @@ Sequence: this rides behind 013's foundation pass + workbench + matrix (those
 are table stakes; 1–2 here build directly on the matrix/meter idiom). Items
 1–3 are genuinely new vocabulary; 4–5 are decisions, not necessarily new code.
 The reusable proof that the kit can serve a _lab_ (not just a dashboard) is the
-same bar 013 sets: if Daedalus's comparison screen cannot be built from
+same bar 013 sets: if Threshold's comparison screen cannot be built from
 primitives — plot, intervals, matrix, and all — the channels are still
-missing. Daedalus's `lab.css` is the consumer-side sketch of 1–3 and should be
+missing. Threshold's `lab.css` is the consumer-side sketch of 1–3 and should be
 read as a proposal, then rebuilt properly here per repo law (never graduate by
 copy).
 
@@ -172,7 +172,7 @@ glue); no desk-fills-viewport layout class (every operator screen re-derives
 bordered chrome.)
 
 Artifacts (in-kit rebuilds vs off-kit originals), in
-`daedalus/docs/daedalus-ui-lab/round-2/`: `comparison.html` (shell),
+`threshold/docs/threshold-ui-lab/round-2/`: `comparison.html` (shell),
 `terminal.html` (dark operator), `atlas.html` (report), `schematic.html` (flow).
 The `*-offkit.html` siblings are the leave-the-kit versions, kept as each
 friction's "before".

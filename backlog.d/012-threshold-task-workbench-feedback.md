@@ -1,10 +1,10 @@
-# Daedalus task-workbench adoption feedback
+# Threshold task-workbench adoption feedback
 
 Priority: P1 · Status: open · Estimate: M
 
 ## Goal
 
-Use the Daedalus UI catalog as a pressure test for aesthetic's ability to
+Use the Threshold UI catalog as a pressure test for aesthetic's ability to
 support dense, evidence-heavy agent workbenches without consumers falling back
 to bespoke dashboard CSS.
 
@@ -28,13 +28,13 @@ to bespoke dashboard CSS.
 
 ## Notes
 
-Daedalus is a useful adopter because its UI is not marketing, not a generic
+Threshold is a useful adopter because its UI is not marketing, not a generic
 analytics dashboard, and not a simple document. The product unit is a task
 contract. Downstream objects include eval arenas, hypotheses, candidate
 compositions, runs, trials, traces, approvals, launch packages, and sometimes a
 swarm of member tasks plus a master synthesis task.
 
-The first Daedalus catalog pass used reasonable bespoke UI decisions but drifted
+The first Threshold catalog pass used reasonable bespoke UI decisions but drifted
 away from aesthetic: rounded cards, filled status pills, multiple font sizes,
 soft color washes, and page-level scroll. Grounding it in aesthetic forced the
 right questions:
@@ -48,4 +48,4 @@ right questions:
 - Should the kit ship a workbench archetype separate from screen, shell, and
   document?
 
-This is not a Daedalus blocker. It is a design-system hardening opportunity.
+This is not a Threshold blocker. It is a design-system hardening opportunity.
