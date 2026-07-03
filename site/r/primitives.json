@@ -320,7 +320,7 @@
     {
       "route": "shellapp",
       "title": "App shell",
-      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves.",
+      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. On small screens the same rail becomes bottom chrome, not a hidden drawer.",
       "classes": [".ae-shell / .ae-rail / .ae-desk"],
       "role": "",
       "since": "",

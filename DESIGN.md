@@ -129,11 +129,13 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    column for a figure, a timestamp, and a trace of recent readings —
    the discrete cousin of `.ae-spark`).
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
-   a 13px rail beside the working desk), the document (`.ae-doc` —
-   markdown drops in unclassed; opt-in report registers add a lede,
-   numbered figures, a findings box, and a pull-quote, all weight and
-   space), and the form flow (settings rows, choice marks, one send
-   moment).
+   a 13px rail beside the working desk; below the `md` breakpoint the
+   same rail becomes bottom chrome, never a hidden drawer, so places
+   stay visible without adding JavaScript state), the document
+   (`.ae-doc` — markdown drops in unclassed; opt-in report registers
+   add a lede, numbered figures, a findings box, and a pull-quote, all
+   weight and space), and the form flow (settings rows, choice marks,
+   one send moment).
 9. The canonical markup for every primitive is in `site/` —
    view-source is documentation.
 

@@ -2376,6 +2376,56 @@ details.ae-fold:last-of-type {
   padding: 2.2em 2.8em;
 }
 
+/* md breakpoint: tokens.layout.breakpoints.md = 48rem. The rail becomes
+   bottom chrome rather than disappearing; places stay visible and the desk
+   keeps the only vertical scroll. */
+@media (max-width: 48rem) {
+  .ae-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .ae-rail {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    border-right: 0;
+    border-top: 1px solid var(--ae-line);
+    padding: 0 1.2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ae-space-5);
+  }
+
+  .ae-rail .ae-h {
+    display: none;
+  }
+
+  .ae-rail a,
+  .ae-rail button:not(.ae-mode) {
+    flex: none;
+    width: auto;
+    padding: 0.85em 0;
+    white-space: nowrap;
+  }
+
+  .ae-rail-foot {
+    flex: none;
+    margin-top: 0;
+    margin-left: auto;
+    padding-top: 0;
+  }
+
+  .ae-desk {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    padding: 1.8em 1.6rem;
+  }
+}
+
 /* ── the document: long-form prose, unclassed inside ──────────────── */
 
 /* the third archetype: rendered markdown drops in bare. Headings are
@@ -2567,13 +2617,14 @@ details.ae-fold:last-of-type {
   }
 
   /* the shell folds to one column; compose a bar for the places the
-     rail held — the rail itself steps aside */
+     rail held, then tighten the bottom chrome for phone width */
   .ae-shell {
     grid-template-columns: 1fr;
   }
 
   .ae-rail {
-    display: none;
+    padding-inline: 1.2rem;
+    gap: var(--ae-space-4);
   }
 
   .ae-desk {

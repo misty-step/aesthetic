@@ -98,7 +98,10 @@ Two more archetypes compose from the same parts:
 - **The app shell** (`.ae-shell` > `.ae-rail` + `.ae-desk`): one
   viewport, hairline-divided — a 13px rail for places (group headings,
   links, an `.ae-rail-foot` pinned to the bottom for the mode toggle),
-  a desk for the work. The desk scrolls inside itself.
+  a desk for the work. The desk scrolls inside itself. At the `md`
+  breakpoint and below, the same rail becomes a bottom nav bar instead
+  of disappearing; it may scroll horizontally if a product has more
+  places than a phone can show.
 - **The document** (`.ae-doc`): long-form prose where rendered
   markdown drops in unclassed — headings are weight, never size;
   rules are hairlines; quotes are inset. Put the article in a
