@@ -87,6 +87,9 @@
   --ae-measure: 38rem; /* rem: bars in the 13px chrome register must not shrink the measure */
   --ae-measure-wide: 68rem;
   --ae-radius: 0;
+  --ae-breakpoint-sm: 40rem; /* phones and narrow split-view: one-column data */
+  --ae-breakpoint-md: 48rem; /* tablet portrait: shell chrome leaves the side */
+  --ae-breakpoint-lg: 64rem; /* small laptop: boards can hold columns */
 
   /* the spacing scale: consumers use these instead of ad-hoc em values.
      The token-guard (015) will enforce them. Off-scale internal values
@@ -2551,7 +2554,9 @@ details.ae-fold:last-of-type {
 
 /* ── small screens ────────────────────────────────────────────────── */
 
-@media (max-width: 640px) {
+/* sm breakpoint: tokens.layout.breakpoints.sm = 40rem. Media queries inline
+   token values because CSS custom properties cannot drive @media. */
+@media (max-width: 40rem) {
   .ae-bar,
   .ae-stage {
     width: calc(100% - 2.4rem);
