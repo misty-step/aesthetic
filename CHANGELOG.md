@@ -1,3 +1,9 @@
+# [2.16.0](https://github.com/misty-step/aesthetic/compare/v2.15.0...v2.16.0) (2026-07-03)
+
+### Features
+
+- add mobile responsive vocabulary ([#15](https://github.com/misty-step/aesthetic/issues/15)) ([55a632b](https://github.com/misty-step/aesthetic/commit/55a632b7bf2fffac817b2ca75b701cac36659a51))
+
 # [2.15.0](https://github.com/misty-step/aesthetic/compare/v2.14.1...v2.15.0) (2026-07-03)
 
 ### Features
