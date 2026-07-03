@@ -273,7 +273,7 @@ test('the specimen grid lists every primitive and navigates', async ({
 
   // the grid is the navigation: one live card per primitive
   const cards = page.locator('.gal-card[href^="#"]');
-  await expect(cards).toHaveCount(33);
+  await expect(cards).toHaveCount(34);
 
   // clicking a card swaps the desk to that plate, which carries
   // prev/next steps wired from the grid's own order
