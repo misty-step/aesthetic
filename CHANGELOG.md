@@ -1,3 +1,9 @@
+# [2.15.0](https://github.com/misty-step/aesthetic/compare/v2.14.1...v2.15.0) (2026-07-03)
+
+### Features
+
+- **primitives:** add decomposed list rows ([#14](https://github.com/misty-step/aesthetic/issues/14)) ([5f61a32](https://github.com/misty-step/aesthetic/commit/5f61a32c720d51debf5df6116eccee6d8adc7454))
+
 ## [2.14.1](https://github.com/misty-step/aesthetic/compare/v2.14.0...v2.14.1) (2026-07-02)
 
 ### Bug Fixes
