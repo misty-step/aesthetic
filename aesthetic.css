@@ -2493,8 +2493,7 @@ details.ae-fold:last-of-type {
     border-right: 0;
     border-top: 1px solid var(--ae-line);
     padding: 0 1.2rem;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     flex-direction: row;
     align-items: center;
     gap: var(--ae-space-5);
