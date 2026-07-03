@@ -40,6 +40,29 @@ for (const mode of MODES) {
       .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' '));
     expect(firstColumns.length).toBeGreaterThanOrEqual(4);
 
+    const markedTypeCell = page
+      .locator('.ae-list-cell[data-field="type"]')
+      .first();
+    const markedTextColumn = await markedTypeCell
+      .locator('.ae-list-label')
+      .evaluate((el) => getComputedStyle(el).gridColumnStart);
+    expect(markedTextColumn).toBe('2');
+
+    const unmarkedTypeCell = page
+      .locator('.ae-list-cell[data-field="type"]')
+      .nth(2);
+    await expect(
+      unmarkedTypeCell.locator('.ae-icon, .ae-app-mark'),
+    ).toHaveCount(0);
+    const unmarkedColumns = await unmarkedTypeCell.evaluate(
+      (el) => getComputedStyle(el).gridTemplateColumns.split(' ').length,
+    );
+    const unmarkedTextColumn = await unmarkedTypeCell
+      .locator('.ae-list-value')
+      .evaluate((el) => getComputedStyle(el).gridColumnStart);
+    expect(unmarkedColumns).toBe(1);
+    expect(unmarkedTextColumn).toBe('1');
+
     await expect(page.locator('.ae-list-label').first()).toHaveCSS(
       'text-transform',
       'uppercase',

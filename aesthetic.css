@@ -535,13 +535,19 @@ a:hover {
 .ae-list-cell {
   min-width: 0;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   column-gap: var(--ae-space-2);
   align-items: center;
 }
 
+.ae-list-cell:has(> .ae-icon),
+.ae-list-cell:has(> .ae-app-mark) {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
 .ae-list-cell > .ae-icon,
 .ae-list-cell > .ae-app-mark {
+  grid-column: 1;
   grid-row: 1 / span 2;
   align-self: center;
 }
@@ -552,6 +558,7 @@ a:hover {
 }
 
 .ae-list-label {
+  grid-column: 1;
   font-family: var(--ae-font-mono);
   font-size: 11px;
   line-height: 1.2;
@@ -562,11 +569,19 @@ a:hover {
 }
 
 .ae-list-value {
+  grid-column: 1;
   min-width: 0;
   color: var(--ae-ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.ae-list-cell:has(> .ae-icon) > .ae-list-label,
+.ae-list-cell:has(> .ae-icon) > .ae-list-value,
+.ae-list-cell:has(> .ae-app-mark) > .ae-list-label,
+.ae-list-cell:has(> .ae-app-mark) > .ae-list-value {
+  grid-column: 2;
 }
 
 .ae-list-time .ae-list-value {
