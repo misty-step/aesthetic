@@ -57,7 +57,7 @@ for (const { path, name } of PAGES) {
 // check skips hidden views for font size (the offsetParent guard), so the
 // one-size law on each is otherwise unverified until it is the active route.
 // Drive each route and assert the law on the now-visible view, both modes.
-const INSTRUMENT_ROUTES = ['interval', 'plot', 'flow', 'report'];
+const INSTRUMENT_ROUTES = ['interval', 'plot', 'flow', 'report', 'board'];
 for (const route of INSTRUMENT_ROUTES) {
   for (const mode of MODES) {
     test(`catalog #${route} · ${mode} · the law holds`, async ({ page }) => {

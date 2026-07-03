@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic - fixture - mobile responsive vocabulary</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position: absolute">
+      <symbol id="i-circle-check" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol id="i-triangle-alert" viewBox="0 0 24 24">
+        <path
+          d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+        />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+    </svg>
+
+    <div class="ae-shell" data-testid="mobile-shell">
+      <aside class="ae-rail" aria-label="places">
+        <p class="ae-h">PLACES</p>
+        <a aria-current="page" href="#overview">overview</a>
+        <a href="#incidents">incidents</a>
+        <a href="#board">board</a>
+        <div class="ae-rail-foot">
+          <button class="ae-mode" aria-label="toggle color mode">mode</button>
+        </div>
+      </aside>
+      <main class="ae-desk" id="overview">
+        <section class="ae-group">
+          <h1 class="ae-h">MOBILE VOCABULARY</h1>
+          <p class="ae-dim">
+            Shell, dense rows, table instruments, and board columns in one
+            viewport.
+          </p>
+        </section>
+
+        <section class="ae-group" id="incidents">
+          <div class="ae-list-rows" role="list">
+            <a
+              class="ae-list-row ae-row-link"
+              href="#incident-1"
+              role="listitem"
+            >
+              <span class="ae-list-cell ae-list-time" data-field="time">
+                <span class="ae-list-label">time</span>
+                <span class="ae-list-value">14:43</span>
+              </span>
+              <span class="ae-list-cell" data-field="app">
+                <span class="ae-list-label">app</span>
+                <span class="ae-list-value">canary</span>
+              </span>
+              <span class="ae-list-cell" data-field="type">
+                <span class="ae-list-label">type</span>
+                <span class="ae-list-value"
+                  >probe failure with a long path</span
+                >
+              </span>
+              <span class="ae-list-cell ae-list-status" data-field="status">
+                <svg class="ae-icon ae-warn" data-lucide="triangle-alert">
+                  <use href="#i-triangle-alert" />
+                </svg>
+                <span class="ae-list-label">status</span>
+                <span class="ae-list-value">watching</span>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section class="ae-group">
+          <div class="ae-plate">
+            <p class="ae-plate-cap">TABLE 1 · MOBILE STACK</p>
+            <table class="ae-table">
+              <thead>
+                <tr>
+                  <th>endpoint</th>
+                  <th>status</th>
+                  <th class="num">p99 ms</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ae-item" data-label="endpoint">/send</td>
+                  <td data-label="status">live</td>
+                  <td class="num" data-label="p99 ms">412</td>
+                </tr>
+                <tr>
+                  <td class="ae-item" data-label="endpoint">/archive</td>
+                  <td data-label="status">draining</td>
+                  <td class="num" data-label="p99 ms">1204</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="ae-plate-note">
+              Cells carry data-label for phone stacks.
+            </p>
+          </div>
+        </section>
+
+        <section class="ae-board" id="board">
+          <div class="ae-column">
+            <div class="ae-column-head">
+              <p class="ae-column-title">Ready</p>
+              <p class="ae-column-meta">2</p>
+            </div>
+            <div class="ae-column-body">
+              <article class="ae-board-card">
+                <p class="ae-item">Write acceptance packet</p>
+                <p class="ae-dim">evidence first</p>
+              </article>
+              <article class="ae-board-card">
+                <p class="ae-item">Check rail at 390px</p>
+                <p class="ae-dim">bottom chrome visible</p>
+              </article>
+            </div>
+          </div>
+          <div class="ae-column">
+            <div class="ae-column-head">
+              <p class="ae-column-title">Live</p>
+              <p class="ae-column-meta">1</p>
+            </div>
+            <div class="ae-column-body">
+              <article class="ae-board-card">
+                <p class="ae-item">
+                  Confirm no horizontal scrunch or document overflow
+                </p>
+                <p class="ae-dim">
+                  table rows, list fields, and board columns stack
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
