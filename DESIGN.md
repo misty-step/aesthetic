@@ -116,6 +116,10 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    is a stat band
    (`.ae-stat-badges` — compact hairline badges with a tabular value
    and quiet label; status may add a glyph, but the words stay ink).
+   A feed row is decomposed, not dot-separated prose
+   (`.ae-list-rows` / `.ae-list-row` / `.ae-list-cell`): time, app,
+   type, and status align as fields with optional Lucide/app marks, and
+   status hue still rides only the glyph.
    A history is a spine (`.ae-trail` — a hairline run, a square tick
    per entry, time and actor in the instrument register, the body in
    prose; not a table, because entries carry variable-length bodies
