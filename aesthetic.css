@@ -87,6 +87,9 @@
   --ae-measure: 38rem; /* rem: bars in the 13px chrome register must not shrink the measure */
   --ae-measure-wide: 68rem;
   --ae-radius: 0;
+  --ae-breakpoint-sm: 40rem; /* phones and narrow split-view: one-column data */
+  --ae-breakpoint-md: 48rem; /* tablet portrait: shell chrome leaves the side */
+  --ae-breakpoint-lg: 64rem; /* small laptop: boards can hold columns */
 
   /* the spacing scale: consumers use these instead of ad-hoc em values.
      The token-guard (015) will enforce them. Off-scale internal values
@@ -1483,6 +1486,57 @@ input.ae-switch:checked::before {
   font-weight: var(--ae-w-medium);
 }
 
+/* sm table stack: add data-label to each td when a dense instrument must
+   survive phone width. The row becomes a ruled list of label/value pairs
+   instead of shrinking columns until they are unreadable. */
+@media (max-width: 40rem) {
+  .ae-table:has(td[data-label]) {
+    display: block;
+  }
+
+  .ae-table:has(td[data-label]) thead {
+    display: none;
+  }
+
+  .ae-table:has(td[data-label]) tbody,
+  .ae-table:has(td[data-label]) tr,
+  .ae-table:has(td[data-label]) td {
+    display: block;
+  }
+
+  .ae-table:has(td[data-label]) tbody tr {
+    border-top: 1px solid var(--ae-line);
+    padding: 0.55em 0;
+  }
+
+  .ae-table:has(td[data-label]) tbody tr:first-child {
+    border-top: 0;
+  }
+
+  .ae-table:has(td[data-label]) td {
+    border-top: 0;
+    padding: 0.16em 0;
+    display: grid;
+    grid-template-columns: minmax(7em, 0.45fr) minmax(0, 1fr);
+    gap: var(--ae-space-3);
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .ae-table:has(td[data-label]) td::before {
+    content: attr(data-label);
+    color: var(--ae-ink-faint);
+    font-weight: var(--ae-w-regular);
+    letter-spacing: 0.08em;
+    text-align: left;
+  }
+
+  .ae-table:has(td[data-label]) td.num {
+    text-align: right;
+  }
+}
+
 /* the plate: a numbered figure frame around a table or specimen —
    mono caption above, hairline frame, footnote rule below */
 .ae-plate {
@@ -1648,6 +1702,56 @@ input.ae-switch:checked::before {
   width: 1em;
   height: 1em;
   vertical-align: 0;
+}
+
+/* the board: several columns of comparable work. Columns are hairline
+   lanes, not cards inside cards; at narrow widths they stack before their
+   contents are squeezed. */
+.ae-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--ae-space-6);
+  align-items: start;
+}
+
+.ae-column {
+  min-width: 0;
+  border-top: 1px solid var(--ae-line);
+  padding-top: var(--ae-space-4);
+}
+
+.ae-column-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ae-space-4);
+  margin-bottom: var(--ae-space-4);
+}
+
+.ae-column-title {
+  font-weight: var(--ae-w-medium);
+}
+
+.ae-column-meta {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+  white-space: nowrap;
+}
+
+.ae-column-body {
+  display: grid;
+  gap: var(--ae-space-3);
+}
+
+.ae-board-card {
+  border-top: 1px solid var(--ae-line);
+  padding-top: var(--ae-space-3);
+}
+
+.ae-board-card:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 /* ── instruments: ink on a ruled line ─────────────────────────────── */
@@ -2373,6 +2477,67 @@ details.ae-fold:last-of-type {
   padding: 2.2em 2.8em;
 }
 
+/* md breakpoint: tokens.layout.breakpoints.md = 48rem. The rail becomes
+   bottom chrome rather than disappearing; places stay visible and the desk
+   keeps the only vertical scroll. */
+@media (max-width: 48rem) {
+  .ae-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .ae-rail {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    border-right: 0;
+    border-top: 1px solid var(--ae-line);
+    padding: 0 1.2rem;
+    overflow: auto hidden;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ae-space-5);
+  }
+
+  .ae-rail .ae-h {
+    display: none;
+  }
+
+  .ae-rail a,
+  .ae-rail button:not(.ae-mode) {
+    flex: none;
+    width: auto;
+    padding: 0.85em 0;
+    white-space: nowrap;
+  }
+
+  .ae-rail-foot {
+    flex: none;
+    margin-top: 0;
+    margin-left: auto;
+    padding-top: 0;
+  }
+
+  .ae-desk {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    padding: 1.8em 1.6rem;
+  }
+
+  .ae-list-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ae-list-status {
+    justify-self: stretch;
+  }
+
+  .ae-board {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── the document: long-form prose, unclassed inside ──────────────── */
 
 /* the third archetype: rendered markdown drops in bare. Headings are
@@ -2551,7 +2716,9 @@ details.ae-fold:last-of-type {
 
 /* ── small screens ────────────────────────────────────────────────── */
 
-@media (max-width: 640px) {
+/* sm breakpoint: tokens.layout.breakpoints.sm = 40rem. Media queries inline
+   token values because CSS custom properties cannot drive @media. */
+@media (max-width: 40rem) {
   .ae-bar,
   .ae-stage {
     width: calc(100% - 2.4rem);
@@ -2562,13 +2729,14 @@ details.ae-fold:last-of-type {
   }
 
   /* the shell folds to one column; compose a bar for the places the
-     rail held — the rail itself steps aside */
+     rail held, then tighten the bottom chrome for phone width */
   .ae-shell {
     grid-template-columns: 1fr;
   }
 
   .ae-rail {
-    display: none;
+    padding-inline: 1.2rem;
+    gap: var(--ae-space-4);
   }
 
   .ae-desk {
@@ -2584,11 +2752,15 @@ details.ae-fold:last-of-type {
   }
 
   .ae-list-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: var(--ae-space-3);
   }
 
-  .ae-list-status {
-    justify-self: stretch;
+  .ae-list-value {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 

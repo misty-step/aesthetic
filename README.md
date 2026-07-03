@@ -98,7 +98,10 @@ Two more archetypes compose from the same parts:
 - **The app shell** (`.ae-shell` > `.ae-rail` + `.ae-desk`): one
   viewport, hairline-divided — a 13px rail for places (group headings,
   links, an `.ae-rail-foot` pinned to the bottom for the mode toggle),
-  a desk for the work. The desk scrolls inside itself.
+  a desk for the work. The desk scrolls inside itself. At the `md`
+  breakpoint and below, the same rail becomes a bottom nav bar instead
+  of disappearing; it may scroll horizontally if a product has more
+  places than a phone can show.
 - **The document** (`.ae-doc`): long-form prose where rendered
   markdown drops in unclassed — headings are weight, never size;
   rules are hairlines; quotes are inset. Put the article in a
@@ -193,7 +196,14 @@ Tables are instruments: `.ae-table` is 13px mono with lowercase headers
 on a wash band and hairline row rules. A column header always shares its
 column's alignment (`.num` on the `th` and its `td`s). Frame a table as
 a numbered figure with `.ae-plate` + `.ae-plate-cap` ("TABLE 1 · …") +
-`.ae-plate-note`.
+`.ae-plate-note`. For phone stacking, put `data-label="column"` on each
+`td`; at the `sm` breakpoint rows become label/value rules instead of
+scrunched columns.
+
+Boards are lanes of comparable work: `.ae-board` contains `.ae-column`
+lanes, each with an `.ae-column-head` and `.ae-column-body`. The columns
+auto-fit on roomy screens and stack at the `md` breakpoint before cards
+get squeezed.
 
 ## Settings rows
 
@@ -309,6 +319,7 @@ framework; they are documentation that happens to execute.
 | `.ae-send`                                              | The send moment: label resolves to "Sent ✓" once, then the button rests disabled             |
 | `.ae-dialog`                                            | The decision panel: `<dialog>` in the panel costume over a paper-dim backdrop                |
 | `.ae-table` / `.ae-plate`                               | The data instrument: 13px mono, wash header band; framed as a numbered figure                |
+| `.ae-board` / `.ae-column`                              | Responsive work lanes: hairline columns that stack before their cards scrunch                |
 | `.ae-settings` / `.ae-menu`                             | Settings rows that open: label · value lines unfolding a quiet chooser                       |
 | `[data-ae-anticipate]`                                  | Opt-in input anticipation: the nearest field warms as the pointer nears                      |
 | `.ae-choice` / `.ae-check` / `.ae-radio` / `.ae-switch` | Choice marks: ink-filled squares and a hairline-channel slide                                |

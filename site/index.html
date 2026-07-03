@@ -502,8 +502,8 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="ae-item">/send</td>
-                            <td class="num">412</td>
+                            <td class="ae-item" data-label="endpoint">/send</td>
+                            <td class="num" data-label="ms">412</td>
                           </tr>
                         </tbody>
                       </table>
@@ -512,7 +512,24 @@
                       <span class="gal-meta-cls">Table</span>
                     </p>
                   </a>
-                  <a class="gal-card" href="#meter" style="--gal-i: 1">
+                  <a class="gal-card" href="#board" style="--gal-i: 1">
+                    <div class="gal-specimen">
+                      <div class="ae-board" style="width: 100%">
+                        <section class="ae-column">
+                          <p class="ae-column-title">todo</p>
+                          <div class="ae-column-body">
+                            <p class="ae-board-card">
+                              <span class="ae-item">contract</span>
+                            </p>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                    <p class="gal-meta">
+                      <span class="gal-meta-cls">Board</span>
+                    </p>
+                  </a>
+                  <a class="gal-card" href="#meter" style="--gal-i: 2">
                     <div class="gal-specimen">
                       <div style="width: 100%">
                         <p class="ae-chrome" style="margin: 0 0 0.4em">
@@ -534,7 +551,7 @@
                       <span class="gal-meta-cls">Meter</span>
                     </p>
                   </a>
-                  <a class="gal-card" href="#figures" style="--gal-i: 2">
+                  <a class="gal-card" href="#figures" style="--gal-i: 3">
                     <div class="gal-specimen">
                       <p style="margin: 0">
                         <span class="ae-num ae-strong">48,211</span>
@@ -545,7 +562,7 @@
                       <span class="gal-meta-cls">Figures</span>
                     </p>
                   </a>
-                  <a class="gal-card" href="#interval" style="--gal-i: 3">
+                  <a class="gal-card" href="#interval" style="--gal-i: 4">
                     <div class="gal-specimen">
                       <div
                         class="ae-ci is-lead"
@@ -564,7 +581,7 @@
                       <span class="gal-meta-cls">Interval</span>
                     </p>
                   </a>
-                  <a class="gal-card" href="#plot" style="--gal-i: 4">
+                  <a class="gal-card" href="#plot" style="--gal-i: 5">
                     <div class="gal-specimen">
                       <svg
                         class="ae-plot"
@@ -598,7 +615,7 @@
                       <span class="gal-meta-cls">Plot</span>
                     </p>
                   </a>
-                  <a class="gal-card" href="#flow" style="--gal-i: 5">
+                  <a class="gal-card" href="#flow" style="--gal-i: 6">
                     <div class="gal-specimen">
                       <svg
                         class="ae-flow"
@@ -1096,7 +1113,8 @@
                 Terminal density: 13px mono, lowercase headers on a wash band,
                 hairline row rules — framed as a numbered plate. A column header
                 shares its column's alignment: put <code>.num</code> on the th
-                AND its tds.
+                AND its tds. Add <code>data-label</code> to cells that should
+                stack on phones.
               </p>
             </div>
             <div class="src-split">
@@ -1112,19 +1130,19 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="ae-item">/send</td>
-                      <td>live</td>
-                      <td class="num">412</td>
+                      <td class="ae-item" data-label="endpoint">/send</td>
+                      <td data-label="status">live</td>
+                      <td class="num" data-label="p99 ms">412</td>
                     </tr>
                     <tr>
-                      <td class="ae-item">/verify</td>
-                      <td>live</td>
-                      <td class="num">88</td>
+                      <td class="ae-item" data-label="endpoint">/verify</td>
+                      <td data-label="status">live</td>
+                      <td class="num" data-label="p99 ms">88</td>
                     </tr>
                     <tr>
-                      <td class="ae-item">/archive</td>
-                      <td>draining</td>
-                      <td class="num">1204</td>
+                      <td class="ae-item" data-label="endpoint">/archive</td>
+                      <td data-label="status">draining</td>
+                      <td class="num" data-label="p99 ms">1204</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1140,8 +1158,9 @@
           &lt;th class="<span class="t">num</span>"&gt;p99 ms&lt;/th&gt;&lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
-      &lt;tr&gt;&lt;td class="<span class="t">ae-item</span>"&gt;/send&lt;/td&gt;&lt;td&gt;live&lt;/td&gt;
-          &lt;td class="<span class="t">num</span>"&gt;412&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class="<span class="t">ae-item</span>" data-label="endpoint"&gt;/send&lt;/td&gt;
+          &lt;td data-label="status"&gt;live&lt;/td&gt;
+          &lt;td class="<span class="t">num</span>" data-label="p99 ms"&gt;412&lt;/td&gt;&lt;/tr&gt;
       …
     &lt;/tbody&gt;
   &lt;/table&gt;
@@ -1220,6 +1239,67 @@
                   >
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div class="ae-view" data-route="board">
+            <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
+            <div class="ae-group">
+              <h2 class="ae-h" tabindex="-1">Board</h2>
+              <p class="gal-cls">.ae-board / .ae-column</p>
+              <p class="ae-dim">
+                Comparable work lanes: ruled columns with quiet cards. They
+                auto-fit when there is room and stack before narrow screens
+                squeeze the task text.
+              </p>
+            </div>
+            <div class="src-split">
+              <div class="ae-board">
+                <section class="ae-column">
+                  <div class="ae-column-head">
+                    <p class="ae-column-title">Ready</p>
+                    <p class="ae-column-meta">2</p>
+                  </div>
+                  <div class="ae-column-body">
+                    <article class="ae-board-card">
+                      <p class="ae-item">Write acceptance packet</p>
+                      <p class="ae-dim">evidence first</p>
+                    </article>
+                    <article class="ae-board-card">
+                      <p class="ae-item">Check mobile rail</p>
+                      <p class="ae-dim">390px law gate</p>
+                    </article>
+                  </div>
+                </section>
+                <section class="ae-column">
+                  <div class="ae-column-head">
+                    <p class="ae-column-title">Live</p>
+                    <p class="ae-column-meta">1</p>
+                  </div>
+                  <div class="ae-column-body">
+                    <article class="ae-board-card">
+                      <p class="ae-item">Run visual proof</p>
+                      <p class="ae-dim">site and fixture widths</p>
+                    </article>
+                  </div>
+                </section>
+              </div>
+              <pre
+                class="src-code"
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-board</span>"&gt;
+  &lt;<span class="t">section</span> class="<span class="t">ae-column</span>"&gt;
+    &lt;div class="<span class="t">ae-column-head</span>"&gt;
+      &lt;p class="<span class="t">ae-column-title</span>"&gt;Ready&lt;/p&gt;
+      &lt;p class="<span class="t">ae-column-meta</span>"&gt;2&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="<span class="t">ae-column-body</span>"&gt;
+      &lt;article class="<span class="t">ae-board-card</span>"&gt;
+        &lt;p class="<span class="t">ae-item</span>"&gt;Write acceptance packet&lt;/p&gt;
+        &lt;p class="<span class="t">ae-dim</span>"&gt;evidence first&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
             </div>
           </div>
 
@@ -2702,7 +2782,8 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
               <p class="ae-dim">
                 The app shell: one viewport, hairline-divided — a 13px rail for
                 places, a desk for work. The desk scrolls inside itself; the
-                page never moves.
+                page never moves. On small screens the same rail becomes bottom
+                chrome, not a hidden drawer.
               </p>
             </div>
             <div class="src-split">

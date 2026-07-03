@@ -130,12 +130,22 @@
     {
       "route": "table",
       "title": "Table",
-      "summary": "Terminal density: 13px mono, lowercase headers on a wash band, hairline row rules — framed as a numbered plate. A column header shares its column's alignment: put .num on the th AND its tds.",
+      "summary": "Terminal density: 13px mono, lowercase headers on a wash band, hairline row rules — framed as a numbered plate. A column header shares its column's alignment: put .num on the th AND its tds. Add data-label to cells that should stack on phones.",
       "classes": [".ae-table / .ae-plate"],
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<div class=\"ae-plate\">\n  <p class=\"ae-plate-cap\">TABLE 1 · EXAMPLE</p>\n  <table class=\"ae-table\">\n    <thead>\n      <tr><th>endpoint</th><th>status</th>\n          <th class=\"num\">p99 ms</th></tr>\n    </thead>\n    <tbody>\n      <tr><td class=\"ae-item\">/send</td><td>live</td>\n          <td class=\"num\">412</td></tr>\n      …\n    </tbody>\n  </table>\n  <p class=\"ae-plate-note\">p99 over the trailing 24 hours.</p>\n</div>"
+      "markup": "<div class=\"ae-plate\">\n  <p class=\"ae-plate-cap\">TABLE 1 · EXAMPLE</p>\n  <table class=\"ae-table\">\n    <thead>\n      <tr><th>endpoint</th><th>status</th>\n          <th class=\"num\">p99 ms</th></tr>\n    </thead>\n    <tbody>\n      <tr><td class=\"ae-item\" data-label=\"endpoint\">/send</td>\n          <td data-label=\"status\">live</td>\n          <td class=\"num\" data-label=\"p99 ms\">412</td></tr>\n      …\n    </tbody>\n  </table>\n  <p class=\"ae-plate-note\">p99 over the trailing 24 hours.</p>\n</div>"
+    },
+    {
+      "route": "board",
+      "title": "Board",
+      "summary": "Comparable work lanes: ruled columns with quiet cards. They auto-fit when there is room and stack before narrow screens squeeze the task text.",
+      "classes": [".ae-board / .ae-column"],
+      "role": "",
+      "since": "",
+      "recipes": [],
+      "markup": "<div class=\"ae-board\">\n  <section class=\"ae-column\">\n    <div class=\"ae-column-head\">\n      <p class=\"ae-column-title\">Ready</p>\n      <p class=\"ae-column-meta\">2</p>\n    </div>\n    <div class=\"ae-column-body\">\n      <article class=\"ae-board-card\">\n        <p class=\"ae-item\">Write acceptance packet</p>\n        <p class=\"ae-dim\">evidence first</p>\n      </article>\n    </div>\n  </section>\n</div>"
     },
     {
       "route": "dialog",
@@ -320,7 +330,7 @@
     {
       "route": "shellapp",
       "title": "App shell",
-      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves.",
+      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. On small screens the same rail becomes bottom chrome, not a hidden drawer.",
       "classes": [".ae-shell / .ae-rail / .ae-desk"],
       "role": "",
       "since": "",
