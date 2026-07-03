@@ -1486,6 +1486,57 @@ input.ae-switch:checked::before {
   font-weight: var(--ae-w-medium);
 }
 
+/* sm table stack: add data-label to each td when a dense instrument must
+   survive phone width. The row becomes a ruled list of label/value pairs
+   instead of shrinking columns until they are unreadable. */
+@media (max-width: 40rem) {
+  .ae-table:has(td[data-label]) {
+    display: block;
+  }
+
+  .ae-table:has(td[data-label]) thead {
+    display: none;
+  }
+
+  .ae-table:has(td[data-label]) tbody,
+  .ae-table:has(td[data-label]) tr,
+  .ae-table:has(td[data-label]) td {
+    display: block;
+  }
+
+  .ae-table:has(td[data-label]) tbody tr {
+    border-top: 1px solid var(--ae-line);
+    padding: 0.55em 0;
+  }
+
+  .ae-table:has(td[data-label]) tbody tr:first-child {
+    border-top: 0;
+  }
+
+  .ae-table:has(td[data-label]) td {
+    border-top: 0;
+    padding: 0.16em 0;
+    display: grid;
+    grid-template-columns: minmax(7em, 0.45fr) minmax(0, 1fr);
+    gap: var(--ae-space-3);
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .ae-table:has(td[data-label]) td::before {
+    content: attr(data-label);
+    color: var(--ae-ink-faint);
+    font-weight: var(--ae-w-regular);
+    letter-spacing: 0.08em;
+    text-align: left;
+  }
+
+  .ae-table:has(td[data-label]) td.num {
+    text-align: right;
+  }
+}
+
 /* the plate: a numbered figure frame around a table or specimen —
    mono caption above, hairline frame, footnote rule below */
 .ae-plate {
@@ -1651,6 +1702,56 @@ input.ae-switch:checked::before {
   width: 1em;
   height: 1em;
   vertical-align: 0;
+}
+
+/* the board: several columns of comparable work. Columns are hairline
+   lanes, not cards inside cards; at narrow widths they stack before their
+   contents are squeezed. */
+.ae-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--ae-space-6);
+  align-items: start;
+}
+
+.ae-column {
+  min-width: 0;
+  border-top: 1px solid var(--ae-line);
+  padding-top: var(--ae-space-4);
+}
+
+.ae-column-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ae-space-4);
+  margin-bottom: var(--ae-space-4);
+}
+
+.ae-column-title {
+  font-weight: var(--ae-w-medium);
+}
+
+.ae-column-meta {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+  white-space: nowrap;
+}
+
+.ae-column-body {
+  display: grid;
+  gap: var(--ae-space-3);
+}
+
+.ae-board-card {
+  border-top: 1px solid var(--ae-line);
+  padding-top: var(--ae-space-3);
+}
+
+.ae-board-card:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 /* ── instruments: ink on a ruled line ─────────────────────────────── */
@@ -2424,6 +2525,18 @@ details.ae-fold:last-of-type {
     min-height: 0;
     padding: 1.8em 1.6rem;
   }
+
+  .ae-list-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ae-list-status {
+    justify-self: stretch;
+  }
+
+  .ae-board {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── the document: long-form prose, unclassed inside ──────────────── */
@@ -2640,11 +2753,15 @@ details.ae-fold:last-of-type {
   }
 
   .ae-list-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: var(--ae-space-3);
   }
 
-  .ae-list-status {
-    justify-self: stretch;
+  .ae-list-value {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 

@@ -95,7 +95,8 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    floats as a hairline slip (`.ae-pop`); news waits at the edge
    (`.ae-toast`); hints whisper (`[data-ae-tip]`); tables are 13px
    mono instruments framed as numbered plates (`.ae-table`,
-   `.ae-plate`); view swaps are a simple cut.
+   `.ae-plate`) and stack on phones when cells carry `data-label`;
+   view swaps are a simple cut.
 6. Choice marks are squares — checkbox fills with ink, radio holds an
    ink core, the switch slides along a hairline channel
    (`.ae-choice`). A badge is a mono word (`.ae-tag`), never a filled
@@ -127,7 +128,9 @@ ambient motion. Worked examples: `docs/ADOPTING.md`.
    (`.ae-wall` — an auto-fit grid of hairline cards; each carries its
    status on a glyph, never a filled tile, with an optional right
    column for a figure, a timestamp, and a trace of recent readings —
-   the discrete cousin of `.ae-spark`).
+   the discrete cousin of `.ae-spark`). Several lanes of comparable
+   work are a board (`.ae-board` / `.ae-column`): ruled columns that
+   stack before their cards are squeezed.
 8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
    a 13px rail beside the working desk; below the `md` breakpoint the
    same rail becomes bottom chrome, never a hidden drawer, so places
