@@ -51,6 +51,17 @@ Or through the registry — no npm account on either side:
 npx shadcn@latest add https://aesthetic.mistystep.io/r/aesthetic.json
 ```
 
+Or copy one primitive and its dependencies:
+
+```bash
+npx shadcn@latest add https://aesthetic.mistystep.io/r/toast.json
+```
+
+Primitive registry items depend on `aesthetic-base.json`, then add only
+the CSS selector/token slice and recipe singles that primitive needs.
+The generated index is at
+[site/r/](https://aesthetic.mistystep.io/r/).
+
 The full adoption guide — Geist wiring, the mode boot, the Tailwind v4
 bridge, steering blocks, recipes — is
 [docs/ADOPTING.md](docs/ADOPTING.md).

@@ -8,6 +8,76 @@
       "type": "registry:item",
       "title": "aesthetic",
       "description": "The Misty Step design system, v2.16.0: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
+      "meta": {
+        "version": "2.16.0",
+        "tier": "whole-kit",
+        "classes": ["*"],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-muted",
+          "--ae-ink-faint",
+          "--ae-line",
+          "--ae-accent",
+          "--ae-ok",
+          "--ae-warn",
+          "--ae-err",
+          "--ae-cat-0",
+          "--ae-cat-1",
+          "--ae-cat-2",
+          "--ae-cat-3",
+          "--ae-cat-4",
+          "--ae-cat-5",
+          "--ae-cat-6",
+          "--ae-cat-7",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-muted-dark",
+          "--ae-ink-faint-dark",
+          "--ae-line-dark",
+          "--ae-accent-dark",
+          "--ae-ok-dark",
+          "--ae-warn-dark",
+          "--ae-err-dark",
+          "--ae-cat-0-dark",
+          "--ae-cat-1-dark",
+          "--ae-cat-2-dark",
+          "--ae-cat-3-dark",
+          "--ae-cat-4-dark",
+          "--ae-cat-5-dark",
+          "--ae-cat-6-dark",
+          "--ae-cat-7-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-w-medium",
+          "--ae-w-black",
+          "--ae-measure",
+          "--ae-measure-wide",
+          "--ae-radius",
+          "--ae-breakpoint-sm",
+          "--ae-breakpoint-md",
+          "--ae-breakpoint-lg",
+          "--ae-space-0",
+          "--ae-space-1",
+          "--ae-space-2",
+          "--ae-space-3",
+          "--ae-space-4",
+          "--ae-space-5",
+          "--ae-space-6",
+          "--ae-space-7",
+          "--ae-space-8",
+          "--ae-z-tip",
+          "--ae-z-toast",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-soft",
+          "--ae-gentle"
+        ],
+        "recipes": []
+      },
       "files": [
         {
           "path": "aesthetic.css",
@@ -25,12 +95,1825 @@
       "name": "recipes",
       "type": "registry:item",
       "title": "aesthetic recipes",
-      "description": "The canonical behavior glue for aesthetic v2.16.0: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, toasts, popovers. Dependency-free.",
+      "description": "The canonical behavior glue for aesthetic v2.16.0: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, dialogs, toasts, popovers. Dependency-free.",
+      "meta": {
+        "version": "2.16.0",
+        "tier": "whole-recipes",
+        "classes": [],
+        "tokens": [],
+        "recipes": ["recipes.js"]
+      },
       "files": [
         {
           "path": "recipes/recipes.js",
           "type": "registry:file",
           "target": "~/aesthetic.recipes.js"
+        }
+      ]
+    },
+    {
+      "name": "aesthetic-base",
+      "type": "registry:item",
+      "title": "aesthetic base",
+      "description": "The shared base for Aesthetic primitive slices, v2.16.0: root tokens, body/type reset, links, focus, selection, and mode color-scheme wiring.",
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive-base",
+        "classes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/aesthetic-base/aesthetic.base.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.base.css"
+        }
+      ]
+    },
+    {
+      "name": "shell",
+      "type": "registry:item",
+      "title": "aesthetic Screen",
+      "description": "Aesthetic Screen primitive, v2.16.0. Installs ae-bar, ae-mode, ae-name, ae-nav, ae-screen, ae-stage, ae-view without the full stylesheet. Recipes: mode.js, nav.js, views.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "shell",
+        "classes": [
+          "ae-bar",
+          "ae-mode",
+          "ae-name",
+          "ae-nav",
+          "ae-screen",
+          "ae-stage",
+          "ae-view"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium",
+          "--ae-w-black",
+          "--ae-measure",
+          "--ae-space-5",
+          "--ae-space-6",
+          "--ae-soft"
+        ],
+        "recipes": ["mode.js", "nav.js", "views.js"]
+      },
+      "files": [
+        {
+          "path": "registry/shell/aesthetic.shell.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.shell.css"
+        },
+        {
+          "path": "recipes/mode.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.mode.js"
+        },
+        {
+          "path": "recipes/nav.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.nav.js"
+        },
+        {
+          "path": "recipes/views.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.views.js"
+        }
+      ]
+    },
+    {
+      "name": "scroll",
+      "type": "registry:item",
+      "title": "aesthetic Stage scroll",
+      "description": "Aesthetic Stage scroll primitive, v2.16.0. Installs ae-stage, ae-stage-scroll without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "scroll",
+        "classes": ["ae-stage", "ae-stage-scroll"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-measure",
+          "--ae-space-5",
+          "--ae-space-6"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/scroll/aesthetic.scroll.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.scroll.css"
+        }
+      ]
+    },
+    {
+      "name": "nav",
+      "type": "registry:item",
+      "title": "aesthetic Nav",
+      "description": "Aesthetic Nav primitive, v2.16.0. Installs ae-nav, ae-nav-ind, ae-view without the full stylesheet. Recipes: nav.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "nav",
+        "classes": ["ae-nav", "ae-nav-ind", "ae-view"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium",
+          "--ae-space-6",
+          "--ae-soft"
+        ],
+        "recipes": ["nav.js"]
+      },
+      "files": [
+        {
+          "path": "registry/nav/aesthetic.nav.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.nav.css"
+        },
+        {
+          "path": "recipes/nav.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.nav.js"
+        }
+      ]
+    },
+    {
+      "name": "rows",
+      "type": "registry:item",
+      "title": "aesthetic Row link",
+      "description": "Aesthetic Row link primitive, v2.16.0. Installs ae-dim, ae-item, ae-row-link without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "rows",
+        "classes": ["ae-dim", "ae-item", "ae-row-link"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/rows/aesthetic.rows.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.rows.css"
+        }
+      ]
+    },
+    {
+      "name": "chrome",
+      "type": "registry:item",
+      "title": "aesthetic Chrome",
+      "description": "Aesthetic Chrome primitive, v2.16.0. Installs ae-chrome, ae-foot, ae-foot-links without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "chrome",
+        "classes": ["ae-chrome", "ae-foot", "ae-foot-links"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-space-4",
+          "--ae-space-5",
+          "--ae-space-6"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/chrome/aesthetic.chrome.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.chrome.css"
+        }
+      ]
+    },
+    {
+      "name": "icons",
+      "type": "registry:item",
+      "title": "aesthetic Icon",
+      "description": "Aesthetic Icon primitive, v2.16.0. Installs ae-icon, ae-mode, ae-moon, ae-sun without the full stylesheet. Recipes: mode.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "icons",
+        "classes": ["ae-icon", "ae-mode", "ae-moon", "ae-sun"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark"
+        ],
+        "recipes": ["mode.js"]
+      },
+      "files": [
+        {
+          "path": "registry/icons/aesthetic.icons.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.icons.css"
+        },
+        {
+          "path": "recipes/mode.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.mode.js"
+        }
+      ]
+    },
+    {
+      "name": "panel",
+      "type": "registry:item",
+      "title": "aesthetic Panel",
+      "description": "Aesthetic Panel primitive, v2.16.0. Installs ae-panel without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "panel",
+        "classes": ["ae-panel"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-space-6"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/panel/aesthetic.panel.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.panel.css"
+        }
+      ]
+    },
+    {
+      "name": "registers",
+      "type": "registry:item",
+      "title": "aesthetic Registers",
+      "description": "Aesthetic Registers primitive, v2.16.0. Installs ae-accent, ae-dim, ae-item, ae-lede, ae-name without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "registers",
+        "classes": ["ae-accent", "ae-dim", "ae-item", "ae-lede", "ae-name"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium",
+          "--ae-w-black"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/registers/aesthetic.registers.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.registers.css"
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:item",
+      "title": "aesthetic Input",
+      "description": "Aesthetic Input primitive, v2.16.0. Installs ae-input, ae-label without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "form",
+        "classes": ["ae-input", "ae-label"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-err",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-err-dark",
+          "--ae-w-medium",
+          "--ae-radius",
+          "--ae-space-0"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/form/aesthetic.form.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.form.css"
+        }
+      ]
+    },
+    {
+      "name": "buttons",
+      "type": "registry:item",
+      "title": "aesthetic Button",
+      "description": "Aesthetic Button primitive, v2.16.0. Installs ae-button, ae-button-compact, ae-button-quiet, ae-icon, ae-send, ae-send-done, ae-send-label without the full stylesheet. Recipes: send.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "buttons",
+        "classes": [
+          "ae-button",
+          "ae-button-compact",
+          "ae-button-quiet",
+          "ae-icon",
+          "ae-send",
+          "ae-send-done",
+          "ae-send-label"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-w-medium",
+          "--ae-radius",
+          "--ae-space-2",
+          "--ae-gentle"
+        ],
+        "recipes": ["send.js"]
+      },
+      "files": [
+        {
+          "path": "registry/buttons/aesthetic.buttons.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.buttons.css"
+        },
+        {
+          "path": "recipes/send.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.send.js"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "type": "registry:item",
+      "title": "aesthetic Status",
+      "description": "Aesthetic Status primitive, v2.16.0. Installs ae-err, ae-icon, ae-ok, ae-warn without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "status",
+        "classes": ["ae-err", "ae-icon", "ae-ok", "ae-warn"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ok",
+          "--ae-warn",
+          "--ae-err",
+          "--ae-ok-dark",
+          "--ae-warn-dark",
+          "--ae-err-dark"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/status/aesthetic.status.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.status.css"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:item",
+      "title": "aesthetic Table",
+      "description": "Aesthetic Table primitive, v2.16.0. Installs ae-item, ae-plate, ae-plate-cap, ae-plate-note, ae-table without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "table",
+        "classes": [
+          "ae-item",
+          "ae-plate",
+          "ae-plate-cap",
+          "ae-plate-note",
+          "ae-table"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-space-3",
+          "--ae-space-4"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/table/aesthetic.table.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.table.css"
+        }
+      ]
+    },
+    {
+      "name": "board",
+      "type": "registry:item",
+      "title": "aesthetic Board",
+      "description": "Aesthetic Board primitive, v2.16.0. Installs ae-board, ae-board-card, ae-column, ae-column-body, ae-column-head, ae-column-meta, ae-column-title, ae-dim, ae-item without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "board",
+        "classes": [
+          "ae-board",
+          "ae-board-card",
+          "ae-column",
+          "ae-column-body",
+          "ae-column-head",
+          "ae-column-meta",
+          "ae-column-title",
+          "ae-dim",
+          "ae-item"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-space-3",
+          "--ae-space-4",
+          "--ae-space-6"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/board/aesthetic.board.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.board.css"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:item",
+      "title": "aesthetic Dialog",
+      "description": "Aesthetic Dialog primitive, v2.16.0. Installs ae-button, ae-button-quiet, ae-dialog, ae-dialog-acts, ae-dialog-title, ae-dim without the full stylesheet. Recipes: dialog.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "dialog",
+        "classes": [
+          "ae-button",
+          "ae-button-quiet",
+          "ae-dialog",
+          "ae-dialog-acts",
+          "ae-dialog-title",
+          "ae-dim"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium",
+          "--ae-w-black",
+          "--ae-radius",
+          "--ae-space-2",
+          "--ae-space-4",
+          "--ae-space-6",
+          "--ae-soft"
+        ],
+        "recipes": ["dialog.js"]
+      },
+      "files": [
+        {
+          "path": "registry/dialog/aesthetic.dialog.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.dialog.css"
+        },
+        {
+          "path": "recipes/dialog.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.dialog.js"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:item",
+      "title": "aesthetic Settings",
+      "description": "Aesthetic Settings primitive, v2.16.0. Installs ae-menu, ae-setting, ae-setting-panel, ae-setting-val, ae-settings without the full stylesheet. Recipes: pop.js, settings.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "settings",
+        "classes": [
+          "ae-menu",
+          "ae-setting",
+          "ae-setting-panel",
+          "ae-setting-val",
+          "ae-settings"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-radius",
+          "--ae-space-5",
+          "--ae-soft"
+        ],
+        "recipes": ["pop.js", "settings.js"]
+      },
+      "files": [
+        {
+          "path": "registry/settings/aesthetic.settings.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.settings.css"
+        },
+        {
+          "path": "recipes/pop.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.pop.js"
+        },
+        {
+          "path": "recipes/settings.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.settings.js"
+        }
+      ]
+    },
+    {
+      "name": "choice",
+      "type": "registry:item",
+      "title": "aesthetic Choice",
+      "description": "Aesthetic Choice primitive, v2.16.0. Installs ae-check, ae-choice, ae-radio, ae-switch without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "choice",
+        "classes": ["ae-check", "ae-choice", "ae-radio", "ae-switch"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-radius"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/choice/aesthetic.choice.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.choice.css"
+        }
+      ]
+    },
+    {
+      "name": "validation",
+      "type": "registry:item",
+      "title": "aesthetic Validation",
+      "description": "Aesthetic Validation primitive, v2.16.0. Installs ae-err, ae-field-note, ae-icon, ae-input, ae-label without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "validation",
+        "classes": [
+          "ae-err",
+          "ae-field-note",
+          "ae-icon",
+          "ae-input",
+          "ae-label"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-err",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-err-dark",
+          "--ae-w-medium",
+          "--ae-radius",
+          "--ae-space-0"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/validation/aesthetic.validation.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.validation.css"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:item",
+      "title": "aesthetic Tabs",
+      "description": "Aesthetic Tabs primitive, v2.16.0. Installs ae-nav-ind, ae-tabs without the full stylesheet. Recipes: nav.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "tabs",
+        "classes": ["ae-nav-ind", "ae-tabs"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium",
+          "--ae-space-6",
+          "--ae-soft"
+        ],
+        "recipes": ["nav.js"]
+      },
+      "files": [
+        {
+          "path": "registry/tabs/aesthetic.tabs.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.tabs.css"
+        },
+        {
+          "path": "recipes/nav.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.nav.js"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:item",
+      "title": "aesthetic Tag",
+      "description": "Aesthetic Tag primitive, v2.16.0. Installs ae-icon, ae-ok, ae-tag, ae-tag-bare without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "tag",
+        "classes": ["ae-icon", "ae-ok", "ae-tag", "ae-tag-bare"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ok",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-ok-dark"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/tag/aesthetic.tag.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.tag.css"
+        }
+      ]
+    },
+    {
+      "name": "tip",
+      "type": "registry:item",
+      "title": "aesthetic Tooltip",
+      "description": "Aesthetic Tooltip primitive, v2.16.0. Installs [data-ae-tip] without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "tip",
+        "classes": [],
+        "attributes": ["[data-ae-tip]"],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-z-tip"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/tip/aesthetic.tip.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.tip.css"
+        }
+      ]
+    },
+    {
+      "name": "pop",
+      "type": "registry:item",
+      "title": "aesthetic Popover",
+      "description": "Aesthetic Popover primitive, v2.16.0. Installs ae-menu, ae-pop without the full stylesheet. Recipes: pop.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "pop",
+        "classes": ["ae-menu", "ae-pop"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-radius"
+        ],
+        "recipes": ["pop.js"]
+      },
+      "files": [
+        {
+          "path": "registry/pop/aesthetic.pop.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.pop.css"
+        },
+        {
+          "path": "recipes/pop.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.pop.js"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:item",
+      "title": "aesthetic Toast",
+      "description": "Aesthetic Toast primitive, v2.16.0. Installs ae-err, ae-icon, ae-ok, ae-toast, ae-toast-x, ae-toasts, ae-warn without the full stylesheet. Recipes: toast.js.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "toast",
+        "classes": [
+          "ae-err",
+          "ae-icon",
+          "ae-ok",
+          "ae-toast",
+          "ae-toast-x",
+          "ae-toasts",
+          "ae-warn"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-line",
+          "--ae-ok",
+          "--ae-warn",
+          "--ae-err",
+          "--ae-line-dark",
+          "--ae-ok-dark",
+          "--ae-warn-dark",
+          "--ae-err-dark",
+          "--ae-z-toast",
+          "--ae-soft"
+        ],
+        "recipes": ["toast.js"]
+      },
+      "files": [
+        {
+          "path": "registry/toast/aesthetic.toast.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.toast.css"
+        },
+        {
+          "path": "recipes/toast.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.toast.js"
+        }
+      ]
+    },
+    {
+      "name": "fold",
+      "type": "registry:item",
+      "title": "aesthetic Fold",
+      "description": "Aesthetic Fold primitive, v2.16.0. Installs ae-dim, ae-fold without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "fold",
+        "classes": ["ae-dim", "ae-fold"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-space-4",
+          "--ae-space-5",
+          "--ae-soft"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/fold/aesthetic.fold.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.fold.css"
+        }
+      ]
+    },
+    {
+      "name": "crumbs",
+      "type": "registry:item",
+      "title": "aesthetic Breadcrumbs",
+      "description": "Aesthetic Breadcrumbs primitive, v2.16.0. Installs ae-crumbs without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "crumbs",
+        "classes": ["ae-crumbs"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ink-muted-dark",
+          "--ae-w-medium"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/crumbs/aesthetic.crumbs.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.crumbs.css"
+        }
+      ]
+    },
+    {
+      "name": "waiting",
+      "type": "registry:item",
+      "title": "aesthetic Waiting",
+      "description": "Aesthetic Waiting primitive, v2.16.0. Installs ae-button, ae-button-quiet, ae-chrome, ae-dim, ae-empty, ae-item, ae-skeleton without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "waiting",
+        "classes": [
+          "ae-button",
+          "ae-button-quiet",
+          "ae-chrome",
+          "ae-dim",
+          "ae-empty",
+          "ae-item",
+          "ae-skeleton"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-radius",
+          "--ae-space-2"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/waiting/aesthetic.waiting.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.waiting.css"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:item",
+      "title": "aesthetic Meter",
+      "description": "Aesthetic Meter primitive, v2.16.0. Installs ae-meter, ae-meter-fill, ae-meter-mark, ae-warn without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "meter",
+        "classes": ["ae-meter", "ae-meter-fill", "ae-meter-mark", "ae-warn"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-warn",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-warn-dark",
+          "--ae-gentle"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/meter/aesthetic.meter.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.meter.css"
+        }
+      ]
+    },
+    {
+      "name": "figures",
+      "type": "registry:item",
+      "title": "aesthetic Figures",
+      "description": "Aesthetic Figures primitive, v2.16.0. Installs ae-delta, ae-dim, ae-err, ae-icon, ae-num, ae-ok, ae-spark, ae-strong, ae-warn without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "figures",
+        "classes": [
+          "ae-delta",
+          "ae-dim",
+          "ae-err",
+          "ae-icon",
+          "ae-num",
+          "ae-ok",
+          "ae-spark",
+          "ae-strong",
+          "ae-warn"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-ok",
+          "--ae-warn",
+          "--ae-err",
+          "--ae-ink-muted-dark",
+          "--ae-ok-dark",
+          "--ae-warn-dark",
+          "--ae-err-dark",
+          "--ae-w-black"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/figures/aesthetic.figures.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.figures.css"
+        }
+      ]
+    },
+    {
+      "name": "interval",
+      "type": "registry:item",
+      "title": "aesthetic Interval",
+      "description": "Aesthetic Interval primitive, v2.16.0. Installs ae-ci, ae-ci-band, ae-ci-bound, ae-ci-cap, ae-ci-detail, ae-ci-mean, ae-ci-whisker without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "interval",
+        "classes": [
+          "ae-ci",
+          "ae-ci-band",
+          "ae-ci-bound",
+          "ae-ci-cap",
+          "ae-ci-detail",
+          "ae-ci-mean",
+          "ae-ci-whisker"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-space-2",
+          "--ae-soft"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/interval/aesthetic.interval.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.interval.css"
+        }
+      ]
+    },
+    {
+      "name": "plot",
+      "type": "registry:item",
+      "title": "aesthetic Plot",
+      "description": "Aesthetic Plot primitive, v2.16.0. Installs ae-err, ae-ok, ae-plot, ae-plot-axis, ae-plot-dot, ae-plot-frontier, ae-plot-glyph, ae-warn without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "plot",
+        "classes": [
+          "ae-err",
+          "ae-ok",
+          "ae-plot",
+          "ae-plot-axis",
+          "ae-plot-dot",
+          "ae-plot-frontier",
+          "ae-plot-glyph",
+          "ae-warn"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-line",
+          "--ae-ok",
+          "--ae-warn",
+          "--ae-err",
+          "--ae-line-dark",
+          "--ae-ok-dark",
+          "--ae-warn-dark",
+          "--ae-err-dark",
+          "--ae-soft"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/plot/aesthetic.plot.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.plot.css"
+        }
+      ]
+    },
+    {
+      "name": "flow",
+      "type": "registry:item",
+      "title": "aesthetic Flow",
+      "description": "Aesthetic Flow primitive, v2.16.0. Installs ae-flow, ae-icon, ae-node, ae-node-label, ae-ok, ae-wire without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "flow",
+        "classes": [
+          "ae-flow",
+          "ae-icon",
+          "ae-node",
+          "ae-node-label",
+          "ae-ok",
+          "ae-wire"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ok",
+          "--ae-err",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-ok-dark",
+          "--ae-err-dark",
+          "--ae-w-medium",
+          "--ae-w-black"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/flow/aesthetic.flow.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.flow.css"
+        }
+      ]
+    },
+    {
+      "name": "shellapp",
+      "type": "registry:item",
+      "title": "aesthetic App shell",
+      "description": "Aesthetic App shell primitive, v2.16.0. Installs ae-desk, ae-h, ae-rail, ae-rail-foot, ae-shell without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "shellapp",
+        "classes": ["ae-desk", "ae-h", "ae-rail", "ae-rail-foot", "ae-shell"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-space-4",
+          "--ae-space-5"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/shellapp/aesthetic.shellapp.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.shellapp.css"
+        }
+      ]
+    },
+    {
+      "name": "doc",
+      "type": "registry:item",
+      "title": "aesthetic Document",
+      "description": "Aesthetic Document primitive, v2.16.0. Installs ae-doc without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "doc",
+        "classes": ["ae-doc"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-w-black"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/doc/aesthetic.doc.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.doc.css"
+        }
+      ]
+    },
+    {
+      "name": "report",
+      "type": "registry:item",
+      "title": "aesthetic Report",
+      "description": "Aesthetic Report primitive, v2.16.0. Installs ae-doc, ae-findings, ae-findings-title, ae-lede, ae-plate, ae-pull, ae-rec without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "report",
+        "classes": [
+          "ae-doc",
+          "ae-findings",
+          "ae-findings-title",
+          "ae-lede",
+          "ae-plate",
+          "ae-pull",
+          "ae-rec"
+        ],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick",
+          "--ae-ink-muted",
+          "--ae-line",
+          "--ae-ink-muted-dark",
+          "--ae-line-dark",
+          "--ae-w-medium",
+          "--ae-w-black",
+          "--ae-space-4"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/report/aesthetic.report.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.report.css"
+        }
+      ]
+    },
+    {
+      "name": "sr",
+      "type": "registry:item",
+      "title": "aesthetic Screen reader",
+      "description": "Aesthetic Screen reader primitive, v2.16.0. Installs ae-sr without the full stylesheet.",
+      "registryDependencies": [
+        "https://aesthetic.mistystep.io/r/aesthetic-base.json"
+      ],
+      "meta": {
+        "version": "2.16.0",
+        "tier": "primitive",
+        "route": "sr",
+        "classes": ["ae-sr"],
+        "attributes": [],
+        "tokens": [
+          "--ae-surface",
+          "--ae-wash",
+          "--ae-ink",
+          "--ae-ink-faint",
+          "--ae-accent",
+          "--ae-surface-dark",
+          "--ae-wash-dark",
+          "--ae-ink-dark",
+          "--ae-ink-faint-dark",
+          "--ae-accent-dark",
+          "--ae-font",
+          "--ae-font-mono",
+          "--ae-w-regular",
+          "--ae-ease",
+          "--ae-quick"
+        ],
+        "recipes": []
+      },
+      "files": [
+        {
+          "path": "registry/sr/aesthetic.sr.css",
+          "type": "registry:file",
+          "target": "~/aesthetic.sr.css"
         }
       ]
     }

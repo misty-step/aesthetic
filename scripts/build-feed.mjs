@@ -57,6 +57,7 @@ const RECIPE_SIGNALS = [
   [/\bae-send\b/, 'send.js'],
   [/\bae-toast\b|aeToast/, 'toast.js'],
   [/\bae-pop\b|\bae-menu\b/, 'pop.js'],
+  [/\bae-dialog\b|data-ae-dialog/, 'dialog.js'],
   [/\bae-settings\b/, 'settings.js'],
   [/\bae-nav\b/, 'nav.js'],
   [/\bae-mode\b/, 'mode.js'],

@@ -28,6 +28,31 @@ pnpm add github:misty-step/aesthetic#v2.16.0
 Pin the tag. Consumers upgrade deliberately; only the aesthetic site
 itself rides HEAD.
 
+For copy-to-own installs, use the static shadcn registry. The whole
+kit remains available:
+
+```bash
+npx shadcn@latest add https://aesthetic.mistystep.io/r/aesthetic.json
+```
+
+Or pull one primitive. This installs the generated base CSS dependency,
+the toast CSS slice, and `recipes/toast.js` — not the whole
+stylesheet or combined recipe bundle:
+
+```bash
+npx shadcn@latest add https://aesthetic.mistystep.io/r/toast.json
+```
+
+```html
+<link rel="stylesheet" href="./aesthetic.toast.css" />
+<script src="./aesthetic.toast.js"></script>
+```
+
+Every primitive URL is listed at `https://aesthetic.mistystep.io/r/`.
+The item metadata carries the kit version, classes, token custom
+properties, and recipes generated from the catalog, stylesheet, and
+recipe singles.
+
 ## 2 · Load Geist
 
 ```html
@@ -205,6 +230,7 @@ Each JS-implying primitive has one canonical recipe in `recipes/`:
 | Send moment (+ SR announce)    | `send.js`       |
 | Settings rows                  | `settings.js`   |
 | Input anticipation (opt-in)    | `anticipate.js` |
+| Dialog focus + restoration     | `dialog.js`     |
 | Toasts (`aeToast`)             | `toast.js`      |
 | Popover placement              | `pop.js`        |
 
