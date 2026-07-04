@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+  <title id="title">Workflow screen placeholder</title>
+  <desc id="desc">A workflow board with three ruled lanes and a highlighted active step.</desc>
+  <rect width="1280" height="800" fill="#fcfcfc" />
+  <text x="88" y="104" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#151515">Primary workflow</text>
+  <text x="88" y="148" font-family="Arial, sans-serif" font-size="20" fill="#737373">Use this frame for the main action a visitor should understand.</text>
+  <rect x="88" y="216" width="330" height="456" fill="#fcfcfc" stroke="#e9e9e9" stroke-width="2" />
+  <rect x="475" y="216" width="330" height="456" fill="#fcfcfc" stroke="#2643d0" stroke-width="3" />
+  <rect x="862" y="216" width="330" height="456" fill="#fcfcfc" stroke="#e9e9e9" stroke-width="2" />
+  <text x="120" y="268" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#151515">input</text>
+  <text x="507" y="268" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#151515">decision</text>
+  <text x="894" y="268" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#151515">proof</text>
+  <line x1="120" y1="318" x2="386" y2="318" stroke="#e9e9e9" stroke-width="2" />
+  <line x1="507" y1="318" x2="773" y2="318" stroke="#e9e9e9" stroke-width="2" />
+  <line x1="894" y1="318" x2="1160" y2="318" stroke="#e9e9e9" stroke-width="2" />
+  <text x="120" y="372" font-family="Arial, sans-serif" font-size="18" fill="#737373">live card</text>
+  <text x="120" y="418" font-family="Arial, sans-serif" font-size="18" fill="#737373">acceptance</text>
+  <text x="120" y="464" font-family="Arial, sans-serif" font-size="18" fill="#737373">constraints</text>
+  <text x="507" y="372" font-family="Arial, sans-serif" font-size="18" fill="#2643d0">claim</text>
+  <text x="507" y="418" font-family="Arial, sans-serif" font-size="18" fill="#2643d0">verify</text>
+  <text x="507" y="464" font-family="Arial, sans-serif" font-size="18" fill="#2643d0">ship</text>
+  <text x="894" y="372" font-family="Arial, sans-serif" font-size="18" fill="#737373">CI run</text>
+  <text x="894" y="418" font-family="Arial, sans-serif" font-size="18" fill="#737373">screenshot</text>
+  <text x="894" y="464" font-family="Arial, sans-serif" font-size="18" fill="#737373">release note</text>
+  <path d="M418 444h57" stroke="#151515" stroke-width="2" />
+  <path d="m462 430 14 14-14 14" fill="none" stroke="#151515" stroke-width="2" />
+  <path d="M805 444h57" stroke="#151515" stroke-width="2" />
+  <path d="m849 430 14 14-14 14" fill="none" stroke="#151515" stroke-width="2" />
+</svg>
