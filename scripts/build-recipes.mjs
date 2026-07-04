@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ORDER = [
   'mode.js',
+  'theme.js',
   'nav.js',
   'views.js',
   'send.js',

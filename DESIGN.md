@@ -23,13 +23,14 @@ glows, nothing floats, nothing bounces.
   comes from ink and weight, never from scale.
 - Nine registers: three inks (ink, muted, faint) by three weights
   (400, 550, 800). The headline is heavier and blacker, not larger.
-- The accent is the consumer's: define your accent (your color
-  scheme) and use it with judgment. The system carries any hue
-  without losing its identity — ink, hairlines, type, and motion do
-  the identifying. There is no counting rule and no placement rule;
-  there is taste: spend the accent where it earns its place — buttons,
-  active states, anywhere the product calls for it — and keep it from
-  becoming ambient filler. Restraint is judgment, never law.
+- The accent is the consumer's: pin one named theme (`ultramarine`,
+  `moss`, `ember`, `violet`) or define your own scheme and use it with
+  judgment. The system carries any hue without losing its identity —
+  ink, hairlines, type, and motion do the identifying. There is no
+  counting rule and no placement rule; there is taste: spend the accent
+  where it earns its place — buttons, active states, anywhere the
+  product calls for it — and keep it from becoming ambient filler.
+  Restraint is judgment, never law.
 - Screens, not pages: every view fits the viewport. Long documents
   scroll inside the stage; the chrome never moves.
 - Motion is feedback, never decoration: small, brief, eased. State
@@ -59,9 +60,10 @@ light and dark as equals. **Dials** are the project's: the accent —
 one hue or several, extra hues named as project tokens
 (`--sploot-coral`) and spent on content, never on pills or hierarchy;
 the status triplet; density (measure, chrome register, app shell);
-the mono ratio. A calm tool turns every dial down; a loud one turns
-up hue count and accent frequency — never radius, size scale, or
-ambient motion. Worked examples: `docs/ADOPTING.md`.
+the mono ratio. Named themes are presets for those dials, not new
+invariants. A calm tool turns every dial down; a loud one turns up hue
+count and accent frequency — never radius, size scale, or ambient
+motion. Worked examples: `docs/ADOPTING.md`.
 
 ## Never
 

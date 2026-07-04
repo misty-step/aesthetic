@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aesthetic theme fixture</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link rel="stylesheet" href="../../aesthetic.css" />
+  </head>
+  <body>
+    <div class="ae-screen">
+      <header class="ae-bar">
+        <a class="ae-name" href="/">THEME FIXTURE</a>
+        <nav class="ae-chrome" aria-label="theme choices">
+          <button data-ae-theme-choice="ultramarine">ultramarine</button>
+          <button data-ae-theme-choice="moss">moss</button>
+          <button data-ae-theme-choice="ember">ember</button>
+          <button data-ae-theme-choice="violet">violet</button>
+        </nav>
+      </header>
+      <main class="ae-stage">
+        <section class="ae-view is-on">
+          <p>
+            <span class="ae-item">Named themes.</span>
+            <span class="ae-dim"
+              >Each preset steers the same custom properties without changing
+              the law or adding a second token contract.</span
+            >
+          </p>
+          <p class="ae-status">
+            <svg class="ae-icon ae-ok" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+            <span>Theme selected.</span>
+          </p>
+          <p>
+            <a href="#proof">Accent link proof</a>
+            <button class="ae-button" type="button">Action</button>
+          </p>
+        </section>
+      </main>
+      <footer class="ae-bar">
+        <p class="ae-chrome">theme fixture</p>
+      </footer>
+    </div>
+    <script src="../../recipes/theme.js"></script>
+  </body>
+</html>

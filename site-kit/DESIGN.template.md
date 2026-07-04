@@ -23,6 +23,10 @@ inventing a second design system.
 
 ## Palette Hooks
 
+The scaffold pins `data-ae-theme="moss"` as a live non-default example.
+Change that root attribute to `ultramarine`, `ember`, `violet`, or a
+product-owned steering block when the brand needs a different register.
+
 Only steer brand tokens here. Do not add a second palette.
 
 ```css

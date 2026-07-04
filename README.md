@@ -15,10 +15,11 @@ stylesheet, unmodified.
 - **Opinionated.** One font size everywhere (hierarchy comes from ink and
   weight), viewport-sized screens instead of scrolling pages, motion only
   as feedback, status on the glyph instead of colored pills.
-- **Steerable.** The accent is yours: downstream projects define their
-  scheme (`--ae-accent` / `--ae-accent-dark`, and the status triplet when
-  the domain needs it) and use it with judgment — identity comes from
-  ink, hairlines, type, and motion, not from a color-counting rule.
+- **Steerable.** Projects can pin a named theme (`ultramarine`, `moss`,
+  `ember`, `violet`) or define their own scheme
+  (`--ae-accent` / `--ae-accent-dark`, and the status triplet when the
+  domain needs it). Identity comes from ink, hairlines, type, and motion,
+  not from a color-counting rule.
 
 ## Install
 
@@ -131,6 +132,29 @@ toggle sets `.dark` / `.light` (next-themes compatible) or
 `.ae-mode`. The toggle stays enabled during the flip; rapid clicks cut
 the in-flight animation and apply the newest mode immediately. The
 visual transition uses `--ae-quick` so it feels below 200ms.
+
+## Themes
+
+Themes are flavor presets over the same `--ae-*` token contract, not a
+second palette. Pin one for a product:
+
+```html
+<html data-ae-theme="moss"></html>
+```
+
+The shipped names are `ultramarine`, `moss`, `ember`, and `violet`. They
+steer accent and categorical inks while leaving the shared surfaces, ink
+hierarchy, radius, type scale, and status semantics intact.
+
+To expose user switching, load `recipes/theme.js` and mark controls:
+
+```html
+<button data-ae-theme-choice="ultramarine">ultramarine</button>
+<button data-ae-theme-choice="moss">moss</button>
+<button data-ae-theme-choice="ember">ember</button>
+<button data-ae-theme-choice="violet">violet</button>
+<script src="theme.js"></script>
+```
 
 ## Steering
 

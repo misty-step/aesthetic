@@ -24,6 +24,16 @@ for (const mode of MODES) {
     await page.waitForLoadState('networkidle');
 
     await assertLaw(page, { consoleErrors: errors });
+    await expect(page.locator('html')).toHaveAttribute('data-ae-theme', 'moss');
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ae-accent')
+            .trim(),
+        ),
+      )
+      .toBe(mode === 'dark' ? '#80d98e' : '#2f6b3f');
     await expect(page.locator('.ae-app-mark .ae-icon')).toHaveAttribute(
       'data-lucide',
       'kanban',

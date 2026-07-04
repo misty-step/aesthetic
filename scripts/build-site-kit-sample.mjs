@@ -25,6 +25,7 @@ const required = [
   join(root, 'site-kit', 'scaffold', '.github', 'workflows', 'pages.yml'),
   join(root, 'aesthetic.css'),
   join(root, 'recipes', 'mode.js'),
+  join(root, 'recipes', 'theme.js'),
 ];
 
 for (const path of required) {
@@ -66,13 +67,20 @@ mkdirSync(out, { recursive: true });
 cpSync(scaffold, out, { recursive: true });
 cpSync(join(root, 'aesthetic.css'), join(out, 'aesthetic.css'));
 cpSync(join(root, 'recipes', 'mode.js'), join(out, 'mode.js'));
+cpSync(join(root, 'recipes', 'theme.js'), join(out, 'theme.js'));
 writeFileSync(
   join(out, 'build-manifest.json'),
   `${JSON.stringify(
     {
       artifact: 'site-kit-sample',
       source: 'site-kit/scaffold/site',
-      includes: ['aesthetic.css', 'mode.js', 'index.html', 'changelog.html'],
+      includes: [
+        'aesthetic.css',
+        'mode.js',
+        'theme.js',
+        'index.html',
+        'changelog.html',
+      ],
       check,
     },
     null,
