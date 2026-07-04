@@ -16,6 +16,7 @@ mkdir -p site .github/workflows
 cp -R ../aesthetic/site-kit/scaffold/site/. site/
 cp ../aesthetic/aesthetic.css site/aesthetic.css
 cp ../aesthetic/recipes/mode.js site/mode.js
+cp ../aesthetic/recipes/theme.js site/theme.js
 cp ../aesthetic/site-kit/DESIGN.template.md DESIGN.md
 cp ../aesthetic/site-kit/scaffold/.github/workflows/pages.yml .github/workflows/pages.yml
 ```
@@ -25,7 +26,7 @@ Then edit exactly these fields:
 - `DESIGN.md`: brand voice, Lucide mark, pitch one-liner, palette hooks, and
   screenshot inventory.
 - `site/index.html`: product name, pitch, feature rows, screenshot captions,
-  footer links.
+  footer links, and the root `data-ae-theme` pin.
 - `site/changelog.html`: user-facing release notes.
 - `site/marketing.css`: only the `:root` brand hooks at the top, unless the
   product genuinely needs a layout exception.

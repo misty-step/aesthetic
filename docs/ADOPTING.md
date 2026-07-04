@@ -101,7 +101,7 @@ combined `recipes/recipes.js`). React apps using next-themes keep
 `attribute="class"` — the `.dark` / `.light` classes match — and skip
 the recipe.
 
-## 4 · Steer the scheme
+## 4 · Choose or steer the scheme
 
 This is the volume knob. The doctrine in one breath:
 
@@ -119,6 +119,41 @@ The mono ratio. How loudly and how often you spend color.
 A calm tool turns every dial down. A loud one turns hue count and
 accent frequency up — never radius, size scale, or ambient motion.
 That asymmetry is what keeps the family resemblance.
+
+Start with a shipped theme when the product wants an in-family flavor
+without owning a palette:
+
+```html
+<html data-ae-theme="moss"></html>
+```
+
+The built-ins are `ultramarine` (house), `moss`, `ember`, and `violet`.
+Each one sets the same `--ae-*` custom properties; no consumer code gets
+a new token contract. If users should choose their own theme, add the
+tiny recipe and theme buttons:
+
+```html
+<button data-ae-theme-choice="ultramarine">ultramarine</button>
+<button data-ae-theme-choice="moss">moss</button>
+<button data-ae-theme-choice="ember">ember</button>
+<button data-ae-theme-choice="violet">violet</button>
+<script src="theme.js"></script>
+```
+
+For no-flash switching, inline this before first paint:
+
+```html
+<script>
+  try {
+    var t = localStorage.getItem('ae-theme');
+    if (/^(ultramarine|moss|ember|violet)$/.test(t)) {
+      document.documentElement.dataset.aeTheme = t;
+    }
+  } catch (e) {}
+</script>
+```
+
+Project-owned steering still uses the same contract:
 
 ```css
 :root {
@@ -225,6 +260,7 @@ Each JS-implying primitive has one canonical recipe in `recipes/`:
 | Behavior                       | Recipe          |
 | ------------------------------ | --------------- |
 | Mode toggle (breath + persist) | `mode.js`       |
+| Theme switching                | `theme.js`      |
 | Nav / tabs indicator           | `nav.js`        |
 | Hash-routed view swap          | `views.js`      |
 | Send moment (+ SR announce)    | `send.js`       |
