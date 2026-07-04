@@ -80,7 +80,20 @@ await assertLaw(page, { skip: ['fontSize'] });
 - `collectConsoleErrors(page)` — sets up console/pageerror listeners; pass the array to `assertLaw` via `opts.consoleErrors`
 - `checkAll(page, opts?)` — returns `LawViolation[]` instead of throwing (for custom reporting)
 
-## No build step
+## How it ships
 
-The law gate ships as `.ts` files. Playwright's test runner handles
-TypeScript natively — no `tsc`, no bundler, no build step required.
+`@misty-step/aesthetic/law` resolves to a compiled ESM build
+(`law/dist`, generated from `law/index.ts` + `law/invariants.ts` by
+`npm run build:law`) — Node's own module resolver refuses to load `.ts`
+files from `node_modules`, so importing the package by name needs
+compiled JS. `law/dist` ships with `law/index.ts`/`law/invariants.ts` in
+the same tarball; CI (`build-law.mjs --check`) fails if dist ever drifts
+from the source.
+
+If you're pinning-conscious and don't want a `node_modules` dependency
+on the gate at all, vendor the `.ts` source verbatim instead: copy
+`law/index.ts` and `law/invariants.ts` into your own repo and import them
+by relative path. Playwright's test runner handles TypeScript natively —
+no build step needed for that path either. Both are supported; pick
+whichever matches how much you want this repo's release cadence to touch
+your test suite.

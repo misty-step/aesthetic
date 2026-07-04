@@ -248,7 +248,8 @@ with the `ae-` classes and let them own focus management.
 
 The law — one font size, radius 0, no page scroll, default cursor, clean
 console — ships as a Playwright fixture you import in your own tests.
-No build step; Playwright's runner handles the TypeScript natively.
+`@misty-step/aesthetic/law` resolves to a compiled ESM build, so it works
+in ESM (`"type": "module"`) test suites, not just CJS.
 
 ```bash
 pnpm add github:misty-step/aesthetic#v2.7.0
@@ -268,7 +269,9 @@ test('dashboard holds the law', async ({ page }) => {
 
 On failure, `assertLaw` throws with named offenders — which invariant
 broke and which elements caused it. See `law/README.md` for the full
-API (route sweeps, mode support, skipping invariants).
+API (route sweeps, mode support, skipping invariants) and for the
+vendoring alternative if you'd rather pin the `.ts` source directly
+instead of depending on `node_modules/@misty-step/aesthetic`.
 
 ## The adoption checklist
 

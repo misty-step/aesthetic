@@ -21,7 +21,11 @@
     "./aesthetic.css": "./aesthetic.css",
     "./tokens.json": "./tokens.json",
     "./recipes/*": "./recipes/*",
-    "./law": "./law/index.ts",
+    "./law": {
+      "types": "./law/dist/index.d.ts",
+      "import": "./law/dist/index.js",
+      "default": "./law/dist/index.js"
+    },
     "./law/*": "./law/*"
   },
   "files": [
@@ -37,7 +41,8 @@
     "build:registry": "node scripts/build-registry.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:feed": "node scripts/build-feed.mjs",
-    "check": "prettier --check . && stylelint aesthetic.css site/site.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check",
+    "build:law": "node scripts/build-law.mjs",
+    "check": "prettier --check . && stylelint aesthetic.css site/site.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check && node scripts/build-law.mjs --check",
     "ci": "npm run check && npm test",
     "test": "playwright test",
     "release": "node scripts/release.mjs"
@@ -54,6 +59,7 @@
     "@playwright/test": "^1.60.0",
     "prettier": "3.8.4",
     "stylelint": "17.13.0",
-    "stylelint-config-standard": "40.0.0"
+    "stylelint-config-standard": "40.0.0",
+    "typescript": "^6.0.3"
   }
 }
