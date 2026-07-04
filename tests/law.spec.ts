@@ -20,6 +20,7 @@ import {
 
 const PAGES = [
   { path: '/site/', name: 'gallery' },
+  { path: '/site/r/', name: 'registry' },
   { path: '/site/tokens.html', name: 'tokens' },
 ];
 

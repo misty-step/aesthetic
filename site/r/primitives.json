@@ -154,7 +154,7 @@
       "classes": [".ae-dialog"],
       "role": "",
       "since": "",
-      "recipes": [],
+      "recipes": ["dialog.js"],
       "markup": "<dialog class=\"ae-dialog\">\n  <p class=\"ae-dialog-title\">Archive this project?</p>\n  <p class=\"ae-dim\">It leaves the index but keeps its history.</p>\n  <div class=\"ae-dialog-acts\">\n    <button class=\"ae-button ae-button-quiet\">Cancel</button>\n    <button class=\"ae-button\">Confirm</button>\n  </div>\n</dialog>",
       "note": "open with dialog.showModal();\nboth actions close()"
     },
