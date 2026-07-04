@@ -11,14 +11,14 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.16.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.17.0/aesthetic.css"
 />
 ```
 
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v2.16.0
+pnpm add github:misty-step/aesthetic#v2.17.0
 ```
 
 ```css
@@ -237,7 +237,7 @@ Each JS-implying primitive has one canonical recipe in `recipes/`:
 No build step: load the combined file —
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.16.0/recipes/recipes.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v2.17.0/recipes/recipes.js"></script>
 ```
 
 React apps: treat the recipes as reference implementations — port the

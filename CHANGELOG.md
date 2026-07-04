@@ -1,3 +1,9 @@
+# [2.17.0](https://github.com/misty-step/aesthetic/compare/v2.16.0...v2.17.0) (2026-07-04)
+
+### Features
+
+- **registry:** add per-primitive component items ([#16](https://github.com/misty-step/aesthetic/issues/16)) ([af033a6](https://github.com/misty-step/aesthetic/commit/af033a61803b7dac3468d746bcf25eb5d2778af8))
+
 # [2.16.0](https://github.com/misty-step/aesthetic/compare/v2.15.0...v2.16.0) (2026-07-03)
 
 ### Features
