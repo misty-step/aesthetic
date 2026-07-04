@@ -7,9 +7,9 @@
       "name": "aesthetic",
       "type": "registry:item",
       "title": "aesthetic",
-      "description": "The Misty Step design system, v2.17.1: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
+      "description": "The Misty Step design system, v2.18.0: one stylesheet — tokens, base, and the primitive catalog. Hierarchy from ink and weight, hairlines, radius 0, motion as feedback.",
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "whole-kit",
         "classes": ["*"],
         "tokens": [
@@ -95,9 +95,9 @@
       "name": "recipes",
       "type": "registry:item",
       "title": "aesthetic recipes",
-      "description": "The canonical behavior glue for aesthetic v2.17.1: mode toggle, theme switching, nav indicator, view swap, send moment, settings rows, anticipation, dialogs, toasts, popovers. Dependency-free.",
+      "description": "The canonical behavior glue for aesthetic v2.18.0: mode toggle, theme switching, nav indicator, view swap, send moment, settings rows, anticipation, dialogs, toasts, popovers. Dependency-free.",
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "whole-recipes",
         "classes": [],
         "tokens": [],
@@ -115,9 +115,9 @@
       "name": "aesthetic-base",
       "type": "registry:item",
       "title": "aesthetic base",
-      "description": "The shared base for Aesthetic primitive slices, v2.17.1: root tokens, body/type reset, links, focus, selection, and mode color-scheme wiring.",
+      "description": "The shared base for Aesthetic primitive slices, v2.18.0: root tokens, body/type reset, links, focus, selection, and mode color-scheme wiring.",
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive-base",
         "classes": [],
         "tokens": [
@@ -151,12 +151,12 @@
       "name": "shell",
       "type": "registry:item",
       "title": "aesthetic Screen",
-      "description": "Aesthetic Screen primitive, v2.17.1. Installs ae-bar, ae-mode, ae-name, ae-nav, ae-screen, ae-stage, ae-view without the full stylesheet. Recipes: mode.js, nav.js, views.js.",
+      "description": "Aesthetic Screen primitive, v2.18.0. Installs ae-bar, ae-mode, ae-name, ae-nav, ae-screen, ae-stage, ae-view without the full stylesheet. Recipes: mode.js, nav.js, views.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "shell",
         "classes": [
@@ -223,12 +223,12 @@
       "name": "scroll",
       "type": "registry:item",
       "title": "aesthetic Stage scroll",
-      "description": "Aesthetic Stage scroll primitive, v2.17.1. Installs ae-stage, ae-stage-scroll without the full stylesheet.",
+      "description": "Aesthetic Stage scroll primitive, v2.18.0. Installs ae-stage, ae-stage-scroll without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "scroll",
         "classes": ["ae-stage", "ae-stage-scroll"],
@@ -267,12 +267,12 @@
       "name": "nav",
       "type": "registry:item",
       "title": "aesthetic Nav",
-      "description": "Aesthetic Nav primitive, v2.17.1. Installs ae-nav, ae-nav-ind, ae-view without the full stylesheet. Recipes: nav.js.",
+      "description": "Aesthetic Nav primitive, v2.18.0. Installs ae-nav, ae-nav-ind, ae-view without the full stylesheet. Recipes: nav.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "nav",
         "classes": ["ae-nav", "ae-nav-ind", "ae-view"],
@@ -318,12 +318,12 @@
       "name": "rows",
       "type": "registry:item",
       "title": "aesthetic Row link",
-      "description": "Aesthetic Row link primitive, v2.17.1. Installs ae-dim, ae-item, ae-row-link without the full stylesheet.",
+      "description": "Aesthetic Row link primitive, v2.18.0. Installs ae-dim, ae-item, ae-row-link without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "rows",
         "classes": ["ae-dim", "ae-item", "ae-row-link"],
@@ -362,12 +362,12 @@
       "name": "chrome",
       "type": "registry:item",
       "title": "aesthetic Chrome",
-      "description": "Aesthetic Chrome primitive, v2.17.1. Installs ae-chrome, ae-foot, ae-foot-links without the full stylesheet.",
+      "description": "Aesthetic Chrome primitive, v2.18.0. Installs ae-chrome, ae-foot, ae-foot-links without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "chrome",
         "classes": ["ae-chrome", "ae-foot", "ae-foot-links"],
@@ -410,12 +410,12 @@
       "name": "icons",
       "type": "registry:item",
       "title": "aesthetic Icon",
-      "description": "Aesthetic Icon primitive, v2.17.1. Installs ae-icon, ae-mode, ae-moon, ae-sun without the full stylesheet. Recipes: mode.js.",
+      "description": "Aesthetic Icon primitive, v2.18.0. Installs ae-icon, ae-mode, ae-moon, ae-sun without the full stylesheet. Recipes: mode.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "icons",
         "classes": ["ae-icon", "ae-mode", "ae-moon", "ae-sun"],
@@ -458,12 +458,12 @@
       "name": "panel",
       "type": "registry:item",
       "title": "aesthetic Panel",
-      "description": "Aesthetic Panel primitive, v2.17.1. Installs ae-panel without the full stylesheet.",
+      "description": "Aesthetic Panel primitive, v2.18.0. Installs ae-panel without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "panel",
         "classes": ["ae-panel"],
@@ -500,12 +500,12 @@
       "name": "registers",
       "type": "registry:item",
       "title": "aesthetic Registers",
-      "description": "Aesthetic Registers primitive, v2.17.1. Installs ae-accent, ae-dim, ae-item, ae-lede, ae-name without the full stylesheet.",
+      "description": "Aesthetic Registers primitive, v2.18.0. Installs ae-accent, ae-dim, ae-item, ae-lede, ae-name without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "registers",
         "classes": ["ae-accent", "ae-dim", "ae-item", "ae-lede", "ae-name"],
@@ -545,12 +545,12 @@
       "name": "form",
       "type": "registry:item",
       "title": "aesthetic Input",
-      "description": "Aesthetic Input primitive, v2.17.1. Installs ae-input, ae-label without the full stylesheet.",
+      "description": "Aesthetic Input primitive, v2.18.0. Installs ae-input, ae-label without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "form",
         "classes": ["ae-input", "ae-label"],
@@ -595,12 +595,12 @@
       "name": "buttons",
       "type": "registry:item",
       "title": "aesthetic Button",
-      "description": "Aesthetic Button primitive, v2.17.1. Installs ae-button, ae-button-compact, ae-button-quiet, ae-icon, ae-send, ae-send-done, ae-send-label without the full stylesheet. Recipes: send.js.",
+      "description": "Aesthetic Button primitive, v2.18.0. Installs ae-button, ae-button-compact, ae-button-quiet, ae-icon, ae-send, ae-send-done, ae-send-label without the full stylesheet. Recipes: send.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "buttons",
         "classes": [
@@ -653,12 +653,12 @@
       "name": "status",
       "type": "registry:item",
       "title": "aesthetic Status",
-      "description": "Aesthetic Status primitive, v2.17.1. Installs ae-err, ae-icon, ae-ok, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Status primitive, v2.18.0. Installs ae-err, ae-icon, ae-ok, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "status",
         "classes": ["ae-err", "ae-icon", "ae-ok", "ae-warn"],
@@ -700,12 +700,12 @@
       "name": "table",
       "type": "registry:item",
       "title": "aesthetic Table",
-      "description": "Aesthetic Table primitive, v2.17.1. Installs ae-item, ae-plate, ae-plate-cap, ae-plate-note, ae-table without the full stylesheet.",
+      "description": "Aesthetic Table primitive, v2.18.0. Installs ae-item, ae-plate, ae-plate-cap, ae-plate-note, ae-table without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "table",
         "classes": [
@@ -754,12 +754,12 @@
       "name": "board",
       "type": "registry:item",
       "title": "aesthetic Board",
-      "description": "Aesthetic Board primitive, v2.17.1. Installs ae-board, ae-board-card, ae-column, ae-column-body, ae-column-head, ae-column-meta, ae-column-title, ae-dim, ae-item without the full stylesheet.",
+      "description": "Aesthetic Board primitive, v2.18.0. Installs ae-board, ae-board-card, ae-column, ae-column-body, ae-column-head, ae-column-meta, ae-column-title, ae-dim, ae-item without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "board",
         "classes": [
@@ -813,12 +813,12 @@
       "name": "dialog",
       "type": "registry:item",
       "title": "aesthetic Dialog",
-      "description": "Aesthetic Dialog primitive, v2.17.1. Installs ae-button, ae-button-quiet, ae-dialog, ae-dialog-acts, ae-dialog-title, ae-dim without the full stylesheet. Recipes: dialog.js.",
+      "description": "Aesthetic Dialog primitive, v2.18.0. Installs ae-button, ae-button-quiet, ae-dialog, ae-dialog-acts, ae-dialog-title, ae-dim without the full stylesheet. Recipes: dialog.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "dialog",
         "classes": [
@@ -875,12 +875,12 @@
       "name": "settings",
       "type": "registry:item",
       "title": "aesthetic Settings",
-      "description": "Aesthetic Settings primitive, v2.17.1. Installs ae-menu, ae-setting, ae-setting-panel, ae-setting-val, ae-settings without the full stylesheet. Recipes: pop.js, settings.js.",
+      "description": "Aesthetic Settings primitive, v2.18.0. Installs ae-menu, ae-setting, ae-setting-panel, ae-setting-val, ae-settings without the full stylesheet. Recipes: pop.js, settings.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "settings",
         "classes": [
@@ -940,12 +940,12 @@
       "name": "choice",
       "type": "registry:item",
       "title": "aesthetic Choice",
-      "description": "Aesthetic Choice primitive, v2.17.1. Installs ae-check, ae-choice, ae-radio, ae-switch without the full stylesheet.",
+      "description": "Aesthetic Choice primitive, v2.18.0. Installs ae-check, ae-choice, ae-radio, ae-switch without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "choice",
         "classes": ["ae-check", "ae-choice", "ae-radio", "ae-switch"],
@@ -984,12 +984,12 @@
       "name": "validation",
       "type": "registry:item",
       "title": "aesthetic Validation",
-      "description": "Aesthetic Validation primitive, v2.17.1. Installs ae-err, ae-field-note, ae-icon, ae-input, ae-label without the full stylesheet.",
+      "description": "Aesthetic Validation primitive, v2.18.0. Installs ae-err, ae-field-note, ae-icon, ae-input, ae-label without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "validation",
         "classes": [
@@ -1040,12 +1040,12 @@
       "name": "tabs",
       "type": "registry:item",
       "title": "aesthetic Tabs",
-      "description": "Aesthetic Tabs primitive, v2.17.1. Installs ae-nav-ind, ae-tabs without the full stylesheet. Recipes: nav.js.",
+      "description": "Aesthetic Tabs primitive, v2.18.0. Installs ae-nav-ind, ae-tabs without the full stylesheet. Recipes: nav.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "tabs",
         "classes": ["ae-nav-ind", "ae-tabs"],
@@ -1091,12 +1091,12 @@
       "name": "tag",
       "type": "registry:item",
       "title": "aesthetic Tag",
-      "description": "Aesthetic Tag primitive, v2.17.1. Installs ae-icon, ae-ok, ae-tag, ae-tag-bare without the full stylesheet.",
+      "description": "Aesthetic Tag primitive, v2.18.0. Installs ae-icon, ae-ok, ae-tag, ae-tag-bare without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "tag",
         "classes": ["ae-icon", "ae-ok", "ae-tag", "ae-tag-bare"],
@@ -1138,12 +1138,12 @@
       "name": "tip",
       "type": "registry:item",
       "title": "aesthetic Tooltip",
-      "description": "Aesthetic Tooltip primitive, v2.17.1. Installs [data-ae-tip] without the full stylesheet.",
+      "description": "Aesthetic Tooltip primitive, v2.18.0. Installs [data-ae-tip] without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "tip",
         "classes": [],
@@ -1184,12 +1184,12 @@
       "name": "pop",
       "type": "registry:item",
       "title": "aesthetic Popover",
-      "description": "Aesthetic Popover primitive, v2.17.1. Installs ae-menu, ae-pop without the full stylesheet. Recipes: pop.js.",
+      "description": "Aesthetic Popover primitive, v2.18.0. Installs ae-menu, ae-pop without the full stylesheet. Recipes: pop.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "pop",
         "classes": ["ae-menu", "ae-pop"],
@@ -1236,12 +1236,12 @@
       "name": "toast",
       "type": "registry:item",
       "title": "aesthetic Toast",
-      "description": "Aesthetic Toast primitive, v2.17.1. Installs ae-err, ae-icon, ae-ok, ae-toast, ae-toast-x, ae-toasts, ae-warn without the full stylesheet. Recipes: toast.js.",
+      "description": "Aesthetic Toast primitive, v2.18.0. Installs ae-err, ae-icon, ae-ok, ae-toast, ae-toast-x, ae-toasts, ae-warn without the full stylesheet. Recipes: toast.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "toast",
         "classes": [
@@ -1300,12 +1300,12 @@
       "name": "fold",
       "type": "registry:item",
       "title": "aesthetic Fold",
-      "description": "Aesthetic Fold primitive, v2.17.1. Installs ae-dim, ae-fold without the full stylesheet.",
+      "description": "Aesthetic Fold primitive, v2.18.0. Installs ae-dim, ae-fold without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "fold",
         "classes": ["ae-dim", "ae-fold"],
@@ -1349,12 +1349,12 @@
       "name": "crumbs",
       "type": "registry:item",
       "title": "aesthetic Breadcrumbs",
-      "description": "Aesthetic Breadcrumbs primitive, v2.17.1. Installs ae-crumbs without the full stylesheet.",
+      "description": "Aesthetic Breadcrumbs primitive, v2.18.0. Installs ae-crumbs without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "crumbs",
         "classes": ["ae-crumbs"],
@@ -1393,12 +1393,12 @@
       "name": "waiting",
       "type": "registry:item",
       "title": "aesthetic Waiting",
-      "description": "Aesthetic Waiting primitive, v2.17.1. Installs ae-button, ae-button-quiet, ae-chrome, ae-dim, ae-empty, ae-item, ae-skeleton without the full stylesheet.",
+      "description": "Aesthetic Waiting primitive, v2.18.0. Installs ae-button, ae-button-quiet, ae-chrome, ae-dim, ae-empty, ae-item, ae-skeleton without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "waiting",
         "classes": [
@@ -1449,12 +1449,12 @@
       "name": "meter",
       "type": "registry:item",
       "title": "aesthetic Meter",
-      "description": "Aesthetic Meter primitive, v2.17.1. Installs ae-meter, ae-meter-fill, ae-meter-mark, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Meter primitive, v2.18.0. Installs ae-meter, ae-meter-fill, ae-meter-mark, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "meter",
         "classes": ["ae-meter", "ae-meter-fill", "ae-meter-mark", "ae-warn"],
@@ -1497,12 +1497,12 @@
       "name": "figures",
       "type": "registry:item",
       "title": "aesthetic Figures",
-      "description": "Aesthetic Figures primitive, v2.17.1. Installs ae-delta, ae-dim, ae-err, ae-icon, ae-num, ae-ok, ae-spark, ae-strong, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Figures primitive, v2.18.0. Installs ae-delta, ae-dim, ae-err, ae-icon, ae-num, ae-ok, ae-spark, ae-strong, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "figures",
         "classes": [
@@ -1557,12 +1557,12 @@
       "name": "interval",
       "type": "registry:item",
       "title": "aesthetic Interval",
-      "description": "Aesthetic Interval primitive, v2.17.1. Installs ae-ci, ae-ci-band, ae-ci-bound, ae-ci-cap, ae-ci-detail, ae-ci-mean, ae-ci-whisker without the full stylesheet.",
+      "description": "Aesthetic Interval primitive, v2.18.0. Installs ae-ci, ae-ci-band, ae-ci-bound, ae-ci-cap, ae-ci-detail, ae-ci-mean, ae-ci-whisker without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "interval",
         "classes": [
@@ -1612,12 +1612,12 @@
       "name": "plot",
       "type": "registry:item",
       "title": "aesthetic Plot",
-      "description": "Aesthetic Plot primitive, v2.17.1. Installs ae-err, ae-ok, ae-plot, ae-plot-axis, ae-plot-dot, ae-plot-frontier, ae-plot-glyph, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Plot primitive, v2.18.0. Installs ae-err, ae-ok, ae-plot, ae-plot-axis, ae-plot-dot, ae-plot-frontier, ae-plot-glyph, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "plot",
         "classes": [
@@ -1671,12 +1671,12 @@
       "name": "flow",
       "type": "registry:item",
       "title": "aesthetic Flow",
-      "description": "Aesthetic Flow primitive, v2.17.1. Installs ae-flow, ae-icon, ae-node, ae-node-label, ae-ok, ae-wire without the full stylesheet.",
+      "description": "Aesthetic Flow primitive, v2.18.0. Installs ae-flow, ae-icon, ae-node, ae-node-label, ae-ok, ae-wire without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "flow",
         "classes": [
@@ -1729,12 +1729,12 @@
       "name": "shellapp",
       "type": "registry:item",
       "title": "aesthetic App shell",
-      "description": "Aesthetic App shell primitive, v2.17.1. Installs ae-desk, ae-h, ae-rail, ae-rail-foot, ae-shell without the full stylesheet.",
+      "description": "Aesthetic App shell primitive, v2.18.0. Installs ae-desk, ae-h, ae-rail, ae-rail-foot, ae-shell without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "shellapp",
         "classes": ["ae-desk", "ae-h", "ae-rail", "ae-rail-foot", "ae-shell"],
@@ -1777,12 +1777,12 @@
       "name": "doc",
       "type": "registry:item",
       "title": "aesthetic Document",
-      "description": "Aesthetic Document primitive, v2.17.1. Installs ae-doc without the full stylesheet.",
+      "description": "Aesthetic Document primitive, v2.18.0. Installs ae-doc without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "doc",
         "classes": ["ae-doc"],
@@ -1824,12 +1824,12 @@
       "name": "report",
       "type": "registry:item",
       "title": "aesthetic Report",
-      "description": "Aesthetic Report primitive, v2.17.1. Installs ae-doc, ae-findings, ae-findings-title, ae-lede, ae-plate, ae-pull, ae-rec without the full stylesheet.",
+      "description": "Aesthetic Report primitive, v2.18.0. Installs ae-doc, ae-findings, ae-findings-title, ae-lede, ae-plate, ae-pull, ae-rec without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "report",
         "classes": [
@@ -1880,12 +1880,12 @@
       "name": "sr",
       "type": "registry:item",
       "title": "aesthetic Screen reader",
-      "description": "Aesthetic Screen reader primitive, v2.17.1. Installs ae-sr without the full stylesheet.",
+      "description": "Aesthetic Screen reader primitive, v2.18.0. Installs ae-sr without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
       "meta": {
-        "version": "2.17.1",
+        "version": "2.18.0",
         "tier": "primitive",
         "route": "sr",
         "classes": ["ae-sr"],

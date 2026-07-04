@@ -1,3 +1,9 @@
+# [2.18.0](https://github.com/misty-step/aesthetic/compare/v2.17.1...v2.18.0) (2026-07-04)
+
+### Features
+
+- **themes:** add named theme system over the shared token contract ([#19](https://github.com/misty-step/aesthetic/issues/19)) ([de81087](https://github.com/misty-step/aesthetic/commit/de8108708e8ace69d7bc1c89b56cf06ab3a54677))
+
 ## [2.17.1](https://github.com/misty-step/aesthetic/compare/v2.17.0...v2.17.1) (2026-07-04)
 
 ### Bug Fixes
