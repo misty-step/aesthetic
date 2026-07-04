@@ -1,5 +1,26 @@
 [
   {
+    "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.</li>\n</ul>\n",
+    "markdown": "## Bug Fixes\n\n- Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
+    "notes": "## Bug Fixes\n\n- Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
+    "plaintext": "Bug Fixes\nFixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
+    "published_at": "2026-07-04T07:13:56.100386118+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration."
+          }
+        ],
+        "title": "Bug Fixes"
+      }
+    ],
+    "slack": "## Bug Fixes\n\n- Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
+    "tag": "v2.17.1",
+    "version": "2.17.1"
+  },
+  {
     "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Mode toggle animations now respond immediately to rapid user interaction instead of queueing up multiple transitions that could delay the visual state change.</li>\n</ul>\n<details>\n<summary>Release classification notes</summary>\n<p>Landmark classification notice: deterministic release signals (conventional:chore, conventional:fix) disagreed with model classification; synthesis proceeded. deterministic floor prevented low-significance skip</p>\n</details>",
     "markdown": "## Bug Fixes\n\n- Mode toggle animations now respond immediately to rapid user interaction instead of queueing up multiple transitions that could delay the visual state change.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix) disagreed with model classification; synthesis proceeded. deterministic floor prevented low-significance skip\n\n</details>",
     "notes": "## Bug Fixes\n\n- Mode toggle animations now respond immediately to rapid user interaction instead of queueing up multiple transitions that could delay the visual state change.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix) disagreed with model classification; synthesis proceeded. deterministic floor prevented low-significance skip\n\n</details>",
