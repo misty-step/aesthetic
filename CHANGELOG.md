@@ -1,3 +1,9 @@
+## [2.17.1](https://github.com/misty-step/aesthetic/compare/v2.17.0...v2.17.1) (2026-07-04)
+
+### Bug Fixes
+
+- **law:** ship compiled ESM build so node_modules consumers can import it ([#17](https://github.com/misty-step/aesthetic/issues/17)) ([00fb5b9](https://github.com/misty-step/aesthetic/commit/00fb5b92ef8d4734161f8a953b1cf975463ff55a))
+
 # [2.17.0](https://github.com/misty-step/aesthetic/compare/v2.16.0...v2.17.0) (2026-07-04)
 
 ### Features

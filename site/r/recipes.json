@@ -3,9 +3,9 @@
   "name": "recipes",
   "type": "registry:item",
   "title": "aesthetic recipes",
-  "description": "The canonical behavior glue for aesthetic v2.17.0: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, dialogs, toasts, popovers. Dependency-free.",
+  "description": "The canonical behavior glue for aesthetic v2.17.1: mode toggle, nav indicator, view swap, send moment, settings rows, anticipation, dialogs, toasts, popovers. Dependency-free.",
   "meta": {
-    "version": "2.17.0",
+    "version": "2.17.1",
     "tier": "whole-recipes",
     "classes": [],
     "tokens": [],
