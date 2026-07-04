@@ -3,3 +3,4 @@ node_modules/
 # playwright
 test-results/
 playwright-report/
+_site-kit-sample/

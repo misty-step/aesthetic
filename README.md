@@ -66,6 +66,11 @@ The full adoption guide — Geist wiring, the mode boot, the Tailwind v4
 bridge, steering blocks, recipes — is
 [docs/ADOPTING.md](docs/ADOPTING.md).
 
+For product repos that need a public marketing site, copy the static scaffold in
+[site-kit/](site-kit/). It provides the `site/` structure, `DESIGN.md` brand
+template, screenshot gallery, release-notes page, footer link contract, and
+GitHub Pages workflow without adding a framework.
+
 Load Geist and Geist Mono however your stack prefers (Google Fonts,
 `next/font`, self-hosted). If the family comes through a variable, point
 the kit at it:
