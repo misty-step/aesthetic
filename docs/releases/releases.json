@@ -1,5 +1,43 @@
 [
   {
+    "html": "<h2>New Features</h2>\n<ul>\n<li>Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.</li>\n</ul>\n<h2>Bug Fixes</h2>\n<ul>\n<li>Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.</li>\n<li>Gallery component image cropping now displays properly across all viewport sizes.</li>\n<li>Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.</li>\n</ul>\n",
+    "markdown": "## New Features\n\n- Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\n\n## Bug Fixes\n\n- Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\n- Gallery component image cropping now displays properly across all viewport sizes.\n- Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
+    "notes": "## New Features\n\n- Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\n\n## Bug Fixes\n\n- Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\n- Gallery component image cropping now displays properly across all viewport sizes.\n- Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
+    "plaintext": "New Features\nNamed theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\nBug Fixes\nSite scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\nGallery component image cropping now displays properly across all viewport sizes.\nMobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
+    "published_at": "2026-07-05T04:06:03.155181113+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants."
+          }
+        ],
+        "title": "New Features"
+      },
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation."
+          },
+          {
+            "links": [],
+            "text": "Gallery component image cropping now displays properly across all viewport sizes."
+          },
+          {
+            "links": [],
+            "text": "Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens."
+          }
+        ],
+        "title": "Bug Fixes"
+      }
+    ],
+    "slack": "## New Features\n\n- Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\n\n## Bug Fixes\n\n- Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\n- Gallery component image cropping now displays properly across all viewport sizes.\n- Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
+    "tag": "v2.18.1",
+    "version": "2.18.1"
+  },
+  {
     "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.</li>\n</ul>\n",
     "markdown": "## Bug Fixes\n\n- Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
     "notes": "## Bug Fixes\n\n- Fixed ESM import compatibility by shipping a compiled ESM build alongside the existing CSS distribution. Node.js projects using ES modules can now import Misty Step directly from node_modules without build tool configuration.",
