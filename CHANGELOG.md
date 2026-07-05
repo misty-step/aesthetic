@@ -1,3 +1,9 @@
+## [2.18.1](https://github.com/misty-step/aesthetic/compare/v2.18.0...v2.18.1) (2026-07-05)
+
+### Bug Fixes
+
+- **site-kit:** scaffold to site/DESIGN.md with overwrite refusal; fix gallery crop and mobile nav crowding ([ac67f53](https://github.com/misty-step/aesthetic/commit/ac67f53014fb1cd67fe652380782268609479767))
+
 # [2.18.0](https://github.com/misty-step/aesthetic/compare/v2.17.1...v2.18.0) (2026-07-04)
 
 ### Features
