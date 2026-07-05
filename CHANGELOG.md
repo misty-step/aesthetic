@@ -1,3 +1,9 @@
+# [2.20.0](https://github.com/misty-step/aesthetic/compare/v2.19.0...v2.20.0) (2026-07-05)
+
+### Features
+
+- **site:** adopt the site-kit's shared contract onto aesthetic's own demo site ([c58c3a3](https://github.com/misty-step/aesthetic/commit/c58c3a3af565932d069ea46347af6fe062077aea))
+
 # [2.19.0](https://github.com/misty-step/aesthetic/compare/v2.18.1...v2.19.0) (2026-07-05)
 
 ### Features
