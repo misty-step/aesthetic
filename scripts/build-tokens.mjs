@@ -213,6 +213,8 @@ const body = `<!doctype html>
         <span class="bar-end">
           <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
             <a href="tokens.html" aria-current="page">tokens</a>
+            <a href="law.html">law</a>
+            <a href="changelog.html">release notes</a>
             <a href="https://github.com/misty-step/aesthetic">github</a>
           </nav>
           <button class="ae-mode" aria-label="toggle color mode">

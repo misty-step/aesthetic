@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>release notes — aesthetic</title>
+    <meta
+      name="description"
+      content="User-facing release notes for the Misty Step design system, generated from tagged releases."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="aesthetic.css" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <a class="gal-skip" href="#gal-main">Skip to content</a>
+    <h1 class="ae-sr">release notes — aesthetic</h1>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="./">AESTHETIC</a>
+        <span class="bar-end">
+          <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
+            <a href="tokens.html">tokens</a>
+            <a href="law.html">law</a>
+            <a href="changelog.html" aria-current="page">release notes</a>
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </nav>
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <div class="gal-mid">
+        <main class="ae-desk ae-stage-scroll" id="gal-main">
+          <div class="ae-group">
+            <p>
+              <span class="ae-item">Release notes.</span>
+              <span class="ae-dim"
+                >Generated from tagged releases by Landmark — the same
+                <code>docs/releases/*.md</code> export shipped with every
+                version. Nothing here is hand-written marketing copy.</span
+              >
+            </p>
+          </div>
+
+          <section class="tok-sec">
+            <h2 class="ae-h">v2.18.1 — 2026-07-05</h2>
+            <div class="ae-group">
+              <p class="ae-dim" style="margin-bottom: 0.5em">New Features</p>
+              <ul>
+                <li>
+                  Named theme system now available over the shared token
+                  contract, enabling consistent theming across your application
+                  with predefined color schemes and styling variants.
+                </li>
+              </ul>
+              <p class="ae-dim" style="margin-bottom: 0.5em">Bug Fixes</p>
+              <ul>
+                <li>
+                  Site scaffold generator no longer overwrites existing
+                  DESIGN.md files, preventing accidental loss of documentation.
+                </li>
+                <li>
+                  Gallery component image cropping now displays properly across
+                  all viewport sizes.
+                </li>
+                <li>
+                  Mobile navigation spacing issues resolved, eliminating visual
+                  crowding on smaller screens.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="tok-sec">
+            <h2 class="ae-h">v2.17.1 — 2026-07-04</h2>
+            <div class="ae-group">
+              <p class="ae-dim" style="margin-bottom: 0.5em">Bug Fixes</p>
+              <ul>
+                <li>
+                  Fixed ESM import compatibility by shipping a compiled ESM
+                  build alongside the existing CSS distribution. Node.js
+                  projects using ES modules can now import Misty Step directly
+                  from <code>node_modules</code> without build tool
+                  configuration.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <div class="ae-group">
+            <p class="ae-dim">
+              Full history:
+              <a href="https://github.com/misty-step/aesthetic/releases"
+                >GitHub releases</a
+              >
+              · every tagged version's export lives in
+              <code>docs/releases/</code>.
+            </p>
+          </div>
+        </main>
+      </div>
+      <footer class="ae-bar">
+        <p class="ae-chrome">
+          v2.18.1 · MIT · generated from
+          <code>docs/releases/releases.json</code>
+        </p>
+        <p class="ae-chrome">
+          by <a href="https://mistystep.io">Misty Step</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="recipes.js"></script>
+  </body>
+</html>
