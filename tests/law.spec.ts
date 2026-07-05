@@ -22,6 +22,7 @@ const PAGES = [
   { path: '/site/', name: 'gallery' },
   { path: '/site/r/', name: 'registry' },
   { path: '/site/tokens.html', name: 'tokens' },
+  { path: '/site/law.html', name: 'law' },
 ];
 
 const MODES = ['light', 'dark'] as const;
