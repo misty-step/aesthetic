@@ -7,24 +7,34 @@ no external asset CDN, and no product-specific build system.
 The scaffold is intentionally small. A product repo owns its copy after
 adoption; Aesthetic owns the law, tokens, and page pattern.
 
-## Copy-Paste Adoption
+## DESIGN.md Location
+
+The brand contract lives at **`site/DESIGN.md`**, never at the product repo's
+root. A product repo's root is not the kit's to claim — it may already hold an
+unrelated, load-bearing document (a UI design system for the product itself,
+not its marketing site). Writing to `site/DESIGN.md` scopes the contract next
+to the `site/` directory it actually governs and can never collide with
+whatever else lives at the root.
+
+## Adoption
 
 From a product repo root, with this repo checked out beside it:
 
 ```sh
-mkdir -p site .github/workflows
-cp -R ../aesthetic/site-kit/scaffold/site/. site/
-cp ../aesthetic/aesthetic.css site/aesthetic.css
-cp ../aesthetic/recipes/mode.js site/mode.js
-cp ../aesthetic/recipes/theme.js site/theme.js
-cp ../aesthetic/site-kit/DESIGN.template.md DESIGN.md
-cp ../aesthetic/site-kit/scaffold/.github/workflows/pages.yml .github/workflows/pages.yml
+node ../aesthetic/scripts/scaffold-site-kit.mjs .
 ```
+
+This copies `site/`, `.github/workflows/pages.yml`, and `site/DESIGN.md` in
+one step. It **refuses to write anything** if a single destination path
+already exists — it fails loudly and copies nothing rather than silently
+overwriting a file the product repo already owns. Re-run it after moving
+whatever collided, or copy the remaining files by hand if only part of the
+scaffold is missing.
 
 Then edit exactly these fields:
 
-- `DESIGN.md`: brand voice, Lucide mark, pitch one-liner, palette hooks, and
-  screenshot inventory.
+- `site/DESIGN.md`: brand voice, Lucide mark, pitch one-liner, palette hooks,
+  and screenshot inventory.
 - `site/index.html`: product name, pitch, feature rows, screenshot captions,
   footer links, and the root `data-ae-theme` pin.
 - `site/changelog.html`: user-facing release notes.
@@ -46,7 +56,7 @@ Keep these footer links visible:
 
 Use a Lucide icon in `.ae-app-mark`. Do not draw a bespoke logo or import a logo
 image. The SVG symbol can be inlined in `index.html`; the selected icon name
-must also be written in `DESIGN.md`.
+must also be written in `site/DESIGN.md`.
 
 ## Deploy
 
@@ -54,7 +64,7 @@ The copied `.github/workflows/pages.yml` stages only `site/` and deploys through
 GitHub Pages. In the product repo:
 
 ```sh
-git add DESIGN.md site .github/workflows/pages.yml
+git add site .github/workflows/pages.yml
 git commit -m "Add public marketing site"
 git push
 ```

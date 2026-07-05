@@ -43,7 +43,8 @@
     "build:feed": "node scripts/build-feed.mjs",
     "build:law": "node scripts/build-law.mjs",
     "build:site-kit": "node scripts/build-site-kit-sample.mjs",
-    "check": "prettier --check . && stylelint aesthetic.css site/site.css site-kit/scaffold/site/marketing.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check && node scripts/build-law.mjs --check && node scripts/build-site-kit-sample.mjs --check",
+    "test:unit": "node --test scripts/*.test.mjs",
+    "check": "prettier --check . && stylelint aesthetic.css site/site.css site-kit/scaffold/site/marketing.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check && node scripts/build-law.mjs --check && node scripts/build-site-kit-sample.mjs --check && npm run test:unit",
     "ci": "npm run check && npm test",
     "test": "playwright test",
     "release": "node scripts/release.mjs"

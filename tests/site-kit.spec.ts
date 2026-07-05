@@ -77,3 +77,33 @@ test('site kit gallery opens a click-to-zoom dialog', async ({ page }) => {
   await page.locator('[data-zoom-close]').click();
   await expect(dialog).not.toHaveAttribute('open', '');
 });
+
+test('site kit gallery thumbnails never crop (object-fit: contain)', async ({
+  page,
+}) => {
+  await page.goto('/_site-kit-sample/');
+
+  const img = page.locator('.msk-shot img').first();
+  await expect(img).toHaveCSS('object-fit', 'contain');
+});
+
+test('site kit nav has no horizontal overflow at 390px (aesthetic-910)', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/_site-kit-sample/');
+  await page.waitForLoadState('networkidle');
+
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - window.innerWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
+
+  // regression guard for the `.ae-wide .ae-bar` specificity bug: the
+  // mobile-width override must actually take effect, not just exist in the
+  // stylesheet unapplied behind a higher-specificity desktop rule.
+  const barWidth = await page
+    .locator('.msk-bar')
+    .evaluate((el) => el.getBoundingClientRect().width);
+  expect(barWidth).toBeLessThanOrEqual(390 - 32 + 1);
+});
