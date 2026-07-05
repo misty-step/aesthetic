@@ -1,3 +1,9 @@
+# [2.19.0](https://github.com/misty-step/aesthetic/compare/v2.18.1...v2.19.0) (2026-07-05)
+
+### Features
+
+- **site:** document the law-as-consumer-contract story (curb, powder adoption) ([833bda8](https://github.com/misty-step/aesthetic/commit/833bda8f4e591250647f3b073f40d64d83a143a8)), closes [17/#19](https://github.com/misty-step/aesthetic/issues/19) [52/#55](https://github.com/misty-step/aesthetic/issues/55) [aesthetic#17](https://github.com/aesthetic/issues/17)
+
 ## [2.18.1](https://github.com/misty-step/aesthetic/compare/v2.18.0...v2.18.1) (2026-07-05)
 
 ### Bug Fixes
