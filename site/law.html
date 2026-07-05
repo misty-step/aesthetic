@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>the law travels — aesthetic</title>
+    <meta
+      name="description"
+      content="The design law isn't just CSS and prose here — two other products in the fleet vendor it into their own CI, plant an off-law violation, and watch the gate catch it. Real adoption, a real packaging bug found and fixed."
+    />
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="aesthetic.css" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <a class="gal-skip" href="#gal-main">Skip to content</a>
+    <h1 class="ae-sr">the law travels — aesthetic</h1>
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <div class="ae-screen ae-wide">
+      <header class="ae-bar">
+        <a class="ae-name" href="./">AESTHETIC</a>
+        <span class="bar-end">
+          <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
+            <a href="tokens.html">tokens</a>
+            <a href="law.html" aria-current="page">law</a>
+            <a href="https://github.com/misty-step/aesthetic">github</a>
+          </nav>
+          <button class="ae-mode" aria-label="toggle color mode">
+            <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
+            <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
+          </button>
+        </span>
+      </header>
+      <div class="gal-mid">
+        <main class="ae-desk ae-stage-scroll" id="gal-main">
+          <div class="ae-group">
+            <p>
+              <span class="ae-item">The law travels.</span>
+              <span class="ae-dim"
+                >Not as a promise — as a gate two other products run in their
+                own CI, against their own real UI.</span
+              >
+            </p>
+          </div>
+
+          <article class="ae-doc" style="max-width: var(--ae-measure-wide)">
+            <p class="ae-lede">
+              DESIGN.md and <code>tokens.json</code> describe the law.
+              <code>law/</code> is the same five invariants shipped as code —
+              radius 0, one type scale, hairline borders, no page-scroll, the
+              cursor rule — importable and runnable by anyone building on this
+              system. Two consumer repos in the fleet, <strong>curb</strong> and
+              <strong>powder</strong>, now run that exact gate in their own CI
+              matrices, against their own served UI, and both are green.
+            </p>
+
+            <figure>
+              <figcaption>
+                law-gate adoption — two consumer repos, their own CI
+              </figcaption>
+              <div class="ae-plate">
+                <table class="ae-table">
+                  <thead>
+                    <tr>
+                      <th>consumer</th>
+                      <th>spec</th>
+                      <th>CI wiring</th>
+                      <th class="num">result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ae-item">curb</td>
+                      <td><code>ui/law/dashboard.law.spec.ts</code></td>
+                      <td>fast-feedback gate · curb#17, refreshed curb#19</td>
+                      <td class="num">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                        >green
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="ae-item">powder</td>
+                      <td><code>law/board.law.spec.ts</code></td>
+                      <td>
+                        dedicated “aesthetic law gate (board UI)” job ·
+                        powder#52, refreshed powder#55
+                      </td>
+                      <td class="num">
+                        <svg class="ae-icon ae-ok"><use href="#i-check" /></svg
+                        >green
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="ae-plate-note">
+                  Both suites include a planted negative control: a 9px-radius,
+                  20px-font button injected into the live page at runtime.
+                  Before the gate is trusted to pass anything, it has to fail
+                  that button first — with a named-offender error, not a silent
+                  skip.
+                </p>
+              </div>
+            </figure>
+
+            <div class="ae-findings">
+              <p class="ae-findings-title">WHAT THE GATE CHECKS</p>
+              <p>
+                <span class="ae-strong">Five invariants, mechanically:</span>
+                radius is 0 everywhere, one type scale holds, borders stay
+                hairline, the page itself never scrolls, and static text never
+                earns a text cursor. <code>assertLaw()</code> runs all five
+                against a real rendered page and fails loud, naming the
+                offending element, the moment one drifts.
+              </p>
+              <div class="ae-rec">
+                <p class="ae-findings-title" style="margin: 0 0 0.3em">
+                  THE BUG THIS SURFACED
+                </p>
+                Shipping the gate to real consumers found a real defect: Node's
+                ESM resolution refused to import <code>.ts</code> law files
+                straight from <code>node_modules</code>
+                (<code>ERR_UNKNOWN_FILE_EXTENSION</code>) — the documented
+                <code>import … from '@misty-step/aesthetic/law'</code> path
+                didn't work for anyone outside this repo. Fixed in
+                <a href="https://github.com/misty-step/aesthetic"
+                  >aesthetic#17</a
+                >
+                by shipping a compiled <code>law/dist</code> build (JS +
+                <code>.d.ts</code>) behind a proper package export, verified
+                with before/after scratch-consumer transcripts. The fix also
+                surfaced a second bug: the gate's failure branch called a
+                Playwright API that doesn't exist, so a real violation would
+                have thrown a raw type error instead of a readable one — fixed
+                alongside it, and the same bug was found and refreshed out of
+                both curb and powder's vendored copies (curb#19, powder#55).
+              </div>
+            </div>
+
+            <p class="ae-pull">
+              The gate isn't ours to grade — it's theirs to run. Two other
+              products import the same five invariants, plant a violation the
+              system is supposed to catch, and watch it fail with a name
+              attached.
+              <span class="ae-pull-by"
+                >— curb, powder · vendored aesthetic law</span
+              >
+            </p>
+          </article>
+        </main>
+      </div>
+      <footer class="ae-bar">
+        <p class="ae-chrome">v2.18.1 · MIT · the law, shipped as code</p>
+        <p class="ae-chrome">
+          by <a href="https://mistystep.io">Misty Step</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="recipes.js"></script>
+  </body>
+</html>
