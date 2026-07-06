@@ -144,6 +144,15 @@ motion. Worked examples: `docs/ADOPTING.md`.
 9. The canonical markup for every primitive is in `site/` —
    view-source is documentation.
 
+## Lucide Mark
+
+- Icon: `swatch-book`
+- Reason: operator-ratified 2026-07-06 — a swatch book is the literal
+  tool-of-trade for a design system, apt for the product that ships the
+  ink-and-registers instrument every other fleet site's mark rides on.
+- Rule: the mark is an inline Lucide SVG inside `.ae-app-mark`. No bespoke
+  marks, logo images, emoji marks, or colored wordmarks.
+
 ## The image language
 
 The copy-paste style block for image models (vary only the subject
