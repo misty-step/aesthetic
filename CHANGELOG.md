@@ -1,3 +1,9 @@
+# [2.21.0](https://github.com/misty-step/aesthetic/compare/v2.20.0...v2.21.0) (2026-07-06)
+
+### Features
+
+- **site:** add swatch-book Lucide mark ([368b580](https://github.com/misty-step/aesthetic/commit/368b580e871e9e437a78414b687df958f7a9b273))
+
 # [2.20.0](https://github.com/misty-step/aesthetic/compare/v2.19.0...v2.20.0) (2026-07-05)
 
 ### Features
