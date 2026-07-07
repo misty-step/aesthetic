@@ -1,3 +1,9 @@
+## [2.22.1](https://github.com/misty-step/aesthetic/compare/v2.22.0...v2.22.1) (2026-07-07)
+
+### Bug Fixes
+
+- **docs:** drop hardcoded tailnet hostname from CATALOG.md + MOBILE-AUDIT.md (aesthetic-930) ([aaf051e](https://github.com/misty-step/aesthetic/commit/aaf051ef85d72671098a9158e274fd4ac71b24d8))
+
 # [2.22.0](https://github.com/misty-step/aesthetic/compare/v2.21.0...v2.22.0) (2026-07-07)
 
 ### Features
