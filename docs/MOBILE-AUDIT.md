@@ -18,17 +18,20 @@ Each surface was loaded headless (Chromium via Playwright, this repo's own
 - a full-viewport screenshot, reviewed by eye for collapsed chrome, readable
   type, and no cut-off content
 
-Screenshots live beside this file in `docs/mobile-audit/`.
+Screenshots live beside this file in `docs/mobile-audit/`. Tailnet-private
+surfaces are named by role, not by their literal hostname (aesthetic-930):
+this is an open-source repo and the operator's personal infra address isn't
+this doc's to publish.
 
 ## Audit table
 
-| Surface                | URL                                             | HTTP | Overflow (px) | Console errors | Verdict                                                                                       |
-| ---------------------- | ----------------------------------------------- | ---- | ------------- | -------------- | --------------------------------------------------------------------------------------------- |
-| Deck (Bridge)          | `bastion.tail5f5eb4.ts.net/artifacts/a/bridge/` | 200  | 0             | none           | **Clean.** Single-column feed, mono tag badges, no pills.                                     |
-| Board (Powder)         | `bastion.tail5f5eb4.ts.net:10001/`              | 200  | 0             | none           | **Clean.** Tabs + filter row readable, card list single-column.                               |
-| Glass (marketing site) | `misty-step.github.io/glass/`                   | 200  | 0             | none           | **Clean** (site only — see gap below).                                                        |
-| Sanctum (portal)       | `bastion.tail5f5eb4.ts.net/`                    | 200  | 0             | none           | **Clean.** Fleet directory table's three columns fit without stacking or truncation at 390px. |
-| Shelf (artifacts)      | `bastion.tail5f5eb4.ts.net/artifacts/`          | 200  | 0             | none           | **Clean.** Search + list render single-column, bottom-chrome home affordance visible.         |
+| Surface                | Where                                          | HTTP | Overflow (px) | Console errors | Verdict                                                                                       |
+| ---------------------- | ---------------------------------------------- | ---- | ------------- | -------------- | --------------------------------------------------------------------------------------------- |
+| Deck (Bridge)          | Sanctum artifact shelf, tailnet-private        | 200  | 0             | none           | **Clean.** Single-column feed, mono tag badges, no pills.                                     |
+| Board (Powder)         | Sanctum, tailnet-private, dedicated board port | 200  | 0             | none           | **Clean.** Tabs + filter row readable, card list single-column.                               |
+| Glass (marketing site) | `misty-step.github.io/glass/` (public)         | 200  | 0             | none           | **Clean** (site only — see gap below).                                                        |
+| Sanctum (portal)       | Sanctum root, tailnet-private                  | 200  | 0             | none           | **Clean.** Fleet directory table's three columns fit without stacking or truncation at 390px. |
+| Shelf (artifacts)      | Sanctum artifact shelf, tailnet-private        | 200  | 0             | none           | **Clean.** Search + list render single-column, bottom-chrome home affordance visible.         |
 
 All five surfaces pass the law's hard gate (zero horizontal overflow at
 390px) with rendered evidence in `docs/mobile-audit/*.png`. This is
