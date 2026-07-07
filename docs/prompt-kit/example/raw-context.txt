@@ -1,0 +1,26 @@
+window: 2026-07-06T03:00:36.985676+00:00 .. 2026-07-07T03:00:36.985676+00:00
+schema_version: weave.evidence-pack.v1
+
+- [repo-swept] (git:aesthetic) aesthetic swept  refs: repo:aesthetic
+- [commit] (git:aesthetic) fix(docs): drop hardcoded tailnet hostname from CATALOG.md + MOBILE-AUDIT.md (aesthetic-930)  refs: repo:aesthetic
+- [commit] (git:aesthetic) chore(release): 2.22.0 [skip ci]  refs: repo:aesthetic
+- [commit] (git:aesthetic) feat(design): mobile-first is law; audit fleet at 390px (aesthetic-928)  refs: repo:aesthetic
+- [commit] (git:aesthetic) chore(release): 2.21.0 [skip ci]  refs: repo:aesthetic
+- [commit] (git:aesthetic) feat(site): add swatch-book Lucide mark  refs: repo:aesthetic
+- [repo-swept] (git:bastion) bastion swept  refs: repo:bastion
+- [commit] (git:bastion) feat(artifacts): expose live stars via GET /stars (#49)  refs: repo:bastion, pr:49
+- [repo-swept] (git:glance-next) glance-next swept  refs: repo:glance-next
+- [repo-swept] (git:landmark) landmark swept  refs: repo:landmark
+- [commit] (git:landmark) chore(backlog): archive shipped tickets swept by /groom  refs: repo:landmark
+- [repo-swept] (git:powder) powder swept  refs: repo:powder
+- [commit] (git:powder) feat(core,store,api,server,cli,mcp): first-class attributed work_log on cards (powder-943)  refs: repo:powder
+- [commit] (git:powder) fix(core,store,server,shell): release expired claims as a no-op, distinguish stale-claim mutations (powder-938) (#79)  refs: repo:powder, pr:79
+- [commit] (git:powder) fix(store): refresh the ratified tier seed for the 2026-07-06 ruling (powder-941) (#78)  refs: repo:powder, pr:78
+- [commit] (git:powder) feat(mcp): surface API key last_used_at via a list_keys tool (powder-940) (#77)  refs: repo:powder, pr:77
+- [commit] (git:powder) feat(core,store,api,server,cli,mcp): add transfer_claim verb (powder-936) (#76)  refs: repo:powder, pr:76
+- [repo-swept] (git:weave) weave swept  refs: repo:weave
+- [commit] (git:weave) fix(fleet-retro): resolve op:// references in env_or_secrets_file (harness-kit-914)  refs: repo:weave
+- [commit] (git:weave) fix(fleet-retro): adopt the Aesthetic kit, fix markdown/timestamp leaks (aesthetic-927)  refs: repo:weave
+- [commit] (git:weave) feat(fleet-retro): synthesis stage + citation gate (weave-923)  refs: repo:weave
+- [commit] (git:weave) feat(fleet-retro): EvidencePack — one versioned intermediate between collectors and synthesis (weave-922)  refs: repo:weave
+- [commit] (git:weave) feat(fleet-retro): receipts become collectible (weave-921)  refs: repo:weave

@@ -1,0 +1,194 @@
+{
+  "catalog_version": "aesthetic-catalog-001",
+  "components": [
+    {
+      "type": "hero",
+      "title": "Fleet retro — daily",
+      "summary": [
+        {
+          "type": "text",
+          "text": "24h window, six repos swept."
+        }
+      ],
+      "stats": [
+        {
+          "label": "Commits",
+          "value": "23"
+        }
+      ]
+    },
+    {
+      "type": "narrative",
+      "heading": "What mattered",
+      "status": {
+        "status": "ok",
+        "paragraphs": [
+          [
+            {
+              "type": "text",
+              "text": "The aesthetic repo had significant updates including documentation fixes and new features."
+            },
+            {
+              "type": "text",
+              "text": "The powder repo introduced first-class attributed work logs and several fixes."
+            },
+            {
+              "type": "text",
+              "text": "Weave made improvements to the Aesthetic kit and synthesis stage."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "heading": "Repo activity",
+      "columns": [
+        {
+          "key": "repo",
+          "label": "repo"
+        },
+        {
+          "key": "commits",
+          "label": "commits",
+          "numeric": true
+        }
+      ],
+      "rows": [
+        {
+          "cells": [
+            {
+              "column_key": "repo",
+              "value": {
+                "type": "text",
+                "text": "aesthetic"
+              }
+            },
+            {
+              "column_key": "commits",
+              "value": {
+                "type": "text",
+                "text": "6"
+              }
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "column_key": "repo",
+              "value": {
+                "type": "text",
+                "text": "bastion"
+              }
+            },
+            {
+              "column_key": "commits",
+              "value": {
+                "type": "text",
+                "text": "1"
+              }
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "column_key": "repo",
+              "value": {
+                "type": "text",
+                "text": "landmark"
+              }
+            },
+            {
+              "column_key": "commits",
+              "value": {
+                "type": "text",
+                "text": "1"
+              }
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "column_key": "repo",
+              "value": {
+                "type": "text",
+                "text": "powder"
+              }
+            },
+            {
+              "column_key": "commits",
+              "value": {
+                "type": "text",
+                "text": "5"
+              }
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "column_key": "repo",
+              "value": {
+                "type": "text",
+                "text": "weave"
+              }
+            },
+            {
+              "column_key": "commits",
+              "value": {
+                "type": "text",
+                "text": "5"
+              }
+            }
+          ]
+        }
+      ],
+      "empty_note": "No additional activity to report."
+    },
+    {
+      "type": "timeline",
+      "heading": "Timeline",
+      "entries": [
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "aesthetic",
+          "kind": "repo-swept",
+          "summary": "aesthetic swept"
+        },
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "bastion",
+          "kind": "repo-swept",
+          "summary": "bastion swept"
+        },
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "glance-next",
+          "kind": "repo-swept",
+          "summary": "glance-next swept"
+        },
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "landmark",
+          "kind": "repo-swept",
+          "summary": "landmark swept"
+        },
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "powder",
+          "kind": "repo-swept",
+          "summary": "powder swept"
+        },
+        {
+          "at": "2026-07-06T03:00:36Z",
+          "actor": "weave",
+          "kind": "repo-swept",
+          "summary": "weave swept"
+        }
+      ]
+    }
+  ]
+}

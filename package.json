@@ -43,7 +43,7 @@
     "build:feed": "node scripts/build-feed.mjs",
     "build:law": "node scripts/build-law.mjs",
     "build:site-kit": "node scripts/build-site-kit-sample.mjs",
-    "test:unit": "node --test scripts/*.test.mjs",
+    "test:unit": "node --test scripts/*.test.mjs docs/prompt-kit/*.test.mjs",
     "check": "prettier --check . && stylelint aesthetic.css site/site.css site-kit/scaffold/site/marketing.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check && node scripts/build-law.mjs --check && node scripts/build-site-kit-sample.mjs --check && npm run test:unit",
     "ci": "npm run check && npm test",
     "test": "playwright test",
@@ -59,6 +59,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "prettier": "3.8.4",
     "stylelint": "17.13.0",
     "stylelint-config-standard": "40.0.0",
