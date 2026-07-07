@@ -1,5 +1,26 @@
 [
   {
+    "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.</li>\n</ul>\n<details>\n<summary>Release classification notes</summary>\n<p>Landmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip</p>\n</details>",
+    "markdown": "## Bug Fixes\n\n- Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n\n</details>",
+    "notes": "## Bug Fixes\n\n- Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n\n</details>",
+    "plaintext": "Bug Fixes\nRemoved hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n<details>\n<summary>Release classification notes</summary>\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n</details>",
+    "published_at": "2026-07-07T02:45:39.556190823+00:00",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators."
+          }
+        ],
+        "title": "Bug Fixes"
+      }
+    ],
+    "slack": "## Bug Fixes\n\n- Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n\n</details>",
+    "tag": "v2.22.1",
+    "version": "2.22.1"
+  },
+  {
     "html": "<h2>New Features</h2>\n<ul>\n<li>Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.</li>\n</ul>\n<h2>Bug Fixes</h2>\n<ul>\n<li>Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.</li>\n<li>Gallery component image cropping now displays properly across all viewport sizes.</li>\n<li>Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.</li>\n</ul>\n",
     "markdown": "## New Features\n\n- Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\n\n## Bug Fixes\n\n- Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\n- Gallery component image cropping now displays properly across all viewport sizes.\n- Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
     "notes": "## New Features\n\n- Named theme system now available over the shared token contract, enabling consistent theming across your application with predefined color schemes and styling variants.\n\n## Bug Fixes\n\n- Site scaffold generator no longer overwrites existing DESIGN.md files, preventing accidental loss of documentation.\n- Gallery component image cropping now displays properly across all viewport sizes.\n- Mobile navigation spacing issues resolved, eliminating visual crowding on smaller screens.",
