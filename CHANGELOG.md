@@ -1,3 +1,9 @@
+# [2.23.0](https://github.com/misty-step/aesthetic/compare/v2.22.1...v2.23.0) (2026-07-07)
+
+### Features
+
+- **prompt-kit:** catalog-conformant spec JSON from raw context (aesthetic-929) ([ee5c2f8](https://github.com/misty-step/aesthetic/commit/ee5c2f8df12a01284cf5c1d092ed56afa55840b3))
+
 ## [2.22.1](https://github.com/misty-step/aesthetic/compare/v2.22.0...v2.22.1) (2026-07-07)
 
 ### Bug Fixes
