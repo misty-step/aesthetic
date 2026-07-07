@@ -1,3 +1,9 @@
+# [2.24.0](https://github.com/misty-step/aesthetic/compare/v2.23.0...v2.24.0) (2026-07-07)
+
+### Features
+
+- **mcp:** stdio MCP server over the existing registry JSON (aesthetic-931) ([17539ce](https://github.com/misty-step/aesthetic/commit/17539ced5193377235a98bec35dad8e269e7b4c5))
+
 # [2.23.0](https://github.com/misty-step/aesthetic/compare/v2.22.1...v2.23.0) (2026-07-07)
 
 ### Features
