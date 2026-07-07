@@ -1,12 +1,11 @@
 /* build the composition feed: site/r/primitives.json — every catalog
    primitive with its canonical markup, the recipes it needs, and the law it
    must hold, so an adopting agent composes a view from JSON without scraping
-   HTML. Derived from site/index.html (the gallery) — the catalog is the
+   HTML. Derived from site/primitives.html (the gallery) — the catalog is the
    single source of truth; the markup here is the same text the copy button
    yields. The machine dual of copy-to-clipboard (016 child 3). `--check`
    keeps it in step; CI runs that, the same contract as build-recipes /
-   build-tokens. site/primitives.html is a legacy hash-preserving redirect
-   only — it carries no plates of its own. */
+   build-tokens. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,7 +13,7 @@ import * as prettier from 'prettier';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
-const html = read('site/index.html');
+const html = read('site/primitives.html');
 const tokens = JSON.parse(read('tokens.json'));
 const { version } = JSON.parse(read('package.json'));
 
@@ -126,7 +125,7 @@ for (const [, route, body] of views) {
 const feed = {
   name: '@misty-step/aesthetic',
   version,
-  note: 'The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/index.html, the gallery (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.',
+  note: 'The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/primitives.html, the gallery (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.',
   law: tokens.law,
   primitives,
 };

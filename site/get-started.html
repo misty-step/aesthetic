@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>release notes — aesthetic</title>
+    <title>get started — aesthetic</title>
     <meta
       name="description"
-      content="User-facing release notes for the Misty Step design system, generated from tagged releases."
+      content="Install the Misty Step design system from the pinned GitHub tag."
     />
     <script>
       try {
@@ -26,7 +26,7 @@
   </head>
   <body>
     <a class="gal-skip" href="#gal-main">Skip to content</a>
-    <h1 class="ae-sr">release notes — aesthetic</h1>
+    <h1 class="ae-sr">get started — aesthetic</h1>
     <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="4" />
@@ -75,78 +75,50 @@
           <a href="primitives.html">primitives</a>
           <a href="tokens.html">tokens</a>
           <a href="law.html">law</a>
-          <a href="changelog.html" aria-current="page">changelog</a>
+          <a href="changelog.html">changelog</a>
           <a href="https://github.com/misty-step/aesthetic">github</a>
         </nav>
       </header>
       <div class="gal-mid">
         <main class="ae-desk ae-stage-scroll" id="gal-main">
-          <div class="ae-group">
+          <article class="ae-doc get-started-doc">
+            <h2>Get started</h2>
+            <p class="ae-lede">
+              Pin the GitHub tag. Aesthetic ships as CSS, tokens, recipes, the
+              law gate, and the static primitive registry.
+            </p>
+            <figure>
+              <figcaption>package install</figcaption>
+              <div class="ae-plate">
+                <pre><code>pnpm add github:misty-step/aesthetic#v2.24.0</code></pre>
+                <p class="ae-plate-note">
+                  Keep the tag explicit so design-system upgrades are reviewed
+                  deliberately.
+                </p>
+              </div>
+            </figure>
+            <figure>
+              <figcaption>css import</figcaption>
+              <div class="ae-plate">
+                <pre><code>@import '@misty-step/aesthetic';</code></pre>
+              </div>
+            </figure>
+            <figure>
+              <figcaption>registry install</figcaption>
+              <div class="ae-plate">
+                <pre><code>npx shadcn@latest add https://aesthetic.mistystep.io/r/aesthetic.json</code></pre>
+              </div>
+            </figure>
             <p>
-              <span class="ae-item">Release notes.</span>
-              <span class="ae-dim"
-                >Generated from tagged releases by Landmark — the same
-                <code>docs/releases/*.md</code> export shipped with every
-                version. Nothing here is hand-written marketing copy.</span
+              <a href="primitives.html">Browse primitives</a> ·
+              <a href="tokens.html">Read tokens</a> ·
+              <a href="law.html">Run the law</a> ·
+              <a
+                href="https://github.com/misty-step/aesthetic/blob/master/docs/ADOPTING.md"
+                >Adoption guide</a
               >
             </p>
-          </div>
-
-          <section class="tok-sec">
-            <h2 class="ae-h">v2.18.1 — 2026-07-05</h2>
-            <div class="ae-group">
-              <p class="ae-dim" style="margin-bottom: 0.5em">New Features</p>
-              <ul>
-                <li>
-                  Named theme system now available over the shared token
-                  contract, enabling consistent theming across your application
-                  with predefined color schemes and styling variants.
-                </li>
-              </ul>
-              <p class="ae-dim" style="margin-bottom: 0.5em">Bug Fixes</p>
-              <ul>
-                <li>
-                  Site scaffold generator no longer overwrites existing
-                  DESIGN.md files, preventing accidental loss of documentation.
-                </li>
-                <li>
-                  Gallery component image cropping now displays properly across
-                  all viewport sizes.
-                </li>
-                <li>
-                  Mobile navigation spacing issues resolved, eliminating visual
-                  crowding on smaller screens.
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          <section class="tok-sec">
-            <h2 class="ae-h">v2.17.1 — 2026-07-04</h2>
-            <div class="ae-group">
-              <p class="ae-dim" style="margin-bottom: 0.5em">Bug Fixes</p>
-              <ul>
-                <li>
-                  Fixed ESM import compatibility by shipping a compiled ESM
-                  build alongside the existing CSS distribution. Node.js
-                  projects using ES modules can now import Misty Step directly
-                  from <code>node_modules</code> without build tool
-                  configuration.
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          <div class="ae-group">
-            <p class="ae-dim">
-              Full history:
-              <a href="https://github.com/misty-step/aesthetic/releases"
-                >GitHub releases</a
-              >
-              · every tagged version's export lives in
-              <code>docs/releases/</code>.
-            </p>
-          </div>
+          </article>
         </main>
       </div>
       <footer class="ae-bar site-footer">

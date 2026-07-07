@@ -1,7 +1,7 @@
 {
   "name": "@misty-step/aesthetic",
   "version": "2.24.0",
-  "note": "The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/index.html, the gallery (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.",
+  "note": "The composition feed: every catalog primitive with its canonical markup, the recipes it needs, and the law it must hold. Generated from site/primitives.html, the gallery (the catalog is the source of truth). To compose a view: include aesthetic.css + recipes/recipes.js, paste the markup you need, steer --ae-accent, and never violate the law below.",
   "law": {
     "size": "Exactly one font size on every surface; the headline is heavier and blacker, never larger.",
     "registers": "Three inks by three weights (400 / 550 / 800): nine registers.",
@@ -42,7 +42,7 @@
       "role": "",
       "since": "",
       "recipes": ["nav.js"],
-      "markup": "<nav class=\"ae-nav\">\n  <button aria-current=\"page\">work</button>\n  <button>writing</button>\n  <button>contact</button>\n  <span class=\"ae-nav-ind\"></span>\n</nav>",
+      "markup": "<nav class=\"ae-nav\">\n  <button>work</button>\n  <button>writing</button>\n  <button>contact</button>\n  <span class=\"ae-nav-ind\"></span>\n</nav>",
       "note": "the site positions the indicator\n(left/width) on view change"
     },
     {
@@ -335,7 +335,7 @@
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<div class=\"ae-shell\">\n  <aside class=\"ae-rail\">\n    <p class=\"ae-h\">PLACES</p>\n    <a aria-current=\"page\" href=\"…\">agents</a>\n    <a href=\"…\">history</a>\n    <div class=\"ae-rail-foot\">…mode toggle…</div>\n  </aside>\n  <main class=\"ae-desk\">…the work…</main>\n</div>"
+      "markup": "<div class=\"ae-shell\">\n  <aside class=\"ae-rail\">\n    <p class=\"ae-h\">PLACES</p>\n    <a href=\"…\">agents</a>\n    <a href=\"…\">history</a>\n    <div class=\"ae-rail-foot\">…mode toggle…</div>\n  </aside>\n  <main class=\"ae-desk\">…the work…</main>\n</div>"
     },
     {
       "route": "doc",

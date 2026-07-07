@@ -11,19 +11,105 @@
 .bar-links {
   display: inline-flex;
   gap: 1.5em;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-/* an inline link inside footer prose still reads as a link: the chrome
-   register strips underlines for utility links, so restore the system's
-   faint underline here */
-footer.ae-bar a {
+.site-bar,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.site-bar .ae-name {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.site-footer {
+  justify-content: space-between;
+}
+
+.site-project {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.site-project a {
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-color: var(--ae-ink-faint);
 }
 
-footer.ae-bar a:hover {
+.site-project a:hover {
   text-decoration-color: currentColor;
+}
+
+.site-github {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+}
+
+/* ── locked fleet hero ───────────────────────────────────────────── */
+
+.hero-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('assets/hero.jpg');
+  background-position: center;
+  background-size: cover;
+  opacity: 0.85;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--ae-surface) 0%, transparent 62%),
+    linear-gradient(
+      180deg,
+      var(--ae-surface) 0%,
+      transparent 24%,
+      var(--ae-surface) 100%
+    );
+  opacity: 0.72;
+}
+
+.hero-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  width: min(var(--ae-measure-wide), 100% - 5rem);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+}
+
+.hero-copy {
+  max-width: 52%;
+}
+
+.hero-copy h1 {
+  max-width: 24ch;
+  margin: 0 0 1.2em;
+  font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+  line-height: 1.25;
+  font-weight: var(--ae-w-bold, var(--ae-w-black));
+  letter-spacing: -0.01em;
+}
+
+.get-started-doc {
+  max-width: min(44em, 100%);
 }
 
 /* ── the manual (index) ───────────────────────────────────────────── */
@@ -124,12 +210,57 @@ footer.ae-bar a:hover {
 }
 
 @media (max-width: 900px) {
+  .bar-end,
+  .site-bar {
+    align-items: flex-start;
+  }
+
+  .site-bar {
+    gap: 1em;
+  }
+
+  .hero-main {
+    width: min(var(--ae-measure-wide), 100% - 2rem);
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    padding-block: 2rem;
+  }
+
+  .hero-bg::after {
+    background:
+      linear-gradient(90deg, var(--ae-surface) 0%, transparent 88%),
+      linear-gradient(
+        180deg,
+        var(--ae-surface) 0%,
+        transparent 35%,
+        var(--ae-surface) 100%
+      );
+    opacity: 0.82;
+  }
+
   .man-doc {
     grid-template-columns: 1fr;
   }
 
   .man-toc {
     display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-bar {
+    flex-direction: column;
+  }
+
+  .site-bar .bar-links {
+    justify-content: flex-start;
+    gap: 0.9em 1.2em;
+  }
+
+  .site-footer {
+    align-items: center;
   }
 }
 
