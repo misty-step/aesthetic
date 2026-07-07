@@ -220,6 +220,23 @@ on the system surfaces):
 See them rendered side by side: the steering page on the site
 (`site/steering.html`).
 
+### The density dial, worked (aesthetic-014)
+
+The measure/chrome-register/app-shell density dial (`DESIGN.md`'s "The
+volume knob") is a dial, not an invariant — turn it up for an
+instrument-dense working surface, down for a calm reading one. The
+recorded real-world decision is Threshold's lab desk, the densest
+in-fleet surface built on the kit to date: a working-agent monitoring
+desk that needs a terminal's information density without breaking the
+law (one size, hairlines, no filled cards). Threshold's own catalog
+records the choice explicitly (`docs/threshold-ui-catalog.html`: "Density:
+High") and its lab narrates the tradeoff directly — "a lab desk earns
+its ink, so the working surface turns every density knob up: tighter
+line-height, a 13px base across the whole desk, more visible structure
+per screen" (`docs/threshold-ui-lab/round-2/index.html`, `lab.css`). Turn
+the same dial down for a calm reading surface (`curb`'s zero-steering
+example above is the low-density end of the same range).
+
 ## 5 · Tailwind v4 bridge (React apps)
 
 Import the system into the base layer, then map its tokens into
