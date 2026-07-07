@@ -20,15 +20,16 @@ Aesthetic to another repo.
 
 ## Route
 
-| Need                                       | Surface                                              |
-| ------------------------------------------ | ---------------------------------------------------- |
-| Install or upgrade the package             | `@misty-step/aesthetic` pinned by version or git tag |
-| Understand invariants vs consumer dials    | `docs/ADOPTING.md`                                   |
-| Generate visuals that feel like Misty Step | `DESIGN.md`                                          |
-| Use tokens programmatically                | `tokens.json`                                        |
-| Use behavior snippets                      | `recipes/` and `recipes/recipes.js`                  |
-| Read machine-facing registry data          | `site/r/*.json`                                      |
-| Verify rendered law compliance             | `npm run ci`                                         |
+| Need                                       | Surface                                                                                   |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Install or upgrade the package             | `@misty-step/aesthetic` pinned by version or git tag                                      |
+| Understand invariants vs consumer dials    | `docs/ADOPTING.md`                                                                        |
+| Generate visuals that feel like Misty Step | `DESIGN.md`                                                                               |
+| Use tokens programmatically                | `tokens.json`                                                                             |
+| Use behavior snippets                      | `recipes/` and `recipes/recipes.js`                                                       |
+| Read machine-facing registry data          | `site/r/*.json`                                                                           |
+| Query tokens/recipes/primitives/law live   | `mcp/server.mjs` (`npx -p @misty-step/aesthetic aesthetic-mcp`, or `npm run mcp` in-repo) |
+| Verify rendered law compliance             | `npm run ci`                                                                              |
 
 ## Operating Rules
 
@@ -41,6 +42,34 @@ Aesthetic to another repo.
   and dials; products choose brand accents and local layout needs.
 - Do not copy prototype files into production. Rebuild the locked direction
   with package tokens, recipes, and registry references.
+
+## MCP server (aesthetic-931)
+
+`mcp/server.mjs` is the fifth face: a stdio MCP server so an adopting agent
+can query tokens/recipes/primitives/law without vendoring knowledge or
+grepping `site/r/*.json` by hand. Six tools, each a thin read over an
+already-built registry file (no regeneration, no judgment):
+
+- `get_tokens` -- the full `tokens.json`.
+- `list_primitives` -- every route + title + summary + classes (lightweight).
+- `get_primitive` -- one route's full entry (markup, recipes used).
+- `get_recipe` -- the real JS source of one `recipes/*.js` file.
+- `get_law` -- the structured law object, whole or by section.
+- `search_registry` -- keyword search across every registry item's
+  name/title/description.
+
+Run it: `npm run mcp` (stdio) or `npx -p @misty-step/aesthetic aesthetic-mcp`
+from a consumer. Tests: `node --test mcp/*.test.mjs` (also covered by
+`npm run ci`).
+
+**API/CLI waived, recorded here per the five-faces audit:** Aesthetic ships
+as a single CSS artifact + static registry, not a running service --
+there is no request/response boundary a REST API would front, and no
+imperative workflow a CLI would drive beyond the build scripts
+(`scripts/build-*.mjs`) already exposed via `npm run build:*`. The MCP
+server is the query face; a bespoke HTTP API or CLI on top of the same
+read-only registry lookups would be a second, redundant face for the same
+four query shapes.
 
 ## Verification
 

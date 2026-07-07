@@ -16,6 +16,9 @@
   ],
   "main": "aesthetic.css",
   "style": "aesthetic.css",
+  "bin": {
+    "aesthetic-mcp": "./mcp/server.mjs"
+  },
   "exports": {
     ".": "./aesthetic.css",
     "./aesthetic.css": "./aesthetic.css",
@@ -33,6 +36,8 @@
     "tokens.json",
     "recipes",
     "law",
+    "mcp",
+    "site/r",
     "README.md",
     "LICENSE"
   ],
@@ -43,7 +48,8 @@
     "build:feed": "node scripts/build-feed.mjs",
     "build:law": "node scripts/build-law.mjs",
     "build:site-kit": "node scripts/build-site-kit-sample.mjs",
-    "test:unit": "node --test scripts/*.test.mjs docs/prompt-kit/*.test.mjs",
+    "test:unit": "node --test scripts/*.test.mjs docs/prompt-kit/*.test.mjs mcp/*.test.mjs",
+    "mcp": "node mcp/server.mjs",
     "check": "prettier --check . && stylelint aesthetic.css site/site.css site-kit/scaffold/site/marketing.css && node scripts/build-recipes.mjs --check && node scripts/build-tokens.mjs --check && node scripts/build-feed.mjs --check && node scripts/build-registry.mjs --check && node scripts/build-law.mjs --check && node scripts/build-site-kit-sample.mjs --check && npm run test:unit",
     "ci": "npm run check && npm test",
     "test": "playwright test",
@@ -65,5 +71,9 @@
     "stylelint": "17.13.0",
     "stylelint-config-standard": "40.0.0",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
   }
 }
