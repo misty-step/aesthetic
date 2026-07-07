@@ -1,3 +1,9 @@
+# [2.22.0](https://github.com/misty-step/aesthetic/compare/v2.21.0...v2.22.0) (2026-07-07)
+
+### Features
+
+- **design:** mobile-first is law; audit fleet at 390px (aesthetic-928) ([f78d9c1](https://github.com/misty-step/aesthetic/commit/f78d9c11c534c4ec70e8c5d055f6ce39e47a16c7))
+
 # [2.21.0](https://github.com/misty-step/aesthetic/compare/v2.20.0...v2.21.0) (2026-07-06)
 
 ### Features
