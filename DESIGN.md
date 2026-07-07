@@ -50,6 +50,28 @@ glows, nothing floats, nothing bounces.
   change itself is quick and interruptible: the toggle never disables,
   and a second click cuts the in-flight animation instead of waiting.
 
+## Mobile-first is law
+
+Design and preview at 390px first; desktop is the enhancement, never the
+baseline. This is an invariant, not a dial.
+
+- Every surface is authored for a 390px viewport before it is authored for
+  anything wider. A view that only works past some breakpoint is unshipped,
+  not "responsive later."
+- Rails collapse to header/bottom chrome below the `md` breakpoint
+  (`.ae-shell`'s `.ae-rail` becomes bottom chrome) — never a hidden drawer,
+  so places stay reachable without JavaScript state.
+- No horizontal body scroll, ever, at any width. A surface with
+  `document.documentElement.scrollWidth > window.innerWidth` at 390px is
+  broken, full stop — not a follow-up.
+- Lab and design-review previews (variation fans, test fixtures, the
+  playground harness) default their viewport to 390px; a preview that needs
+  a wider width opts up explicitly and says why, the same way a component
+  opts up out of the one-size-per-surface default. `playwright.config.ts`'s
+  shared `use.viewport` carries this default for every test in the repo.
+
+Fleet-wide audit against this law: `docs/MOBILE-AUDIT.md`.
+
 ## The volume knob
 
 Steering has two strata. **Invariants** are never steered: one size

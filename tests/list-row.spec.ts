@@ -12,6 +12,11 @@ for (const mode of MODES) {
   test(`.ae-list-row fixture · ${mode} · the law holds`, async ({ page }) => {
     const errors = collectConsoleErrors(page);
 
+    // Desktop fielded-row layout is the case under test here (the mobile
+    // single-column collapse is asserted separately in mobile.spec.ts); the
+    // default preview viewport is mobile-first, so this desktop assertion
+    // opts up explicitly.
+    await page.setViewportSize({ width: 1280, height: 800 });
     await page.addInitScript((m: string) => {
       localStorage.setItem('ae-mode', m);
     }, mode);

@@ -11,6 +11,7 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'list',
   use: {
     baseURL: 'http://127.0.0.1:8642',
+    viewport: { width: 390, height: 844 },
   },
   webServer: {
     command: 'python3 -m http.server 8642 --bind 127.0.0.1',
