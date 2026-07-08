@@ -1,3 +1,9 @@
+## Version reset: 2.24.0 → 0.24.0 (2026-07-08)
+
+Fleet moved to pre-stable 0.x semantics (Powder landmark-016/017).
+`v0.24.0` is the same tree as `v2.24.0`. Old version tags are retired;
+already-published pages keep working off the jsdelivr permanent cache.
+
 # [2.24.0](https://github.com/misty-step/aesthetic/compare/v2.23.0...v2.24.0) (2026-07-07)
 
 ### Features
