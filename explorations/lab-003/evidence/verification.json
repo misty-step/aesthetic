@@ -1,0 +1,1947 @@
+{
+  "generatedAt": "2026-07-09T23:18:59.764Z",
+  "base": "http://127.0.0.1:8127/explorations/lab-003",
+  "registry": {
+    "total": 14,
+    "baseline": 1,
+    "raw": 18,
+    "retained": 13,
+    "lanes": 6
+  },
+  "cases": [
+    {
+      "id": "BASE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "MIN-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "MIN-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Notes"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "SOFT-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "SOFT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Field"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Datum Press"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Watch"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "BRUT-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "BRUT-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Service Book"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "ANTH-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "ANTH-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Night Index"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "HALL-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "HALL-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Field Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-1",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-2",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Chromatic Relay"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "light",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    },
+    {
+      "id": "IMP-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "IMP-3",
+          "mode": "dark",
+          "sections": 6,
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Instrument"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1
+      },
+      "errors": []
+    }
+  ],
+  "passed": 84,
+  "failures": []
+}
