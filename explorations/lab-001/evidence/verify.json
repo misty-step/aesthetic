@@ -1,0 +1,799 @@
+{
+  "generated_at": "2026-07-09T20:44:28.317Z",
+  "lab_url": "http://127.0.0.1:8124/explorations/lab-001/",
+  "option_count": 6,
+  "options": [
+    {
+      "id": "BASE-1",
+      "title": "Shipped shell",
+      "move": "Persistent desktop place rail becomes horizontally scrolling bottom chrome on phone."
+    },
+    {
+      "id": "TASTE-2",
+      "title": "Object-First Work Spine",
+      "move": "Inverts place-first navigation: the work remains primary while a right-edge object spine becomes a top object strip on phones."
+    },
+    {
+      "id": "MIN-2",
+      "title": "Object folio",
+      "move": "Objects replace destinations in a right-edge folio that folds into bottom keys on phones."
+    },
+    {
+      "id": "BRUT-2",
+      "title": "Object Conveyor",
+      "move": "A bottom object manifest becomes a left thumb rail on phones, reversing the usual desktop-side/mobile-bottom chrome."
+    },
+    {
+      "id": "ANTH-1",
+      "title": "Object path",
+      "move": "Remove global chrome; the selected object is reached through a centered breadcrumb ledger."
+    },
+    {
+      "id": "ANTH-2",
+      "title": "Command history",
+      "move": "Make command search the only global wayfinding; keep only contextual back and forward history visible."
+    }
+  ],
+  "cases": 48,
+  "passed": true,
+  "focus_indicator": {
+    "outlineStyle": "solid",
+    "outlineWidth": "2px",
+    "outlineColor": "rgb(38, 67, 208)"
+  },
+  "console_errors": [],
+  "results": [
+    {
+      "option": "BASE-1",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "crucible",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "powder",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "flask-conical"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "crucible",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "BASE-1",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "MIN-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "BRUT-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": [],
+        "mark": "snowflake"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "app": "powder",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844,
+        "radii": [],
+        "oversized": []
+      }
+    }
+  ]
+}

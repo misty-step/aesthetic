@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aesthetic LAB 001 · fleet navigation spine</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <div class="lab-shell">
+      <header class="lab-topbar">
+        <div>
+          <b>AESTHETIC LAB 001</b
+          ><span class="lab-muted">FLEET NAVIGATION SPINE · ROUND 1</span>
+        </div>
+        <div class="lab-controls">
+          <label
+            >viewport
+            <select id="viewport">
+              <option value="fit">fit</option>
+              <option value="1440x900">1440×900</option>
+              <option value="1280x800">1280×800</option>
+              <option value="1024x768">1024×768</option>
+              <option value="768x1024">tablet 768×1024</option>
+              <option value="390x844">phone 390×844</option>
+            </select></label
+          >
+          <label class="lab-custom"
+            ><input
+              id="width"
+              inputmode="numeric"
+              aria-label="Custom viewport width" />
+            ×
+            <input
+              id="height"
+              inputmode="numeric"
+              aria-label="Custom viewport height"
+          /></label>
+          <div
+            class="lab-segment"
+            role="group"
+            aria-label="Application content"
+          >
+            <button type="button" data-app="crucible">Crucible</button
+            ><button type="button" data-app="powder">Powder</button>
+          </div>
+          <button id="mode" type="button">mode: light</button>
+        </div>
+      </header>
+      <aside class="lab-sidebar">
+        <div class="lab-summary">
+          <p class="lab-muted">6 OPTIONS · 4 BLIND LANES · 3 RESKINS DEDUPED</p>
+          <p>
+            Arrow keys move. Every screen carries the same real app snapshot;
+            only the navigation spine changes.
+          </p>
+        </div>
+        <ol id="registry"></ol>
+      </aside>
+      <main class="lab-stage">
+        <div id="readout" class="lab-readout"></div>
+        <div id="viewport-frame" class="lab-viewport">
+          <iframe id="screen" title="Selected navigation option"></iframe>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="app.js?v=2"></script>
+  </body>
+</html>
