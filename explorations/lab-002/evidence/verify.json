@@ -1,0 +1,1338 @@
+{
+  "generated_at": "2026-07-09T22:31:38.930Z",
+  "lab_url": "http://127.0.0.1:8125/explorations/lab-002/",
+  "option_count": 16,
+  "raw_candidate_count": 18,
+  "candidate_count": 15,
+  "lanes": {
+    "MIN": 3,
+    "IMP": 3,
+    "TASTE": 3,
+    "ANTH": 3,
+    "SOFT": 3,
+    "HALL": 3
+  },
+  "options": [
+    {
+      "id": "BASE-1",
+      "title": "Shipped gallery",
+      "move": "The current 2.24.0 gallery, unchanged.",
+      "family": "baseline"
+    },
+    {
+      "id": "MIN-3",
+      "title": "The Indexed Reading Room",
+      "move": "Add a derived contents rail and let the canonical groups read as long-form chapters.",
+      "family": "reference reading room"
+    },
+    {
+      "id": "IMP-1",
+      "title": "The calibration field",
+      "move": "Keep the canonical gallery map and optically calibrate every plate, edge, focus, and selection state.",
+      "family": "Optical calibration"
+    },
+    {
+      "id": "IMP-2",
+      "title": "The reading room",
+      "move": "Arrange categories as an asymmetric reading room of compact specimen bands.",
+      "family": "Ruled reading room"
+    },
+    {
+      "id": "IMP-3",
+      "title": "State before source",
+      "move": "Promote every existing state matrix ahead of source and mark state-proven primitives in the canonical overview.",
+      "family": "State-proof gallery"
+    },
+    {
+      "id": "TASTE-1",
+      "title": "The Indexed Atlas",
+      "move": "Turn each taxonomy band into a ruled index row with one lead specimen and a tight supporting field.",
+      "family": "editorial atlas"
+    },
+    {
+      "id": "TASTE-2",
+      "title": "The Instrument Ledger",
+      "move": "Compress the catalog into numbered horizontal specimen records beneath full-width ruled chapter labels.",
+      "family": "instrument ledger"
+    },
+    {
+      "id": "TASTE-3",
+      "title": "The Six Rooms",
+      "move": "Stage each family as an alternating exhibition room with a dominant threshold plate and an asymmetric twelve-column wall.",
+      "family": "curatorial rooms"
+    },
+    {
+      "id": "ANTH-1",
+      "title": "The focus aperture",
+      "move": "Keep the complete gallery in a compact index while a sticky aperture magnifies the specimen under hover or keyboard focus.",
+      "family": "focus-and-context atlas"
+    },
+    {
+      "id": "ANTH-2",
+      "title": "Six specimen drawers",
+      "move": "Stand the six canonical families beside one another as narrow, vertically scanned drawers.",
+      "family": "comparative cabinet"
+    },
+    {
+      "id": "ANTH-3",
+      "title": "The field atlas",
+      "move": "Compose the existing families as unequal atlas plates whose spans follow their actual content depth.",
+      "family": "asymmetric field atlas"
+    },
+    {
+      "id": "SOFT-2",
+      "title": "The Instrument Library",
+      "move": "Recompose persistent chrome as a desktop library rail and make every category a labelled run of horizontal specimen records.",
+      "family": "library-rail"
+    },
+    {
+      "id": "SOFT-3",
+      "title": "The Precision Mat",
+      "move": "Seat the complete gallery in spacious square wash mats, using nested hairlines and exact responsive grids to create soft depth without cropping or ornament.",
+      "family": "soft-precision"
+    },
+    {
+      "id": "HALL-1",
+      "title": "The Reference Ledger",
+      "move": "Fix the gallery thesis as a left-hand reading rail while the complete catalogue advances as a ruled, single-column ledger.",
+      "family": "editorial ledger"
+    },
+    {
+      "id": "HALL-2",
+      "title": "The Continuous Atlas",
+      "move": "Turn each primitive family into a horizontal chapter band, with the family name occupying a narrow index column and its live specimens forming a continuous contact sheet.",
+      "family": "chaptered atlas"
+    },
+    {
+      "id": "HALL-3",
+      "title": "The Working Index",
+      "move": "Reorder the overview around practical use, then compose a dense three-column workbench whose wider lead plates interrupt the scan at deliberate intervals.",
+      "family": "operational workbench"
+    }
+  ],
+  "cases": 64,
+  "passed": true,
+  "focus_indicator": {
+    "outlineStyle": "solid",
+    "outlineWidth": "2px"
+  },
+  "console_errors": [],
+  "results": [
+    {
+      "option": "BASE-1",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "BASE-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "MIN-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "MIN-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-1",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-2",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-1",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "SOFT-2",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "SOFT-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-1",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-2",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-3",
+      "viewport": "390x844",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "BASE-1",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "BASE-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "MIN-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "MIN-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-1",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-2",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-1",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "SOFT-2",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "SOFT-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-1",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-2",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-3",
+      "viewport": "390x844",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "height": 793,
+        "scrollWidth": 390,
+        "bodyScrollWidth": 390,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "BASE-1",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "BASE-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "MIN-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "MIN-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-1",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-2",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "IMP-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-1",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "TASTE-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "ANTH-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "SOFT-2",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "SOFT-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-1",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-1",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-2",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-2",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "HALL-3",
+      "viewport": "1440x900",
+      "mode": "light",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-3",
+        "mode": "light"
+      }
+    },
+    {
+      "option": "BASE-1",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "BASE-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "MIN-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "MIN-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-1",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-2",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "IMP-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "IMP-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-1",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-2",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "TASTE-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "TASTE-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-1",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-2",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "ANTH-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "ANTH-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "SOFT-2",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "SOFT-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "SOFT-3",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-1",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-1",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-2",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-2",
+        "mode": "dark"
+      }
+    },
+    {
+      "option": "HALL-3",
+      "viewport": "1440x900",
+      "mode": "dark",
+      "pass": true,
+      "metrics": {
+        "width": 1440,
+        "height": 860,
+        "scrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "cards": 34,
+        "routes": 35,
+        "visibleViews": 1,
+        "nonzeroRadii": [],
+        "oversized": [],
+        "option": "HALL-3",
+        "mode": "dark"
+      }
+    }
+  ]
+}

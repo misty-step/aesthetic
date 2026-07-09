@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aesthetic LAB 002 · whole-system refinement</title>
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
+  <body>
+    <div class="lab-shell">
+      <header class="lab-topbar">
+        <div class="lab-title">
+          <b>AESTHETIC LAB 002</b>
+          <span class="ae-dim">WHOLE-SYSTEM REFINEMENT · ROUND 1</span>
+        </div>
+        <div class="lab-controls">
+          <label
+            >viewport
+            <select id="viewport">
+              <option value="fit">fit</option>
+              <option value="1440x900">1440×900</option>
+              <option value="1280x800">1280×800</option>
+              <option value="1024x768">1024×768</option>
+              <option value="768x1024">tablet 768×1024</option>
+              <option value="390x844">phone 390×844</option>
+            </select>
+          </label>
+          <label class="lab-custom">
+            <input
+              id="width"
+              inputmode="numeric"
+              aria-label="Custom viewport width"
+            />
+            ×
+            <input
+              id="height"
+              inputmode="numeric"
+              aria-label="Custom viewport height"
+            />
+          </label>
+          <button id="mode" type="button">mode: light</button>
+        </div>
+      </header>
+      <aside class="lab-sidebar">
+        <div class="lab-summary">
+          <p class="ae-chrome">
+            15 RETAINED · 18 RAW · 6 BLIND LANES · SHIPPED BASELINE
+          </p>
+          <p>
+            Every option reuses the complete live primitive gallery. Arrow keys
+            move; press <kbd>F</kbd> to focus the preview.
+          </p>
+        </div>
+        <ol id="registry" aria-label="Design propositions"></ol>
+      </aside>
+      <main class="lab-stage">
+        <div id="readout" class="lab-readout" aria-live="polite"></div>
+        <div id="viewport-frame" class="lab-viewport">
+          <iframe
+            id="screen"
+            title="Selected whole-system proposition"
+          ></iframe>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="app.js?v=1"></script>
+  </body>
+</html>
