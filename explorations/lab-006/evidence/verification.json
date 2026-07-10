@@ -1,0 +1,109 @@
+{
+  "cases": [
+    {
+      "view": "studio",
+      "mode": "light",
+      "width": 390,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "work",
+      "mode": "light",
+      "width": 390,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "studio",
+      "mode": "dark",
+      "width": 390,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "work",
+      "mode": "dark",
+      "width": 390,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "studio",
+      "mode": "light",
+      "width": 1440,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "work",
+      "mode": "light",
+      "width": 1440,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "studio",
+      "mode": "dark",
+      "width": 1440,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    },
+    {
+      "view": "work",
+      "mode": "dark",
+      "width": 1440,
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "laws": {
+        "size": [],
+        "radius": []
+      }
+    }
+  ],
+  "failures": []
+}
