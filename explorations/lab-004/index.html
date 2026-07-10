@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aesthetic Lab 004 · Closer Futures</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="lab-shell">
+      <header>
+        <div>
+          <span class="mark">MS</span>
+          <div>
+            <small>AESTHETIC LAB 004 · ROUND 2</small>
+            <h1>Closer Misty Step futures</h1>
+          </div>
+        </div>
+        <div class="controls">
+          <label
+            >Viewport<select id="viewport">
+              <option value="fit">Fit</option>
+              <option value="1440x900">1440 × 900</option>
+              <option value="1024x768">1024 × 768</option>
+              <option value="768x1024">768 × 1024</option>
+              <option value="390x844">390 × 844</option>
+            </select></label
+          ><button id="mode">Dark</button>
+        </div>
+      </header>
+      <aside>
+        <div class="brief">
+          <b>Fixed substrate</b>
+          <p>React · shadcn registry · Base UI behavior</p>
+          <b>Variable language</b>
+          <p>
+            Register balance, density, action anatomy, hierarchy, composition.
+          </p>
+        </div>
+        <nav id="registry"></nav>
+      </aside>
+      <section class="stage">
+        <div id="viewport-shell">
+          <iframe id="preview" title="Selected design-system future"></iframe>
+        </div>
+        <div class="caption">
+          <div><b id="caption-title"></b><span id="caption-meta"></span></div>
+          <p id="caption-copy"></p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

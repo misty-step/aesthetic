@@ -1,0 +1,143 @@
+/* Current Misty Step invariants override exploratory component CSS. */
+.future-root *,
+.future-root *::before,
+.future-root *::after {
+  border-radius: 0 !important;
+}
+.badge,
+.badge.accent,
+.badge.success,
+.badge.warning,
+.badge.danger,
+.badge.neutral {
+  gap: 0.32rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+.badge .icon,
+.status-glyph .icon {
+  width: 0.82rem;
+  height: 0.82rem;
+}
+.badge.accent .icon,
+.status-glyph.accent {
+  color: var(--accent);
+}
+.badge.success .icon,
+.status-glyph.success {
+  color: var(--success);
+}
+.badge.warning .icon,
+.status-glyph.warning {
+  color: var(--warning);
+}
+.badge.danger .icon,
+.status-glyph.danger {
+  color: var(--danger);
+}
+.status-glyph {
+  display: inline-grid;
+  place-items: center;
+  margin-right: 0.35rem;
+  vertical-align: -0.12rem;
+}
+.btn.is-loading::before,
+.state-row.is-loading .btn::before {
+  content: none;
+  animation: none;
+}
+.loading-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  height: 0.75rem;
+}
+.loading-mark i {
+  width: 0.18rem;
+  height: 0.18rem;
+  border: 1px solid currentColor;
+  background: currentColor;
+}
+.future-root[data-id^='R2MIN'] .loading-mark i:nth-child(2) {
+  width: 0.45rem;
+}
+.future-root[data-id^='R2TASTE'] .loading-mark {
+  align-self: stretch;
+  border-bottom: 2px solid var(--accent);
+}
+.future-root[data-id^='R2RED'] .loading-mark i {
+  width: 0.55rem;
+  height: 1px;
+}
+.future-root[data-id^='R2ANTH'] .loading-mark {
+  padding: 0 0.2rem;
+  border-left: 2px solid var(--accent);
+  border-right: 1px solid currentColor;
+}
+.future-root[data-id^='R2HALL'] .loading-mark {
+  flex-direction: column;
+  justify-content: center;
+}
+.future-root[data-id^='R2IMP'] .loading-mark i {
+  width: 0.12rem;
+  height: 0.65rem;
+}
+.spinner,
+.is-loading::before,
+.motion-demo i {
+  animation-iteration-count: 1 !important;
+}
+.focus-components {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+  max-width: 100vw !important;
+}
+.focus-components .system-bar,
+.focus-components .future-nav,
+.focus-components .section:not(#components),
+.focus-components footer {
+  display: none;
+}
+.focus-components .future-scroll {
+  overflow: visible;
+}
+.focus-components .future-content {
+  width: 100%;
+  padding: 1rem;
+  max-width: 100vw !important;
+  overflow-x: clip;
+}
+.focus-components #components {
+  padding: 0;
+}
+.focus-components .component-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.focus-components .specimen {
+  display: block !important;
+  min-width: 0 !important;
+  min-height: 9rem;
+  grid-column: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 620px) {
+  .focus-components .future-content {
+    padding: 0.5rem;
+  }
+  .focus-components .component-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .focus-components .specimen {
+    min-height: 8rem;
+  }
+}
