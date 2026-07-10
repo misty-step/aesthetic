@@ -1,0 +1,227 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+/*
+ * Lane C glue — the entire cost of wiring Base UI anatomy to the
+ * shipped aesthetic.css. Every rule here is a finding: it exists
+ * because a kit costume is element-qualified (dialog.ae-dialog), or
+ * assumes native popover positioning (.ae-pop), or because the
+ * self-hosted variable fonts register under a different family name.
+ * Page-level layout below is ordinary consumer CSS, not glue.
+ */
+
+/* fontsource registers 'Geist Variable'; the kit asks for 'Geist'. */
+:root {
+  --ae-font:
+    'Geist Variable', 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ae-font-mono:
+    'Geist Mono Variable', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+}
+
+/* dialog.ae-dialog is element-qualified and centers via the native
+   <dialog> UA styles; Base UI renders a div, so the costume is
+   restated for its popup + backdrop. */
+.aeb-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 40;
+  border: 0;
+  background: var(--ae-surface);
+  color: var(--ae-ink);
+  width: min(26em, calc(100vw - 3em));
+  box-sizing: border-box;
+  padding: var(--ae-space-6);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 12px 36px rgba(0, 0, 0, 0.09);
+  outline: none;
+}
+
+.aeb-dialog[data-open] {
+  animation: ae-enter var(--ae-soft) var(--ae-ease) both;
+}
+
+.aeb-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  background: rgba(252, 252, 252, 0.4);
+}
+
+:root.dark .aeb-dialog {
+  background: var(--ae-wash);
+  box-shadow: none;
+}
+
+:root.dark .aeb-backdrop {
+  background: rgba(18, 18, 18, 0.4);
+}
+
+/* .ae-pop assumes the native popover top layer (position: fixed on
+   itself); under Base UI the positioner owns geometry, so the slip
+   costume is restated minus positioning. */
+.aeb-pop {
+  border: 1px solid var(--ae-line);
+  background: var(--ae-surface);
+  color: var(--ae-ink);
+  width: max-content;
+  max-width: 22em;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.06);
+  outline: none;
+}
+
+.aeb-pop[data-open] {
+  animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+}
+
+.aeb-pop .ae-menu {
+  margin: 0;
+  border: 0;
+}
+
+:root.dark .aeb-pop {
+  background: var(--ae-wash);
+  box-shadow: none;
+}
+
+/* Base UI triggers render real <button>s; without Tailwind's preflight
+   the UA button chrome leaks through. aesthetic.css assumes inline
+   status marks, so the trigger is undressed here. */
+button.ae-status {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+/* [data-ae-tip] is a CSS-only ::after; Base UI renders a real element,
+   so the whisper costume is restated as a class. */
+.aeb-tip {
+  background: var(--ae-surface);
+  color: var(--ae-ink-muted);
+  border: 1px solid var(--ae-line);
+  font-size: 13px;
+  font-weight: var(--ae-w-regular);
+  line-height: 1.5;
+  padding: 0.25em 0.7em;
+  white-space: nowrap;
+  animation: ae-enter var(--ae-quick) var(--ae-ease) both;
+}
+
+:root.dark .aeb-tip {
+  background: var(--ae-wash);
+}
+
+/* ---- page-level CSS (ordinary consumer work, not glue) ---- */
+
+.c-kicker {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ae-ink-muted);
+}
+
+.c-headline {
+  font-size: inherit;
+  font-weight: var(--ae-w-black);
+  max-width: 26ch;
+  margin: 0;
+}
+
+.c-lede {
+  max-width: 52ch;
+}
+
+.c-view {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+  outline: none;
+}
+
+.c-offer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.4em;
+}
+
+.c-rows {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.c-row {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.15em 0.9em;
+  padding: 0.8em 0;
+  color: inherit;
+  text-decoration: none;
+  border-top: 1px solid var(--ae-line);
+}
+
+.c-row:first-child {
+  border-top: 0;
+}
+
+.c-row:hover {
+  background: var(--ae-wash);
+}
+
+.c-row-mark {
+  font-family: var(--ae-font-mono);
+  font-size: 13px;
+  color: var(--ae-ink-muted);
+}
+
+.c-row-name {
+  font-weight: var(--ae-w-medium);
+}
+
+.c-row-desc {
+  grid-column: 2;
+  color: var(--ae-ink-muted);
+}
+
+@media (min-width: 48rem) {
+  .c-row {
+    grid-template-columns: 2.5rem 10rem minmax(0, 1fr);
+  }
+
+  .c-row-desc {
+    grid-column: 3;
+  }
+}
+
+.c-plate {
+  margin-top: auto;
+  border-top: 1px solid var(--ae-line);
+  padding-block: 1em;
+}
+
+.c-plate ul {
+  list-style: none;
+  margin: 0.9em 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.6em;
+}
+
+.c-mail {
+  color: var(--ae-accent);
+}

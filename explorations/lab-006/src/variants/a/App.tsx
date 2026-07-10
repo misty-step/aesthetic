@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Moon, Sun, SwatchBook } from 'lucide-react';
 import {
-  CircleCheck,
-  CircleDashed,
-  CircleX,
-  Clock,
-  Moon,
-  Sun,
-  SwatchBook,
-  TriangleAlert,
-} from 'lucide-react';
+  accents,
+  dialogCopy,
+  footer,
+  projects,
+  statuses,
+  studio,
+  work,
+} from '@/shared/content';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -33,71 +33,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-
-const projects = [
-  [
-    'RS',
-    'roster',
-    'the agent registry: identities, prompts, model policy, and harness materialization',
-  ],
-  [
-    'BB',
-    'bitterblossom',
-    'event plane for agent workloads: tasks, triggers, budgets, and remote runs',
-  ],
-  [
-    'PW',
-    'powder',
-    'agent-friendly backlog and kanban board for cards, claims, runs, and handoffs',
-  ],
-  [
-    'CN',
-    'canary',
-    'agent-facing observability for errors, health probes, and incident context',
-  ],
-  [
-    'LM',
-    'landmark',
-    'release intelligence from commits to changelogs, notes, plans, and evidence',
-  ],
-] as const;
-
-/* Status rides the glyph: hue on the Lucide mark only, labels stay ink.
-   Pending and unknown carry no judgment, so they carry no hue. */
-const statuses = [
-  {
-    label: 'healthy',
-    Icon: CircleCheck,
-    tone: 'text-ok',
-    note: 'All probes green for 14 days.',
-  },
-  {
-    label: 'attention',
-    Icon: TriangleAlert,
-    tone: 'text-warn',
-    note: 'One probe degraded since 09:12.',
-  },
-  {
-    label: 'failed',
-    Icon: CircleX,
-    tone: 'text-err',
-    note: 'Deploy 4818 rolled back at 07:03.',
-  },
-  {
-    label: 'pending',
-    Icon: Clock,
-    tone: 'text-muted-foreground',
-    note: 'Verification queued behind 2 runs.',
-  },
-  {
-    label: 'unknown',
-    Icon: CircleDashed,
-    tone: 'text-muted-foreground/60',
-    note: 'No probe has reported yet.',
-  },
-] as const;
-
-const accents = ['ultramarine', 'moss', 'ember', 'violet'] as const;
 
 function StatusPlate() {
   return (
@@ -127,41 +62,36 @@ function Studio() {
     <section className="flex h-full flex-col">
       <div className="flex flex-1 flex-col justify-center gap-5 py-6">
         <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-          Software consulting · agentic systems
+          {studio.kicker}
         </p>
-        <h1 className="max-w-[26ch] font-bold">
-          You know AI could help. We know where to start.
-        </h1>
-        <p className="max-w-[52ch] text-muted-foreground">
-          We look at how your company actually runs, from operations to product
-          to support, and show you where AI pays off. The conversation is free,
-          and you leave with a plan either way.
-        </p>
+        <h1 className="max-w-[26ch] font-bold">{studio.headline}</h1>
+        <p className="max-w-[52ch] text-muted-foreground">{studio.lede}</p>
         <Dialog>
           <DialogTrigger
-            render={<Button className="self-start">Let's talk</Button>}
+            render={<Button className="self-start">{studio.action}</Button>}
           />
           <DialogContent className="sm:max-w-sm">
             <DialogHeader>
-              <DialogTitle>Let's talk</DialogTitle>
-              <DialogDescription>
-                A one-hour working session on where AI pays off in your company.
-                Free, and you leave with a plan either way.
-              </DialogDescription>
+              <DialogTitle>{dialogCopy.title}</DialogTitle>
+              <DialogDescription>{dialogCopy.description}</DialogDescription>
             </DialogHeader>
             <p>
               Write to{' '}
               <a
                 className="text-primary underline underline-offset-4"
-                href="mailto:hello@mistystep.io"
+                href={`mailto:${dialogCopy.email}`}
               >
-                hello@mistystep.io
+                {dialogCopy.email}
               </a>{' '}
-              with a sentence about your company. We reply within a day.
+              {dialogCopy.body}
             </p>
             <DialogFooter>
               <Button
-                render={<a href="mailto:hello@mistystep.io">Start the email</a>}
+                render={
+                  <a href={`mailto:${dialogCopy.email}`}>
+                    {dialogCopy.confirm}
+                  </a>
+                }
               />
             </DialogFooter>
           </DialogContent>
@@ -177,12 +107,10 @@ function Work() {
     <section className="flex h-full min-h-0 flex-col gap-5 pt-6 md:pt-14">
       <header className="flex flex-col gap-2">
         <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-          Selected work
+          {work.kicker}
         </p>
-        <h1 className="font-bold">Factory systems.</h1>
-        <p className="max-w-[52ch] text-muted-foreground">
-          Operational software for agents and the people responsible for them.
-        </p>
+        <h1 className="font-bold">{work.headline}</h1>
+        <p className="max-w-[52ch] text-muted-foreground">{work.lede}</p>
       </header>
       <div className="min-h-0 overflow-y-auto">
         {projects.map(([mark, name, desc], i) => (
@@ -247,10 +175,8 @@ export default function App() {
       </main>
 
       <footer className="flex items-center justify-between border-t px-4 py-2 text-xs text-muted-foreground md:px-10">
-        <span className="hidden sm:inline">
-          GitHub · hello@mistystep.io · privacy
-        </span>
-        <span className="sm:hidden">hello@mistystep.io</span>
+        <span className="hidden sm:inline">{footer.links}</span>
+        <span className="sm:hidden">{footer.short}</span>
         <span className="flex items-center gap-1">
           <DropdownMenu>
             <DropdownMenuTrigger

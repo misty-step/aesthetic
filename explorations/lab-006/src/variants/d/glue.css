@@ -1,0 +1,28 @@
+/*
+ * Lane D glue — the coexistence cost of aesthetic.css pages with stock
+ * shadcn floats in one document. Kept separate so the price is
+ * countable. Page-level classes are shared with lane C via c/glue.css's
+ * page section being duplicated here only where needed.
+ */
+
+/* fontsource registers 'Geist Variable'; the kit asks for 'Geist'. */
+:root {
+  --ae-font:
+    'Geist Variable', 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ae-font-mono:
+    'Geist Mono Variable', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+}
+
+/* Tailwind's preflight resets margins that aesthetic.css's typographic
+   rhythm assumes on plain prose inside the stage. Restore the ones the
+   two pages use. */
+.ae-stage p {
+  margin-block: 0;
+}
+
+/* Buttons are not links: aesthetic.css's content-link underline bleeds
+   into shadcn buttons rendered as anchors inside the floats. */
+[data-slot='button'] {
+  text-decoration: none;
+}

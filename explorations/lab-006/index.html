@@ -4,10 +4,55 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>lab-006 · misty step on shadcn/Base UI</title>
+    <title>lab-006 · adoption catalog · aesthetic on shadcn/Base UI</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/catalog.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <header>
+      <h1>Lab 006 — adoption catalog</h1>
+      <p>
+        One identity, five ways to marry it to shadcn/Base UI. Content and
+        tokens fixed; only the substrate strategy varies.
+      </p>
+    </header>
+    <div class="frame">
+      <nav id="registry" aria-label="Adoption lanes"></nav>
+      <div class="stage">
+        <div class="stage-bar">
+          <span id="lane-note"></span>
+          <span class="sizes" id="sizes">
+            <button data-size="390x844">390</button>
+            <button data-size="1024x768">1024</button>
+            <button data-size="fit" class="active">fit</button>
+          </span>
+        </div>
+        <div class="well">
+          <div class="shell" id="shell">
+            <iframe id="preview" title="lane preview"></iframe>
+          </div>
+          <div class="note" id="doc-note" hidden>
+            <p>
+              Lane E is a distribution strategy, not a rendered surface: the
+              aesthetic publishes its own shadcn registry so consumers run
+              <code>npx shadcn add</code> against
+              <code>aesthetic.mistystep.io/r/…</code> and own the code from
+              there. It builds on the per-primitive registry ticket (backlog
+              019). The full comparison matrix lives in
+              <a href="./ADOPTION.md">ADOPTION.md</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/catalog.js"></script>
   </body>
 </html>
