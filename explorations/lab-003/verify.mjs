@@ -62,6 +62,17 @@ for (const spec of specs) {
         inner: innerWidth,
         overflow: document.documentElement.scrollWidth - innerWidth,
         root: document.querySelectorAll('.future-root').length,
+        regions: document.querySelectorAll('.section[data-region][data-index]')
+          .length,
+        leakedCode: document.body.textContent.includes("+icon('chevron')+"),
+        brutRegion: (() => {
+          const region = document.querySelector('.section[data-index="01"]');
+          if (!region) return null;
+          return {
+            border: getComputedStyle(region).borderInlineStartWidth,
+            folio: getComputedStyle(region, '::before').content,
+          };
+        })(),
       }));
       const pass =
         metric.ready?.id === spec.id &&
@@ -74,6 +85,11 @@ for (const spec of specs) {
         metric.inner === width &&
         metric.overflow <= 1 &&
         metric.root === 1 &&
+        metric.regions === 6 &&
+        !metric.leakedCode &&
+        (spec.id !== 'BRUT-1' ||
+          (metric.brutRegion?.border !== '0px' &&
+            metric.brutRegion?.folio.includes('01'))) &&
         !errors.length;
       cases.push({ id: spec.id, width, height, mode, pass, metric, errors });
       if (!pass)

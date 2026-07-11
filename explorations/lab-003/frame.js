@@ -230,7 +230,7 @@ const html = `<main class="future-root lab-stage lab-spec layout-${spec.layout} 
     <section id="motion" class="section"><header class="section-title"><span>04</span><div><h2>Motion grammar</h2><p>Purposeful transitions with a complete reduced-motion path.</p></div></header><div class="motion-grid"><article><div class="motion-demo enter"><i></i></div><h3>Enter</h3><p>Reveal hierarchy, never decorate.</p><code>opacity · translate</code></article><article><div class="motion-demo select"><i></i></div><h3>Selection</h3><p>Track direct manipulation.</p><code>color · position</code></article><article><div class="motion-demo disclose"><i></i></div><h3>Disclosure</h3><p>Preserve spatial continuity.</p><code>clip · scale</code></article><article><div class="motion-demo resolve"><i></i></div><h3>Resolution</h3><p>Confirm a state change once.</p><code>stroke · opacity</code></article></div></section>
     <section id="compositions" class="section"><header class="section-title"><span>05</span><div><h2>Composition stress test</h2><p>The same system across four neutral product archetypes.</p></div></header><div class="composition-grid">
       <article class="composition dashboard"><header><span>Operations overview</span><button>${icon('dots')}</button></header><div class="comp-kpis"><div><b>99.98%</b><small>availability</small></div><div><b>184ms</b><small>response</small></div><div><b>7</b><small>active signals</small></div></div><div class="chart"><i></i></div></article>
-      <article class="composition settings"><header><span>Workspace settings</span><button class="btn primary">Save</button></header><label class="field"><span>Display name</span><input value="North observatory"></label><label class="field"><span>Default region</span><button class="select-trigger">Chicago '+icon('chevron')+'</button></label><label class="switch-row"><span><b>Public reports</b><small>Share read-only evidence</small></span><button class="switch"><i></i></button></label></article>
+      <article class="composition settings"><header><span>Workspace settings</span><button class="btn primary">Save</button></header><label class="field"><span>Display name</span><input value="North observatory"></label><label class="field"><span>Default region</span><button class="select-trigger">Chicago ${icon('chevron')}</button></label><label class="switch-row"><span><b>Public reports</b><small>Share read-only evidence</small></span><button class="switch"><i></i></button></label></article>
       <article class="composition document"><div class="doc-meta">REPORT / 0142</div><h3>Delivery evidence</h3><p>The release completed across all active regions. Two delayed probes recovered within the acceptance window.</p><blockquote>“The artifact should explain itself without the conversation that produced it.”</blockquote><div class="doc-sign"><span>Verified</span><b>09 JUL 2026</b></div></article>
       <article class="composition workbench"><header><span>Evidence queue</span><span class="badge accent">24 open</span></header><div class="work-rows">${[
         ['API regression', 'Critical', '4m'],
@@ -255,9 +255,11 @@ const html = `<main class="future-root lab-stage lab-spec layout-${spec.layout} 
 
 document.documentElement.dataset.mode = mode;
 document.getElementById('mount').innerHTML = html;
-document
-  .querySelectorAll('.section')
-  .forEach((element) => element.classList.add('future-section'));
+document.querySelectorAll('.section').forEach((element, index) => {
+  element.classList.add('future-section');
+  element.dataset.region = element.id;
+  element.dataset.index = String(index + 1).padStart(2, '0');
+});
 document
   .querySelectorAll('.section-title')
   .forEach((element) =>
