@@ -1,0 +1,1290 @@
+/* LAB 007 gallery glue. Base UI owns behavior; these rules only compose the
+   established palette, registers, hairlines, and viewport archetypes. */
+
+:root {
+  --gallery-rail: 15rem;
+  --gallery-gutter: 1.4rem;
+  --gallery-gap: 1rem;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+button,
+input,
+summary {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.gallery-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.gallery-topbar,
+.gallery-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem var(--gallery-gutter);
+  border-bottom: 1px solid var(--border);
+}
+
+.gallery-topbar {
+  min-height: 3.25rem;
+}
+
+.gallery-footer {
+  border-top: 1px solid var(--border);
+  border-bottom: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.gallery-brand,
+.gallery-top-actions,
+.gallery-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.gallery-brand {
+  font-weight: 550;
+  letter-spacing: 0.02em;
+}
+
+.gallery-brand svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.gallery-brand em {
+  color: var(--muted-foreground);
+  font-style: normal;
+}
+
+.gallery-top-actions > span {
+  color: var(--muted-foreground);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.gallery-main {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--gallery-rail) minmax(0, 1fr);
+  min-height: 0;
+}
+
+.gallery-rail {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--background);
+  font-size: 0.8125rem;
+}
+
+.rail-intro {
+  padding: 0 0.35rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.rail-intro strong,
+.rail-intro span {
+  display: block;
+}
+
+.rail-intro strong {
+  font-weight: 800;
+}
+
+.rail-intro span,
+.rail-label {
+  color: var(--muted-foreground);
+}
+
+.rail-intro span {
+  margin-top: 0.15rem;
+}
+
+.gallery-rail nav {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.rail-label {
+  padding: 0 0.35rem 0.3rem;
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gallery-rail nav button {
+  position: relative;
+  width: 100%;
+  padding: 0.45rem 0.35rem 0.45rem 1.1rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  text-align: left;
+}
+
+.gallery-rail nav button::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  content: '';
+  background: transparent;
+}
+
+.gallery-rail nav button:hover,
+.gallery-rail nav button[aria-current='page'] {
+  color: var(--foreground);
+}
+
+.gallery-rail nav button[aria-current='page'] {
+  font-weight: 550;
+}
+
+.gallery-rail nav button[aria-current='page']::before {
+  background: var(--primary);
+}
+
+.rail-foot {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.accent-trigger {
+  justify-content: flex-start;
+  width: 100%;
+  padding-inline: 0.35rem;
+  color: var(--muted-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-underline-offset: 0.2em;
+}
+
+.gallery-stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+}
+
+.stage-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.3rem;
+  padding: 0.8rem var(--gallery-gutter) 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.stage-head > div:first-child {
+  min-width: 0;
+}
+
+.stage-head h1 {
+  margin: 0.1rem 0 0;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.stage-head p {
+  max-width: 62ch;
+  color: var(--muted-foreground);
+}
+
+.kicker,
+.caption {
+  color: var(--primary);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.direction-picker {
+  display: grid;
+  flex: none;
+  gap: 0.25rem;
+  justify-items: end;
+}
+
+.direction-picker > span {
+  color: var(--muted-foreground);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.direction-picker > div {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.direction-picker button {
+  padding: 0.2rem 0.65rem 0.3rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.8125rem;
+}
+
+.direction-picker button:hover,
+.direction-picker button[aria-pressed='true'] {
+  color: var(--foreground);
+}
+
+.direction-picker button[aria-pressed='true'] {
+  border-bottom-color: var(--foreground);
+}
+
+.gallery-views {
+  min-width: 0;
+  min-height: 0;
+}
+
+.gallery-view {
+  display: none;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.35rem var(--gallery-gutter) 2rem;
+}
+
+.gallery-view[data-active='true'] {
+  display: block;
+}
+
+.gallery-view-inner {
+  width: 100%;
+}
+
+.section-heading {
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+  font-weight: 800;
+}
+
+.section-heading p {
+  max-width: 64ch;
+  color: var(--muted-foreground);
+}
+
+.overview-grid,
+.migration-grid,
+.form-layout,
+.desk-layout,
+.dossier {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(19rem, 0.9fr);
+  gap: clamp(1.1rem, 3vw, 3.5rem);
+  align-items: start;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 0.9rem;
+  padding-block: 0.4rem 0.9rem;
+}
+
+.hero-copy h2 {
+  max-width: 22ch;
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.hero-copy > p {
+  max-width: 52ch;
+  color: var(--muted-foreground);
+}
+
+.action-row,
+.inline-specimens,
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.law-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+
+.law-strip > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.law-strip strong {
+  font-weight: 550;
+}
+
+.law-strip span,
+.direction-card span,
+.preview-desk > p,
+.preview-row small,
+.quiet-copy,
+.specimen-body > p,
+.form-aside > p,
+.migration-aside > p,
+.dossier-copy > p,
+.dossier blockquote {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.gallery-preview,
+.composition-frame {
+  min-width: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  background: var(--muted);
+}
+
+.preview-head,
+.preview-row,
+.mini-head,
+.mini-list > div {
+  display: grid;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.preview-head {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-head strong,
+.preview-desk h3 {
+  font-weight: 550;
+}
+
+.preview-head code,
+.preview-row small,
+.mini-head code,
+.mini-list code,
+.token-value,
+.register-list code,
+.space-row,
+.state code,
+.migration-table th,
+.migration-table td:first-child,
+.data-table th,
+.caption {
+  font-family: 'Geist Mono Variable', monospace;
+}
+
+.preview-head code,
+.preview-row small {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.preview-body {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 0.9rem;
+}
+
+.preview-rail {
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+  padding-right: 0.8rem;
+  border-right: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.preview-rail b {
+  color: var(--foreground);
+  font-weight: 550;
+}
+
+.preview-desk {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.preview-row {
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+  padding-block: 0.45rem;
+  border-top: 1px solid var(--border);
+}
+
+.preview-row code {
+  color: var(--primary);
+  font-size: 0.8125rem;
+}
+
+.direction-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+}
+
+.direction-card {
+  display: grid;
+  gap: 0.4rem;
+  min-height: 7.8rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+  text-align: left;
+}
+
+.direction-card:hover,
+.direction-card:focus-visible,
+.direction-card[aria-pressed='true'] {
+  border-color: var(--foreground);
+}
+
+.direction-card[aria-pressed='true'] {
+  box-shadow: inset 3px 0 var(--primary);
+}
+
+.direction-card strong {
+  font-weight: 550;
+}
+
+.token-grid,
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gallery-gap);
+}
+
+.token-panel,
+.specimen {
+  min-width: 0;
+  padding: 0.95rem;
+  border-top: 1px solid var(--border);
+}
+
+.token-panel h3,
+.specimen h3,
+.surface-panel h3 {
+  margin-bottom: 0.7rem;
+  font-weight: 550;
+}
+
+.color-list,
+.register-list,
+.space-list,
+.specimen-body,
+.choice-stack,
+.migration-aside,
+.desk-side,
+.findings {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.color-row {
+  display: grid;
+  grid-template-columns: 1.3rem minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: center;
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+}
+
+.swatch {
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid var(--border);
+}
+
+.token-value {
+  color: var(--muted-foreground);
+}
+
+.register-list > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.register-list .medium {
+  font-weight: 550;
+}
+
+.register-list .black {
+  font-weight: 800;
+}
+
+.register-list .muted {
+  color: var(--muted-foreground);
+}
+
+.space-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 4rem;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.6875rem;
+}
+
+.space-bar {
+  height: 0.65rem;
+  background: var(--foreground);
+}
+
+.space-row:nth-child(2n) .space-bar {
+  background: var(--primary);
+}
+
+.tag-row {
+  margin-top: 0.8rem;
+}
+
+.tag {
+  padding: 0.15rem 0.35rem;
+  border: 1px solid var(--border);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+}
+
+.gallery-tabs,
+.composition-tabs {
+  margin-bottom: 1rem;
+}
+
+.gallery-tabs [data-slot='tabs-trigger'] {
+  padding-bottom: 0.45rem;
+}
+
+.component-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.specimen-wide {
+  grid-column: 1 / -1;
+}
+
+.state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.state {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  padding: 0.65rem;
+  background: var(--muted);
+}
+
+.state code,
+.caption {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.state > span,
+.specimen-body > p,
+.specimen-body label > span,
+.form-aside > p,
+.migration-aside > p {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.choice-stack label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.field > span:first-child {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.field input,
+.form-layout input {
+  width: 100%;
+  min-height: 2.5rem;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.field input:focus-visible,
+.form-layout input:focus-visible {
+  border-bottom: 2px solid var(--foreground);
+}
+
+.field input[aria-invalid='true'] {
+  border-bottom-color: var(--err);
+}
+
+.field-note {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+}
+
+.field-note svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: var(--err);
+}
+
+.fold {
+  border-bottom: 1px solid var(--border);
+}
+
+.fold summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.6rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.fold summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold summary::after {
+  content: '+';
+  font-family: 'Geist Mono Variable', monospace;
+}
+
+.fold[open] summary::after {
+  rotate: 45deg;
+}
+
+.fold > p {
+  padding-bottom: 0.8rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.gallery-status {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.gallery-status-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.gallery-status-icon.ok {
+  color: var(--ok);
+}
+
+.gallery-status-icon.warn {
+  color: var(--warn);
+}
+
+.gallery-status-icon.err {
+  color: var(--err);
+}
+
+.figure,
+.data-table .winner {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.meter {
+  position: relative;
+  height: 0.25rem;
+  background: var(--muted);
+}
+
+.meter > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--foreground);
+}
+
+.meter > span.ok {
+  background: var(--ok);
+}
+
+.meter > i {
+  position: absolute;
+  top: -0.2rem;
+  bottom: -0.2rem;
+  width: 1px;
+  background: var(--foreground);
+}
+
+.data-table,
+.migration-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td,
+.migration-table th,
+.migration-table td {
+  padding: 0.55rem 0.65rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th,
+.migration-table th {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.data-table td,
+.data-table th {
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.8125rem;
+}
+
+.data-table td:first-child,
+.migration-table td:first-child {
+  font-weight: 550;
+}
+
+.composition-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.composition-tabs [data-slot='tabs-trigger'] {
+  min-height: 3.3rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.composition-tabs [data-slot='tabs-trigger']::after {
+  display: none;
+}
+
+.composition-tabs [data-active='true'] {
+  box-shadow: inset 3px 0 var(--primary);
+}
+
+.composition-tabs strong,
+.composition-tabs small {
+  display: block;
+}
+
+.composition-tabs strong {
+  font-weight: 550;
+}
+
+.composition-tabs small {
+  margin-top: 0.15rem;
+  color: var(--muted-foreground);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+}
+
+.mini-shell {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 10rem;
+  height: 20rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
+.mini-shell > * {
+  min-width: 0;
+  min-height: 0;
+  padding: 0.8rem;
+}
+
+.mini-rail,
+.mini-inspector {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  background: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.mini-rail {
+  border-right: 1px solid var(--border);
+}
+
+.mini-inspector {
+  border-left: 1px solid var(--border);
+}
+
+.mini-rail span,
+.mini-inspector span {
+  color: var(--muted-foreground);
+}
+
+.mini-desk {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.8rem;
+}
+
+.mini-head {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mini-head code,
+.mini-list code {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.mini-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mini-body > p,
+.mini-foot {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.mini-list {
+  display: grid;
+  margin-top: 1rem;
+}
+
+.mini-list > div {
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  padding-block: 0.55rem;
+  border-top: 1px solid var(--border);
+}
+
+.mini-foot {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+}
+
+.form-layout,
+.desk-layout,
+.dossier {
+  grid-template-columns: minmax(0, 1.2fr) minmax(15rem, 0.8fr);
+}
+
+.form-layout form,
+.form-aside,
+.desk-side,
+.dossier-copy,
+.findings {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.setting-trigger {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.setting-trigger span {
+  color: var(--muted-foreground);
+}
+
+.form-aside,
+.findings {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+.form-aside strong,
+.findings > strong {
+  font-weight: 550;
+}
+
+.plot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.plot-axis {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.plot-frontier {
+  fill: none;
+  stroke: var(--foreground);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.plot-dot {
+  fill: var(--foreground);
+}
+
+.plot-dot.chosen {
+  fill: var(--primary);
+}
+
+.plot-dot.dominated {
+  fill: var(--muted-foreground);
+}
+
+.plot-label {
+  fill: var(--primary);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.6875rem;
+}
+
+.surface-panel {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
+.dossier-copy h3 {
+  max-width: 24ch;
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.dossier blockquote {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--primary);
+}
+
+.findings > div {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: baseline;
+}
+
+.findings b {
+  color: var(--primary);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 0.8125rem;
+  font-weight: 550;
+}
+
+.migration-grid {
+  grid-template-columns: minmax(0, 1.3fr) minmax(15rem, 0.7fr);
+}
+
+.migration-table-wrap {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.migration-table th,
+.migration-table td {
+  font-size: 0.8125rem;
+}
+
+.migration-table th {
+  font-size: 0.6875rem;
+}
+
+.migration-table td:first-child {
+  width: 8rem;
+  font-size: 0.8125rem;
+}
+
+.migration-table td:nth-child(2) {
+  width: 14rem;
+}
+
+.migration-table td:nth-child(3),
+.migration-aside > p {
+  color: var(--muted-foreground);
+}
+
+.migration-aside ul {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.2rem;
+}
+
+.migration-aside li::marker {
+  color: var(--primary);
+}
+
+.toast-wrap {
+  position: fixed;
+  right: 1rem;
+  bottom: 3.7rem;
+  z-index: 100;
+}
+
+.toast {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 5%),
+    0 12px 36px rgb(0 0 0 / 9%);
+}
+
+.toast > svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--ok);
+}
+
+.toast button {
+  display: inline-flex;
+  padding: 0;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+}
+
+.toast button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* The three directions are composition switches over one component tree. */
+.gallery-shell.direction-desk {
+  --gallery-rail: 17rem;
+  --gallery-gap: 0.7rem;
+}
+
+.gallery-shell.direction-desk .stage-head,
+.gallery-shell.direction-desk .gallery-view {
+  background: var(--muted);
+}
+
+.gallery-shell.direction-desk .gallery-preview,
+.gallery-shell.direction-desk .specimen,
+.gallery-shell.direction-desk .composition-frame {
+  background: var(--background);
+}
+
+.gallery-shell.direction-book {
+  --gallery-rail: 12rem;
+}
+
+.gallery-shell.direction-book .gallery-stage {
+  background: var(--muted);
+}
+
+.gallery-shell.direction-book .stage-head {
+  background: var(--background);
+}
+
+.gallery-shell.direction-book .gallery-view {
+  padding-inline: clamp(1.3rem, 8vw, 8rem);
+}
+
+@media (max-width: 64rem) {
+  .overview-grid,
+  .migration-grid,
+  .form-layout,
+  .desk-layout,
+  .dossier {
+    grid-template-columns: 1fr;
+  }
+
+  .token-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --gallery-gutter: 1rem;
+  }
+
+  .gallery-top-actions > span,
+  .footer-wide {
+    display: none;
+  }
+
+  .gallery-main {
+    display: block;
+  }
+
+  .gallery-rail {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    height: 3.7rem;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    border-right: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: var(--background);
+  }
+
+  .rail-intro,
+  .rail-label,
+  .rail-foot {
+    display: none;
+  }
+
+  .gallery-rail nav {
+    display: flex;
+    flex: none;
+  }
+
+  .gallery-rail nav button {
+    width: auto;
+    min-width: 5.7rem;
+    height: 3.7rem;
+    padding: 0 0.8rem;
+    text-align: center;
+  }
+
+  .gallery-rail nav button::before {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  .stage-head {
+    min-height: 6.2rem;
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .direction-picker {
+    width: 100%;
+    justify-items: start;
+  }
+
+  .direction-picker > div {
+    width: 100%;
+  }
+
+  .direction-picker button {
+    flex: 1;
+    text-align: center;
+  }
+
+  .gallery-view {
+    padding-bottom: 5rem;
+  }
+
+  .law-strip,
+  .direction-cards,
+  .token-grid,
+  .component-grid,
+  .state-grid,
+  .composition-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .specimen-wide {
+    grid-column: auto;
+  }
+
+  .mini-shell {
+    grid-template-columns: 5rem minmax(0, 1fr);
+    height: 18rem;
+  }
+
+  .mini-inspector {
+    display: none;
+  }
+
+  .gallery-footer {
+    min-height: 2.8rem;
+  }
+}

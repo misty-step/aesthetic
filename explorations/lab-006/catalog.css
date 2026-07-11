@@ -1,0 +1,182 @@
+/* Catalog shell — lab chrome in the system's own idiom. */
+:root {
+  --surface: #fcfcfc;
+  --wash: #f3f3f3;
+  --ink: #151515;
+  --muted: #737373;
+  --line: #e9e9e9;
+  --accent: #2643d0;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #121212;
+    --wash: #1b1b1b;
+    --ink: #ededed;
+    --muted: #8f8f8f;
+    --line: #262626;
+    --accent: #8c9eff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  font:
+    400 16px/1.5 'Geist',
+    'Helvetica Neue',
+    sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: default;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.9em 1.4em;
+  border-bottom: 1px solid var(--line);
+}
+
+header h1 {
+  font-size: inherit;
+  font-weight: 800;
+  margin: 0;
+}
+
+header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.frame {
+  display: grid;
+  grid-template-columns: 19rem minmax(0, 1fr);
+  min-height: 0;
+}
+
+nav {
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  padding: 1em 0;
+}
+
+nav .option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-left: 2px solid transparent;
+  font: inherit;
+  padding: 0.7em 1.3em;
+  cursor: pointer;
+}
+
+nav .option:hover {
+  background: var(--wash);
+}
+
+nav .option.active {
+  border-left-color: var(--ink);
+  background: var(--wash);
+}
+
+nav .option code {
+  font:
+    700 13px 'Geist Mono',
+    monospace;
+  color: var(--accent);
+  margin-right: 0.7em;
+}
+
+nav .option b {
+  font-weight: 550;
+}
+
+nav .option small {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 0.1em;
+}
+
+.stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+}
+
+.stage-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.55em 1.3em;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.stage-bar .sizes {
+  display: flex;
+  gap: 0.4em;
+}
+
+.stage-bar button {
+  font:
+    550 13px 'Geist Mono',
+    monospace;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 0.2em 0.8em;
+  cursor: pointer;
+}
+
+.stage-bar button.active {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.well {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  background: var(--wash);
+  padding: 1em;
+}
+
+.shell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+iframe {
+  border: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.note {
+  max-width: 44ch;
+  color: var(--muted);
+  padding: 2em;
+}
+
+.note a {
+  color: var(--accent);
+}

@@ -1,0 +1,7739 @@
+{
+  "generatedAt": "2026-07-10T15:30:31.281Z",
+  "base": "http://127.0.0.1:8127/explorations/lab-004",
+  "registry": {
+    "total": 13,
+    "baseline": 1,
+    "raw": 18,
+    "retained": 12,
+    "lanes": 6
+  },
+  "cases": [
+    {
+      "id": "BASE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 342.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2443
+      }
+    },
+    {
+      "id": "BASE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 342.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2443
+      }
+    },
+    {
+      "id": "BASE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 175.25,
+            "height": 770.15625,
+            "overflow": 0
+          },
+          {
+            "width": 175.25,
+            "height": 770.15625,
+            "overflow": 0
+          },
+          {
+            "width": 175.25,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 175.25,
+            "height": 770.15625,
+            "overflow": 0
+          },
+          {
+            "width": 175.25,
+            "height": 770.15625,
+            "overflow": 0
+          },
+          {
+            "width": 175.25,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "BASE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 157.21875,
+            "height": 837.65625,
+            "overflow": 1
+          },
+          {
+            "width": 136.71875,
+            "height": 837.65625,
+            "overflow": 0
+          },
+          {
+            "width": 136.71875,
+            "height": 837.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1171
+      }
+    },
+    {
+      "id": "BASE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": false,
+      "waived": true,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "BASE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "15px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Aesthetic 2.24"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 9,
+        "buttonArticles": [
+          {
+            "width": 157.21875,
+            "height": 837.65625,
+            "overflow": 1
+          },
+          {
+            "width": 136.71875,
+            "height": 837.65625,
+            "overflow": 0
+          },
+          {
+            "width": 136.71875,
+            "height": 837.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 15,
+        "headerBox": {
+          "width": 187.78125,
+          "height": 13.5
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1171
+      }
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 575.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2326
+      }
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 575.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2326
+      }
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 283,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 283,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 283,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 283,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 283,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 283,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 419.828125,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 365.078125,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 365.078125,
+            "height": 513.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1276
+      }
+    },
+    {
+      "id": "R2MIN-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Margin Ledger"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 419.828125,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 365.078125,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 365.078125,
+            "height": 513.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1276
+      }
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 366,
+            "height": 585.15625,
+            "overflow": 0
+          },
+          {
+            "width": 366,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 366,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2479
+      }
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 366,
+            "height": 585.15625,
+            "overflow": 0
+          },
+          {
+            "width": 366,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 366,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2479
+      }
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 361.5,
+            "height": 598.15625,
+            "overflow": 0
+          },
+          {
+            "width": 361.5,
+            "height": 598.15625,
+            "overflow": 0
+          },
+          {
+            "width": 361.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 288,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 361.5,
+            "height": 598.15625,
+            "overflow": 0
+          },
+          {
+            "width": 361.5,
+            "height": 598.15625,
+            "overflow": 0
+          },
+          {
+            "width": 361.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 288,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 447.578125,
+            "height": 500.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.203125,
+            "height": 500.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.203125,
+            "height": 500.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 417.40625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1333
+      }
+    },
+    {
+      "id": "R2MIN-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Survey Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 447.578125,
+            "height": 500.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.203125,
+            "height": 500.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.203125,
+            "height": 500.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 417.40625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1333
+      }
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 358,
+            "height": 601.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 358,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 358,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2285
+      }
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 358,
+            "height": 601.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 358,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 358,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2285
+      }
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 285,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 285,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 285,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 285,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 285,
+            "height": 748.15625,
+            "overflow": 0
+          },
+          {
+            "width": 285,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 427.859375,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 372.0625,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 372.0625,
+            "height": 513.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1245
+      }
+    },
+    {
+      "id": "R2MIN-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2MIN-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Index Desk"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 427.859375,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 372.0625,
+            "height": 513.15625,
+            "overflow": 0
+          },
+          {
+            "width": 372.0625,
+            "height": 513.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 17.71875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1245
+      }
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 332,
+            "height": 473.15625,
+            "overflow": 0
+          },
+          {
+            "width": 332,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 332,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2311
+      }
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 332,
+            "height": 473.15625,
+            "overflow": 0
+          },
+          {
+            "width": 332,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 332,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2311
+      }
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 269,
+            "height": 613.15625,
+            "overflow": 0
+          },
+          {
+            "width": 269,
+            "height": 613.15625,
+            "overflow": 0
+          },
+          {
+            "width": 269,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 269,
+            "height": 613.15625,
+            "overflow": 0
+          },
+          {
+            "width": 269,
+            "height": 613.15625,
+            "overflow": 0
+          },
+          {
+            "width": 269,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 412.53125,
+            "height": 421.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358.734375,
+            "height": 421.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358.71875,
+            "height": 421.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1334
+      }
+    },
+    {
+      "id": "R2TASTE-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Instrument"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 412.53125,
+            "height": 421.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358.734375,
+            "height": 421.15625,
+            "overflow": 0
+          },
+          {
+            "width": 358.71875,
+            "height": 421.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1334
+      }
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 370,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 370,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 370,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2338
+      }
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 370,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 370,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 370,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2338
+      }
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 368,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 470.15625,
+            "overflow": 0
+          },
+          {
+            "width": 368,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 384.40625,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 455.609375,
+            "height": 395.15625,
+            "overflow": 0
+          },
+          {
+            "width": 396.1875,
+            "height": 395.15625,
+            "overflow": 0
+          },
+          {
+            "width": 396.1875,
+            "height": 395.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1295
+      }
+    },
+    {
+      "id": "R2TASTE-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2TASTE-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 455.609375,
+            "height": 395.15625,
+            "overflow": 0
+          },
+          {
+            "width": 396.1875,
+            "height": 395.15625,
+            "overflow": 0
+          },
+          {
+            "width": 396.1875,
+            "height": 395.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 720.765625,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 13.40625,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1295
+      }
+    },
+    {
+      "id": "R2RED-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "52px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 511.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 52,
+        "headerBox": {
+          "width": 370,
+          "height": 45.75
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2382
+      }
+    },
+    {
+      "id": "R2RED-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "52px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 511.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 52,
+        "headerBox": {
+          "width": 370,
+          "height": 45.75
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2382
+      }
+    },
+    {
+      "id": "R2RED-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "42.24px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 362.5,
+            "height": 534.15625,
+            "overflow": 0
+          },
+          {
+            "width": 362.5,
+            "height": 534.15625,
+            "overflow": 0
+          },
+          {
+            "width": 362.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 42.24,
+        "headerBox": {
+          "width": 340.71875,
+          "height": 37.15625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2RED-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "42.24px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 362.5,
+            "height": 534.15625,
+            "overflow": 0
+          },
+          {
+            "width": 362.5,
+            "height": 534.15625,
+            "overflow": 0
+          },
+          {
+            "width": 362.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 42.24,
+        "headerBox": {
+          "width": 340.71875,
+          "height": 37.15625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2RED-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "76.8px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 447.9375,
+            "height": 456.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.53125,
+            "height": 456.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.515625,
+            "height": 456.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 76.8,
+        "headerBox": {
+          "width": 619.5,
+          "height": 67.578125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1235
+      }
+    },
+    {
+      "id": "R2RED-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "76.8px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Signal Loom"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 447.9375,
+            "height": 456.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.53125,
+            "height": 456.15625,
+            "overflow": 0
+          },
+          {
+            "width": 389.515625,
+            "height": 456.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 76.8,
+        "headerBox": {
+          "width": 619.5,
+          "height": 67.578125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1235
+      }
+    },
+    {
+      "id": "R2RED-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "51.2px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 315,
+            "height": 586.15625,
+            "overflow": 0
+          },
+          {
+            "width": 315,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 315,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 51.2,
+        "headerBox": {
+          "width": 358,
+          "height": 46.078125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2610
+      }
+    },
+    {
+      "id": "R2RED-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "51.2px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 315,
+            "height": 586.15625,
+            "overflow": 0
+          },
+          {
+            "width": 315,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 315,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 51.2,
+        "headerBox": {
+          "width": 358,
+          "height": 46.078125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2610
+      }
+    },
+    {
+      "id": "R2RED-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "39.936px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 260.5,
+            "height": 699.65625,
+            "overflow": 0
+          },
+          {
+            "width": 260.5,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 260.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 39.936,
+        "headerBox": {
+          "width": 295.25,
+          "height": 35.9375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2RED-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "39.936px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 260.5,
+            "height": 699.65625,
+            "overflow": 0
+          },
+          {
+            "width": 260.5,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 260.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 39.936,
+        "headerBox": {
+          "width": 295.25,
+          "height": 35.9375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2RED-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "74.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 407.78125,
+            "height": 472.65625,
+            "overflow": 0
+          },
+          {
+            "width": 354.609375,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 354.59375,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 74.4,
+        "headerBox": {
+          "width": 550.125,
+          "height": 66.953125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1343
+      }
+    },
+    {
+      "id": "R2RED-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2RED-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "74.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Atelier"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 407.78125,
+            "height": 472.65625,
+            "overflow": 0
+          },
+          {
+            "width": 354.609375,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 354.59375,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 74.4,
+        "headerBox": {
+          "width": 550.125,
+          "height": 66.953125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 31.171875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1343
+      }
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 339,
+            "height": 489.15625,
+            "overflow": 0
+          },
+          {
+            "width": 339,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 339,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2402
+      }
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 339,
+            "height": 489.15625,
+            "overflow": 0
+          },
+          {
+            "width": 339,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 339,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 370,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2402
+      }
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 266.5,
+            "height": 615.65625,
+            "overflow": 0
+          },
+          {
+            "width": 266.5,
+            "height": 615.65625,
+            "overflow": 0
+          },
+          {
+            "width": 266.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 419.171875,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 266.5,
+            "height": 615.65625,
+            "overflow": 0
+          },
+          {
+            "width": 266.5,
+            "height": 615.65625,
+            "overflow": 0
+          },
+          {
+            "width": 266.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 419.171875,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 410.703125,
+            "height": 414.65625,
+            "overflow": 0
+          },
+          {
+            "width": 357.140625,
+            "height": 414.65625,
+            "overflow": 0
+          },
+          {
+            "width": 357.140625,
+            "height": 414.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 785.953125,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1251
+      }
+    },
+    {
+      "id": "R2ANTH-2",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-2",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Control Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 410.703125,
+            "height": 414.65625,
+            "overflow": 0
+          },
+          {
+            "width": 357.140625,
+            "height": 414.65625,
+            "overflow": 0
+          },
+          {
+            "width": 357.140625,
+            "height": 414.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 785.953125,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1251
+      }
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 357,
+            "height": 489.15625,
+            "overflow": 0
+          },
+          {
+            "width": 357,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 357,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 358,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2589
+      }
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 357,
+            "height": 489.15625,
+            "overflow": 0
+          },
+          {
+            "width": 357,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 357,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 358,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2589
+      }
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 287.5,
+            "height": 589.65625,
+            "overflow": 0
+          },
+          {
+            "width": 287.5,
+            "height": 589.65625,
+            "overflow": 0
+          },
+          {
+            "width": 287.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 180,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 287.5,
+            "height": 589.65625,
+            "overflow": 0
+          },
+          {
+            "width": 287.5,
+            "height": 589.65625,
+            "overflow": 0
+          },
+          {
+            "width": 287.5,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 180,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 431.875,
+            "height": 427.65625,
+            "overflow": 0
+          },
+          {
+            "width": 375.5625,
+            "height": 427.65625,
+            "overflow": 0
+          },
+          {
+            "width": 375.546875,
+            "height": 427.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 336,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1283
+      }
+    },
+    {
+      "id": "R2ANTH-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2ANTH-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Relay Board"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 431.875,
+            "height": 427.65625,
+            "overflow": 0
+          },
+          {
+            "width": 375.5625,
+            "height": 427.65625,
+            "overflow": 0
+          },
+          {
+            "width": 375.546875,
+            "height": 427.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 336,
+          "height": 64.796875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 22.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1283
+      }
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "48px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 703.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 48,
+        "headerBox": {
+          "width": 324.234375,
+          "height": 42.234375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2585
+      }
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "48px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 703.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 48,
+        "headerBox": {
+          "width": 324.234375,
+          "height": 42.234375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2585
+      }
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "55.296px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 217.84375,
+            "height": 1335.15625,
+            "overflow": 0
+          },
+          {
+            "width": 178.578125,
+            "height": 1335.15625,
+            "overflow": 0
+          },
+          {
+            "width": 178.578125,
+            "height": 1335.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 55.296,
+        "headerBox": {
+          "width": 373.46875,
+          "height": 48.65625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "55.296px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 217.84375,
+            "height": 1335.15625,
+            "overflow": 0
+          },
+          {
+            "width": 178.578125,
+            "height": 1335.15625,
+            "overflow": 0
+          },
+          {
+            "width": 178.578125,
+            "height": 1335.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 55.296,
+        "headerBox": {
+          "width": 373.46875,
+          "height": 48.65625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "103.68px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 442.140625,
+            "height": 545.65625,
+            "overflow": 0
+          },
+          {
+            "width": 362.421875,
+            "height": 545.65625,
+            "overflow": 0
+          },
+          {
+            "width": 362.4375,
+            "height": 545.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 103.68,
+        "headerBox": {
+          "width": 700.34375,
+          "height": 91.234375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1297
+      }
+    },
+    {
+      "id": "R2HALL-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-1",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "103.68px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Quiet Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 442.140625,
+            "height": 545.65625,
+            "overflow": 0
+          },
+          {
+            "width": 362.421875,
+            "height": 545.65625,
+            "overflow": 0
+          },
+          {
+            "width": 362.4375,
+            "height": 545.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 103.68,
+        "headerBox": {
+          "width": 700.34375,
+          "height": 91.234375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1297
+      }
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "49.6px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 703.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 49.6,
+        "headerBox": {
+          "width": 300.0625,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2729
+      }
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "49.6px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 369,
+            "height": 703.65625,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 369,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 49.6,
+        "headerBox": {
+          "width": 300.0625,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2729
+      }
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "53.76px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 260.796875,
+            "height": 1019.65625,
+            "overflow": 0
+          },
+          {
+            "width": 237.09375,
+            "height": 1019.65625,
+            "overflow": 0
+          },
+          {
+            "width": 237.109375,
+            "height": 1019.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 53.76,
+        "headerBox": {
+          "width": 325.234375,
+          "height": 49.453125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "53.76px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 260.796875,
+            "height": 1019.65625,
+            "overflow": 0
+          },
+          {
+            "width": 237.09375,
+            "height": 1019.65625,
+            "overflow": 0
+          },
+          {
+            "width": 237.109375,
+            "height": 1019.65625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 53.76,
+        "headerBox": {
+          "width": 325.234375,
+          "height": 49.453125
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "100.8px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 442.46875,
+            "height": 636.15625,
+            "overflow": 0
+          },
+          {
+            "width": 402.265625,
+            "height": 636.15625,
+            "overflow": 0
+          },
+          {
+            "width": 402.265625,
+            "height": 636.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 100.8,
+        "headerBox": {
+          "width": 609.8125,
+          "height": 92.71875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1403
+      }
+    },
+    {
+      "id": "R2HALL-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2HALL-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "100.8px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Folio"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 442.46875,
+            "height": 636.15625,
+            "overflow": 0
+          },
+          {
+            "width": 402.265625,
+            "height": 636.15625,
+            "overflow": 0
+          },
+          {
+            "width": 402.265625,
+            "height": 636.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 100.8,
+        "headerBox": {
+          "width": 609.8125,
+          "height": 92.71875
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 2.875,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1403
+      }
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 356,
+            "height": 516.15625,
+            "overflow": 0
+          },
+          {
+            "width": 356,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 356,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 356,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2577
+      }
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "50.7px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 390,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 356,
+            "height": 516.15625,
+            "overflow": 0
+          },
+          {
+            "width": 356,
+            "height": 240,
+            "overflow": 0
+          },
+          {
+            "width": 356,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 50.7,
+        "headerBox": {
+          "width": 356,
+          "height": 45.625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 2577
+      }
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 282.203125,
+            "height": 627.15625,
+            "overflow": 0
+          },
+          {
+            "width": 282.203125,
+            "height": 627.15625,
+            "overflow": 0
+          },
+          {
+            "width": 282.203125,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 224,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 768,
+      "height": 1024,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "38.4px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 768,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 282.203125,
+            "height": 627.15625,
+            "overflow": 0
+          },
+          {
+            "width": 282.203125,
+            "height": 627.15625,
+            "overflow": 0
+          },
+          {
+            "width": 282.203125,
+            "height": 240,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 38.4,
+        "headerBox": {
+          "width": 224,
+          "height": 34.5625
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "light",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 424.515625,
+            "height": 454.15625,
+            "overflow": 0
+          },
+          {
+            "width": 369.140625,
+            "height": 454.15625,
+            "overflow": 0
+          },
+          {
+            "width": 369.140625,
+            "height": 454.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 316.25,
+          "height": 129.59375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1334
+      }
+    },
+    {
+      "id": "R2IMP-3",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "pass": true,
+      "waived": false,
+      "accepted": true,
+      "metric": {
+        "ready": {
+          "id": "R2IMP-3",
+          "mode": "dark",
+          "sections": 7,
+          "buttonStates": 10,
+          "displayHeader": "72px",
+          "components": 16,
+          "states": 10,
+          "compositions": 4,
+          "products": 4,
+          "title": "Civic Register"
+        },
+        "inner": 1440,
+        "overflow": 0,
+        "root": 1,
+        "buttons": 10,
+        "visibleButtons": 10,
+        "buttonArticles": [
+          {
+            "width": 424.515625,
+            "height": 454.15625,
+            "overflow": 0
+          },
+          {
+            "width": 369.140625,
+            "height": 454.15625,
+            "overflow": 0
+          },
+          {
+            "width": 369.140625,
+            "height": 454.15625,
+            "overflow": 0
+          }
+        ],
+        "buttonBoardOverflow": 0,
+        "headerPx": 72,
+        "headerBox": {
+          "width": 316.25,
+          "height": 129.59375
+        },
+        "radii": [
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "badgeLaw": [
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "radius": "0px",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadingMark": {
+          "width": 10.78125,
+          "height": 12,
+          "animation": "1"
+        }
+      },
+      "errors": [],
+      "corpus": {
+        "cards": 16,
+        "visible": 16,
+        "overflow": 0,
+        "height": 1334
+      }
+    }
+  ],
+  "candidatePassed": 72,
+  "baselineWaived": 6,
+  "accepted": 78,
+  "failures": []
+}

@@ -1,0 +1,1309 @@
+{
+  "generatedAt": "2026-07-10T20:20:10.582Z",
+  "registry": {
+    "total": 6,
+    "raw": 8,
+    "carried": 2,
+    "blind": 6
+  },
+  "cases": [
+    {
+      "id": "CARRY-QR",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-QR",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-QR",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "CARRY-CF",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "CARRY-CF",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "corner-mark"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGM-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGM-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGA-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGA-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "register-tick"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGR-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGR-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "bracketed"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 390,
+      "height": 844,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 390,
+      "height": 844,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "light",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "light",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "studio",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "studio",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 0,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    },
+    {
+      "id": "PGI-1",
+      "width": 1440,
+      "height": 900,
+      "mode": "dark",
+      "view": "work",
+      "pass": true,
+      "metric": {
+        "ready": {
+          "id": "PGI-1",
+          "mode": "dark",
+          "pages": 2,
+          "statuses": 5,
+          "projects": 5,
+          "statusStyle": "signal-cell"
+        },
+        "view": "work",
+        "overflow": 0,
+        "scroll": 0,
+        "statuses": 5,
+        "unique": 5,
+        "labelsInk": true,
+        "projects": 5,
+        "actionRadius": "0px"
+      },
+      "errors": []
+    }
+  ],
+  "passed": 48,
+  "failures": []
+}
