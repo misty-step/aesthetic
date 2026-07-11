@@ -290,8 +290,7 @@ button {
 }
 
 .gallery-view-inner {
-  width: min(100%, 78rem);
-  margin-inline: auto;
+  width: 100%;
 }
 
 .section-heading {
@@ -1164,10 +1163,6 @@ button {
 
 .gallery-shell.direction-book .gallery-view {
   padding-inline: clamp(1.3rem, 8vw, 8rem);
-}
-
-.gallery-shell.direction-book .gallery-view-inner {
-  max-width: 60rem;
 }
 
 @media (max-width: 64rem) {

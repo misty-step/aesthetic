@@ -35,6 +35,7 @@ const sizes = [
   [390, 844],
   [1024, 768],
   [1440, 900],
+  [1920, 1080],
 ];
 const modes = ['light', 'dark'];
 const directions = ['quiet', 'desk', 'book'];
@@ -61,11 +62,33 @@ async function checkLaw(page, label, consoleErrors) {
       if (radius && radius !== '0px')
         badRadius.push(`${el.tagName}.${el.className}: ${radius}`);
     }
+    const shell = document
+      .querySelector('.gallery-shell')
+      .getBoundingClientRect();
+    const activeView = document.querySelector(
+      '.gallery-view[data-active="true"]',
+    );
+    const viewStyle = getComputedStyle(activeView);
+    const viewContentWidth =
+      activeView.clientWidth -
+      parseFloat(viewStyle.paddingLeft) -
+      parseFloat(viewStyle.paddingRight);
+    const innerWidth = activeView
+      .querySelector('.gallery-view-inner')
+      .getBoundingClientRect().width;
     return {
       width: window.innerWidth,
       height: window.innerHeight,
       pageWidth: document.documentElement.scrollWidth,
       pageHeight: document.documentElement.scrollHeight,
+      shell: {
+        x: shell.x,
+        y: shell.y,
+        width: shell.width,
+        height: shell.height,
+      },
+      viewContentWidth,
+      innerWidth,
       largest,
       badRadius: badRadius.slice(0, 4),
     };
@@ -77,6 +100,19 @@ async function checkLaw(page, label, consoleErrors) {
   if (result.pageHeight > result.height)
     failures.push(
       `${label}: vertical page scroll ${result.pageHeight - result.height}px`,
+    );
+  if (
+    result.shell.x !== 0 ||
+    result.shell.y !== 0 ||
+    result.shell.width !== result.width ||
+    result.shell.height !== result.height
+  )
+    failures.push(
+      `${label}: shell ${JSON.stringify(result.shell)} does not fill ${result.width}x${result.height}`,
+    );
+  if (Math.abs(result.innerWidth - result.viewContentWidth) > 1)
+    failures.push(
+      `${label}: view is constrained to ${result.innerWidth}px inside ${result.viewContentWidth}px`,
     );
   if (result.largest > 16.01)
     failures.push(`${label}: largest font ${result.largest}px exceeds 16px`);
