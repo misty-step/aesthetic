@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T23:18:59.764Z",
+  "generatedAt": "2026-07-11T20:08:46.748Z",
   "base": "http://127.0.0.1:8127/explorations/lab-003",
   "registry": {
     "total": 14,
@@ -28,7 +28,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -51,7 +57,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -74,7 +86,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -97,7 +115,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -120,7 +144,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -143,7 +173,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -166,7 +202,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -189,7 +231,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -212,7 +260,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -235,7 +289,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -258,7 +318,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -281,7 +347,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -304,7 +376,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -327,7 +405,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -350,7 +434,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -373,7 +463,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -396,7 +492,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -419,7 +521,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -442,7 +550,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -465,7 +579,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -488,7 +608,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -511,7 +637,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -534,7 +666,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -557,7 +695,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -580,7 +724,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -603,7 +753,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -626,7 +782,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -649,7 +811,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -672,7 +840,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -695,7 +869,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -718,7 +898,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -741,7 +927,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -764,7 +956,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -787,7 +985,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -810,7 +1014,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -833,7 +1043,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "1px",
+          "folio": "\"01\""
+        }
       },
       "errors": []
     },
@@ -856,7 +1072,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -879,7 +1101,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -902,7 +1130,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -925,7 +1159,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -948,7 +1188,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -971,7 +1217,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"[ 01 ]\""
+        }
       },
       "errors": []
     },
@@ -994,7 +1246,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1017,7 +1275,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1040,7 +1304,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1063,7 +1333,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1086,7 +1362,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1109,7 +1391,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "\"SECTION 01 ///\""
+        }
       },
       "errors": []
     },
@@ -1132,7 +1420,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1155,7 +1449,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1178,7 +1478,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1201,7 +1507,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1224,7 +1536,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1247,7 +1565,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1270,7 +1594,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1293,7 +1623,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1316,7 +1652,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1339,7 +1681,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1362,7 +1710,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1385,7 +1739,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1408,7 +1768,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1431,7 +1797,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1454,7 +1826,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1477,7 +1855,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1500,7 +1884,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1523,7 +1913,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1546,7 +1942,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1569,7 +1971,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1592,7 +2000,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1615,7 +2029,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1638,7 +2058,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1661,7 +2087,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1684,7 +2116,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1707,7 +2145,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1730,7 +2174,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1753,7 +2203,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1776,7 +2232,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1799,7 +2261,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1822,7 +2290,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1845,7 +2319,13 @@
         },
         "inner": 390,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1868,7 +2348,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1891,7 +2377,13 @@
         },
         "inner": 768,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1914,7 +2406,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     },
@@ -1937,7 +2435,13 @@
         },
         "inner": 1440,
         "overflow": 0,
-        "root": 1
+        "root": 1,
+        "regions": 6,
+        "leakedCode": false,
+        "brutRegion": {
+          "border": "0px",
+          "folio": "none"
+        }
       },
       "errors": []
     }
