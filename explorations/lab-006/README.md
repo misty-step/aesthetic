@@ -13,6 +13,27 @@ comes for free. Substrate strategies, not redesigns.
 status plate rendered per lane. Full lane briefs and the comparison
 matrix: **[ADOPTION.md](./ADOPTION.md)**.
 
+## Gallery route
+
+The migration gallery is a real React + Base UI surface, not a static facsimile:
+one shared component tree is shown in three composition directions (quiet
+specimen book, operator desk, paper dossier) with tokens, components, and four
+common compositions. Build and open it with Vite:
+
+```sh
+npm run build
+npm run dev -- --host 127.0.0.1
+# open http://127.0.0.1:5173/gallery.html
+```
+
+The focused proof loop exercises the actual dialog, menu, tabs, theme dial, mode
+toggle, all views, all directions, both modes, and 390 / 1024 / 1440 viewport
+law:
+
+```sh
+node verify-gallery.mjs
+```
+
 - **A — Theme mapping** (`a.html`): stock shadcn, identity entirely in
   CSS variables. One component edit (dialog overlay blur).
 - **B — Registry reskin** (`b.html`): owned component copies with the

@@ -24,6 +24,7 @@ export default defineConfig({
         b: path.resolve(__dirname, 'b.html'),
         c: path.resolve(__dirname, 'c.html'),
         d: path.resolve(__dirname, 'd.html'),
+        gallery: path.resolve(__dirname, 'gallery.html'),
       },
     },
   },
