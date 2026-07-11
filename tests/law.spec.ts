@@ -19,7 +19,8 @@ import {
    '@misty-step/aesthetic/law'. */
 
 const PAGES = [
-  { path: '/site/', name: 'gallery' },
+  { path: '/site/', name: 'home' },
+  { path: '/site/primitives.html', name: 'gallery' },
   { path: '/site/r/', name: 'registry' },
   { path: '/site/tokens.html', name: 'tokens' },
   { path: '/site/law.html', name: 'law' },
@@ -68,7 +69,7 @@ for (const route of INSTRUMENT_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/#${route}`);
+      await page.goto(`/site/primitives.html#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(page.locator(`[data-route="${route}"]`)).toBeVisible();
 
@@ -103,7 +104,7 @@ for (const route of STATE_ROUTES) {
       await page.addInitScript((m: string) => {
         localStorage.setItem('ae-mode', m);
       }, mode);
-      await page.goto(`/site/#${route}`);
+      await page.goto(`/site/primitives.html#${route}`);
       await page.waitForLoadState('networkidle');
       await expect(
         page.locator(`[data-route="${route}"] .states`),
@@ -128,7 +129,7 @@ for (const route of STATE_ROUTES) {
 test('the state-matrix gate catches a planted off-law state', async ({
   page,
 }) => {
-  await page.goto('/site/#buttons');
+  await page.goto('/site/primitives.html#buttons');
   await expect(page.locator('[data-route="buttons"] .states')).toBeVisible();
   // baseline: the fan is clean
   expect((await checkRadius(page)).pass).toBe(true);
@@ -153,7 +154,7 @@ test('the state-matrix gate catches a planted off-law state', async ({
 });
 
 test('the send moment resolves once and announces', async ({ page }) => {
-  await page.goto('/site/#buttons');
+  await page.goto('/site/primitives.html#buttons');
   // the live demo form's control, not the static states-strip specimen
   const send = page.locator(
     '[data-route="buttons"] form[data-ae-demo] .ae-send',
@@ -173,11 +174,11 @@ test('the send moment resolves once and announces', async ({ page }) => {
 test('the catalog routes by hash and the toggle flips the mode', async ({
   page,
 }) => {
-  await page.goto('/site/#meter');
+  await page.goto('/site/primitives.html#meter');
   await expect(page.locator('[data-route="meter"]')).toBeVisible();
   await expect(page.locator('[data-route="index"]')).toBeHidden();
 
-  await page.locator('.ae-mode').first().click();
+  await page.locator('.ae-mode:visible').click();
   // the flip runs inside startViewTransition's async update callback —
   // poll rather than read immediately
   await expect
@@ -199,9 +200,9 @@ test('the mode toggle stays enabled and honors rapid toggles', async ({
   await page.addInitScript(() => {
     localStorage.setItem('ae-mode', 'light');
   });
-  await page.goto('/site/#meter');
+  await page.goto('/site/primitives.html#meter');
 
-  const mode = page.locator('.ae-mode').first();
+  const mode = page.locator('.ae-mode:visible');
   await expect(mode).toBeEnabled();
   await expect(mode).not.toHaveAttribute('disabled', /.*/);
 
@@ -246,7 +247,7 @@ test('the catalog copy button copies the clean canonical markup', async ({
   context,
 }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('/site/#buttons');
+  await page.goto('/site/primitives.html#buttons');
   const view = page.locator('[data-route="buttons"]');
   await expect(view).toBeVisible();
 
