@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Base UI adapter fixture</title>
+    <link rel="stylesheet" href="../../aesthetic.css" />
+    <style>
+      .fixture-pop {
+        position: fixed;
+        inset: 8em auto auto 1em;
+      }
+      .fixture-tip {
+        position: fixed;
+        inset: 14em auto auto 1em;
+      }
+    </style>
+    <script>
+      try {
+        var mode = localStorage.getItem('ae-mode');
+        if (mode === 'dark' || mode === 'light') {
+          document.documentElement.classList.add(mode);
+          document.documentElement.style.colorScheme = mode;
+        }
+      } catch (error) {}
+    </script>
+  </head>
+  <body>
+    <main class="ae-stage" aria-label="Base UI adapter specimens">
+      <button class="ae-status" type="button">
+        <svg class="ae-icon ae-ok" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="8" />
+        </svg>
+        <span class="ae-status-label">Connected</span>
+      </button>
+
+      <div class="ae-pop-surface fixture-pop" data-open>
+        <nav class="ae-menu" aria-label="Actions">
+          <button type="button">Rename</button>
+          <button type="button">Archive</button>
+        </nav>
+      </div>
+
+      <div class="ae-tip-surface fixture-tip" data-open role="tooltip">
+        Inspect report
+      </div>
+      <div class="ae-toasts" hidden>Saved</div>
+
+      <span data-ae-tip="Native tooltip" data-testid="native-tip">Native</span>
+      <dialog class="ae-dialog" data-testid="native-dialog"></dialog>
+
+      <div class="ae-dialog-backdrop" data-testid="backdrop"></div>
+      <section
+        class="ae-dialog-panel"
+        data-open
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+      >
+        <h1 class="ae-dialog-title" id="dialog-title">Archive report?</h1>
+        <p>This action moves the report out of the active queue.</p>
+        <div class="ae-dialog-acts">
+          <button class="ae-button ae-button-quiet" type="button">
+            Cancel
+          </button>
+          <button class="ae-button" type="button">Archive</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

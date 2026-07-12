@@ -64,13 +64,18 @@
     }
   },
   "devDependencies": {
+    "@base-ui/react": "^1.6.0",
     "@playwright/test": "^1.60.0",
+    "@vitejs/plugin-react": "^6.0.3",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "prettier": "3.8.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "stylelint": "17.13.0",
     "stylelint-config-standard": "40.0.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.1.1"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

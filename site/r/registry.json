@@ -69,6 +69,9 @@
           "--ae-space-6",
           "--ae-space-7",
           "--ae-space-8",
+          "--ae-z-backdrop",
+          "--ae-z-dialog",
+          "--ae-z-pop",
           "--ae-z-tip",
           "--ae-z-toast",
           "--ae-ease",
@@ -653,7 +656,7 @@
       "name": "status",
       "type": "registry:item",
       "title": "aesthetic Status",
-      "description": "Aesthetic Status primitive, v2.24.0. Installs ae-err, ae-icon, ae-ok, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Status primitive, v2.24.0. Installs ae-err, ae-icon, ae-ok, ae-status, ae-status-label, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -661,7 +664,14 @@
         "version": "2.24.0",
         "tier": "primitive",
         "route": "status",
-        "classes": ["ae-err", "ae-icon", "ae-ok", "ae-warn"],
+        "classes": [
+          "ae-err",
+          "ae-icon",
+          "ae-ok",
+          "ae-status",
+          "ae-status-label",
+          "ae-warn"
+        ],
         "attributes": [],
         "tokens": [
           "--ae-surface",
@@ -684,7 +694,8 @@
           "--ae-err",
           "--ae-ok-dark",
           "--ae-warn-dark",
-          "--ae-err-dark"
+          "--ae-err-dark",
+          "--ae-space-2"
         ],
         "recipes": []
       },
@@ -813,7 +824,7 @@
       "name": "dialog",
       "type": "registry:item",
       "title": "aesthetic Dialog",
-      "description": "Aesthetic Dialog primitive, v2.24.0. Installs ae-button, ae-button-quiet, ae-dialog, ae-dialog-acts, ae-dialog-title, ae-dim without the full stylesheet. Recipes: dialog.js.",
+      "description": "Aesthetic Dialog primitive, v2.24.0. Installs ae-button, ae-button-quiet, ae-dialog, ae-dialog-acts, ae-dialog-backdrop, ae-dialog-panel, ae-dialog-title, ae-dim without the full stylesheet. Recipes: dialog.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -826,6 +837,8 @@
           "ae-button-quiet",
           "ae-dialog",
           "ae-dialog-acts",
+          "ae-dialog-backdrop",
+          "ae-dialog-panel",
           "ae-dialog-title",
           "ae-dim"
         ],
@@ -854,6 +867,8 @@
           "--ae-space-2",
           "--ae-space-4",
           "--ae-space-6",
+          "--ae-z-backdrop",
+          "--ae-z-dialog",
           "--ae-soft"
         ],
         "recipes": ["dialog.js"]
@@ -1138,7 +1153,7 @@
       "name": "tip",
       "type": "registry:item",
       "title": "aesthetic Tooltip",
-      "description": "Aesthetic Tooltip primitive, v2.24.0. Installs [data-ae-tip] without the full stylesheet.",
+      "description": "Aesthetic Tooltip primitive, v2.24.0. Installs ae-tip-positioner, ae-tip-surface, [data-ae-tip] without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -1146,7 +1161,7 @@
         "version": "2.24.0",
         "tier": "primitive",
         "route": "tip",
-        "classes": [],
+        "classes": ["ae-tip-positioner", "ae-tip-surface"],
         "attributes": ["[data-ae-tip]"],
         "tokens": [
           "--ae-surface",
@@ -1184,7 +1199,7 @@
       "name": "pop",
       "type": "registry:item",
       "title": "aesthetic Popover",
-      "description": "Aesthetic Popover primitive, v2.24.0. Installs ae-menu, ae-pop without the full stylesheet. Recipes: pop.js.",
+      "description": "Aesthetic Popover primitive, v2.24.0. Installs ae-menu, ae-menu-item, ae-pop, ae-pop-positioner, ae-pop-surface without the full stylesheet. Recipes: pop.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -1192,7 +1207,13 @@
         "version": "2.24.0",
         "tier": "primitive",
         "route": "pop",
-        "classes": ["ae-menu", "ae-pop"],
+        "classes": [
+          "ae-menu",
+          "ae-menu-item",
+          "ae-pop",
+          "ae-pop-positioner",
+          "ae-pop-surface"
+        ],
         "attributes": [],
         "tokens": [
           "--ae-surface",
@@ -1215,7 +1236,8 @@
           "--ae-ink-muted-dark",
           "--ae-line-dark",
           "--ae-w-medium",
-          "--ae-radius"
+          "--ae-radius",
+          "--ae-z-pop"
         ],
         "recipes": ["pop.js"]
       },

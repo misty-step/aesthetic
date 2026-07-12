@@ -208,14 +208,40 @@ const selectorMatches = (prelude, markers) => {
 
 const renderRule = (rule) => `${rule.prelude} {\n${rule.body}\n}`;
 
+const splitSelectorList = (prelude) => {
+  const selectors = [];
+  let start = 0;
+  let depth = 0;
+  let quote = '';
+
+  for (let i = 0; i < prelude.length; i++) {
+    const ch = prelude[i];
+    const prev = prelude[i - 1];
+    if (quote) {
+      if (ch === quote && prev !== '\\') quote = '';
+    } else if (ch === '"' || ch === "'") {
+      quote = ch;
+    } else if (ch === '(' || ch === '[') {
+      depth++;
+    } else if (ch === ')' || ch === ']') {
+      depth--;
+    } else if (ch === ',' && depth === 0) {
+      selectors.push(prelude.slice(start, i));
+      start = i + 1;
+    }
+  }
+
+  selectors.push(prelude.slice(start));
+  return selectors;
+};
+
 const filteredPrelude = (
   prelude,
   predicate,
   { splitSelectors = false } = {},
 ) => {
   if (!splitSelectors) return predicate(prelude) ? prelude : '';
-  return prelude
-    .split(',')
+  return splitSelectorList(prelude)
     .map((selector) => selector.trim())
     .filter(predicate)
     .join(',\n');
@@ -294,10 +320,26 @@ const classesFrom = (s) => {
 
 const EXTRA_CLASSES = {
   buttons: ['ae-button-compact', 'ae-button-quiet', 'ae-icon'],
-  dialog: ['ae-button', 'ae-button-quiet'],
+  dialog: [
+    'ae-button',
+    'ae-button-quiet',
+    'ae-dialog-panel',
+    'ae-dialog-backdrop',
+    'ae-dialog-title',
+    'ae-dialog-acts',
+  ],
   figures: ['ae-icon', 'ae-ok', 'ae-warn', 'ae-err'],
   plot: ['ae-ok', 'ae-warn', 'ae-err'],
-  status: ['ae-icon'],
+  pop: ['ae-pop-positioner', 'ae-pop-surface', 'ae-menu', 'ae-menu-item'],
+  status: [
+    'ae-status',
+    'ae-status-label',
+    'ae-icon',
+    'ae-ok',
+    'ae-warn',
+    'ae-err',
+  ],
+  tip: ['ae-tip-positioner', 'ae-tip-surface'],
   toast: ['ae-icon', 'ae-ok', 'ae-warn', 'ae-err', 'ae-toast-x'],
   validation: ['ae-icon', 'ae-err'],
 };

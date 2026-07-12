@@ -293,9 +293,39 @@ No build step: load the combined file —
 <script src="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v0.24.0/recipes/recipes.js"></script>
 ```
 
-React apps: treat the recipes as reference implementations — port the
-ones you need into components, or style Base UI / Radix primitives
-with the `ae-` classes and let them own focus management.
+React apps use Base UI as the preferred behavior substrate. Keep
+`aesthetic.css` as the styling layer; apply the adapter classes to the
+portaled elements whose anatomy differs from the native HTML recipes:
+
+| Base UI part              | Aesthetic class      |
+| ------------------------- | -------------------- |
+| `Dialog.Popup`            | `ae-dialog-panel`    |
+| `Dialog.Backdrop`         | `ae-dialog-backdrop` |
+| Menu/popover `Positioner` | `ae-pop-positioner`  |
+| Menu/popover popup        | `ae-pop-surface`     |
+| `Menu.Item`               | `ae-menu-item`       |
+| `Tooltip.Positioner`      | `ae-tip-positioner`  |
+| `Tooltip.Popup`           | `ae-tip-surface`     |
+
+```tsx
+<Dialog.Portal>
+  <Dialog.Backdrop className="ae-dialog-backdrop" />
+  <Dialog.Popup className="ae-dialog-panel" data-open>
+    <Dialog.Title className="ae-dialog-title">Archive report?</Dialog.Title>
+    <div className="ae-dialog-acts">{actions}</div>
+  </Dialog.Popup>
+</Dialog.Portal>
+```
+
+Base UI owns focus trapping, Escape, focus return, positioning, and ARIA.
+The adapter only clothes its rendered anatomy. Buttons, tabs, menu rows,
+status marks, and form controls continue to wear their existing `ae-`
+classes directly; Base UI's non-button `Menu.Item` uses `ae-menu-item`. No
+Tailwind theme or second component palette is needed.
+Keep Base UI's `Positioner` around menu, popover, and tooltip popups: it owns
+their geometry, while its adapter class supplies the Aesthetic layer.
+The shared order is backdrop → dialog → popover → tooltip → toast, so a
+modal-owned menu or tooltip stays above the decision it explains.
 
 ## 7 · Enforce the law in CI
 
