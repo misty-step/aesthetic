@@ -20,7 +20,8 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'vite tests/fixtures/base-ui-app --port 8643 --strictPort',
+      command:
+        'vite tests/fixtures/base-ui-app --host 127.0.0.1 --port 8643 --strictPort',
       url: 'http://127.0.0.1:8643/',
       reuseExistingServer: !process.env.CI,
     },
