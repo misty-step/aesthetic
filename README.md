@@ -331,6 +331,12 @@ combined file the site itself runs. Load it without a build step from
 jsDelivr, copy the singles into your project, or port them to your
 framework; they are documentation that happens to execute.
 
+React consumers use Base UI as the preferred behavior substrate while
+`aesthetic.css` remains the complete styling layer. Its portaled anatomy
+wears `.ae-dialog-panel`, `.ae-dialog-backdrop`, `.ae-pop-surface`, and
+`.ae-tip-surface`; ordinary controls keep their existing `ae-` classes.
+See the worked mapping in [docs/ADOPTING.md](docs/ADOPTING.md).
+
 ## Primitives
 
 | Class                                                   | Role                                                                                         |
