@@ -1,5 +1,47 @@
 [
   {
+    "audience": "developer",
+    "html": "<h2>New Features</h2>\n<ul>\n<li><strong>Base UI integration support</strong>: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.</li>\n</ul>\n<h2>Improvements</h2>\n<ul>\n<li>\n<p>Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.</p>\n</li>\n<li>\n<p>Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.</p>\n</li>\n<li>\n<p>Updated installation snippets and build workflows with improved release automation and dependency pinning.</p>\n</li>\n</ul>\n",
+    "markdown": "## New Features\n\n- **Base UI integration support**: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.\n\n## Improvements\n\n- Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.\n\n- Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.\n\n- Updated installation snippets and build workflows with improved release automation and dependency pinning.",
+    "notes": "## New Features\n\n- **Base UI integration support**: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.\n\n## Improvements\n\n- Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.\n\n- Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.\n\n- Updated installation snippets and build workflows with improved release automation and dependency pinning.",
+    "plaintext": "New Features\nBase UI integration support: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.\nImprovements\nEnhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.\nDesign exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.\nUpdated installation snippets and build workflows with improved release automation and dependency pinning.",
+    "published_at": "2026-07-12T00:55:48.502718434+00:00",
+    "release_url": "https://github.com/misty-step/aesthetic/releases/tag/v0.25.0",
+    "repository": "misty-step/aesthetic",
+    "schema_version": "landmark.public-release-notes.v1",
+    "sections": [
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Base UI integration support: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation."
+          }
+        ],
+        "title": "New Features"
+      },
+      {
+        "bullets": [
+          {
+            "links": [],
+            "text": "Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches."
+          },
+          {
+            "links": [],
+            "text": "Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes."
+          },
+          {
+            "links": [],
+            "text": "Updated installation snippets and build workflows with improved release automation and dependency pinning."
+          }
+        ],
+        "title": "Improvements"
+      }
+    ],
+    "slack": "## New Features\n\n- *Base UI integration support*: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.\n\n## Improvements\n\n- Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.\n\n- Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.\n\n- Updated installation snippets and build workflows with improved release automation and dependency pinning.",
+    "tag": "v0.25.0",
+    "version": "0.25.0"
+  },
+  {
     "html": "<h2>Bug Fixes</h2>\n<ul>\n<li>Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.</li>\n</ul>\n<details>\n<summary>Release classification notes</summary>\n<p>Landmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip</p>\n</details>",
     "markdown": "## Bug Fixes\n\n- Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n\n</details>",
     "notes": "## Bug Fixes\n\n- Removed hardcoded internal hostnames from documentation files that were causing confusion for external integrators.\n\n<details>\n<summary>Release classification notes</summary>\n\nLandmark classification notice: deterministic release signals (conventional:chore, conventional:fix, security) disagreed with model classification; synthesis proceeded. deterministic floor found user-visible commit signals but model did not; deterministic floor prevented low-significance skip\n\n</details>",

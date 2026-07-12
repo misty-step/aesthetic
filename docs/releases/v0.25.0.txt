@@ -1,0 +1,6 @@
+New Features
+Base UI integration support: Added anatomy adapter that enables native styling of shadcn/ui and Radix Base UI components through aesthetic.css, with documented portal layering contract and registry validation.
+Improvements
+Enhanced adoption documentation with five distinct strategies for integrating shadcn/Base UI components, from theme-only CSS variable mappings to full registry distribution approaches.
+Design exploration lab now includes comprehensive Base UI futures catalog with responsive testing across light/dark modes and multiple viewport sizes.
+Updated installation snippets and build workflows with improved release automation and dependency pinning.
