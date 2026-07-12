@@ -1,3 +1,16 @@
+# [0.25.0](https://github.com/misty-step/aesthetic/compare/v0.24.0...v0.25.0) (2026-07-12)
+
+### Bug Fixes
+
+- **ci:** bind Base UI fixture server ([0125c4e](https://github.com/misty-step/aesthetic/commit/0125c4eb032c38df86fc171af6ff17d94e69e697))
+- **ci:** point gallery law checks at catalog ([8b3fc25](https://github.com/misty-step/aesthetic/commit/8b3fc251f086d2552b4ac13464162444a23ffeab))
+- **lab:** render retained direction details ([#26](https://github.com/misty-step/aesthetic/issues/26)) ([f31bbbf](https://github.com/misty-step/aesthetic/commit/f31bbbf46b130db8b9479f7c30c21b5dd8a5b251))
+
+### Features
+
+- ship Base UI anatomy adapter ([d682934](https://github.com/misty-step/aesthetic/commit/d682934a9e659776a4bca62d7830b42841c96afd))
+- **site:** lock aesthetic fleet marketing homepage ([f8394ad](https://github.com/misty-step/aesthetic/commit/f8394ad7948f963ea96f49a81375030d3646e4ce))
+
 ## Version reset: 2.24.0 → 0.24.0 (2026-07-08)
 
 Fleet moved to pre-stable 0.x semantics (Powder landmark-016/017).
