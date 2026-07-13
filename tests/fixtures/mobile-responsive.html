@@ -18,6 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
     />
     <link rel="stylesheet" href="../../aesthetic.css" />
+    <script defer src="../../recipes/nav.js"></script>
   </head>
   <body>
     <svg aria-hidden="true" width="0" height="0" style="position: absolute">
@@ -32,16 +33,31 @@
         <path d="M12 9v4" />
         <path d="M12 17h.01" />
       </symbol>
+      <symbol id="i-loader-circle" viewBox="0 0 24 24">
+        <path d="M21 12a9 9 0 1 1-6.22-8.56" />
+      </symbol>
     </svg>
 
     <div class="ae-shell" data-testid="mobile-shell">
       <aside class="ae-rail" aria-label="places">
-        <p class="ae-h">PLACES</p>
-        <a aria-current="page" href="#overview">overview</a>
-        <a href="#incidents">incidents</a>
-        <a href="#board">board</a>
+        <nav class="ae-rail-nav" aria-label="places">
+          <p class="ae-h">PLACES</p>
+          <a href="#overview">overview</a>
+          <a href="#incidents">incidents</a>
+          <a href="#board">board</a>
+          <a href="#runs">runs</a>
+          <a href="#agents">agents</a>
+          <a href="#spend">spend</a>
+          <a aria-current="page" href="#settings">settings</a>
+        </nav>
         <div class="ae-rail-foot">
-          <button class="ae-mode" aria-label="toggle color mode">mode</button>
+          <button
+            class="ae-mode"
+            data-testid="mode-utility"
+            aria-label="toggle color mode"
+          >
+            mode
+          </button>
         </div>
       </aside>
       <main class="ae-desk" id="overview">
@@ -75,11 +91,11 @@
                 >
               </span>
               <span class="ae-list-cell ae-list-status" data-field="status">
-                <svg class="ae-icon ae-warn" data-lucide="triangle-alert">
-                  <use href="#i-triangle-alert" />
+                <svg class="ae-icon ae-progress" data-lucide="loader-circle">
+                  <use href="#i-loader-circle" />
                 </svg>
                 <span class="ae-list-label">status</span>
-                <span class="ae-list-value">watching</span>
+                <span class="ae-list-value">running</span>
               </span>
             </a>
           </div>
