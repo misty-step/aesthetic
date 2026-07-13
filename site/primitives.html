@@ -78,6 +78,9 @@
         <path d="M12 9v4" />
         <path d="M12 17h.01" />
       </symbol>
+      <symbol id="i-loader-circle" viewBox="0 0 24 24">
+        <path d="M21 12a9 9 0 1 1-6.22-8.56" />
+      </symbol>
       <symbol id="i-github" viewBox="0 0 24 24">
         <path
           d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"
@@ -1084,15 +1087,21 @@
             <p class="ae-chrome back-link"><a href="#">← all primitives</a></p>
             <div class="ae-group">
               <h2 class="ae-h" tabindex="-1">Status</h2>
-              <p class="gal-cls">.ae-ok / .ae-warn / .ae-err</p>
+              <p class="gal-cls">.ae-progress / .ae-ok / .ae-warn / .ae-err</p>
               <p class="ae-dim">
-                Status rides the glyph: success, warning, and danger color the
-                icon — never the sentence, never a filled pill. The words stay
-                ink.
+                Status rides the glyph: active progress spends the accent;
+                success, warning, and danger use their semantic inks. The icon
+                carries the state — never the sentence, never a filled pill.
               </p>
             </div>
             <div class="src-split">
               <div>
+                <p>
+                  <svg class="ae-icon ae-progress">
+                    <use href="#i-loader-circle" />
+                  </svg>
+                  Review is running.
+                </p>
                 <p>
                   <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
                   Deploy succeeded.
@@ -1109,6 +1118,9 @@
                 </p>
               </div>
               <pre class="src-code"><code>&lt;p&gt;
+  &lt;svg class="<span class="t">ae-icon ae-progress</span>"&gt;…loader-circle…&lt;/svg&gt; Review is running.
+&lt;/p&gt;
+&lt;p&gt;
   &lt;svg class="<span class="t">ae-icon ae-ok</span>"&gt;…check…&lt;/svg&gt; Deploy succeeded.
 &lt;/p&gt;
 &lt;p&gt;
@@ -2664,129 +2676,141 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
                     ▸ advance
                   </button>
                 </p>
-                <svg
-                  class="ae-flow"
-                  id="flow-demo"
-                  viewBox="0 0 684 140"
-                  role="img"
-                  aria-label="a four-stage pipeline spine: arena cleared, search running in accent, gates and launch locked, joined by orthogonal wires"
+                <div
+                  class="ae-flow-viewport"
+                  tabindex="0"
+                  role="region"
+                  aria-label="workflow diagram; scroll horizontally on narrow screens"
                 >
-                  <path class="ae-wire is-active" d="M 138 70 L 194 70" />
-                  <path class="ae-wire is-locked" d="M 314 70 L 370 70" />
-                  <path class="ae-wire is-locked" d="M 490 70 L 546 70" />
-                  <rect
-                    class="ae-node is-done"
-                    x="18"
-                    y="43"
-                    width="120"
-                    height="54"
-                  />
-                  <text
-                    class="ae-node-kicker"
-                    x="78"
-                    y="61"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
+                  <svg
+                    class="ae-flow"
+                    id="flow-demo"
+                    viewBox="0 0 684 140"
+                    role="img"
+                    aria-label="a four-stage pipeline spine: arena cleared, search running in accent, gates and launch locked, joined by orthogonal wires"
                   >
-                    01
-                  </text>
-                  <text
-                    class="ae-node-label"
-                    x="78"
-                    y="80"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    arena
-                  </text>
-                  <path class="ae-icon ae-ok" d="M 117 54 L 120 57 L 126 49" />
-                  <rect
-                    class="ae-node is-active"
-                    x="194"
-                    y="43"
-                    width="120"
-                    height="54"
-                  />
-                  <text
-                    class="ae-node-kicker"
-                    x="254"
-                    y="61"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    02
-                  </text>
-                  <text
-                    class="ae-node-label is-active"
-                    x="254"
-                    y="80"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    search
-                  </text>
-                  <rect
-                    class="ae-node is-locked"
-                    x="370"
-                    y="43"
-                    width="120"
-                    height="54"
-                  />
-                  <text
-                    class="ae-node-kicker"
-                    x="430"
-                    y="61"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    03
-                  </text>
-                  <text
-                    class="ae-node-label is-locked"
-                    x="430"
-                    y="80"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    gates
-                  </text>
-                  <rect
-                    class="ae-node is-locked"
-                    x="546"
-                    y="43"
-                    width="120"
-                    height="54"
-                  />
-                  <text
-                    class="ae-node-kicker"
-                    x="606"
-                    y="61"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    04
-                  </text>
-                  <text
-                    class="ae-node-label is-locked"
-                    x="606"
-                    y="80"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                  >
-                    launch
-                  </text>
-                </svg>
+                    <path class="ae-wire is-active" d="M 138 70 L 194 70" />
+                    <path class="ae-wire is-locked" d="M 314 70 L 370 70" />
+                    <path class="ae-wire is-locked" d="M 490 70 L 546 70" />
+                    <rect
+                      class="ae-node is-done"
+                      x="18"
+                      y="43"
+                      width="120"
+                      height="54"
+                    />
+                    <text
+                      class="ae-node-kicker"
+                      x="78"
+                      y="61"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      01
+                    </text>
+                    <text
+                      class="ae-node-label"
+                      x="78"
+                      y="80"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      arena
+                    </text>
+                    <path
+                      class="ae-icon ae-ok"
+                      d="M 117 54 L 120 57 L 126 49"
+                    />
+                    <rect
+                      class="ae-node is-active"
+                      x="194"
+                      y="43"
+                      width="120"
+                      height="54"
+                    />
+                    <text
+                      class="ae-node-kicker"
+                      x="254"
+                      y="61"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      02
+                    </text>
+                    <text
+                      class="ae-node-label is-active"
+                      x="254"
+                      y="80"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      search
+                    </text>
+                    <rect
+                      class="ae-node is-locked"
+                      x="370"
+                      y="43"
+                      width="120"
+                      height="54"
+                    />
+                    <text
+                      class="ae-node-kicker"
+                      x="430"
+                      y="61"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      03
+                    </text>
+                    <text
+                      class="ae-node-label is-locked"
+                      x="430"
+                      y="80"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      gates
+                    </text>
+                    <rect
+                      class="ae-node is-locked"
+                      x="546"
+                      y="43"
+                      width="120"
+                      height="54"
+                    />
+                    <text
+                      class="ae-node-kicker"
+                      x="606"
+                      y="61"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      04
+                    </text>
+                    <text
+                      class="ae-node-label is-locked"
+                      x="606"
+                      y="80"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                    >
+                      launch
+                    </text>
+                  </svg>
+                </div>
               </div>
               <pre
                 class="src-code"
-              ><code>&lt;<span class="t">svg</span> class="<span class="t">ae-flow</span>" viewBox="0 0 684 140" role="img"&gt;
+              ><code>&lt;<span class="t">div</span> class="<span class="t">ae-flow-viewport</span>" tabindex="0" role="region" aria-label="workflow diagram"&gt;
+  &lt;<span class="t">svg</span> class="<span class="t">ae-flow</span>" viewBox="0 0 684 140" role="img"&gt;
   &lt;<span class="t">path</span> class="<span class="t">ae-wire is-active</span>" d="M 138 70 L 194 70"/&gt;
   &lt;<span class="t">rect</span> class="<span class="t">ae-node is-done</span>" x="18" y="43" width="120" height="54"/&gt;
   &lt;<span class="t">text</span> class="<span class="t">ae-node-label</span>" x="78" y="80"&gt;arena&lt;/text&gt;
   &lt;<span class="t">path</span> class="<span class="t">ae-icon ae-ok</span>" d="M 117 54 L 120 57 L 126 49"/&gt;
   &lt;<span class="t">rect</span> class="<span class="t">ae-node is-active</span>" x="194" y="43" …/&gt;
   &lt;<span class="t">rect</span> class="<span class="t">ae-node is-locked</span>" x="370" y="43" …/&gt;
-&lt;/<span class="t">svg</span>&gt;</code></pre>
+  &lt;/<span class="t">svg</span>&gt;
+&lt;/<span class="t">div</span>&gt;</code></pre>
             </div>
           </div>
 
@@ -2799,7 +2823,9 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
                 The app shell: one viewport, hairline-divided — a 13px rail for
                 places, a desk for work. The desk scrolls inside itself; the
                 page never moves. On small screens the same rail becomes bottom
-                chrome, not a hidden drawer.
+                chrome, not a hidden drawer. The nav recipe reveals the current
+                destination inside the scrollable strip while the utility foot
+                stays pinned.
               </p>
             </div>
             <div class="src-split">
@@ -2822,9 +2848,11 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
                 class="src-code"
               ><code>&lt;<span class="t">div</span> class="<span class="t">ae-shell</span>"&gt;
   &lt;<span class="t">aside</span> class="<span class="t">ae-rail</span>"&gt;
-    &lt;p class="<span class="t">ae-h</span>"&gt;PLACES&lt;/p&gt;
-    &lt;a href="…"&gt;agents&lt;/a&gt;
-    &lt;a href="…"&gt;history&lt;/a&gt;
+    &lt;<span class="t">nav</span> class="<span class="t">ae-rail-nav</span>" aria-label="places"&gt;
+      &lt;p class="<span class="t">ae-h</span>"&gt;PLACES&lt;/p&gt;
+      &lt;a href="…"&gt;agents&lt;/a&gt;
+      &lt;a href="…"&gt;history&lt;/a&gt;
+    &lt;/<span class="t">nav</span>&gt;
     &lt;div class="<span class="t">ae-rail-foot</span>"&gt;…mode toggle…&lt;/div&gt;
   &lt;/aside&gt;
   &lt;<span class="t">main</span> class="<span class="t">ae-desk</span>"&gt;…the work…&lt;/main&gt;
@@ -2893,10 +2921,7 @@ aeToast('Copied.', { timeout: 4000 });</code></pre>
                   <div class="ae-plate">
                     <p class="ae-plate-note" style="margin: 0">
                       opus·hi <span class="ae-strong">93</span> · ensemble 89 ·
-                      sonnet·v4 90 ·
-                      <span style="color: var(--ae-ink-faint)"
-                        >haiku·rag 44</span
-                      >
+                      sonnet·v4 90 · <span>haiku·rag 44</span>
                     </p>
                   </div>
                 </figure>

@@ -529,7 +529,7 @@
   margin: 0;
   font-size: 13px;
   line-height: 1.75;
-  color: var(--ae-ink-muted);
+  color: var(--ae-ink);
   white-space: pre-wrap;
   overflow-wrap: break-word;
   padding-left: 2.4em;
@@ -633,7 +633,7 @@
   font-family: var(--ae-font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--ae-ink-faint);
+  color: var(--ae-ink-muted);
   margin-bottom: 1.2em;
 }
 
@@ -654,7 +654,7 @@
   font-family: var(--ae-font-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: var(--ae-ink-faint);
+  color: var(--ae-ink-muted);
 }
 
 .state-demo {
