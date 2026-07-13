@@ -3,7 +3,7 @@
 The durable north star. The law and the visual identity live in
 `aesthetic.css`, `tokens.json`, and `DESIGN.md`; the agent contract lives in
 `CLAUDE.md`. This file is the product strategy those serve — the frame that
-ranks the backlog (`backlog.d/011`–`021`) and decides what is in and out.
+ranks the product work tracked in Powder and decides what is in and out.
 
 ## One sentence
 

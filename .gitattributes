@@ -9,7 +9,6 @@
 /.gitignore export-ignore
 /.prettierrc export-ignore
 /.stylelintrc.json export-ignore
-/backlog.d export-ignore
 /playwright.config.ts export-ignore
 /prototypes export-ignore
 /scripts export-ignore

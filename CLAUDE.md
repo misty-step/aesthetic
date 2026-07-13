@@ -58,7 +58,7 @@ vs dials — lives in `docs/ADOPTING.md`.
   committed for history, NEVER deployed; the Pages workflow stages
   `site/` exclusively. Prototype files never graduate by copy — the
   locked direction gets rebuilt properly in `site/`.
-- `backlog.d/` — tickets; see `003`–`011` for current arcs.
+- Product work is tracked in the deployed Powder board, never in this repository.
 
 ## Gates
 
@@ -84,7 +84,7 @@ calibrations, documented by their grouping.
    `tokens.json`, and regenerates the registry; then commits and tags
    `vX.Y.Z`.
 3. Push with tags. Consumers pin tags and upgrade deliberately —
-   never bump them implicitly; adoption PRs (backlog 011) do that
+   never bump them implicitly; adoption work does that
    per-repo with evidence.
 4. Pages deploys `site/` automatically on push to master
    (`.github/workflows/pages.yml`).
