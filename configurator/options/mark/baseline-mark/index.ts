@@ -1,0 +1,3 @@
+import type { MarkOption } from '../../../src/contract';
+import { esc } from '../../../src/html';
+export default { id: 'baseline-mark', layer: 'mark', label: 'Plain square', summary: 'An intentionally plain placeholder symbol for testing the other layers.', origin: 'baseline', refs: [{ name: 'Misty Step', url: 'https://mistystep.io', what: 'Keeps a symbol and name in the navigation without introducing a visual direction.' }], svg: ({size,title}) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" role="img" aria-label="${esc(title)}"><rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"/></svg>` } satisfies MarkOption;
