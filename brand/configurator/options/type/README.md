@@ -1,6 +1,6 @@
 # Type options
 
-Nine type systems for the configurator's `type` layer, plus LabCore's plain `baseline-type` control. Each option sets the four roles (display, body, UI, mono), the scale and the display setting as tokens, and self-hosts Latin-subset woff2 files with their OFL texts beside them in `fonts/`.
+Nine type systems for the configurator's `type` layer, plus LabCore's plain `baseline-type` control and two product faces for Surfaces (`src/surfaces/faces.ts`). Each option sets the four roles (display, body, UI, mono), the scale and the display setting as tokens, and self-hosts Latin-subset woff2 files with their OFL texts beside them in `fonts/`.
 
 | id | Display | Body and UI | Mono | Origin | Fonts |
 | --- | --- | --- | --- | --- | --- |
@@ -13,6 +13,8 @@ Nine type systems for the configurator's `type` layer, plus LabCore's plain `bas
 | `a-tiling` | Schibsted Grotesk 640, -0.035em | Schibsted Grotesk | Chivo Mono | A | 69.0 KB |
 | `b-atelier` | Literata 400 on its opsz axis | Literata | Departure Mono (code and figures) | B | 106.6 KB |
 | `c-steps` | Archivo width 112, 740; Bitcount pixel digits | Archivo | Fragment Mono | C | 75.5 KB |
+| `instrument` | Geist 800, every step at 16px (13px chrome) | Geist | Geist Mono | product face (aesthetic) | 47.9 KB |
+| `poppycock` | Fredoka 600 | Atkinson Hyperlegible 400 and 700 | Atkinson Hyperlegible Mono (a proposal) | product face (Poppycock) | 54.0 KB |
 
 Each `index.ts` names what the option learns from each reference, and its `license` field lists every face.
 

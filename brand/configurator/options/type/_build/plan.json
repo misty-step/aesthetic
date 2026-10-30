@@ -262,5 +262,55 @@
       "src": "gf/fragmentmono/FragmentMono-Regular.ttf",
       "out": "fragment-mono-latin.woff2"
     }
+  ],
+  "instrument": [
+    {
+      "src": "gf/geist/Geist[wght].ttf",
+      "out": "geist-latin.woff2",
+      "axes": {
+        "wght": [
+          400,
+          800
+        ]
+      }
+    },
+    {
+      "src": "gf/geistmono/GeistMono[wght].ttf",
+      "out": "geist-mono-latin.woff2",
+      "axes": {
+        "wght": [
+          400,
+          600
+        ]
+      }
+    }
+  ],
+  "poppycock": [
+    {
+      "src": "gf/fredoka/Fredoka[wdth,wght].ttf",
+      "out": "fredoka-latin.woff2",
+      "axes": {
+        "wdth": 100,
+        "wght": 600
+      }
+    },
+    {
+      "src": "gf/atkinsonhyperlegible/AtkinsonHyperlegible-Regular.ttf",
+      "out": "atkinson-hyperlegible-latin.woff2"
+    },
+    {
+      "src": "gf/atkinsonhyperlegible/AtkinsonHyperlegible-Bold.ttf",
+      "out": "atkinson-hyperlegible-bold-latin.woff2"
+    },
+    {
+      "src": "gf/atkinsonhyperlegiblemono/AtkinsonHyperlegibleMono[wght].ttf",
+      "out": "atkinson-hyperlegible-mono-latin.woff2",
+      "axes": {
+        "wght": [
+          400,
+          600
+        ]
+      }
+    }
   ]
 }

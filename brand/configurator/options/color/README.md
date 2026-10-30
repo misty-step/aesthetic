@@ -1,6 +1,6 @@
 # Colour options
 
-Thirteen palettes, each a composed light theme and a composed dark theme in OKLCH role tokens (`ColorTokens` in `src/contract.ts`). Ten are new, at least one for every named reference. Three port the previous round's directions (`origin` A, B, C).
+Thirteen palettes, each a composed light theme and a composed dark theme in OKLCH role tokens (`ColorTokens` in `src/contract.ts`). Ten are new, at least one for every named reference. Three port the previous round's directions (`origin` A, B, C). Two more are product faces for Surfaces (`src/surfaces/faces.ts`); they keep their sources' hex values where the guarantees allow and name each adjustment in their headers.
 
 | id | Label | Origin | Strategy | Grounded in |
 | --- | --- | --- | --- | --- |
@@ -17,6 +17,8 @@ Thirteen palettes, each a composed light theme and a composed dark theme in OKLC
 | `fog-sodium` | Fog and sodium | A | Amber marks only the active thing | Direction A |
 | `paper-rubric` | Paper and rubric | B | Ink-filled buttons, rubric red second ink | Direction B |
 | `stone-green` | Stone and signal green | C | Green on the action and the goal | Direction C |
+| `instrument` | Instrument (product face) | new | aesthetic's ink on paper, ember as the one fill; dark ground #121212 (L 0.18) from the package | aesthetic tokens.json, Landmark |
+| `poppycock` | Poppycock (product face) | new | Lilac room, grape action, blue focus; the dark theme is a proposal. The probe flags grape as violet: it is Poppycock's own | Poppycock DESIGN.md and globals.css |
 
 `baseline-color` (Plain neutral) is the lab's control, not a direction. It follows the same guarantees: its fields were lightened, and its dark `--bg-3` now sits below `--bg`.
 
