@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-See [the configurator guide](configurator/README.md) for option authoring, the rendering contract and verification. The lab is previewed at https://misty-brand-lab.misty-step.workers.dev; `.github/workflows/brand.yml` checks every change to `brand/`.
+See [the configurator guide](configurator/README.md) for option authoring, the rendering contract and verification. `.github/workflows/brand.yml` checks every change to `brand/`, and every push to `master` that touches `brand/` deploys the lab to https://misty-brand-lab.misty-step.workers.dev (`.github/workflows/brand-lab-deploy.yml`).
 
 `brand/` lives in `misty-step/aesthetic`, the home for Misty Step brand development since 30 October 2026. It moved here as one commit from `misty-step/brand`, whose history stays readable in that archived repository.
 

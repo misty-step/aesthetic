@@ -42,7 +42,7 @@ jobs:
           npm pack --silent
           tarball="misty-step-brand-${VERSION}.tgz"
           test -f "$tarball"
-          gh release create "$GITHUB_REF_NAME" "$tarball" --verify-tag \
+          gh release create "$GITHUB_REF_NAME" "$tarball" --verify-tag --latest=false \
             --title "@misty-step/brand ${VERSION}" \
             --notes "Install: \`\"@misty-step/brand\": \"https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${tarball}\"\`"
       - name: The published tarball downloads and matches
