@@ -34,6 +34,10 @@ literata Literata[opsz,wght].ttf
 archivo Archivo[wdth,wght].ttf
 bitcountgridsingle BitcountGridSingle[CRSV,ELSH,ELXP,slnt,wght].ttf
 fragmentmono FragmentMono-Regular.ttf
+fredoka Fredoka[wdth,wght].ttf
+atkinsonhyperlegible AtkinsonHyperlegible-Regular.ttf
+atkinsonhyperlegible AtkinsonHyperlegible-Bold.ttf
+atkinsonhyperlegiblemono AtkinsonHyperlegibleMono[wght].ttf
 LIST
 
 get "https://raw.githubusercontent.com/vercel/geist-font/$GEIST/fonts/GeistPixel/ttf/GeistPixel-Square.ttf" "$SRC/geist/GeistPixel-Square.ttf"

@@ -1,0 +1,61 @@
+/* The Surfaces page itself: header, the three-column sheet and the screen frames. It wears the studio face, and
+   each sheet column wears its own, so this file reads only spine tokens too. No ambient motion here. */
+
+html[data-page="surfaces"], html[data-page="surfaces"] body { margin: 0; }
+html[data-page="surfaces"] *, html[data-page="surfaces"] *::before, html[data-page="surfaces"] *::after { box-sizing: border-box; }
+.sf :is(h1, h2, h3, h4, p, ul, figure) { margin: 0; }
+.sf main:focus { outline: none; }
+.sf { --sf-edge: clamp(16px, 4vw, 48px); padding-bottom: 96px; }
+
+.sf-head { display: grid; gap: 16px; padding: clamp(32px, 5vw, 64px) var(--sf-edge) 28px; border-bottom: var(--rule-2) solid var(--ink); }
+.sf-head h1 { font-family: var(--font-display); font-size: var(--step-5); font-weight: var(--display-weight); line-height: var(--display-leading); letter-spacing: var(--display-tracking); text-transform: var(--display-transform); }
+.sf-lede { max-width: var(--measure); font-size: var(--step-1); line-height: 1.4; color: var(--ink-2); }
+.sf-meta { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-2); }
+.sf-meta .sp-link { display: inline-flex; align-items: center; min-height: 44px; }
+.sf-note { max-width: var(--measure); font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink); }
+.sf-controls { display: flex; flex-wrap: wrap; gap: 0 48px; }
+.sf-switch { display: block; }
+.sf-switch > legend { float: left; display: flex; align-items: center; min-height: var(--control-h); margin: 0 16px 0 0; }
+.sf-switch > .sp-choice { display: inline-flex; margin-right: 20px; }
+
+.sf-section { display: grid; gap: 12px; padding: 56px var(--sf-edge) 0; }
+.sf-section > h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: var(--display-weight); line-height: max(1.04, var(--display-leading)); letter-spacing: var(--display-tracking); }
+.sf-intro { max-width: var(--measure); color: var(--ink-2); }
+
+.sf-sheet { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 12px; border: var(--rule) solid var(--line-2); }
+.sf-col { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 32px; min-width: 0; padding: 28px 24px 40px; }
+.sf-col + .sf-col { border-left: var(--rule) solid var(--line-2); }
+.sf-col-head { display: grid; gap: 8px; padding-bottom: 20px; border-bottom: var(--rule-2) solid var(--ink); }
+.sf-col-head h3 { font-family: var(--font-display); font-size: var(--step-3); font-weight: var(--display-weight); line-height: max(1.04, var(--display-leading)); letter-spacing: var(--display-tracking); text-transform: var(--display-transform); }
+.sf-col-head > p:first-of-type { color: var(--ink-2); }
+.sf-proposals { display: grid; gap: 6px; margin-top: 4px; padding: 12px 14px; border: var(--rule) solid var(--line); border-radius: var(--radius); background: var(--bg-2); }
+.sf-proposals h4 { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--ink); }
+.sf-proposals ul { display: grid; gap: 6px; margin: 0; padding-left: 1.1em; font-size: var(--step--1); color: var(--ink-2); }
+.sf-specimen { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
+.sf-specimen > h4 { padding-bottom: 6px; border-bottom: var(--rule) solid var(--line); font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--ink-2); }
+.sf-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.sf-form { display: grid; gap: 16px; }
+.sf-toasts { position: static; align-items: flex-start; max-width: none; }
+.sf-loading { display: grid; gap: 8px; }
+.sf-loading .sp-skeleton { max-width: 18em; }
+.sf-loading .sf-short { max-width: 12em; }
+
+.sf-screen { display: grid; gap: 16px; margin-top: 32px; padding-top: 20px; border-top: var(--rule-2) solid var(--ink); }
+.sf-screen-head { display: grid; gap: 4px; }
+.sf-screen-head h3 { font-family: var(--font-display); font-size: var(--step-2); font-weight: var(--display-weight); line-height: max(1.1, var(--display-leading)); letter-spacing: var(--display-tracking); }
+.sf-step { display: grid; gap: 10px; }
+.sf-step > h4 { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--ink-2); }
+.sf-frames { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.289fr); gap: 24px; align-items: start; }
+.sf-frame { display: grid; gap: 8px; min-width: 0; }
+.sf-window { position: relative; width: 100%; overflow: hidden; border: var(--rule) solid var(--line-2); border-radius: var(--radius); background: var(--bg-3); }
+.sf-window iframe { position: absolute; top: 0; left: 0; display: block; border: 0; transform-origin: top left; background: var(--bg); }
+.sf-frame figcaption { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-2); }
+
+@media (max-width: 1100px) {
+  .sf-sheet { grid-template-columns: minmax(0, 1fr); }
+  .sf-col + .sf-col { border-top: var(--rule) solid var(--line-2); border-left: 0; }
+}
+@media (max-width: 900px) {
+  .sf-frames { grid-template-columns: minmax(0, 1fr); }
+  .sf-phone { max-width: 390px; }
+}
