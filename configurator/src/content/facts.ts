@@ -4,7 +4,7 @@ import type { PageContent } from "../contract";
 export const SOURCES = {
   "offer": "https://github.com/misty-step/misty-step/blob/45628ff8eb8e68963745eea3a6964da754701925/OFFER.md",
   "work": "https://github.com/misty-step/misty-step/blob/45628ff8eb8e68963745eea3a6964da754701925/content/work.ts",
-  "stack": "https://github.com/misty-step/mistystack/tree/b3e508427b42f0bf37cf02083ead391828056b55",
+  "stack": "https://github.com/misty-step/mistystack/tree/c72698fa0cac6241f7c7bb5fc4f587c2e4445d82",
   "trial": "https://github.com/misty-step/mistystack/pull/607",
   "trialRecord": "https://github.com/misty-step/mistystack/blob/feat/stack-site/docs/evals/2026-10-28-kernel-trial.md",
   "trialReport": "https://github.com/misty-step/mistystack/issues/533#issuecomment-6476093437"
@@ -153,7 +153,7 @@ export const INSTALL_HARNESSES = [
   }
 ];
 
-export const CORE = "- Nontrivial work: load the `misty` skill first and follow its routing.\n- Before work, name the check outside yourself that will show the result is right: a failing test, the repository's verification skill, a measurement or the user's path. Done is that check passing on the real path.\n- Ship the smallest change that solves the user's problem. New work becomes a ticket, not scope.\n- Every fact has one home. Replace an old path by migrating its callers and deleting it.\n- Label every claim measured, inferred or guess in the same sentence. Link only what you produced or read.\n- Finish the work you were given. Ask one precise question for a blocked part and finish the rest.\n- Placement: Tern+OMP is the local development environment. Run portable builds, test suites, browser QA, untrusted code and long jobs on fresh Boat workers through the `boat-workers` skill.\n- Ask Phaedrus before spending money, creating or widening credentials, writing production data, messaging third parties or doing anything irreversible.";
+export const CORE = "- Nontrivial work: load the `misty` skill first and follow its routing.\n- Before work, name the check outside yourself that will show the result is right: a failing test, the repository's verification skill, a measurement or the user's path. Done is that check passing on the real path.\n- Ship the smallest change that solves the user's problem. New work becomes a ticket, not scope.\n- Every fact has one home. Replace an old path by migrating its callers and deleting it.\n- Label every claim measured, inferred or guess in the same sentence. Link only what you produced or read.\n- Finish the work you were given. Ask one precise question for a blocked part and finish the rest.\n- Placement: run portable builds, test suites, browser QA, untrusted code and long jobs on fresh Boat workers through the `boat-workers` skill. Everything else stays where you run unless your harness note in `misty` says otherwise.\n- Ask Phaedrus before spending money, creating or widening credentials, writing production data, messaging third parties or doing anything irreversible.";
 
 export const STACK_NODES = [
   {
@@ -185,7 +185,7 @@ export const STACK_NODES = [
     "id": "principles",
     "label": "Principles",
     "body": "On-demand leaves, not more standing instructions.",
-    "count": "7",
+    "count": "9",
     "href": "https://github.com/misty-step/mistystack/tree/master/skills"
   },
   {
@@ -194,6 +194,15 @@ export const STACK_NODES = [
     "body": "The outside check named before work starts.",
     "href": "https://github.com/misty-step/mistystack/blob/master/skills/misty/SKILL.md"
   }
+];
+
+// Why four of the principles exist, from each leaf's `prevents` metadata at mistystack c72698f.
+// "corrections" counts operator corrections recorded in initiative #533; deep-modules marks its count as inferred.
+export const PRINCIPLE_EVIDENCE = [
+  { "id": "principle-prove-it-on-the-real-path", "prevents": "Fix still fails or regresses", "corrections": 36, "inferred": false, "href": "https://github.com/misty-step/mistystack/blob/c72698fa0cac6241f7c7bb5fc4f587c2e4445d82/skills/principle-prove-it-on-the-real-path/SKILL.md" },
+  { "id": "principle-deep-modules", "prevents": "Overengineering and special-case growth", "corrections": 16, "inferred": true, "href": "https://github.com/misty-step/mistystack/blob/c72698fa0cac6241f7c7bb5fc4f587c2e4445d82/skills/principle-deep-modules/SKILL.md" },
+  { "id": "principle-one-home-per-fact", "prevents": "Data-fidelity loss and duplicates", "corrections": 15, "inferred": false, "href": "https://github.com/misty-step/mistystack/blob/c72698fa0cac6241f7c7bb5fc4f587c2e4445d82/skills/principle-one-home-per-fact/SKILL.md" },
+  { "id": "principle-finish-the-work", "prevents": "Half-finished work handed back or parked", "corrections": 11, "inferred": false, "href": "https://github.com/misty-step/mistystack/blob/c72698fa0cac6241f7c7bb5fc4f587c2e4445d82/skills/principle-finish-the-work/SKILL.md" }
 ];
 
 export const TRIAL = {
@@ -446,7 +455,7 @@ export const STACK_PAGE: PageContent = {
           "id": "principles",
           "label": "Principles",
           "body": "On-demand leaves, not more standing instructions.",
-          "count": "7",
+          "count": "9",
           "href": "https://github.com/misty-step/mistystack/tree/master/skills"
         },
         {
@@ -461,7 +470,7 @@ export const STACK_PAGE: PageContent = {
       "type": "install",
       "id": "install",
       "title": "Use your own harness.",
-      "intro": "Native installation. Shared method. Commands from the current harness references; not executed by this lab.",
+      "intro": "Shipped for OMP; the Claude Code, Codex and pi adapters are in progress (#591). Commands from the current harness references; not executed by this lab.",
       "harnesses": [
         {
           "id": "omp",
@@ -542,8 +551,8 @@ export const STACK_PAGE: PageContent = {
       "type": "code",
       "id": "core",
       "title": "The always-on core",
-      "caption": "rules/core.md at b3e5084, read 2026-10-29. The trial evaluated an earlier snapshot.",
-      "code": "- Nontrivial work: load the `misty` skill first and follow its routing.\n- Before work, name the check outside yourself that will show the result is right: a failing test, the repository's verification skill, a measurement or the user's path. Done is that check passing on the real path.\n- Ship the smallest change that solves the user's problem. New work becomes a ticket, not scope.\n- Every fact has one home. Replace an old path by migrating its callers and deleting it.\n- Label every claim measured, inferred or guess in the same sentence. Link only what you produced or read.\n- Finish the work you were given. Ask one precise question for a blocked part and finish the rest.\n- Placement: Tern+OMP is the local development environment. Run portable builds, test suites, browser QA, untrusted code and long jobs on fresh Boat workers through the `boat-workers` skill.\n- Ask Phaedrus before spending money, creating or widening credentials, writing production data, messaging third parties or doing anything irreversible."
+      "caption": `rules/core.md at ${SOURCES.stack.slice(-40, -33)}, read 2026-10-29. The trial evaluated an earlier snapshot.`,
+      "code": CORE
     },
     {
       "type": "cta",
