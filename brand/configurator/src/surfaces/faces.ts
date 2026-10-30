@@ -26,10 +26,14 @@ export interface Face {
 const read = (value: keyof LockedValues): LockedRead => ({ read: value });
 const REPO = 'https://github.com/misty-step/aesthetic/blob/master';
 const POPPYCOCK = 'https://github.com/misty-step/poppycock/blob/904a8df433b9684dd749e5ba81b865f928c67e68';
+// Poppycock's party colours (DESIGN.md colors: primary, accent, secondary, mint and party-coral) and their night
+// counterparts in this lab's dark proposal.
+const PARTY = { grape: '#6537b5', marigold: '#ffd166', lilac: '#e8dcfa', mint: '#bfe8d4', coral: '#ffab96' } as const;
+const PARTY_NIGHT = { lilac: 'oklch(0.32 0.06 300)', mint: 'oklch(0.33 0.055 165)', coral: 'oklch(0.34 0.075 30)' } as const;
 
-// Studio: the Locked preset. Geometry and feedback motion are the preset's own; derived values are expressions of
-// them. Locked is flat (the editorial layout sets no shadow) and has no status hue, so status inks follow the focus
-// ring's rule: a functional hue on the glyph only.
+// Studio: the Locked preset. Geometry, the button weight and feedback motion are the preset's own; derived values
+// are expressions of them. Locked is flat (the editorial layout sets no shadow) and has no status hue, so status
+// inks follow the focus ring's rule: a functional hue on the glyph only.
 const STUDIO = {
   '--radius': read('radius'),
   '--radius-2': 'var(--radius)',
@@ -38,6 +42,7 @@ const STUDIO = {
   '--shadow-1': 'none',
   '--shadow-2': 'none',
   '--control-h': read('controlH'),
+  '--strong-weight': read('weight'),
   '--dur-1': read('duration'),
   '--dur-2': 'var(--dur-1)',
   '--dur-3': 'calc(var(--dur-1) * 2)',
@@ -54,6 +59,7 @@ const INSTRUMENT = {
   '--rule': '1px',
   '--rule-2': '2px',
   '--control-h': AESTHETIC.css['.ae-button']['min-height'],
+  '--strong-weight': String(T.weights.medium),
   '--dur-1': T.motion.quick,
   '--dur-2': T.motion.soft,
   '--dur-3': T.motion.gentle,
@@ -69,12 +75,14 @@ const POPPYCOCK_SHARED = {
   '--rule': '1px',
   '--rule-2': '2px',
   '--control-h': '48px',
+  // Labels and controls are bold: DESIGN.md typography.label 700, and the Button and Tabs components' font-bold.
+  '--strong-weight': '700',
   '--dur-1': '150ms',
   '--dur-2': '150ms',
   '--dur-3': '150ms',
   '--ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
   '--face-rule-style': 'dashed',
-  '--face-band': '#ffd166',
+  '--face-band': PARTY.marigold,
   '--face-band-w': '8px',
 } as const;
 
@@ -137,14 +145,17 @@ export const FACES: Record<FaceId, Face> = {
     values: {
       light: {
         ...POPPYCOCK_SHARED,
-        '--shadow-1': '0 6px 0 color-mix(in srgb, #6537b5 12%, transparent)',
+        '--shadow-1': `0 6px 0 color-mix(in srgb, ${PARTY.grape} 12%, transparent)`,
         '--shadow-2': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
         '--ok': '#276348',
         '--warn': 'oklch(0.5 0.1 70)',
         '--err': '#a52f3b',
-        '--face-feature': 'color-mix(in srgb, #ffd166 28%, #ffffff)',
-        '--face-aside': '#ffab96',
-        '--face-button-edge': '0 3px 0 color-mix(in srgb, #6537b5 65%, #302044)',
+        '--face-feature': `color-mix(in srgb, ${PARTY.marigold} 28%, #ffffff)`,
+        '--face-aside': PARTY.coral,
+        '--face-button-edge': `0 3px 0 color-mix(in srgb, ${PARTY.grape} 65%, #302044)`,
+        '--face-chip-1': PARTY.lilac,
+        '--face-chip-2': PARTY.mint,
+        '--face-chip-3': PARTY.coral,
       },
       dark: {
         ...POPPYCOCK_SHARED,
@@ -154,8 +165,11 @@ export const FACES: Record<FaceId, Face> = {
         '--warn': 'oklch(0.85 0.13 85)',
         '--err': 'oklch(0.76 0.13 20)',
         '--face-feature': 'oklch(0.29 0.045 80)',
-        '--face-aside': 'oklch(0.34 0.075 30)',
+        '--face-aside': PARTY_NIGHT.coral,
         '--face-button-edge': '0 3px 0 oklch(0.52 0.12 295)',
+        '--face-chip-1': PARTY_NIGHT.lilac,
+        '--face-chip-2': PARTY_NIGHT.mint,
+        '--face-chip-3': PARTY_NIGHT.coral,
       },
     },
     sources: [

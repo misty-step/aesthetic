@@ -53,7 +53,10 @@ export const FACE = {
   '--rule-2': 'Strong rule: the selected tab bar, the focus ring and the press distance.',
   '--shadow-1': 'Depth of raised panels. May be none.',
   '--shadow-2': 'Depth of overlays: dialogs, menus and toasts. May be none.',
-  '--control-h': 'Minimum height of buttons, fields, tabs, choice rows and setting rows. At least 44px at phone widths.',
+  '--control-h': 'Minimum height of buttons, fields, tabs, choice rows, setting rows and close buttons. At least 44px at phone widths.',
+  // Added in issue #40: the components hard-coded 600, which no face could steer, while the instrument face must paint
+  // only the aesthetic registers 400, 550 and 800. Body and display weights come from the type option.
+  '--strong-weight': 'Weight of controls, labels and emphasis: buttons, field labels, legends, tabs, setting rows, table headers, captions and strong text.',
   '--dur-1': 'Feedback: hover, press, toggle and leaving.',
   '--dur-2': 'A small surface arriving: menu, toast, chooser fold.',
   '--dur-3': 'A decision arriving: the dialog.',
@@ -71,6 +74,9 @@ export const FACE_EXTRAS = {
   '--face-feature': 'Fill of the feature surface, the one that frames a screen\'s primary task. Default --bg-2. Carries --ink at 4.5:1.',
   '--face-aside': 'Fill of a supporting surface. Default --bg-3. Carries --ink at 4.5:1.',
   '--face-button-edge': 'A printed edge under the primary button. Default none.',
+  '--face-chip-1': 'Fill of the first of a row of fact chips. Default none: a hairline tag. Carries --ink at 4.5:1.',
+  '--face-chip-2': 'Fill of the second fact chip. Default none. Carries --ink at 4.5:1.',
+  '--face-chip-3': 'Fill of the third fact chip. Default none. Carries --ink at 4.5:1.',
 } as const;
 
 export const SPINE = { ...COLOR, ...TYPE, ...FACE } as const;

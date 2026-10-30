@@ -3,8 +3,9 @@ import type { ColorOption } from '../../../src/contract';
 // Strategy: the aesthetic package's ink on paper with Landmark's ember as the one fill. The colour of the
 // instrument face in Surfaces (src/surfaces/faces.ts); usable in the configurator like any palette.
 // SOURCE records every value the instrument face takes from the aesthetic package at the repository root:
-// tokens.json (colour, ember, motion, radius) and three aesthetic.css declarations. `node scripts/surfaces.mjs
-// --static` compares SOURCE with both files and fails on any drift. Adjusted for this lab's guarantees
+// tokens.json (colour, ember, motion, radius, the medium weight) and three aesthetic.css declarations.
+// `node scripts/surfaces.mjs --static` compares SOURCE's colour, ember, motion, radius and CSS values with both
+// files and fails on any drift; it does not compare the weight yet (issue #39). Adjusted for this lab's guarantees
 // (options/color/README.md), every adjustment named:
 //   ink-2 is ink-muted darkened from #737373 to #6e6e6e, which reads 4.5:1 on the wash (tokens.json records 4.27).
 //   ink-3 meets ink-2 by day: the package's faint ink (#a3a3a3) is decoration only, and the lab's faint ink is text.
@@ -31,6 +32,8 @@ export const SOURCE = {
     ember: { light: '#c2410c', dark: '#ff8a5c' },
     motion: { ease: 'cubic-bezier(0.23, 1, 0.32, 1)', quick: '160ms', soft: '240ms', gentle: '480ms' },
     radius: '0',
+    // type.weights.medium: the instrument face's strong weight (src/surfaces/faces.ts).
+    weights: { medium: 550 },
   },
   css: {
     '.ae-panel': { 'box-shadow': '0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 28px rgba(0, 0, 0, 0.06)' },
