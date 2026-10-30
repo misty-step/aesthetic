@@ -1,0 +1,52 @@
+name: brand release
+
+# Push a brand-v<version> tag on master to publish @misty-step/brand as a GitHub
+# release tarball. Consumers install
+# https://github.com/misty-step/aesthetic/releases/download/brand-v<version>/misty-step-brand-<version>.tgz
+
+on:
+  push:
+    tags: ['brand-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: brand
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: The tag is on master and matches package.json
+        run: |
+          version="${GITHUB_REF_NAME#brand-v}"
+          test "$(node -p 'require("./package.json").version')" = "$version"
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: brand/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: identity/ matches the configurator's Locked preset
+        run: npm run identity:check
+      - name: Pack and publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm pack --silent
+          tarball="misty-step-brand-${VERSION}.tgz"
+          test -f "$tarball"
+          gh release create "$GITHUB_REF_NAME" "$tarball" --verify-tag \
+            --title "@misty-step/brand ${VERSION}" \
+            --notes "Install: \`\"@misty-step/brand\": \"https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${tarball}\"\`"
+      - name: The published tarball downloads and matches
+        run: |
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/misty-step-brand-${VERSION}.tgz"
+          curl -fsSL "$url" -o published.tgz
+          cmp published.tgz "misty-step-brand-${VERSION}.tgz"
