@@ -14,7 +14,7 @@ npm run dev
 
 See [the configurator guide](configurator/README.md) for option authoring, the rendering contract and verification. Every push to `master` that touches `brand/` deploys the configurator to https://misty-brand-lab.misty-step.workers.dev (`.github/workflows/brand.yml`).
 
-`brand/` lives in `misty-step/aesthetic`, the home for Misty Step brand development since 30 October 2026. It moved here with its history from `misty-step/brand`, which is archived.
+`brand/` lives in `misty-step/aesthetic`, the home for Misty Step brand development since 30 October 2026. It moved here as one commit from `misty-step/brand`, whose history stays readable in that archived repository.
 
 ## The identity package
 
