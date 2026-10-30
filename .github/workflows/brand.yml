@@ -57,12 +57,20 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Quick WebGL smoke gate on the built lab
         run: node scripts/smoke.mjs --webgl --quick --out evidence
-      - name: Skip a superseded revision
+      - name: Skip when a newer master commit changes the lab
         id: tip
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        # A newer push that touches brand/ (or this workflow) queues its own run behind this one in the
+        # shared group, so this older build must not overwrite it. A newer push that touches only other
+        # paths starts no brand run, so this build is still the current lab and deploys.
         run: |
-          tip="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" refs/heads/master | cut -f1)"
-          if [ "$tip" = "$GITHUB_SHA" ]; then echo "current=true" >> "$GITHUB_OUTPUT"; else echo "Revision $GITHUB_SHA is superseded by $tip; not deploying." >> "$GITHUB_STEP_SUMMARY"; fi
+          git fetch -q --no-tags origin master
+          tip="$(git rev-parse FETCH_HEAD)"
+          if [ "$tip" = "$GITHUB_SHA" ] || git diff --quiet "$GITHUB_SHA" "$tip" -- ':/brand/' ':/.github/workflows/brand.yml'; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Revision $GITHUB_SHA is superseded by $tip, which changes the lab; that run deploys it." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Deploy misty-brand-lab
         if: steps.tip.outputs.current == 'true'
         env:
