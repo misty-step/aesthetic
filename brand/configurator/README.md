@@ -102,6 +102,6 @@ Buttons: `.btn`, `.btn-primary`, `.btn-quiet`, `.btn-sm`. Text links: `a.link`. 
 
 This lab is never part of the repository's Pages deploy. Its separate `wrangler.jsonc` targets only `misty-brand-lab` on workers.dev and serves static assets. HTML and assets carry `X-Robots-Tag: noindex, nofollow`; a robots file also excludes crawling.
 
-Pull requests and master pushes that touch `brand/` run `.github/workflows/brand.yml`: the configurator build and the quick WebGL smoke gate (`node scripts/smoke.mjs --webgl --quick`).
+Pull requests and master pushes that touch `brand/` run `.github/workflows/brand.yml`: the configurator build and the quick WebGL smoke gate (`node scripts/smoke.mjs --webgl --quick`). Deployment is automatic: on every master push that touches `brand/`, `.github/workflows/brand-lab-deploy.yml` builds current master, runs the same gate, deploys only `misty-brand-lab` and checks that the live shell serves that build. A failed gate deploys nothing; a newer run replaces an older one.
 
 The full matrix (`node scripts/smoke.mjs --url https://misty-brand-lab.misty-step.workers.dev --webgl --out evidence`) runs on a Linux Boat worker when a change needs it. It refuses macOS.
