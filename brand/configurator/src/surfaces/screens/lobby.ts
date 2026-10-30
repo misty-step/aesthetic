@@ -59,7 +59,7 @@ function controls() {
 function main() {
   const E = P.ENTRANCE, R = P.ROOM;
   if (state.step === 'entrance') return `<section class="lobby-entrance" aria-labelledby="entrance-title">
-    <div class="lobby-intro"><h1 id="entrance-title" tabindex="-1">${esc(E.title)}</h1><p>${esc(E.intro)}</p></div>
+    <div class="lobby-intro"><h1 id="entrance-title" tabindex="-1">${esc(E.title)}</h1><p>${esc(E.intro)}</p><ul class="lobby-details" aria-label="${esc(E.details)}">${E.facts.map(fact => `<li>${esc(fact)}</li>`).join('')}</ul></div>
     <div class="lobby-ticket sp-panel sp-panel-feature">
       <div class="lobby-ticket-head"><h2>${esc(E.panelTitle)}</h2><p>${esc(E.panelIntro)}</p></div>
       <div class="sp-tabs" role="tablist" aria-label="${esc(E.modes)}">

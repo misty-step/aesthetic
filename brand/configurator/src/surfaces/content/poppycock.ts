@@ -1,6 +1,7 @@
 // Poppycock's lobby as https://poppycock.mistystep.io/ shows it: the entrance (components/entrance.tsx) and the
 // waiting room after a table exists (app/page.tsx), with the app's own strings, verbatim, from misty-step/poppycock
-// at 904a8df (read 2026-10-30). Quoted strings keep their source punctuation; the rules' "3–12" is Poppycock's.
+// at 904a8df (read 2026-10-30). Quoted strings keep their source punctuation; the "3–12" in the game details and
+// the rules is Poppycock's.
 // Not shown: the illustrated characters and the brand mark (the repository has no licence; neutral stand-ins are
 // drawn in screens/lobby.ts), the QR code, and the avatar picker that "Change avatar" opens.
 export const SHA = '904a8df433b9684dd749e5ba81b865f928c67e68';
@@ -31,6 +32,8 @@ export const HOW_TO_PLAY = 'How to play';
 export const ENTRANCE = {
   title: 'Your friends are full of it.',
   intro: 'Invent a convincing answer to a weird question. Fool your friends, then find the truth hiding among the bluffs.',
+  details: 'Game details',
+  facts: ['3–12 players', 'Six untimed rounds', 'One phone each'],
   panelTitle: 'Pull up a chair.',
   panelIntro: 'Create a table or join one with your room code.',
   modes: 'Choose how to play',

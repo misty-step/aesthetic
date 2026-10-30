@@ -1,5 +1,5 @@
-// The studio face is the Locked preset. Its type and colour are the preset's own options; the geometry and the
-// feedback motion below are read from the preset's layout and motion modules when the face loads, so the studio
+// The studio face is the Locked preset. Its type and colour are the preset's own options; the geometry, the button
+// weight and the feedback motion below are read from the preset's layout and motion modules when the face loads, so the studio
 // face copies no values. A module that stops declaring one of them fails loudly here, never silently.
 import type { LayoutOption, MotionOption } from '../contract';
 import { loadOption } from '../options';
@@ -13,6 +13,7 @@ export interface LockedValues {
   radius: string;   // the layout's --radius
   rule: string;     // the layout's --rule
   controlH: string; // the layout's .btn min-height
+  weight: string;   // the layout's .btn font-weight
   duration: string; // the motion's colour transition duration
   easing: string;   // the motion's colour transition easing
 }
@@ -54,6 +55,7 @@ export async function readLocked(): Promise<LockedValues> {
     radius: need(tokens['--radius'], `--radius in ${layout.id}`),
     rule: need(tokens['--rule'], `--rule in ${layout.id}`),
     controlH: need(button['min-height'], `a .btn min-height in ${layout.id}`),
+    weight: need(button['font-weight'], `a .btn font-weight in ${layout.id}`),
     duration: need(colour?.[1], `a colour transition in ${motion.id}`),
     easing: need(colour?.[2], `a colour transition easing in ${motion.id}`),
   };

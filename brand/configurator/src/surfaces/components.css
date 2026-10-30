@@ -19,6 +19,9 @@
 [data-face] ::selection { background: var(--selection); color: var(--ink); }
 [data-face] :focus-visible { outline: var(--rule-2) solid var(--focus); outline-offset: 2px; }
 [data-face] [hidden] { display: none !important; }
+/* Strong text takes the face's strong register, never the browser's relative "bolder"; zero specificity, so any
+   component's own weight (the room code's display weight) still wins. */
+:where([data-face] :is(strong, b)) { font-weight: var(--strong-weight); }
 
 .sp-sr {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
@@ -28,7 +31,7 @@
   position: fixed; top: 12px; left: 12px; z-index: 200;
   padding: 0.75em 1.25em; border-radius: var(--radius);
   background: var(--ink); color: var(--bg);
-  font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; text-decoration: none;
+  font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); text-decoration: none;
   translate: 0 -200%;
 }
 .sp-skip:focus { translate: none; }
@@ -57,7 +60,7 @@
   border: var(--rule) solid var(--accent); border-radius: var(--radius);
   background: var(--accent); color: var(--accent-ink);
   box-shadow: var(--face-button-edge, none);
-  font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; line-height: 1.2;
+  font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); line-height: 1.2;
   text-align: center; text-decoration: none; cursor: pointer;
   touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   transition: background-color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
@@ -69,7 +72,7 @@
 
 /* ---- Text field: label, field, hint, and a note whose glyph carries the status ---- */
 .sp-field { display: grid; gap: 0.375em; min-width: 0; }
-.sp-label { font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; color: var(--ink); }
+.sp-label { font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); color: var(--ink); }
 .sp-input {
   display: block; width: 100%; min-width: 0; min-height: var(--control-h); margin: 0; padding: 0.5em 0.75em;
   border: var(--rule) solid var(--line-2); border-radius: var(--radius);
@@ -85,7 +88,7 @@
 
 /* ---- Choices: checkbox, radio and switch, each a mark beside its words in one control row ---- */
 .sp-choices { display: grid; margin: 0; padding: 0; border: 0; min-width: 0; }
-.sp-choices > legend { margin-bottom: 0.25em; padding: 0; font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; color: var(--ink); }
+.sp-choices > legend { margin-bottom: 0.25em; padding: 0; font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); color: var(--ink); }
 .sp-choice { display: flex; align-items: center; gap: 0.65em; min-height: var(--control-h); font-family: var(--font-ui); cursor: pointer; }
 input.sp-check, input.sp-radio, input.sp-switch {
   appearance: none; flex: none; margin: 0; cursor: pointer;
@@ -126,7 +129,7 @@ input.sp-check:disabled, input.sp-radio:disabled, input.sp-switch:disabled { bor
   min-height: var(--control-h); margin: 0; padding: 0.5em 0;
   border: 0; border-top: var(--rule) solid var(--line); border-radius: 0;
   background: transparent; color: var(--ink);
-  font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; text-align: start; cursor: pointer;
+  font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); text-align: start; cursor: pointer;
 }
 .sp-setting-value { color: var(--ink-2); font-weight: var(--body-weight); transition: color var(--dur-1) var(--ease); }
 .sp-chooser { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-2) var(--ease); }
@@ -147,8 +150,9 @@ input.sp-check:disabled, input.sp-radio:disabled, input.sp-switch:disabled { bor
   transition: background-color var(--dur-1) var(--ease);
 }
 .sp-menu-item:focus-visible { outline-offset: calc(var(--rule-2) * -1); }
-.sp-menu-item[aria-checked="true"] { font-weight: 600; }
-.sp-menu-item .sp-icon { color: var(--ink-2); }
+.sp-menu-item[aria-checked="true"] { font-weight: var(--strong-weight); }
+/* Decorative menu glyphs are muted; a status glyph keeps its status ink ("Leave table" carries --err). */
+.sp-menu-item .sp-icon:not(.sp-ok, .sp-warn, .sp-err) { color: var(--ink-2); }
 .sp-menu-sep { height: 0; margin: 0.25em 0; border: 0; border-top: var(--rule) solid var(--line); }
 
 /* ---- Popover: a slip anchored to its invoker (native [popover]; placed by behaviour.ts) ---- */
@@ -176,7 +180,7 @@ dialog.sp-dialog::backdrop { background: color-mix(in srgb, var(--bg-3) 75%, tra
 .sp-dialog-body > * { margin: 0; }
 .sp-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75em; margin-top: 1.5em; }
 dialog.sp-dialog > .sp-close { position: absolute; top: 0.5em; right: 0.5em; }
-dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: 2em; }
+dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: var(--control-h); }
 
 /* ---- Toast: news at the edge that stays until dismissed ---- */
 .sp-toasts {
@@ -195,7 +199,7 @@ dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: 2em; }
 
 /* ---- Close: the icon button that dismisses a toast or a dialog ---- */
 .sp-close {
-  display: inline-grid; place-items: center; flex: none; min-width: 44px; min-height: 44px; margin: 0; padding: 0;
+  display: inline-grid; place-items: center; flex: none; min-width: var(--control-h); min-height: var(--control-h); margin: 0; padding: 0;
   border: 0; border-radius: calc(var(--radius-2) / 2); background: transparent; color: var(--ink-2); cursor: pointer;
   transition: color var(--dur-1) var(--ease);
 }
@@ -206,7 +210,7 @@ dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: 2em; }
   min-height: var(--control-h); margin: 0 0 calc(var(--rule) * -1); padding: 0 0.9em;
   border: 0; border-radius: var(--radius) var(--radius) 0 0; background: transparent; color: var(--ink-2);
   box-shadow: inset 0 calc(var(--rule-2) * -1) 0 transparent;
-  font-family: var(--font-ui); font-size: var(--step-0); font-weight: 600; cursor: pointer;
+  font-family: var(--font-ui); font-size: var(--step-0); font-weight: var(--strong-weight); cursor: pointer;
   transition: color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
 }
 .sp-tab[aria-selected="true"] { color: var(--ink); box-shadow: inset 0 calc(var(--rule-2) * -1) 0 var(--accent); }
@@ -234,10 +238,10 @@ dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: 2em; }
   width: 100%; border-collapse: collapse;
   font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.45; font-variant-numeric: tabular-nums;
 }
-.sp-table caption { padding-bottom: 0.75em; caption-side: top; font-weight: 600; text-align: start; color: var(--ink); }
+.sp-table caption { padding-bottom: 0.75em; caption-side: top; font-weight: var(--strong-weight); text-align: start; color: var(--ink); }
 .sp-table :is(th, td) { padding: 0.6em 1em 0.6em 0; border-bottom: var(--rule) solid var(--line); text-align: start; vertical-align: top; }
 .sp-table :is(th, td):last-child { padding-right: 0; }
-.sp-table thead th { border-bottom-color: var(--line-2); font-weight: 600; color: var(--ink); vertical-align: bottom; }
+.sp-table thead th { border-bottom-color: var(--line-2); font-weight: var(--strong-weight); color: var(--ink); vertical-align: bottom; }
 .sp-table tbody th { font-weight: var(--body-weight); }
 .sp-table tbody tr:last-child > * { border-bottom: 0; }
 .sp-table .num { text-align: end; }
@@ -250,7 +254,7 @@ dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: 2em; }
 .sp-skeleton * { visibility: hidden; }
 .sp-empty { display: grid; justify-items: start; gap: 0.25em; padding: 2em 0; border-block: var(--rule) solid var(--line); }
 .sp-empty > p { margin: 0; }
-.sp-empty-title { font-weight: 600; color: var(--ink); }
+.sp-empty-title { font-weight: var(--strong-weight); color: var(--ink); }
 .sp-empty-note { color: var(--ink-2); }
 .sp-empty .sp-button { margin-top: 0.75em; }
 
