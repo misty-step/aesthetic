@@ -1,0 +1,74 @@
+name: brand
+
+# brand/: the configurator (the brand lab) and the @misty-step/brand identity package.
+# Pull requests check both. Every push to master that touches brand/ deploys the lab
+# to https://misty-brand-lab.misty-step.workers.dev after the smoke gate passes.
+
+on:
+  pull_request:
+    paths: ['brand/**', '.github/workflows/brand.yml']
+  push:
+    branches: [master]
+    paths: ['brand/**', '.github/workflows/brand.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  identity:
+    name: Identity package
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: brand
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: brand/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: identity/ matches the configurator's Locked preset
+        run: npm run identity:check
+      - name: Runtime sources and published declarations type-check
+        run: npx tsc -p scripts/identity
+
+  lab:
+    name: Configurator build, smoke gate and deploy
+    runs-on: ubuntu-latest
+    concurrency:
+      group: brand-lab-${{ github.event_name == 'push' && 'deploy' || github.ref }}
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: brand/configurator
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: brand/configurator/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Quick WebGL smoke gate on the built lab
+        run: node scripts/smoke.mjs --webgl --quick --out evidence
+      - name: Deploy misty-brand-lab
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy
+      - name: The live lab serves this build
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          want="$(grep -oE '/assets/[^"]+' dist/index.html | sort -u)"
+          for i in $(seq 1 12); do
+            got="$(curl -fsSL "https://misty-brand-lab.misty-step.workers.dev/?v=$GITHUB_SHA" | grep -oE '/assets/[^"]+' | sort -u)"
+            [ "$got" = "$want" ] && { echo "live lab matches $GITHUB_SHA"; exit 0; }
+            sleep 10
+          done
+          echo "live lab does not serve this build"; exit 1

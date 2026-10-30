@@ -5,7 +5,8 @@
   "license": "(MIT AND OFL-1.1)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/misty-step/brand.git"
+    "url": "git+https://github.com/misty-step/aesthetic.git",
+    "directory": "brand"
   },
   "type": "module",
   "files": [

@@ -1,6 +1,6 @@
 # Misty Step brand configurator
 
-The working brand lab for Misty Step, in `misty-step/brand`. It renders the real studio and stack home-page content through seven independently selectable layers. The archived aesthetic package stays untouched; its one-size/no-scroll law does not apply to this commissioned successor exploration.
+The working brand lab for Misty Step, in `brand/configurator/` of `misty-step/aesthetic`. It renders the real studio and stack home-page content through seven independently selectable layers. The aesthetic package at the repository root is a separate system; its one-size/no-scroll law does not apply to this lab.
 
 ## Run
 
@@ -102,20 +102,6 @@ Buttons: `.btn`, `.btn-primary`, `.btn-quiet`, `.btn-sm`. Text links: `a.link`. 
 
 This lab is never part of the repository's Pages deploy. Its separate `wrangler.jsonc` targets only `misty-brand-lab` on workers.dev and serves static assets. HTML and assets carry `X-Robots-Tag: noindex, nofollow`; a robots file also excludes crawling.
 
-Run the build and complete smoke gate on a Linux Boat worker at the SHA being deployed:
+Deployment is automatic. On every push to `master` that touches `brand/`, `.github/workflows/brand.yml` builds the configurator, runs the quick WebGL smoke gate (`node scripts/smoke.mjs --webgl --quick`), deploys only `misty-brand-lab` and checks that the live shell serves the build's assets. A failed gate deploys nothing.
 
-```sh
-npm ci
-npm run build
-npx playwright install --with-deps chromium
-node scripts/smoke.mjs --webgl --out evidence
-```
-
-After that gate is green, build the same SHA locally (no browser) and deploy only this Worker:
-
-```sh
-npm run build
-pass-env run -f ~/.cache/tmp/misty-design/preview/.env.pass -- npx wrangler deploy
-```
-
-Only deploy after the requested Linux predeploy gate is green. Run the full matrix after a rapid review deployment. Never deploy another Worker from this lab.
+The full matrix (`node scripts/smoke.mjs --url https://misty-brand-lab.misty-step.workers.dev --webgl --out evidence`) runs on a Linux Boat worker when a change needs it. It refuses macOS.

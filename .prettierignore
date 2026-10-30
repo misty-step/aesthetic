@@ -3,3 +3,6 @@ docs/releases/
 
 # vendored third-party minified libraries (prototypes)
 prototypes/*/vendor/
+
+# brand/ (configurator and @misty-step/brand) keeps its own formatting and checks (.github/workflows/brand.yml)
+brand/

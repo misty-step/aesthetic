@@ -16,10 +16,10 @@ The preset's copy, `r2-cut`, does not ship here. Each site keeps its own words.
 ## Install
 
 ```json
-"@misty-step/brand": "github:misty-step/brand#v0.1.0"
+"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.1.0/misty-step-brand-0.1.0.tgz"
 ```
 
-npm and pnpm both resolve a GitHub tag. Every file is committed, so installing runs no build step.
+npm and pnpm both install a release tarball. Every file is committed, so installing runs no build step. The package's source is `brand/` in [misty-step/aesthetic](https://github.com/misty-step/aesthetic/tree/master/brand).
 
 ## Exports
 
@@ -58,7 +58,7 @@ The site owns `data-theme` (`light` or `dark`):
 
 ## Markup
 
-For the home pages, the contract is the configurator renderer's markup: the "Markup the renderer emits" section of [configurator/README.md](https://github.com/misty-step/brand/blob/master/configurator/README.md), plus the additions listed there. This is the skeleton with the horizon hero:
+For the home pages, the contract is the configurator renderer's markup: the "Markup the renderer emits" section of [configurator/README.md](https://github.com/misty-step/aesthetic/blob/master/brand/configurator/README.md), plus the additions listed there. This is the skeleton with the horizon hero:
 
 ```html
 <body id="top">
@@ -95,7 +95,7 @@ For the home pages, the contract is the configurator renderer's markup: the "Mar
 - **Motion host.** Render `.hero-motion-host` yourself, so the server HTML is final. If it is missing, the runtime prepends one and removes it again on `destroy()`.
 - **Toc.** `.toc` is hidden in the editorial layout. Emit it or leave it out.
 - **Other pages.** Use the tokens and the editorial section primitives where they fit: `.s`, `.s-head`, `.s-title`, `.s-intro`, `.s-items`, `.item`, `.btn`, `.btn-primary`, `.btn-quiet`, `a.link`, `pre.code` and `.foot`.
-- **Reference.** [demo/markup.mjs](https://github.com/misty-step/brand/blob/master/demo/markup.mjs) writes both home pages against this package alone. Its renders match the configurator's.
+- **Reference.** [demo/markup.mjs](https://github.com/misty-step/aesthetic/blob/master/brand/demo/markup.mjs) writes both home pages against this package alone. Its renders match the configurator's.
 
 ## Runtime
 

@@ -12,17 +12,19 @@ npm install
 npm run dev
 ```
 
-See [the configurator guide](configurator/README.md) for option authoring, the rendering contract, verification and the isolated preview deployment.
+See [the configurator guide](configurator/README.md) for option authoring, the rendering contract and verification. Every push to `master` that touches `brand/` deploys the configurator to https://misty-brand-lab.misty-step.workers.dev (`.github/workflows/brand.yml`).
 
-This repository is separate from the archived `misty-step/aesthetic` design system. The configurator explores its successor; it does not deploy either production site.
+`brand/` lives in `misty-step/aesthetic`, the home for Misty Step brand development since 30 October 2026. It moved here with its history from `misty-step/brand`, which is archived.
 
 ## The identity package
 
-The repository root is the package `@misty-step/brand`. Both sites install it from a tag:
+`brand/` is the package `@misty-step/brand`. Each `brand-v*` tag publishes a GitHub release whose tarball both sites install (`.github/workflows/brand-release.yml`):
 
 ```json
-"@misty-step/brand": "github:misty-step/brand#v0.1.0"
+"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.1.0/misty-step-brand-0.1.0.tgz"
 ```
+
+To release, bump `version` in `brand/package.json` in a reviewed PR, then push the tag `brand-v<version>` on the merge commit. The workflow refuses a tag that disagrees with `package.json` or a stale `identity/`.
 
 `identity/` holds the stylesheet, the html attributes, the runtime, the mark, the icons and the social cards. A script generates every file there from the configurator's option modules. Nothing in it is copied by hand. [identity/README.md](identity/README.md) covers install, markup, the runtime, Next.js and Astro usage, licences and regeneration.
 
