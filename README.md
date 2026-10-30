@@ -7,6 +7,13 @@ Live at [aesthetic.mistystep.io](https://aesthetic.mistystep.io/) —
 the system demonstrating itself: every primitive on the page is the
 stylesheet, unmodified.
 
+**Brand development lives here too.** [`brand/`](brand/README.md) holds the
+brand configurator (live at
+[misty-brand-lab.misty-step.workers.dev](https://misty-brand-lab.misty-step.workers.dev))
+and `@misty-step/brand`, the identity package mistystep.io and
+stack.mistystep.io install. It moved here from `misty-step/brand` on
+30 October 2026.
+
 ## Why
 
 - **Consistent.** Every project that imports it shares the same surfaces,

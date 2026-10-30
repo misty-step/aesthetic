@@ -18,6 +18,13 @@ vs dials — lives in `docs/ADOPTING.md`.
 
 ## Repo shape
 
+- `brand/` — brand development: the configurator (`brand/configurator/`,
+  previewed at `misty-brand-lab` on workers.dev) and
+  the `@misty-step/brand` identity package that both public sites install
+  from `brand-v*` release tarballs. It has its own package, checks and
+  workflows (`.github/workflows/brand.yml`, `brand-release.yml`); the law
+  below governs `aesthetic.css` and `site/`, not the brand lab. Read
+  `brand/README.md` before working there.
 - `aesthetic.css` + `tokens.json` + `recipes/` — the package (npm
   `files` allowlist). `tokens.json` carries the contrast table —
   recompute it whenever a color token changes.
