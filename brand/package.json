@@ -1,8 +1,8 @@
 {
   "name": "@misty-step/brand",
   "version": "0.1.0",
-  "description": "Misty Step's locked identity: one stylesheet, the html attributes, a small runtime and the Mist sign, generated from the brand configurator.",
-  "license": "(MIT AND OFL-1.1)",
+  "description": "Misty Step's locked identity: the stylesheet, the html attributes, a small runtime, the Mist sign and the spine's components in the studio face, generated from the brand configurator.",
+  "license": "(MIT AND OFL-1.1 AND ISC)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/misty-step/aesthetic.git",
@@ -25,6 +25,11 @@
     "./mark": {
       "types": "./identity/mark.d.ts",
       "default": "./identity/mark.js"
+    },
+    "./spine.css": "./identity/spine.css",
+    "./spine": {
+      "types": "./identity/spine.d.ts",
+      "default": "./identity/spine.js"
     },
     "./identity/icons/*": "./identity/icons/*",
     "./identity/og/*": "./identity/og/*",

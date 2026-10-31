@@ -3,10 +3,10 @@
 import { HTML_ATTRS, twoLineLength } from '@misty-step/brand/attrs';
 import { lockup } from '@misty-step/brand/mark';
 
-const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+export const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const heading = value => esc(value).replace(/[^\s-]+(?:-[^\s-]+)+/g, word => `<span class="nowrap">${word}</span>`);
 const target = href => (href.startsWith('#') ? '' : ' target="_blank" rel="noopener noreferrer"');
-const link = (a, cls = 'link', label = esc(a.label)) => `<a class="${cls}" href="${esc(a.href)}"${target(a.href)}>${label}</a>`;
+export const link = (a, cls = 'link', label = esc(a.label)) => `<a class="${cls}" href="${esc(a.href)}"${target(a.href)}>${label}</a>`;
 const head = s => `<div class="s-head" data-enter><h2 class="s-title">${heading(s.title)}</h2>${s.intro ? `<p class="s-intro">${esc(s.intro)}</p>` : ''}</div>`;
 
 const SECTIONS = {
@@ -31,7 +31,7 @@ function hero(h, inlineOrder) {
   return `<div class="hero-motion-host" aria-hidden="true"></div><div class="hz-copy">${title}<div class="hz-row"><p class="hero-sub" data-enter${order(1)}>${esc(h.sub)}</p>${actions}</div></div>${h.proof ? `<p class="hero-proof" data-enter${order(3)}>${esc(h.proof)}</p>` : ''}`;
 }
 
-const THEME_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor"/></svg>';
+export const THEME_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor"/></svg>';
 
 export function page(content, { inlineOrder = true } = {}) {
   const attrs = Object.entries(HTML_ATTRS).map(([name, value]) => `${name}="${esc(value)}"`).join(' ');

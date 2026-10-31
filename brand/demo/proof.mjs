@@ -2,6 +2,8 @@
 // Behaviour proof for the package on the demo pages: the field runs, pauses, follows the theme without a remount,
 // stops offscreen and in hidden tabs, draws one still frame under reduced motion and Save-Data, keeps the pause
 // control in the hero on phones, keeps the hero order without inline styles, and destroy() releases everything.
+// On the spine page: the studio face's values, the focus ring, validation, the toast, the dialog, the menu, tabs,
+// the settings row, motion paused and reduced, and both themes at 390 and 1440.
 // Headless Chromium on a Linux worker only (no browser runs on a Mac). From the repository root, with the
 // configurator's dependencies installed and the root served (python3 -m http.server 4190 --bind 127.0.0.1):
 //   node demo/proof.mjs http://127.0.0.1:4190 proof.json
@@ -32,8 +34,8 @@ function countFrames() {
     return request(callback);
   };
 }
-async function open(browser, path, { width = 1440, height = 900, reduce = false, theme = 'light', init } = {}) {
-  const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: reduce ? 'reduce' : 'no-preference' });
+async function open(browser, path, { width = 1440, height = 900, reduce = false, theme = 'light', init, permissions } = {}) {
+  const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: reduce ? 'reduce' : 'no-preference', permissions });
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(String(error)));
@@ -91,6 +93,147 @@ async function keyboardToggle(page) {
     steps.push(await page.evaluate(want => document.documentElement.dataset.paused === want && document.activeElement === document.querySelector('.motion-toggle'), expected));
   }
   return steps.every(Boolean);
+}
+
+/** The spine on demo/dist/spine.html: the package's spine.css and spine.js alone, under the page's own script. */
+async function spine(browser) {
+  const path = '/demo/dist/spine.html';
+  const opener = '[data-sp-dialog="#start-over"]';
+  const isOpen = id => document.getElementById(id).matches('[open], :popover-open');
+  const focusOn = (page, selector) => page.waitForFunction(sel => document.activeElement === document.querySelector(sel), selector, { timeout: 2000 }).then(() => true, () => false);
+  const toastSays = (page, text) => page.waitForFunction(words => [...document.querySelectorAll('[data-tray] .sp-toast')].some(t => t.textContent.includes(words)), text, { timeout: 3000 }).then(() => true, () => false);
+  {
+    const { page, context, errors } = await open(browser, path, { permissions: ['clipboard-read', 'clipboard-write'] });
+    const face = await page.evaluate(() => {
+      const button = getComputedStyle(document.querySelector('[data-request] .sp-button')), tab = getComputedStyle(document.querySelector('.sp-tab'));
+      return { height: button.minHeight, weight: button.fontWeight, radius: button.borderTopLeftRadius, tabWeight: tab.fontWeight, ok: getComputedStyle(document.body).getPropertyValue('--ok').trim() };
+    });
+    check('spine: the studio face resolves on the package (52px controls, weight 600, radius 4px, status inks)', face.height === '52px' && face.weight === '600' && face.radius === '4px' && face.tabWeight === '600' && face.ok !== '', face);
+    await page.focus('#request-email');
+    const ring = await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return { style: s.outlineStyle, width: s.outlineWidth, offset: s.outlineOffset }; });
+    check('spine: a focused field shows the face\'s 2px focus ring', ring.style === 'solid' && ring.width === '2px', ring);
+
+    await page.click('[data-request] [type="submit"]');
+    const invalid = await page.evaluate(() => {
+      const input = document.getElementById('request-email'), note = document.getElementById('request-email-error');
+      return { invalid: input.getAttribute('aria-invalid'), described: input.getAttribute('aria-describedby'), shown: !note.hidden, text: note.textContent, glyph: getComputedStyle(note.querySelector('.sp-icon')).color, words: getComputedStyle(note).color, focused: document.activeElement === input };
+    });
+    check('spine: a missing email is marked, described and focused, and its glyph carries the error ink', invalid.invalid === 'true' && invalid.described.includes('request-email-error') && invalid.shown && invalid.focused && invalid.glyph !== invalid.words, invalid);
+    await page.fill('#request-email', 'phaedrus@mistystep.io');
+    const cleared = await page.evaluate(() => ({ invalid: document.getElementById('request-email').getAttribute('aria-invalid'), hidden: document.getElementById('request-email-error').hidden }));
+    check('spine: typing clears the error', cleared.invalid === null && cleared.hidden, cleared);
+
+    const toasts = page.locator('[data-tray] .sp-toast');
+    await page.click('[data-request] [type="submit"]');
+    await toasts.first().waitFor();
+    const sent = await toasts.first().evaluate(el => ({ role: el.getAttribute('role'), text: el.textContent.trim(), glyph: getComputedStyle(el.querySelector('.sp-ok')).color, words: getComputedStyle(el).color }));
+    await page.waitForTimeout(4000);
+    const stays = await toasts.count();
+    await toasts.first().locator('.sp-close').click();
+    const gone = await page.waitForFunction(() => !document.querySelector('[data-tray] .sp-toast'), null, { timeout: 3000 }).then(() => true, () => false);
+    check('spine: a valid request shows a status toast that stays until dismissed', sent.role === 'status' && sent.glyph !== sent.words && stays === 1 && gone, { ...sent, stays, gone });
+
+    await page.fill('#request-name', 'Phaedrus');
+    await page.click(opener);
+    await page.waitForFunction(isOpen, 'start-over');
+    const inside = await page.evaluate(() => document.getElementById('start-over').contains(document.activeElement));
+    for (let i = 0; i < 3; i++) await page.keyboard.press('Tab');
+    const kept = await page.evaluate(() => document.getElementById('start-over').contains(document.activeElement));
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(id => !document.getElementById(id).open, 'start-over');
+    const returned = await focusOn(page, opener);
+    const named = await page.evaluate(() => document.getElementById('start-over').getAttribute('aria-labelledby'));
+    check('spine: the dialog takes focus, keeps Tab inside, closes on Escape and returns focus to its opener', inside && kept && returned && named === 'start-over-title', { inside, kept, returned, named });
+    await page.click(opener);
+    await page.click('#start-over [data-sp-close="clear"]');
+    await page.waitForFunction(id => !document.getElementById(id).open, 'start-over');
+    // The dialog's close event arrives as a task after close(); the page resets the form there.
+    const emptied = await page.waitForFunction(() => document.getElementById('request-name').value === '' && document.getElementById('request-email').value === '', null, { timeout: 2000 }).then(() => true, () => false);
+    const reset = await page.evaluate(() => ({ returnValue: document.getElementById('start-over').returnValue, name: document.getElementById('request-name').value, email: document.getElementById('request-email').value }));
+    check('spine: Clear the form closes the dialog with its value and resets the form', emptied && reset.returnValue === 'clear', reset);
+
+    const items = page.locator('#share .sp-menu-item');
+    await page.click('[popovertarget="share"]');
+    await page.waitForFunction(isOpen, 'share');
+    const first = await focusOn(page, '#share .sp-menu-item');
+    await page.keyboard.press('ArrowDown');
+    const down = await items.nth(1).evaluate(el => el === document.activeElement);
+    await page.keyboard.press('Home');
+    const home = await items.nth(0).evaluate(el => el === document.activeElement);
+    const expanded = await page.getAttribute('[popovertarget="share"]', 'aria-expanded');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(id => !document.getElementById(id).matches(':popover-open'), 'share');
+    const back = await focusOn(page, '[popovertarget="share"]');
+    check('spine: the menu opens on its first item, takes ArrowDown and Home, and Escape returns focus', first && down && home && expanded === 'true' && back, { first, down, home, expanded, back });
+    await page.click('[popovertarget="share"]');
+    await page.click('#share [data-copy-link="#install"]');
+    const link = { toast: await toastSays(page, 'Copied the link.'), clipboard: await page.evaluate(() => navigator.clipboard.readText()), open: await page.evaluate(isOpen, 'share') };
+    check('spine: a menu item acts, closes the menu and confirms in a toast', link.toast && link.clipboard.endsWith('/demo/dist/spine.html#install') && !link.open, link);
+
+    const tabs = page.locator('.sp-tab');
+    await tabs.nth(0).focus();
+    await page.keyboard.press('ArrowRight');
+    const right = await page.evaluate(() => { const tab = document.activeElement; return { name: tab.textContent, selected: tab.getAttribute('aria-selected'), panel: !document.getElementById(tab.getAttribute('aria-controls')).hidden, shown: document.querySelectorAll('.sp-tabpanel:not([hidden])').length }; });
+    await page.keyboard.press('End');
+    const end = await tabs.last().evaluate(el => el === document.activeElement && el.getAttribute('aria-selected') === 'true');
+    await page.keyboard.press('Home');
+    const start = await tabs.first().evaluate(el => el === document.activeElement && el.getAttribute('aria-selected') === 'true');
+    check('spine: tabs follow ArrowRight, End and Home, and show only their own panel', right.selected === 'true' && right.panel && right.shown === 1 && end && start, { ...right, end, start });
+    await page.click('[data-copy-code]');
+    const copied = await toastSays(page, 'Copied the OMP commands.');
+    const commands = await page.evaluate(() => navigator.clipboard.readText());
+    check('spine: Copy commands copies the selected tab\'s commands and says so', copied && commands.startsWith('omp plugin marketplace add'), { copied, commands });
+    for (const close of await page.locator('[data-tray] .sp-toast .sp-close').all()) await close.click();
+    await page.waitForFunction(() => !document.querySelector('[data-tray] .sp-toast'), null, { timeout: 3000 });
+
+    const row = page.locator('.sp-setting');
+    await row.click();
+    const unfolded = await row.getAttribute('aria-expanded');
+    await page.click('#theme-chooser [data-theme-choice="dark"]');
+    const chosen = await page.evaluate(() => ({ theme: document.documentElement.dataset.theme, value: document.querySelector('[data-theme-value]').textContent, expanded: document.querySelector('.sp-setting').getAttribute('aria-expanded'), focused: document.activeElement === document.querySelector('.sp-setting') }));
+    await row.click();
+    await page.locator('#theme-chooser .sp-menu-item').first().focus();
+    await page.keyboard.press('Escape');
+    const folded = await page.evaluate(() => ({ expanded: document.querySelector('.sp-setting').getAttribute('aria-expanded'), focused: document.activeElement === document.querySelector('.sp-setting') }));
+    check('spine: the Theme setting folds open, sets the theme, writes its value and folds on Escape', unfolded === 'true' && chosen.theme === 'dark' && chosen.value === 'Dark' && chosen.expanded === 'false' && chosen.focused && folded.expanded === 'false' && folded.focused, { unfolded, chosen, folded });
+    await page.click('.theme-toggle');
+    const synced = await page.evaluate(() => ({ theme: document.documentElement.dataset.theme, value: document.querySelector('[data-theme-value]').textContent }));
+    check('spine: the theme toggle and the Theme setting agree', synced.theme === 'light' && synced.value === 'Light', synced);
+    check('no console errors (spine)', errors.length === 0, errors);
+    await context.close();
+  }
+  {
+    // A visitor who paused the fog anywhere on the site carries data-paused="1" onto every page.
+    const { page, context, errors } = await open(browser, path, { init: () => localStorage.setItem('brand-motion-paused', 'true') });
+    await page.click(opener);
+    await page.waitForTimeout(500);
+    const dialog = await page.evaluate(() => ({ paused: document.documentElement.dataset.paused, opacity: getComputedStyle(document.getElementById('start-over')).opacity }));
+    await page.keyboard.press('Escape');
+    await page.fill('#request-email', 'phaedrus@mistystep.io');
+    await page.click('[data-request] [type="submit"]');
+    await page.waitForTimeout(500);
+    const toast = await page.evaluate(() => getComputedStyle(document.querySelector('[data-tray] .sp-toast')).opacity);
+    await page.click('[popovertarget="share"]');
+    await page.waitForTimeout(500);
+    const menu = await page.evaluate(() => getComputedStyle(document.getElementById('share')).opacity);
+    check('spine: with motion paused, the dialog, the toast and the menu still appear', dialog.paused === '1' && dialog.opacity === '1' && toast === '1' && menu === '1', { ...dialog, toast, menu });
+    check('no console errors (spine, motion paused)', errors.length === 0, errors);
+    await context.close();
+  }
+  {
+    const { page, context, errors } = await open(browser, path, { reduce: true });
+    await page.click(opener);
+    const motion = await page.evaluate(() => [getComputedStyle(document.getElementById('start-over')).animationDuration, getComputedStyle(document.querySelector('.sp-button')).transitionDuration]);
+    check('spine: reduced motion makes dialog and button motion instant', motion.every(d => d.split(',').every(x => parseFloat(x) === 0)), motion);
+    check('no console errors (spine, reduced motion)', errors.length === 0, errors);
+    await context.close();
+  }
+  for (const theme of ['light', 'dark']) for (const width of [390, 1440]) {
+    const { page, context, errors } = await open(browser, path, { width, height: width === 390 ? 844 : 900, theme });
+    const shape = await page.evaluate(() => ({ theme: document.documentElement.dataset.theme, overflow: document.documentElement.scrollWidth - innerWidth, failedFonts: [...document.fonts].filter(f => f.status === 'error').map(f => f.family) }));
+    check(`spine: ${theme} ${width}: no horizontal overflow, no failed font, no console errors`, shape.theme === theme && shape.overflow <= 0 && !shape.failedFonts.length && !errors.length, { ...shape, errors });
+    await context.close();
+  }
 }
 
 const browser = await chromium.launch({ headless: true, args: GL });
@@ -191,6 +334,7 @@ try {
     check('no console errors (stack)', errors.length === 0, errors);
     await context.close();
   }
+  await spine(browser);
 } finally {
   await browser.close();
 }
