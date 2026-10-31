@@ -1,6 +1,6 @@
 {
   "name": "@misty-step/brand",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Misty Step's locked identity: the stylesheet, the html attributes, a small runtime, the Mist sign and the spine's components in the studio face, generated from the brand configurator.",
   "license": "(MIT AND OFL-1.1 AND ISC)",
   "repository": {

@@ -18,7 +18,7 @@ The spine's components come from the brand lab's Surfaces modules, in the studio
 ## Install
 
 ```json
-"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.1.0/misty-step-brand-0.1.0.tgz"
+"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.2.0/misty-step-brand-0.2.0.tgz"
 ```
 
 npm and pnpm both install a release tarball. Every file is committed, so installing runs no build step. The package's source is `brand/` in [misty-step/aesthetic](https://github.com/misty-step/aesthetic/tree/master/brand).

@@ -21,7 +21,7 @@ See [the configurator guide](configurator/README.md) for option authoring, the r
 `brand/` is the package `@misty-step/brand`. Each `brand-v*` tag publishes a GitHub release whose tarball both sites install (`.github/workflows/brand-release.yml`):
 
 ```json
-"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.1.0/misty-step-brand-0.1.0.tgz"
+"@misty-step/brand": "https://github.com/misty-step/aesthetic/releases/download/brand-v0.2.0/misty-step-brand-0.2.0.tgz"
 ```
 
 To release, bump `version` in `brand/package.json` in a reviewed PR, then push the tag `brand-v<version>` on the merge commit. The workflow refuses a tag that disagrees with `package.json` or a stale `identity/`.
