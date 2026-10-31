@@ -1,27 +1,28 @@
 // Lucide icons (lucide-icons/lucide 1.65.0), inlined. Status rides the glyph: circle-check, triangle-alert and
-// circle-x carry --ok, --warn and --err; the words beside them stay ink.
-//
-// ISC License. Copyright (c) 2026 Lucide Icons and Contributors.
-// Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby
-// granted, provided that the above copyright notice and this permission notice appear in all copies.
-// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING
-// ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
-// DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
-// WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
-// USE OR PERFORMANCE OF THIS SOFTWARE.
-//
-// check, x, circle-x, circle-question-mark (help-circle), triangle-alert (alert-triangle), ellipsis
-// (more-horizontal), log-out and moon derive from Feather. The MIT License (MIT). Copyright (c) 2013-present Cole
-// Bemis. Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-// associated documentation files (the "Software"), to deal in the Software without restriction, including without
-// limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-// Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of
-// the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
-// EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
+// circle-x carry --ok, --warn and --err; the words beside them stay ink. The licences are legal comments (/*!), so
+// every bundle that ships these drawings keeps them, as the identity package's spine.js does.
+
+/*! Lucide icons (lucide-icons/lucide 1.65.0). ISC License. Copyright (c) 2026 Lucide Icons and Contributors.
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby
+granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING
+ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
+USE OR PERFORMANCE OF THIS SOFTWARE. */
+
+/*! check, x, circle-x, circle-question-mark (help-circle), triangle-alert (alert-triangle), ellipsis
+(more-horizontal), log-out and moon derive from Feather. The MIT License (MIT). Copyright (c) 2013-present Cole
+Bemis. Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE. */
 
 const PATHS = {
   'circle-check': '<circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/>',
@@ -40,6 +41,8 @@ const PATHS = {
 } as const;
 
 export type IconName = keyof typeof PATHS;
+/** Every glyph icon() draws, in drawing order: the identity package generates its IconName type from this list. */
+export const ICON_NAMES = /* @__PURE__ */ Object.keys(PATHS) as IconName[];
 export type Status = 'ok' | 'warn' | 'err';
 export const STATUS_ICON: Record<Status, IconName> = { ok: 'circle-check', warn: 'triangle-alert', err: 'circle-x' };
 

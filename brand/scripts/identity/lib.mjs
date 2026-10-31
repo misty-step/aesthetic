@@ -1,12 +1,13 @@
 // Builds the identity package from the configurator's Locked preset. Shared by generate.mjs (identity/)
 // and og.mjs (the social cards, rendered on a Linux worker). Nothing here is hand-copied: every token,
-// rule, drawing and script comes from the option modules the preset names.
+// rule, drawing and script comes from the option modules the preset names, and the spine's components
+// from the configurator's Surfaces modules (src/surfaces), in the studio face.
 import { build } from 'esbuild';
 import { Resvg } from '@resvg/resvg-js';
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { basename, dirname, join } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -24,7 +25,11 @@ export const sha256 = (...parts) => {
   return hash.digest('hex');
 };
 
-/** Virtual modules: brand:<layer> is the Locked option module for that layer, brand:locked the derived constants. */
+/**
+ * Virtual modules: brand:<layer> is the Locked option module for that layer, brand:locked the derived constants.
+ * The configurator's option registry (src/options.ts) needs Vite's import.meta.glob, so modules that load options
+ * through it (the Surfaces faces) get a registry of the Locked preset's own modules, and any other pick fails loudly.
+ */
 function brandPlugin({ picks, locked = {}, node = false }) {
   return {
     name: 'brand',
@@ -37,6 +42,20 @@ function brandPlugin({ picks, locked = {}, node = false }) {
       });
       b.onLoad({ filter: /.*/, namespace: 'brand-locked' }, () => ({
         contents: Object.entries(locked).map(([name, value]) => `export const ${name} = ${JSON.stringify(value)};`).join('\n'),
+        loader: 'js',
+      }));
+      b.onResolve({ filter: /(^|\/)options$/ }, ({ path, resolveDir }) => (
+        resolve(resolveDir, path) === join(CONF, 'src', 'options') ? { path: 'options', namespace: 'brand-options' } : undefined
+      ));
+      b.onLoad({ filter: /.*/, namespace: 'brand-options' }, () => ({
+        contents: [
+          ...LAYERS.map(layer => `import ${layer} from 'brand:${layer}';`),
+          `const LOCKED = { ${LAYERS.join(', ')} };`,
+          'export async function loadOption(layer, id) {',
+          '  if (LOCKED[layer]?.id !== id) throw new Error(`The identity package carries only the Locked preset: ${layer} ${id} is not its ${layer} pick`);',
+          '  return LOCKED[layer];',
+          '}',
+        ].join('\n'),
         loader: 'js',
       }));
       // runtime.js loads the field lazily from its sibling file.
@@ -80,6 +99,24 @@ export async function collect() {
   return { picks, options, baseCss: mod.baseCss, twoLineLength: mod.twoLineLength };
 }
 
+/** The face the package ships the spine in: the studio face is the Locked preset (configurator/src/surfaces/faces.ts). */
+const SPINE_FACE = 'studio';
+
+/**
+ * The spine in the studio face, from the configurator's Surfaces modules: the face's own values for both themes,
+ * resolved by the lab's loadFace (faces.ts, with the Locked reads of locked.ts), the components' stylesheet, and
+ * the icon names and statuses that spine.d.ts types.
+ */
+async function collectSpine(picks) {
+  const mod = await evaluate([
+    `export { loadFace } from './configurator/src/surfaces/face.ts';`,
+    `export { ICON_NAMES, STATUS_ICON } from './configurator/src/surfaces/icons.ts';`,
+    `export { default as css } from './configurator/src/surfaces/components.css';`,
+  ].join('\n'), picks);
+  const { face, values } = await mod.loadFace(SPINE_FACE);
+  return { face, values, css: mod.css, icons: mod.ICON_NAMES, statuses: Object.keys(mod.STATUS_ICON) };
+}
+
 /** oklch() (or #rrggbb) to #rrggbb in sRGB, for formats that cannot read oklch (PNG rasteriser, favicons). */
 export function hex(value) {
   const v = value.trim();
@@ -104,10 +141,10 @@ export function hex(value) {
 
 const decl = tokens => Object.entries(tokens).map(([name, value]) => `${name}:${value}`).join(';');
 
-async function bundleBrowser(entry, picks, locked, { minify }) {
+async function bundleBrowser(entry, picks, locked, { minify, legalComments = 'none' }) {
   const result = await build({
     entryPoints: [join(HERE, entry)], bundle: true, write: false, platform: 'browser', format: 'esm', target: 'es2022',
-    minify, legalComments: 'none', charset: 'utf8', absWorkingDir: ROOT, banner: { js: `/* @misty-step/brand: ${NOTICE} */` },
+    minify, legalComments, charset: 'utf8', absWorkingDir: ROOT, banner: { js: `/* @misty-step/brand: ${NOTICE} */` },
     plugins: [brandPlugin({ picks, locked })], logLevel: 'silent',
   });
   return result.outputFiles[0].text;
@@ -285,6 +322,53 @@ function stylesheet(data, fonts) {
   ].filter(Boolean).join('\n') + '\n';
 }
 
+/**
+ * spine.css: the face's own spine values (spine.ts FACE and FACE_EXTRAS) for both themes, then the components. brand.css
+ * carries the face's type and colour tokens; the values follow its theme rules (data-theme on <html>, else the system).
+ */
+function spineStylesheet({ face, values, css }) {
+  const scope = `[data-face="${face.id}"]`;
+  const named = theme => Object.keys(values[theme]).sort().join();
+  if (named('light') !== named('dark')) throw new Error(`face ${face.id}: its light and dark values must name the same tokens`);
+  const night = Object.fromEntries(Object.entries(values.dark).filter(([token, value]) => values.light[token] !== value));
+  return [
+    `/* @misty-step/brand: ${NOTICE} The spine's components (configurator/src/surfaces/components.css) in the ${face.id} face (configurator/src/surfaces/faces.ts), whose values come from the Locked preset. Load it after brand.css, which carries the type and colour tokens, and put data-face="${face.id}" on the element that holds the components: body or a container inside it, never html. */`,
+    `${scope}{${decl(values.light)}}`,
+    ...(Object.keys(night).length ? [
+      `html[data-theme="dark"] ${scope}{${decl(night)}}`,
+      `@media (prefers-color-scheme:dark){html:not([data-theme]) ${scope}{${decl(night)}}}`,
+    ] : []),
+    css.trim(),
+  ].join('\n') + '\n';
+}
+
+function spineTypes({ icons, statuses }) {
+  const union = names => names.map(name => `'${name}'`).join(' | ');
+  return `// @misty-step/brand: ${NOTICE}
+/** A glyph icon() draws: Lucide icons (ISC), several derived from Feather (MIT). The licences ship in spine.js. */
+export type IconName = ${union(icons)};
+/** A status. Its glyph carries --ok, --warn or --err; the words beside it stay ink. */
+export type Status = ${union(statuses)};
+/** The glyph as an SVG string: class "sp-icon" plus cls, drawn in currentColor, aria-hidden. Safe to call on the server. */
+export declare function icon(name: IconName, cls?: string): string;
+/** The status glyph (circle-check, triangle-alert or circle-x) with its status class: sp-ok, sp-warn or sp-err. */
+export declare function statusIcon(status: Status): string;
+/**
+ * Installs the components' behaviour once, as listeners on the document, so markup rendered later works too:
+ * [data-sp-dialog] opens a dialog and [data-sp-close] closes it; a .sp-pop menu opens beside its [popovertarget] and
+ * takes the arrow keys; every [role="tab"] answers clicks, ArrowLeft, ArrowRight, Home and End; a .sp-setting row
+ * folds its chooser open and shut; a toast's close button dismisses it. Calling it again does nothing.
+ */
+export declare function wire(): void;
+/** Opens the dialog as a modal. However it closes, focus returns to the invoker, or to the button of the menu the invoker sat in. */
+export declare function openDialog(dialog: HTMLDialogElement, invoker: HTMLElement): void;
+/** Appends a toast (role="status") to the tray and returns it. It stays until dismissed; a fifth pushes the oldest out. */
+export declare function toast(tray: HTMLElement, message: string, status?: Status): HTMLElement;
+/** Writes the message into the input's #<id>-error note and marks the input invalid; null clears both. Throws when the note is missing. */
+export declare function setInvalid(input: HTMLInputElement, message: string | null): void;
+`;
+}
+
 /** The social card for one page: the lockup, the page's headline and a Ground fog still, 1200 x 630. */
 export const OG = { width: 1200, height: 630, theme: 'light', pages: ['studio', 'stack'] };
 export function ogPage(data, page) {
@@ -361,6 +445,10 @@ export async function outputs(data) {
   const names = brandNames(o);
   files.set('mark.js', markModule(o, names));
   files.set('mark.d.ts', markTypes(names));
+  const spine = await collectSpine(picks);
+  files.set('spine.css', spineStylesheet(spine));
+  files.set('spine.js', await bundleBrowser('spine.ts', picks, locked, { minify: true, legalComments: 'eof' }));
+  files.set('spine.d.ts', spineTypes(spine));
   files.set('icons/favicon.svg', faviconSvg(o, ''));
   const icons = new Map(iconSources(o).map(({ file, source }) => [file, { hash: sha256(RESVG, '\n', source), source }]));
   const fontBytes = fonts.map(font => files.get(`fonts/${font.file}`));

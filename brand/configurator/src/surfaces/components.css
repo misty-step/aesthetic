@@ -1,7 +1,8 @@
 /* The spine's components, one stylesheet for every face (issue #36).
    Reads only the tokens named in src/surfaces/spine.ts and sets no literal colour, font family or font size;
    `node scripts/surfaces.mjs --static` checks both. A face changes values, never this anatomy. Behaviour (focus,
-   keys, folding, toasts) is ported from the root recipes/ into src/surfaces/behaviour.ts. Class prefix sp- (spine). */
+   keys, folding, toasts) is ported from the root recipes/ into src/surfaces/behaviour.ts. Class prefix sp- (spine).
+   The identity package ships this file in the studio face as @misty-step/brand/spine.css (npm run identity). */
 
 /* ---- Face root: every [data-face] element is a page of its face ---- */
 [data-face] {
@@ -287,6 +288,9 @@ dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: var(--cont
 /* ---- Motion: feedback only, resolved once ---- */
 @keyframes sp-enter { from { opacity: 0; translate: 0 6px; } }
 @keyframes sp-leave { to { opacity: 0; } }
+/* Feedback still resolves where a host pauses every animation to hold its ambient motion, as the identity runtime's
+   pause control does (html[data-paused="1"]): a held entrance would leave a dialog, menu or toast invisible. */
+[data-face] :is(.sp-pop, dialog.sp-dialog, .sp-toast) { animation-play-state: running !important; }
 @media (prefers-reduced-motion: reduce) {
   [data-face] *, [data-face] *::before, [data-face] *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
 }

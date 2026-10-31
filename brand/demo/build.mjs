@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 // npm run demo: write demo/dist/studio.html and demo/dist/stack.html, the Locked home pages built on the package
-// alone (markup.mjs). Only the words come from the configurator's r2-cut copy, as each site keeps its own.
+// alone (markup.mjs), and demo/dist/spine.html, an inner page whose components are the package's spine alone
+// (spine.mjs). Only the words come from the configurator's r2-cut copy, as each site keeps its own.
 // Serve the repository root (for example `python3 -m http.server`) and open /demo/dist/<page>.html.
 // The stack page writes its hero without inline --enter-i, as a strict-CSP site must.
 import { mkdir, writeFile } from 'node:fs/promises';
 import { collect } from '../scripts/identity/lib.mjs';
 import { page } from './markup.mjs';
+import { spinePage } from './spine.mjs';
 
 const { options } = await collect();
 const dist = new URL('./dist/', import.meta.url);
@@ -14,3 +16,5 @@ for (const name of ['studio', 'stack']) {
   await writeFile(new URL(`${name}.html`, dist), page(options.copy.pages[name], { inlineOrder: name === 'studio' }));
   console.log(`wrote demo/dist/${name}.html`);
 }
+await writeFile(new URL('spine.html', dist), spinePage(options.copy.pages));
+console.log('wrote demo/dist/spine.html');

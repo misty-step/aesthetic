@@ -26,7 +26,7 @@ See [the configurator guide](configurator/README.md) for option authoring, the r
 
 To release, bump `version` in `brand/package.json` in a reviewed PR, then push the tag `brand-v<version>` on the merge commit. The workflow refuses a tag that disagrees with `package.json` or a stale `identity/`.
 
-`identity/` holds the stylesheet, the html attributes, the runtime, the mark, the icons and the social cards. A script generates every file there from the configurator's option modules. Nothing in it is copied by hand. [identity/README.md](identity/README.md) covers install, markup, the runtime, Next.js and Astro usage, licences and regeneration.
+`identity/` holds the stylesheet, the html attributes, the runtime, the mark, the icons, the social cards and the spine's components in the studio face. A script generates every file there from the configurator's option modules and its Surfaces modules. Nothing in it is copied by hand. [identity/README.md](identity/README.md) covers install, markup, the runtime, the spine components, Next.js and Astro usage, licences and regeneration.
 
 ```sh
 npm ci
@@ -35,8 +35,8 @@ npm run identity:check  # fail when identity/ is stale; CI runs it on every pull
 npm run identity:og     # render the social cards (Linux worker only: no browser runs on a Mac)
 ```
 
-`demo/` is the package's proof fixture, outside the published files. `npm run demo` writes both home pages against the package alone. On a Linux worker, `demo/proof.mjs` checks the runtime's behaviour, and `demo/compare.mjs` compares the pages' renders with the configurator's.
+`demo/` is the package's proof fixture, outside the published files. `npm run demo` writes both home pages, and an inner page built from the spine components, against the package alone. On a Linux worker, `demo/proof.mjs` checks the runtime's and the spine's behaviour, and `demo/compare.mjs` compares the home pages' renders with the configurator's.
 
 ## Licences
 
-Code is MIT ([LICENSE](LICENSE)). Every font is SIL Open Font License 1.1; its licence file sits beside it.
+Code is MIT ([LICENSE](LICENSE)). Every font is SIL Open Font License 1.1; its licence file sits beside it. The spine's glyphs are Lucide icons (ISC), several derived from Feather (MIT); both notices sit in `configurator/src/surfaces/icons.ts` and close `identity/spine.js`.
