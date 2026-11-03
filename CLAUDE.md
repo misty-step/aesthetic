@@ -69,9 +69,11 @@ Design principles (UX/DX/AX; no layout captions) live in [mistystack design](htt
   locked direction gets rebuilt properly in `site/`.
 - Product work is tracked in the deployed Powder board, never in this repository.
 
-## Gates
+## Delivery and repository checks
 
-Run before any commit that touches CSS/HTML/JS:
+Follow the [Mistystack method](https://github.com/misty-step/mistystack/blob/master/skills/misty/SKILL.md) for delivery, real-running-app verification, release gates, Boat slice lifecycle and watchdog supervision. CI and review are not merge gates.
+
+The repository check for CSS/HTML/JS changes is:
 
 ```sh
 npm run ci
