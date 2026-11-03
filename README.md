@@ -33,7 +33,7 @@ stack.mistystep.io install. It moved here from `misty-step/brand` on
 With a package manager:
 
 ```bash
-pnpm add github:misty-step/aesthetic#v0.24.0
+pnpm add github:misty-step/aesthetic#v0.25.0
 ```
 
 ```css
@@ -49,7 +49,7 @@ Without a build step:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v0.24.0/aesthetic.css"
+  href="https://cdn.jsdelivr.net/gh/misty-step/aesthetic@v0.25.0/aesthetic.css"
 />
 ```
 

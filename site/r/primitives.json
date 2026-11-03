@@ -120,12 +120,12 @@
     {
       "route": "status",
       "title": "Status",
-      "summary": "Status rides the glyph: success, warning, and danger color the icon — never the sentence, never a filled pill. The words stay ink.",
-      "classes": [".ae-ok / .ae-warn / .ae-err"],
+      "summary": "Status rides the glyph: active progress spends the accent; success, warning, and danger use their semantic inks. The icon carries the state — never the sentence, never a filled pill.",
+      "classes": [".ae-progress / .ae-ok / .ae-warn / .ae-err"],
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<p>\n  <svg class=\"ae-icon ae-ok\">…check…</svg> Deploy succeeded.\n</p>\n<p>\n  <svg class=\"ae-icon ae-warn\">…triangle-alert…</svg> Certificate expires soon.\n</p>\n<p>\n  <svg class=\"ae-icon ae-err\">…x…</svg> Build failed.\n</p>"
+      "markup": "<p>\n  <svg class=\"ae-icon ae-progress\">…loader-circle…</svg> Review is running.\n</p>\n<p>\n  <svg class=\"ae-icon ae-ok\">…check…</svg> Deploy succeeded.\n</p>\n<p>\n  <svg class=\"ae-icon ae-warn\">…triangle-alert…</svg> Certificate expires soon.\n</p>\n<p>\n  <svg class=\"ae-icon ae-err\">…x…</svg> Build failed.\n</p>"
     },
     {
       "route": "table",
@@ -325,17 +325,17 @@
       "role": "",
       "since": "",
       "recipes": [],
-      "markup": "<svg class=\"ae-flow\" viewBox=\"0 0 684 140\" role=\"img\">\n  <path class=\"ae-wire is-active\" d=\"M 138 70 L 194 70\"/>\n  <rect class=\"ae-node is-done\" x=\"18\" y=\"43\" width=\"120\" height=\"54\"/>\n  <text class=\"ae-node-label\" x=\"78\" y=\"80\">arena</text>\n  <path class=\"ae-icon ae-ok\" d=\"M 117 54 L 120 57 L 126 49\"/>\n  <rect class=\"ae-node is-active\" x=\"194\" y=\"43\" …/>\n  <rect class=\"ae-node is-locked\" x=\"370\" y=\"43\" …/>\n</svg>"
+      "markup": "<div class=\"ae-flow-viewport\" tabindex=\"0\" role=\"region\" aria-label=\"workflow diagram\">\n  <svg class=\"ae-flow\" viewBox=\"0 0 684 140\" role=\"img\">\n  <path class=\"ae-wire is-active\" d=\"M 138 70 L 194 70\"/>\n  <rect class=\"ae-node is-done\" x=\"18\" y=\"43\" width=\"120\" height=\"54\"/>\n  <text class=\"ae-node-label\" x=\"78\" y=\"80\">arena</text>\n  <path class=\"ae-icon ae-ok\" d=\"M 117 54 L 120 57 L 126 49\"/>\n  <rect class=\"ae-node is-active\" x=\"194\" y=\"43\" …/>\n  <rect class=\"ae-node is-locked\" x=\"370\" y=\"43\" …/>\n  </svg>\n</div>"
     },
     {
       "route": "shellapp",
       "title": "App shell",
-      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. On small screens the same rail becomes bottom chrome, not a hidden drawer.",
+      "summary": "The app shell: one viewport, hairline-divided — a 13px rail for places, a desk for work. The desk scrolls inside itself; the page never moves. On small screens the same rail becomes bottom chrome, not a hidden drawer. The nav recipe reveals the current destination inside the scrollable strip while the utility foot stays pinned.",
       "classes": [".ae-shell / .ae-rail / .ae-desk"],
       "role": "",
       "since": "",
-      "recipes": [],
-      "markup": "<div class=\"ae-shell\">\n  <aside class=\"ae-rail\">\n    <p class=\"ae-h\">PLACES</p>\n    <a href=\"…\">agents</a>\n    <a href=\"…\">history</a>\n    <div class=\"ae-rail-foot\">…mode toggle…</div>\n  </aside>\n  <main class=\"ae-desk\">…the work…</main>\n</div>"
+      "recipes": ["nav.js"],
+      "markup": "<div class=\"ae-shell\">\n  <aside class=\"ae-rail\">\n    <nav class=\"ae-rail-nav\" aria-label=\"places\">\n      <p class=\"ae-h\">PLACES</p>\n      <a href=\"…\">agents</a>\n      <a href=\"…\">history</a>\n    </nav>\n    <div class=\"ae-rail-foot\">…mode toggle…</div>\n  </aside>\n  <main class=\"ae-desk\">…the work…</main>\n</div>"
     },
     {
       "route": "doc",

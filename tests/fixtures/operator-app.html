@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aesthetic - operator app usability fixture</title>
+    <script>
+      try {
+        var m = localStorage.getItem('ae-mode');
+        if (m === 'dark' || m === 'light') {
+          document.documentElement.classList.add(m);
+          document.documentElement.style.colorScheme = m;
+        }
+      } catch (e) {}
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="../../aesthetic.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position: absolute">
+      <symbol id="i-loader-circle" viewBox="0 0 24 24">
+        <path d="M21 12a9 9 0 1 1-6.22-8.56" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" />
+      </symbol>
+    </svg>
+
+    <div class="ae-shell">
+      <aside class="ae-rail">
+        <nav class="ae-rail-nav" aria-label="primary">
+          <p class="ae-h">BITTERBLOSSOM</p>
+          <a aria-current="page" href="#workflows">workflows</a>
+          <a href="#runs">runs</a>
+          <a href="#agents">agents</a>
+          <a href="#spend">spend</a>
+          <a href="#evidence">evidence</a>
+          <a href="#history">history</a>
+          <a href="#settings">settings</a>
+        </nav>
+        <div class="ae-rail-foot">
+          <button
+            class="ae-mode"
+            data-testid="operator-mode"
+            aria-label="toggle color mode"
+          >
+            mode
+          </button>
+        </div>
+      </aside>
+
+      <main class="ae-desk" id="workflows">
+        <section class="ae-group">
+          <p class="ae-chrome">PLANE · production</p>
+          <h1 class="ae-item">Workflows</h1>
+          <p class="ae-dim">
+            Configured work first; select one to inspect its current run.
+          </p>
+          <p><button class="ae-button">Create workflow</button></p>
+        </section>
+
+        <section class="ae-group" aria-labelledby="configured-heading">
+          <h2 class="ae-h" id="configured-heading">CONFIGURED</h2>
+          <div class="ae-list-rows" role="list">
+            <a class="ae-list-row ae-row-link" href="#selected" role="listitem">
+              <span class="ae-list-cell">
+                <span class="ae-list-label">workflow</span>
+                <span class="ae-list-value">pull request review</span>
+              </span>
+              <span class="ae-list-cell">
+                <span class="ae-list-label">trigger</span>
+                <span class="ae-list-value">GitHub pull request opened</span>
+              </span>
+              <span class="ae-list-cell">
+                <span class="ae-list-label">route</span>
+                <span class="ae-list-value">reviewer → verifier</span>
+              </span>
+              <span class="ae-list-cell ae-list-status">
+                <svg class="ae-icon ae-progress">
+                  <use href="#i-loader-circle" />
+                </svg>
+                <span class="ae-list-label">latest run</span>
+                <span class="ae-list-value">executing</span>
+              </span>
+            </a>
+            <a class="ae-list-row ae-row-link" href="#selected" role="listitem">
+              <span class="ae-list-cell">
+                <span class="ae-list-label">workflow</span>
+                <span class="ae-list-value">nightly backlog groom</span>
+              </span>
+              <span class="ae-list-cell">
+                <span class="ae-list-label">trigger</span>
+                <span class="ae-list-value">daily at 02:00 UTC</span>
+              </span>
+              <span class="ae-list-cell">
+                <span class="ae-list-label">route</span>
+                <span class="ae-list-value">groomer → publisher</span>
+              </span>
+              <span class="ae-list-cell ae-list-status">
+                <svg class="ae-icon ae-ok"><use href="#i-check" /></svg>
+                <span class="ae-list-label">latest run</span>
+                <span class="ae-list-value">verified</span>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section class="ae-group" id="selected" aria-labelledby="route-heading">
+          <h2 class="ae-h" id="route-heading">PULL REQUEST REVIEW · ROUTE</h2>
+          <div
+            class="ae-flow-viewport"
+            tabindex="0"
+            role="region"
+            aria-label="pull request review workflow; scroll horizontally on narrow screens"
+          >
+            <svg
+              class="ae-flow"
+              viewBox="0 0 684 140"
+              role="img"
+              aria-label="webhook, reviewer, verifier, and result workflow"
+            >
+              <path class="ae-wire is-reached" d="M 138 70 L 194 70" />
+              <path class="ae-wire is-active" d="M 314 70 L 370 70" />
+              <path class="ae-wire is-locked" d="M 490 70 L 546 70" />
+              <rect
+                class="ae-node is-done"
+                x="18"
+                y="43"
+                width="120"
+                height="54"
+              />
+              <text class="ae-node-kicker" x="78" y="61" text-anchor="middle">
+                01
+              </text>
+              <text class="ae-node-label" x="78" y="82" text-anchor="middle">
+                webhook
+              </text>
+              <rect
+                class="ae-node is-done"
+                x="194"
+                y="43"
+                width="120"
+                height="54"
+              />
+              <text class="ae-node-kicker" x="254" y="61" text-anchor="middle">
+                02
+              </text>
+              <text class="ae-node-label" x="254" y="82" text-anchor="middle">
+                reviewer
+              </text>
+              <rect
+                class="ae-node is-active"
+                x="370"
+                y="43"
+                width="120"
+                height="54"
+              />
+              <text class="ae-node-kicker" x="430" y="61" text-anchor="middle">
+                03
+              </text>
+              <text
+                class="ae-node-label is-active"
+                x="430"
+                y="82"
+                text-anchor="middle"
+              >
+                verifier
+              </text>
+              <rect
+                class="ae-node is-locked"
+                x="546"
+                y="43"
+                width="120"
+                height="54"
+              />
+              <text class="ae-node-kicker" x="606" y="61" text-anchor="middle">
+                04
+              </text>
+              <text
+                class="ae-node-label is-locked"
+                x="606"
+                y="82"
+                text-anchor="middle"
+              >
+                result
+              </text>
+            </svg>
+          </div>
+        </section>
+
+        <section
+          class="ae-group"
+          id="evidence"
+          aria-labelledby="evidence-heading"
+        >
+          <h2 class="ae-h" id="evidence-heading">SELECTED RUN · EVIDENCE</h2>
+          <p class="ae-status">
+            <svg class="ae-icon ae-progress">
+              <use href="#i-loader-circle" />
+            </svg>
+            <span class="ae-status-label"
+              >Verifier is checking the review receipt.</span
+            >
+          </p>
+          <p class="ae-dim">
+            Run 01JZ4 · $0.18 recorded · transcript available after completion.
+          </p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

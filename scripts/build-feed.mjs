@@ -58,7 +58,7 @@ const RECIPE_SIGNALS = [
   [/\bae-pop\b|\bae-menu\b/, 'pop.js'],
   [/\bae-dialog\b|data-ae-dialog/, 'dialog.js'],
   [/\bae-settings\b/, 'settings.js'],
-  [/\bae-nav\b/, 'nav.js'],
+  [/\bae-nav\b|\bae-rail-nav\b/, 'nav.js'],
   [/\bae-mode\b/, 'mode.js'],
   [/data-ae-anticipate/, 'anticipate.js'],
   [/\bae-view\b/, 'views.js'],

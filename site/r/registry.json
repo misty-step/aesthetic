@@ -656,7 +656,7 @@
       "name": "status",
       "type": "registry:item",
       "title": "aesthetic Status",
-      "description": "Aesthetic Status primitive, v0.25.0. Installs ae-err, ae-icon, ae-ok, ae-status, ae-status-label, ae-warn without the full stylesheet.",
+      "description": "Aesthetic Status primitive, v0.25.0. Installs ae-err, ae-icon, ae-ok, ae-progress, ae-status, ae-status-label, ae-warn without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -668,6 +668,7 @@
           "ae-err",
           "ae-icon",
           "ae-ok",
+          "ae-progress",
           "ae-status",
           "ae-status-label",
           "ae-warn"
@@ -1292,10 +1293,12 @@
           "--ae-w-regular",
           "--ae-ease",
           "--ae-quick",
+          "--ae-ink-muted",
           "--ae-line",
           "--ae-ok",
           "--ae-warn",
           "--ae-err",
+          "--ae-ink-muted-dark",
           "--ae-line-dark",
           "--ae-ok-dark",
           "--ae-warn-dark",
@@ -1693,7 +1696,7 @@
       "name": "flow",
       "type": "registry:item",
       "title": "aesthetic Flow",
-      "description": "Aesthetic Flow primitive, v0.25.0. Installs ae-flow, ae-icon, ae-node, ae-node-label, ae-ok, ae-wire without the full stylesheet.",
+      "description": "Aesthetic Flow primitive, v0.25.0. Installs ae-flow, ae-flow-viewport, ae-icon, ae-node, ae-node-label, ae-ok, ae-wire without the full stylesheet.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -1703,6 +1706,7 @@
         "route": "flow",
         "classes": [
           "ae-flow",
+          "ae-flow-viewport",
           "ae-icon",
           "ae-node",
           "ae-node-label",
@@ -1751,7 +1755,7 @@
       "name": "shellapp",
       "type": "registry:item",
       "title": "aesthetic App shell",
-      "description": "Aesthetic App shell primitive, v0.25.0. Installs ae-desk, ae-h, ae-rail, ae-rail-foot, ae-shell without the full stylesheet.",
+      "description": "Aesthetic App shell primitive, v0.25.0. Installs ae-desk, ae-h, ae-rail, ae-rail-foot, ae-rail-nav, ae-shell without the full stylesheet. Recipes: nav.js.",
       "registryDependencies": [
         "https://aesthetic.mistystep.io/r/aesthetic-base.json"
       ],
@@ -1759,7 +1763,14 @@
         "version": "0.25.0",
         "tier": "primitive",
         "route": "shellapp",
-        "classes": ["ae-desk", "ae-h", "ae-rail", "ae-rail-foot", "ae-shell"],
+        "classes": [
+          "ae-desk",
+          "ae-h",
+          "ae-rail",
+          "ae-rail-foot",
+          "ae-rail-nav",
+          "ae-shell"
+        ],
         "attributes": [],
         "tokens": [
           "--ae-surface",
@@ -1785,13 +1796,18 @@
           "--ae-space-4",
           "--ae-space-5"
         ],
-        "recipes": []
+        "recipes": ["nav.js"]
       },
       "files": [
         {
           "path": "registry/shellapp/aesthetic.shellapp.css",
           "type": "registry:file",
           "target": "~/aesthetic.shellapp.css"
+        },
+        {
+          "path": "recipes/nav.js",
+          "type": "registry:file",
+          "target": "~/aesthetic.nav.js"
         }
       ]
     },

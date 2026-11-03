@@ -28,6 +28,23 @@ for (const mode of MODES) {
     const deskBox = await page.locator('.ae-desk').boundingBox();
     expect(railBox?.y ?? 0).toBeGreaterThan(deskBox?.y ?? 0);
 
+    const modeUtility = page.getByTestId('mode-utility');
+    await expect(modeUtility).toBeVisible();
+    const modeBox = await modeUtility.boundingBox();
+    expect((modeBox?.x ?? 0) + (modeBox?.width ?? 0)).toBeLessThanOrEqual(390);
+    const navCapacity = await page.locator('.ae-rail-nav').evaluate((el) => ({
+      clientWidth: el.clientWidth,
+      scrollWidth: el.scrollWidth,
+    }));
+    expect(navCapacity.scrollWidth).toBeGreaterThan(navCapacity.clientWidth);
+    const activeBox = await page
+      .locator('.ae-rail-nav [aria-current="page"]')
+      .boundingBox();
+    expect(activeBox?.x ?? -1).toBeGreaterThanOrEqual(0);
+    expect((activeBox?.x ?? 0) + (activeBox?.width ?? 0)).toBeLessThanOrEqual(
+      390,
+    );
+
     await expect
       .poll(() =>
         page
@@ -86,4 +103,28 @@ test('responsive fixture · 768px keeps bottom rail and two-up rows', async ({
         ),
     )
     .toBe(2);
+});
+
+test('v0.25 direct-link rail stays horizontally reachable at 390px', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/tests/fixtures/mobile-responsive.html');
+  await page.evaluate(() => {
+    const nav = document.querySelector('.ae-rail-nav')!;
+    nav.replaceWith(...nav.children);
+  });
+
+  const rail = page.locator('.ae-rail');
+  await expect(rail).toHaveCSS('overflow-x', 'auto');
+  await rail.evaluate((el) => {
+    el.scrollLeft = el.scrollWidth;
+  });
+  const utility = page.getByTestId('mode-utility');
+  await expect(utility).toBeVisible();
+  const utilityBox = await utility.boundingBox();
+  expect(utilityBox?.x ?? -1).toBeGreaterThanOrEqual(0);
+  expect((utilityBox?.x ?? 0) + (utilityBox?.width ?? 0)).toBeLessThanOrEqual(
+    390,
+  );
 });
