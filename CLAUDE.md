@@ -16,6 +16,8 @@ screens that never scroll, motion as feedback only (resolves once,
 persists), buttons are not links. The steering doctrine — invariants
 vs dials — lives in `docs/ADOPTING.md`.
 
+Design principles (UX/DX/AX; no layout captions) live in [mistystack design](https://github.com/misty-step/mistystack/blob/master/skills/design/SKILL.md#principles); point there, don't copy them.
+
 ## Repo shape
 
 - `brand/` — brand development: the configurator (`brand/configurator/`,
