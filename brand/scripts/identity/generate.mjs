@@ -1,54 +1,63 @@
 #!/usr/bin/env node
-// npm run identity: regenerate identity/ from the configurator's Locked preset.
-// npm run identity:check: change nothing; fail when any committed file is stale, missing or extra.
-// The social cards need a browser, so og.mjs renders them on a Linux worker; both modes fail while they are stale.
+// npm run identity: regenerate identity/ from the root tokens.json and brand/src, and render its PNGs with resvg.
+// npm run identity:check: change nothing; fail when any owned file is stale, missing or extra, when a hand-written
+// stylesheet spends a value that is not a token, or when a font differs from its upstream pin.
+// PNGs are checked by their recorded source hash (rasterisers differ in the last bit across platforms) and by
+// their own recorded hash, so the check gives the same answer on every machine.
 import { existsSync } from 'node:fs';
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
-import { collect, OUT, outputs, rasterise } from './lib.mjs';
+import { OUT, outputs, rasterise, sha256 } from './lib.mjs';
 
 const check = process.argv.includes('--check');
 const KEEP = new Set(['README.md']); // written by hand, never generated
+const MANIFEST = 'manifest.json';
 
-const data = await collect();
-const { files, icons, og } = await outputs(data);
-const manifestPath = join(OUT, 'manifest.json');
-const previous = existsSync(manifestPath) ? JSON.parse(await readFile(manifestPath, 'utf8')) : {};
-const recorded = previous.rasters ?? {};
-const manifest = {
-  note: 'Source hashes of the rendered images. generate.mjs renders the icons; og.mjs renders the social cards on a Linux worker.',
-  locked: data.picks,
-  rasters: {
-    ...Object.fromEntries([...icons].map(([file, icon]) => [file, icon.hash])),
-    ...Object.fromEntries([...og.keys()].map(file => [file, recorded[file] ?? null])),
-  },
+const { files, rasters, problems } = await outputs();
+if (problems.length) {
+  console.error(`identity: the sources break the identity's rules\n- ${problems.join('\n- ')}`);
+  process.exit(1);
+}
+
+const manifestPath = join(OUT, MANIFEST);
+const recorded = existsSync(manifestPath) ? JSON.parse(await readFile(manifestPath, 'utf8')).rasters ?? {} : {};
+const stale = [];
+const write = async (file, contents, verb) => {
+  await mkdir(dirname(join(OUT, file)), { recursive: true });
+  await writeFile(join(OUT, file), contents);
+  console.log(`${verb} identity/${file}`);
 };
-files.set('manifest.json', JSON.stringify(manifest, null, 2) + '\n');
 
-const problems = [];
-const same = async (file, contents) => existsSync(join(OUT, file)) && Buffer.compare(await readFile(join(OUT, file)), Buffer.from(contents)) === 0;
+const rendered = {};
+for (const [file, { source, hash }] of rasters) {
+  const path = join(OUT, file);
+  const was = recorded[file];
+  const current = existsSync(path) && was?.source === hash && was.png === sha256(await readFile(path));
+  if (current) {
+    rendered[file] = was;
+    continue;
+  }
+  if (check) {
+    stale.push(`${file} is stale (its source changed, or the PNG differs from the one recorded)`);
+    continue;
+  }
+  const png = rasterise(source);
+  await write(file, png, 'rendered');
+  rendered[file] = { source: hash, png: sha256(png) };
+}
+files.set(MANIFEST, JSON.stringify({
+  note: 'Hashes of each PNG\'s SVG source and of the PNG resvg rendered from it. npm run identity:check compares both.',
+  rasters: rendered,
+}, null, 2) + '\n');
+
 for (const [file, contents] of files) {
-  if (await same(file, contents)) continue;
-  if (check) problems.push(`${file} is stale`);
-  else {
-    await mkdir(dirname(join(OUT, file)), { recursive: true });
-    await writeFile(join(OUT, file), contents);
-    console.log(`wrote identity/${file}`);
-  }
+  const path = join(OUT, file);
+  if (existsSync(path) && Buffer.compare(await readFile(path), Buffer.from(contents)) === 0) continue;
+  if (check) stale.push(`${file} is stale`);
+  else await write(file, contents, 'wrote');
 }
-for (const [file, icon] of icons) {
-  if (recorded[file] === icon.hash && existsSync(join(OUT, file))) continue;
-  if (check) problems.push(`${file} is stale (its source changed)`);
-  else {
-    await mkdir(dirname(join(OUT, file)), { recursive: true });
-    await writeFile(join(OUT, file), rasterise(icon.source));
-    console.log(`rendered identity/${file}`);
-  }
-}
-const stale = [...og].filter(([file, card]) => recorded[file] !== card.hash || !existsSync(join(OUT, file))).map(([file]) => file);
-for (const file of stale) problems.push(`${file} is stale: run npm run identity:og on a Linux worker (no browser runs on a Mac)`);
 
-const owned = new Set([...files.keys(), ...icons.keys(), ...og.keys(), ...KEEP]);
+const owned = new Set([...files.keys(), ...rasters.keys(), ...KEEP]);
 async function* walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
@@ -56,20 +65,23 @@ async function* walk(dir) {
     else yield relative(OUT, path);
   }
 }
-if (existsSync(OUT)) {
-  for await (const file of walk(OUT)) {
-    if (owned.has(file)) continue;
-    if (check) problems.push(`${file} is not generated`);
-    else {
-      await rm(join(OUT, file));
-      console.log(`removed identity/${file}`);
-    }
+for await (const file of existsSync(OUT) ? walk(OUT) : []) {
+  if (owned.has(file)) continue;
+  if (check) stale.push(`${file} is not generated`);
+  else {
+    await rm(join(OUT, file));
+    console.log(`removed identity/${file}`);
+  }
+}
+if (!check) {
+  // Directories emptied by removed files.
+  for (const entry of await readdir(OUT, { withFileTypes: true })) {
+    if (entry.isDirectory() && (await readdir(join(OUT, entry.name))).length === 0) await rm(join(OUT, entry.name), { recursive: true });
   }
 }
 
-if (problems.length) {
-  console.error(`identity${check ? ':check' : ''}: ${problems.length} problem${problems.length > 1 ? 's' : ''}\n- ${problems.join('\n- ')}`);
-  if (check) console.error('Run npm run identity (and npm run identity:og on a Linux worker for the social cards), then commit identity/.');
+if (stale.length) {
+  console.error(`identity:check: ${stale.length} problem${stale.length > 1 ? 's' : ''}\n- ${stale.join('\n- ')}\nRun npm run identity, then commit identity/.`);
   process.exit(1);
 }
-console.log(check ? 'identity:check: identity/ matches the configurator\'s Locked preset' : 'identity: up to date');
+console.log(check ? 'identity:check: identity/ matches tokens.json and brand/src' : 'identity: up to date');

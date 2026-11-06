@@ -1,0 +1,345 @@
+/* The spine's components in the Misty Step identity. Each sp- class carries its whole look, so components need no
+   wrapper; every value is a token from brand.css, which loads first. Flat: Surface on Canvas and a 1px Border,
+   one soft shadow on floating menus only. Behaviour (dialogs, menus, tabs, settings rows, toasts) lives in spine.js. */
+:where(html[data-brand="misty-step"]) {
+  --sp-control-height: calc(var(--label-size) * var(--label-leading) + 2 * var(--control-padding) + 2px);
+  --sp-shadow: 0 var(--space-sm) var(--space-lg) color-mix(in srgb, var(--color-ink) 14%, transparent);
+  --sp-backdrop: color-mix(in srgb, var(--color-ink) 48%, transparent);
+  --sp-fast: 120ms;
+  --sp-slow: 200ms;
+  --sp-ease: cubic-bezier(0.2, 0, 0, 1);
+  /* The palette has no status hues: status rides the glyph's shape. A confirmation takes Indigo; a warning and an
+     error take full ink. */
+  --ok: var(--primary);
+  --warn: var(--ink);
+  --err: var(--ink);
+}
+[class*="sp-"][hidden] { display: none !important; }
+
+.sp-sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+.sp-skip {
+  position: fixed; top: var(--space-sm); left: var(--space-sm); z-index: 200;
+  padding: var(--control-padding); border-radius: var(--radius-control);
+  background: var(--ink); color: var(--canvas);
+  font: var(--type-label); letter-spacing: var(--label-tracking); text-decoration: none;
+  translate: 0 -200%;
+}
+.sp-skip:focus { translate: none; }
+
+/* ---- Icons: Lucide, 1.5 stroke, in currentColor ---- */
+.sp-icon {
+  flex: none; width: 1.2em; height: 1.2em; vertical-align: -0.2em;
+  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.sp-ok { color: var(--ok); }
+.sp-warn { color: var(--warn); }
+.sp-err { color: var(--err); }
+
+/* ---- Link: Indigo text that navigates ---- */
+.sp-link {
+  color: var(--primary);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color var(--sp-fast) var(--sp-ease);
+}
+
+/* ---- Buttons: .sp-button is the one primary action, solid Indigo with a white label in both themes;
+   .sp-secondary is Surface with a Border; .sp-ghost is Indigo text. Each stands alone or modifies .sp-button. ---- */
+.sp-button, .sp-secondary, .sp-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+  min-height: var(--sp-control-height); margin: 0; padding: var(--control-padding);
+  border: 1px solid transparent; border-radius: var(--radius-control);
+  font: var(--type-label); letter-spacing: var(--label-tracking);
+  text-align: center; text-decoration: none; cursor: pointer;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--sp-fast) var(--sp-ease), border-color var(--sp-fast) var(--sp-ease), color var(--sp-fast) var(--sp-ease);
+}
+.sp-button { border-color: var(--button-primary-background); background: var(--button-primary-background); color: var(--on-primary); }
+.sp-secondary { border-color: var(--border); background: var(--surface); color: var(--ink); }
+.sp-ghost { border-color: transparent; background: transparent; color: var(--primary); }
+.sp-icon-only { width: var(--sp-control-height); padding: 0; }
+.sp-ghost.sp-icon-only { color: var(--muted); }
+:is(.sp-button, .sp-secondary, .sp-ghost):active:not(:disabled) { translate: 0 1px; }
+:is(.sp-button, .sp-secondary):disabled { border-color: var(--border); background: var(--canvas); color: var(--muted); cursor: default; }
+.sp-ghost:disabled { color: var(--muted); cursor: default; }
+
+/* ---- Text field: label, input, hint, and a note whose glyph carries the status. Inputs share the secondary
+   button's frame and set the body type. ---- */
+.sp-field { display: grid; gap: var(--space-sm); min-width: 0; }
+.sp-label { font: var(--type-label); letter-spacing: var(--label-tracking); color: var(--ink); }
+.sp-input {
+  display: block; width: 100%; min-width: 0; margin: 0; padding: var(--control-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-control);
+  background: var(--surface); color: var(--ink);
+  font: var(--type-body); letter-spacing: var(--body-tracking);
+  transition: border-color var(--sp-fast) var(--sp-ease);
+}
+textarea.sp-input { resize: vertical; }
+.sp-input::placeholder { color: var(--muted); opacity: 1; }
+.sp-input:focus-visible { border-color: var(--primary); }
+.sp-input[aria-invalid="true"] { border-color: var(--err); box-shadow: inset 0 0 0 1px var(--err); }
+.sp-hint { margin: 0; font: var(--type-label); letter-spacing: var(--label-tracking); color: var(--muted); }
+.sp-field-note { display: flex; align-items: baseline; gap: var(--space-sm); margin: 0; font: var(--type-label); letter-spacing: var(--label-tracking); color: var(--ink); }
+
+/* ---- Choices: checkbox, radio and switch, each a mark beside its words in one control row ---- */
+.sp-choices { display: grid; margin: 0; padding: 0; border: 0; min-width: 0; }
+.sp-choices > legend { margin-bottom: var(--space-xs); padding: 0; font: var(--type-label); letter-spacing: var(--label-tracking); color: var(--ink); }
+.sp-choice { display: flex; align-items: center; gap: var(--space-sm); min-height: var(--sp-control-height); cursor: pointer; }
+input.sp-check, input.sp-radio, input.sp-switch {
+  appearance: none; flex: none; margin: 0; cursor: pointer;
+  border: 1px solid var(--muted); background: var(--surface);
+  transition: background-color var(--sp-fast) var(--sp-ease), border-color var(--sp-fast) var(--sp-ease);
+}
+input.sp-check, input.sp-radio { display: inline-grid; place-content: center; width: 1.15em; height: 1.15em; }
+input.sp-check { border-radius: var(--radius-sm); }
+input.sp-check::before {
+  content: ""; width: 0.6em; height: 0.32em; margin-top: -0.14em;
+  border-left: 2px solid var(--on-primary); border-bottom: 2px solid var(--on-primary);
+  rotate: -45deg; opacity: 0; transition: opacity var(--sp-fast) var(--sp-ease);
+}
+input.sp-check:checked { border-color: var(--button-primary-background); background: var(--button-primary-background); }
+input.sp-check:checked::before { opacity: 1; }
+input.sp-radio { border-radius: var(--radius-pill); }
+input.sp-radio::before {
+  content: ""; width: 0.55em; height: 0.55em; border-radius: var(--radius-pill);
+  background: var(--button-primary-background); opacity: 0; transition: opacity var(--sp-fast) var(--sp-ease);
+}
+input.sp-radio:checked { border-color: var(--button-primary-background); }
+input.sp-radio:checked::before { opacity: 1; }
+input.sp-switch { position: relative; display: inline-block; width: 2.3em; height: 1.35em; border-radius: var(--radius-pill); background: var(--canvas); }
+input.sp-switch::before {
+  content: ""; position: absolute; top: 0.15em; left: 0.15em; width: 0.95em; height: 0.95em;
+  border-radius: var(--radius-pill); background: var(--muted);
+  transition: translate var(--sp-fast) var(--sp-ease), background-color var(--sp-fast) var(--sp-ease);
+}
+input.sp-switch:checked { border-color: var(--button-primary-background); background: var(--button-primary-background); }
+input.sp-switch:checked::before { translate: 0.95em 0; background: var(--on-primary); }
+.sp-choice:has(input:disabled) { color: var(--muted); cursor: default; }
+input.sp-check:disabled, input.sp-radio:disabled, input.sp-switch:disabled { border-color: var(--border); cursor: default; }
+
+/* ---- Settings: rows with the label left and the value right; a row folds open its chooser ---- */
+.sp-settings { border-bottom: 1px solid var(--border); }
+.sp-setting {
+  display: flex; width: 100%; align-items: center; justify-content: space-between; gap: var(--space-md);
+  min-height: var(--sp-control-height); margin: 0; padding: var(--space-sm) 0;
+  border: 0; border-top: 1px solid var(--border); border-radius: 0;
+  background: transparent; color: var(--ink);
+  font: var(--type-label); letter-spacing: var(--label-tracking); text-align: start; cursor: pointer;
+}
+.sp-setting-value { color: var(--muted); font-weight: var(--body-weight); transition: color var(--sp-fast) var(--sp-ease); }
+.sp-chooser { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--sp-slow) var(--sp-ease); }
+.sp-chooser.is-open { grid-template-rows: 1fr; }
+.sp-chooser > * { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s var(--sp-slow); }
+.sp-chooser.is-open > * { visibility: visible; transition: visibility 0s; }
+.sp-chooser .sp-menu { margin-bottom: var(--space-md); }
+
+/* ---- Menu: a list of actions or options; inside a popover it is the popover's whole content ---- */
+.sp-menu {
+  display: grid; margin: 0; padding: var(--space-xs); list-style: none;
+  border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface);
+}
+.sp-menu-item {
+  display: flex; align-items: center; gap: var(--space-sm); width: 100%;
+  min-height: calc(var(--sp-control-height) - var(--space-sm)); margin: 0; padding: 0 var(--control-padding);
+  border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--ink);
+  font: var(--type-label); font-weight: var(--body-weight); letter-spacing: var(--label-tracking); text-align: start; cursor: pointer;
+  transition: background-color var(--sp-fast) var(--sp-ease);
+}
+.sp-menu-item:focus-visible { outline-offset: -2px; }
+.sp-menu-item[aria-checked="true"] { font-weight: var(--label-weight); }
+.sp-menu-item .sp-icon:not(.sp-ok, .sp-warn, .sp-err) { color: var(--muted); }
+.sp-menu-sep { height: 0; margin: var(--space-xs) 0; border: 0; border-top: 1px solid var(--border); }
+
+/* ---- Popover: a slip anchored to its invoker (native [popover], placed by spine.js), the one shadowed surface ---- */
+.sp-pop {
+  position: fixed; inset: auto; margin: 0; padding: 0; overflow: visible;
+  width: max-content; max-width: min(22em, calc(100vw - 2 * var(--space-sm)));
+  border: 0; border-radius: var(--radius-control); background: transparent; color: var(--ink);
+}
+.sp-pop > .sp-menu { box-shadow: var(--sp-shadow); }
+.sp-pop:popover-open { animation: sp-enter var(--sp-slow) var(--sp-ease) both; }
+
+/* ---- Dialog: a decision in the top layer (native <dialog> and showModal; Escape declines) ---- */
+dialog.sp-dialog {
+  width: min(32em, calc(100vw - 2 * var(--space-md))); max-height: calc(100dvh - 2 * var(--space-md));
+  margin: auto; padding: var(--card-padding); overflow: auto;
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  background: var(--surface); color: var(--ink);
+}
+dialog.sp-dialog[open] { animation: sp-enter var(--sp-slow) var(--sp-ease) both; }
+dialog.sp-dialog::backdrop { background: var(--sp-backdrop); }
+.sp-dialog-title { margin: 0 0 var(--space-sm); font: var(--type-title); letter-spacing: var(--title-tracking); }
+.sp-dialog-body { display: grid; gap: var(--space-sm); color: var(--muted); }
+.sp-dialog-body > * { margin: 0; }
+.sp-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-lg); }
+dialog.sp-dialog > .sp-close { position: absolute; top: var(--space-sm); right: var(--space-sm); }
+dialog.sp-dialog:has(> .sp-close) > .sp-dialog-title { padding-right: var(--sp-control-height); }
+
+/* ---- Toast: news at the edge that stays until it is dismissed ---- */
+.sp-toasts {
+  position: fixed; right: var(--space-md); bottom: var(--space-md); z-index: 100;
+  display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-sm); max-width: calc(100vw - 2 * var(--space-md));
+}
+.sp-toast {
+  display: flex; align-items: center; gap: var(--space-sm); max-width: 26em;
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--control-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-control);
+  background: var(--surface); color: var(--ink);
+  font: var(--type-label); letter-spacing: var(--label-tracking);
+  animation: sp-enter var(--sp-slow) var(--sp-ease) both;
+}
+.sp-toast > span { flex: 1; min-width: 0; }
+.sp-toast.is-leaving { animation: sp-leave var(--sp-fast) var(--sp-ease) both; }
+
+/* ---- Close: the icon button that dismisses a toast or a dialog ---- */
+.sp-close {
+  display: inline-grid; place-items: center; flex: none; width: var(--sp-control-height); height: var(--sp-control-height); margin: 0; padding: 0;
+  border: 0; border-radius: var(--radius-control); background: transparent; color: var(--muted); cursor: pointer;
+  transition: color var(--sp-fast) var(--sp-ease);
+}
+
+/* ---- Tabs: an ARIA tablist; the selected tab carries an Indigo bar ---- */
+.sp-tabs { display: flex; flex-wrap: wrap; gap: 0 var(--space-xs); border-bottom: 1px solid var(--border); }
+.sp-tab {
+  min-height: var(--sp-control-height); margin: 0 0 -1px; padding: 0 var(--control-padding);
+  border: 0; border-radius: var(--radius-sm) var(--radius-sm) 0 0; background: transparent; color: var(--muted);
+  box-shadow: inset 0 -2px 0 transparent;
+  font: var(--type-label); letter-spacing: var(--label-tracking); cursor: pointer;
+  transition: color var(--sp-fast) var(--sp-ease), box-shadow var(--sp-fast) var(--sp-ease);
+}
+.sp-tab[aria-selected="true"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--primary); }
+.sp-tab:focus-visible { outline-offset: -2px; }
+.sp-tabpanel { padding-top: var(--space-md); }
+
+/* ---- Code: Ink on light pages, Dark Surface on dark pages ---- */
+.sp-code {
+  margin: 0; padding: var(--code-padding); overflow-x: auto;
+  border-radius: var(--radius-control); background: var(--code-background); color: var(--code-text);
+  font: var(--type-mono); letter-spacing: var(--mono-tracking); white-space: pre; tab-size: 2;
+}
+.sp-code code { font: inherit; letter-spacing: inherit; }
+:not(pre) > code.sp-code-inline {
+  padding: 0.1em 0.35em; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);
+  font: var(--type-mono); letter-spacing: var(--mono-tracking); overflow-wrap: anywhere;
+}
+
+/* ---- Command: one copyable line in the input frame; the copy button is the site's ---- */
+.sp-command {
+  display: flex; align-items: center; gap: var(--space-xs); min-width: 0;
+  padding-inline-start: var(--control-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--ink);
+}
+.sp-command > code { flex: 1; min-width: 0; overflow-x: auto; font: var(--type-mono); letter-spacing: var(--mono-tracking); white-space: pre; }
+.sp-command > :is(.sp-button, .sp-secondary, .sp-ghost) { flex: none; }
+
+/* ---- Tag: a pill on Canvas, for a source, a topic or a status in words ---- */
+.sp-tag {
+  display: inline-flex; align-items: center; gap: var(--space-xs); max-width: 100%;
+  padding: var(--space-xs) var(--tag-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  background: var(--canvas); color: var(--muted);
+  font: var(--type-label); letter-spacing: var(--label-tracking); white-space: nowrap;
+}
+
+/* ---- Card and panels: Surface on Canvas with a 1px Border. The feature panel frames a page's primary task in
+   ink; an aside recedes to Canvas. ---- */
+.sp-card, .sp-panel {
+  min-width: 0; padding: var(--card-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  background: var(--surface); color: var(--ink);
+}
+.sp-panel-feature { border-color: var(--ink); }
+.sp-panel-aside { background: var(--canvas); }
+
+/* ---- Ranked results: the name, a closeness bar in Indigo with its percent in mono, one line of description, the
+   source as a tag and a copyable command. <meter value> draws the bar, so no inline style is needed. ---- */
+.sp-ranked { display: grid; gap: var(--space-sm); margin: 0; padding: 0; list-style: none; container-type: inline-size; }
+.sp-ranked-result {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+  grid-template-areas: "name source" "closeness source" "description source";
+  align-items: start; gap: var(--space-xs) var(--space-lg);
+  padding: var(--card-padding);
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  background: var(--surface); color: var(--ink);
+}
+.sp-ranked-name { grid-area: name; margin: 0; font: var(--type-title); letter-spacing: var(--title-tracking); overflow-wrap: anywhere; }
+.sp-closeness {
+  grid-area: closeness; display: flex; align-items: center; gap: var(--space-sm); margin: 0;
+  color: var(--ink); font: var(--type-mono); letter-spacing: var(--mono-tracking); font-variant-numeric: tabular-nums;
+}
+.sp-closeness > meter {
+  display: block; flex: 1; min-width: 0; height: var(--space-sm); margin: 0;
+  border: 0; border-radius: var(--radius-pill); background: var(--border);
+  -webkit-appearance: none; appearance: none;
+}
+.sp-closeness > meter::-webkit-meter-bar { height: var(--space-sm); border: 0; border-radius: var(--radius-pill); background: var(--border); }
+.sp-closeness > meter::-webkit-meter-optimum-value,
+.sp-closeness > meter::-webkit-meter-suboptimum-value,
+.sp-closeness > meter::-webkit-meter-even-less-good-value { border-radius: var(--radius-pill); background: var(--primary); }
+.sp-closeness > meter::-moz-meter-bar { border-radius: var(--radius-pill); background: var(--primary); }
+.sp-closeness > :not(meter) { flex: none; min-width: 4ch; text-align: end; }
+.sp-ranked-description { grid-area: description; margin: 0; color: var(--muted); }
+.sp-ranked-source { grid-area: source; display: grid; justify-items: start; align-content: start; gap: var(--space-sm); min-width: 0; }
+.sp-ranked-source > .sp-command { justify-self: stretch; }
+@container (max-width: 36rem) {
+  .sp-ranked-result { grid-template-columns: minmax(0, 1fr); grid-template-areas: "name" "closeness" "description" "source"; }
+  .sp-ranked-source { padding-top: var(--space-sm); }
+}
+
+/* ---- Table: captioned, numbers right-aligned in mono ---- */
+.sp-plate {
+  min-width: 0; margin: 0; padding: var(--space-md) var(--card-padding); overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+}
+.sp-table { width: 100%; border-collapse: collapse; font: var(--type-label); letter-spacing: var(--label-tracking); font-weight: var(--body-weight); }
+.sp-table caption { padding-bottom: var(--control-padding); caption-side: top; font-weight: var(--label-weight); text-align: start; color: var(--ink); }
+.sp-table :is(th, td) { padding: var(--space-sm) var(--space-md) var(--space-sm) 0; border-bottom: 1px solid var(--border); text-align: start; vertical-align: top; }
+.sp-table :is(th, td):last-child { padding-right: 0; }
+.sp-table thead th { font-weight: var(--label-weight); color: var(--muted); vertical-align: bottom; }
+.sp-table tbody th { font-weight: var(--body-weight); }
+.sp-table tbody tr:last-child > * { border-bottom: 0; }
+.sp-table .num { text-align: end; font: var(--type-mono); letter-spacing: var(--mono-tracking); font-variant-numeric: tabular-nums; }
+
+/* ---- Status line: the glyph first; the words stay ink ---- */
+.sp-status { display: flex; align-items: baseline; gap: var(--space-sm); margin: 0; color: var(--ink); font: var(--type-label); letter-spacing: var(--label-tracking); }
+
+/* ---- Waiting and absence: a still wash, never a shimmer; an honest sentence and one action ---- */
+.sp-skeleton { display: block; margin: 0; border-radius: var(--radius-sm); background: var(--border); color: transparent; user-select: none; pointer-events: none; }
+.sp-skeleton * { visibility: hidden; }
+.sp-empty { display: grid; justify-items: start; gap: var(--space-xs); padding: var(--space-xl) 0; border-block: 1px solid var(--border); }
+.sp-empty > p { margin: 0; }
+.sp-empty-title { font: var(--type-title); letter-spacing: var(--title-tracking); color: var(--ink); }
+.sp-empty-note { color: var(--muted); }
+.sp-empty :is(.sp-button, .sp-secondary, .sp-ghost) { margin-top: var(--space-sm); }
+
+/* ---- Portrait: a neutral stand-in for a person ---- */
+.sp-portrait {
+  display: inline-grid; place-items: center; flex: none; width: 3em; height: 3em; overflow: hidden;
+  border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--canvas); color: var(--muted);
+}
+.sp-portrait svg { width: 100%; height: 100%; }
+
+/* ---- Hover answers a fine pointer only; touch and keys get the state at once ---- */
+@media (hover: hover) and (pointer: fine) {
+  .sp-link:hover { text-decoration-color: currentColor; }
+  .sp-button:hover:not(:disabled) {
+    border-color: color-mix(in oklab, var(--button-primary-background), var(--color-ink) 14%);
+    background: color-mix(in oklab, var(--button-primary-background), var(--color-ink) 14%);
+  }
+  .sp-secondary:hover:not(:disabled) { border-color: var(--muted); }
+  .sp-ghost:hover:not(:disabled) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .sp-ghost.sp-icon-only:hover:not(:disabled) { color: var(--ink); text-decoration: none; }
+  .sp-setting:hover .sp-setting-value, .sp-close:hover, .sp-tab:hover { color: var(--ink); }
+  .sp-menu-item:hover { background: var(--canvas); }
+  .sp-choice:hover input:not(:checked, :disabled) { border-color: var(--ink); }
+}
+
+/* ---- Motion: feedback only, resolved once; none at all under reduced motion ---- */
+@keyframes sp-enter { from { opacity: 0; translate: 0 4px; } }
+@keyframes sp-leave { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  [class*="sp-"], [class*="sp-"]::before, [class*="sp-"]::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+}

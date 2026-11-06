@@ -1,20 +1,53 @@
 {
-  "note": "Source hashes of the rendered images. generate.mjs renders the icons; og.mjs renders the social cards on a Linux worker.",
-  "locked": {
-    "mark": "r2-a-mist",
-    "type": "industrial-condensed",
-    "color": "mono",
-    "layout": "editorial",
-    "hero": "horizon",
-    "motion": "r2-mist-ground",
-    "copy": "r2-cut"
-  },
+  "note": "Hashes of each PNG's SVG source and of the PNG resvg rendered from it. npm run identity:check compares both.",
   "rasters": {
-    "icons/favicon-32.png": "76b8aba8e1ab2f8b63996eccdadeffa287ce1ed02360e6dcc38fa906434e4de9",
-    "icons/apple-touch-icon.png": "1433522c98ceebfc5aba4372ca9be9ce17eff5b644687f3c2b993630a6602d9f",
-    "icons/icon-192.png": "e1be5ff41d52d279573307215662061032a642164363dab2c90f8a36e94cdb4c",
-    "icons/icon-512.png": "017af9d2a1ebbfdbda550a0e8a25c4b4826cbeeb815cbfb09386600c8dec02e6",
-    "og/studio.png": "5c03fbd26cce229ae12da07c396058cb1970c845cea306d878822047d5547842",
-    "og/stack.png": "aeccc7ed79b1efef21c67225bc78aba6caa5768d714670119d2a883f4356cccf"
+    "icons/favicon-16.png": {
+      "source": "1c6db13fb75e5de55dc55526bf99c505978fe10a61792737cc491a90225f227f",
+      "png": "cd88d49b4b7ed96ae419113b88a9f6dc1dc945a76bcd9b01885e8fbad0494a80"
+    },
+    "icons/favicon-32.png": {
+      "source": "2a3af44961f06a6fb11284e8c05e3cc05ee1b2feaf1dccc7f968f66ad64e81a0",
+      "png": "70ab4d92144d26a922ca58560bf1fa0a433dbb12826eaf3252f14d0c8d0da166"
+    },
+    "icons/app-180-ink.png": {
+      "source": "169a081cd936890de41205dca34e35ac0cca156010bd6f75eae1dc000ba1352c",
+      "png": "1769a3730185b97fde0c4882359e495b96c53441be031922bfcb86f0af337459"
+    },
+    "icons/app-180-indigo.png": {
+      "source": "75cd7d35f039ee4de29c953d848ba29f7d23c540eaffd30b512b1bd0090a78db",
+      "png": "e8eb4a59b2ee1f62f699c75912d44dd642b64c44edb6e4d5c003f3f8656a474a"
+    },
+    "icons/app-180-black.png": {
+      "source": "6223761593c1fa477d8e04b51b8b29a8b6f584297d3b18e6210eb5cf131aa77c",
+      "png": "18dd16275a12aa1059997efc117abb95b82fd43edc7287a7987f0adfdd6ce401"
+    },
+    "icons/app-180-white.png": {
+      "source": "18c0471e43b2fe06bbb27f8fa943adc167a7b4dd13115877cbde674cc36bb047",
+      "png": "cb9d0405537671a242a73b2a2f3a35c6c26dbbe4a030255f07f541e9302aa7fa"
+    },
+    "icons/app-1024-ink.png": {
+      "source": "2623ea7f6bfc03272a298e39df3e76d4894f8149bd3ddfae91fb1186ac0a7060",
+      "png": "febae8c58a119aa04d4050310e91bd56e1181784d802776842afff60fc96b594"
+    },
+    "icons/app-1024-indigo.png": {
+      "source": "6a13c1010043289e4c702edad4b71f35ef6e228a7f6db4eda61f5e362f8902a1",
+      "png": "de6d3a573d6bee91d38440409acc027ea6f146717fa887775ecfc13ba3b9736c"
+    },
+    "icons/app-1024-black.png": {
+      "source": "4ba2302a3ea1231292a5cb6f034714d9c85f59964a84e14977b8175bbff32c4b",
+      "png": "4992c0cdc2c3b922b8a70aac107cb634ff460714fdf299771909d6f50dec2802"
+    },
+    "icons/app-1024-white.png": {
+      "source": "917c66fa824b2c50970bcbb0192c0a28270839f8bfeb4a46baa21a7e1f4ed2a9",
+      "png": "d0f156501a4c9c7fc1e6e83baecb0e19306d8ef6ed56438c042e7e763018985a"
+    },
+    "og/studio.png": {
+      "source": "d294c8f866605033823ed22943704531e320dc8d26ad821d5e4d7b84a19589e9",
+      "png": "7218a2eee7ca85878e38b74534b6f90f6598edb4a52836f7ba8218f595217deb"
+    },
+    "og/stack.png": {
+      "source": "9777c2dbff104e08bd3755dba225e897a0b255eb6071282d9df249b734cd9f50",
+      "png": "fa70e8d188a3997f294ded66772e8080d9c8fc9c38f0ebf9e1f5f694f2439af7"
+    }
   }
 }

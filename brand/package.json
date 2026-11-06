@@ -1,7 +1,7 @@
 {
   "name": "@misty-step/brand",
-  "version": "0.2.0",
-  "description": "Misty Step's locked identity: the stylesheet, the html attributes, a small runtime, the Mist sign and the spine's components in the studio face, generated from the brand configurator.",
+  "version": "0.3.0",
+  "description": "Misty Step's locked identity for its own surfaces: tokens, one stylesheet, the step mark and lockups, icons, social cards, a theme runtime and the spine's components, generated from the root tokens.json.",
   "license": "(MIT AND OFL-1.1 AND ISC)",
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
   ],
   "exports": {
     "./brand.css": "./identity/brand.css",
+    "./tokens.json": "./identity/tokens.json",
     "./attrs": {
       "types": "./identity/attrs.d.ts",
       "default": "./identity/attrs.js"
@@ -31,7 +32,9 @@
       "types": "./identity/spine.d.ts",
       "default": "./identity/spine.js"
     },
+    "./identity/fonts/*": "./identity/fonts/*",
     "./identity/icons/*": "./identity/icons/*",
+    "./identity/marks/*": "./identity/marks/*",
     "./identity/og/*": "./identity/og/*",
     "./package.json": "./package.json"
   },
@@ -41,12 +44,13 @@
   "scripts": {
     "identity": "node scripts/identity/generate.mjs",
     "identity:check": "node scripts/identity/generate.mjs --check",
-    "identity:og": "node scripts/identity/og.mjs",
     "demo": "node demo/build.mjs"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.6.2",
     "esbuild": "0.28.2",
-    "typescript": "5.9.3"
+    "fontkit": "2.0.4",
+    "typescript": "5.9.3",
+    "wawoff2": "2.0.1"
   }
 }
