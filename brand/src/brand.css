@@ -8,6 +8,9 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
+:where(html[data-brand="misty-step"], html[data-brand="misty-step"] *, html[data-brand="misty-step"] *::before, html[data-brand="misty-step"] *::after) {
+  box-sizing: border-box;
+}
 :where(html[data-brand="misty-step"]) :where(body) {
   background-color: var(--canvas);
   color: var(--ink);
