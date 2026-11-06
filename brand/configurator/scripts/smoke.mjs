@@ -95,6 +95,14 @@ try {
         fonts: [...document.fonts].filter(face => face.status === 'loaded').map(face => face.family.replaceAll('"', '')),
         broken: [...document.images].filter(image => !image.complete || image.naturalWidth === 0).map(image => image.src),
         overflow: document.documentElement.scrollWidth - innerWidth,
+        clippedLockups: [...document.querySelectorAll('.demo-tile .ms-lockup')].filter(lockup => {
+          const tile = lockup.closest('.demo-tile');
+          const frame = tile.getBoundingClientRect();
+          const art = lockup.getBoundingClientRect();
+          const style = getComputedStyle(tile);
+          return art.left < frame.left + parseFloat(style.paddingLeft) - 1 ||
+            art.right > frame.right - parseFloat(style.paddingRight) + 1;
+        }).map(lockup => lockup.textContent),
         canvas: getComputedStyle(document.documentElement).getPropertyValue('--canvas').trim(),
       }));
       const label = `${theme} ${width}`;
@@ -106,6 +114,7 @@ try {
       check(`${label}: ${families.join(', ')} load`, families.every(family => state.fonts.includes(family)), state.fonts);
       check(`${label}: every image loads`, state.broken.length === 0, state.broken);
       check(`${label}: fits the viewport`, state.overflow <= 0, state.overflow);
+      check(`${label}: every lockup fits its card`, state.clippedLockups.length === 0, state.clippedLockups);
       check(`${label}: the canvas is tokens.json's ${theme} canvas`, state.canvas === (theme === 'dark' ? tokens.colors['dark-canvas'] : tokens.colors.canvas), state.canvas);
       await page.screenshot({ path: join(out, `lab-${theme}-${width}.png`), fullPage: true });
       await page.click('[data-theme-toggle]');
