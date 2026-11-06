@@ -1,5 +1,5 @@
 /* The Misty Step identity in one stylesheet, for Misty Step's own surfaces.
    tokens.json holds every value; brand/identity is generated from it. This
    file defines nothing itself: it loads the identity and its components. */
-@import './brand/identity/brand.css';
-@import './brand/identity/spine.css';
+@import url('./brand/identity/brand.css');
+@import url('./brand/identity/spine.css');

@@ -19,5 +19,8 @@ export function resolve(reference: string) {
 
 /* The first family of a computed font-family list, unquoted. */
 export function firstFamily(fontFamily: string) {
-  return fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
+  return fontFamily
+    .split(',')[0]
+    .trim()
+    .replace(/^["']|["']$/g, '');
 }

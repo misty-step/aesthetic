@@ -27,6 +27,8 @@ jobs:
         run: npm run identity:check
       - name: Runtime sources and published declarations type-check
         run: npx tsc -p scripts/identity
+      - name: Resolve the published exports and build the package demo
+        run: npm run demo
 
   lab:
     name: Configurator build and smoke gate

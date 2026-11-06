@@ -6,7 +6,8 @@ const tokens = JSON.parse(await readFile(new URL('tokens.json', root), 'utf8'));
 const path = new URL('DESIGN.md', root);
 const current = await readFile(path, 'utf8');
 const frontmatter = /^---\r?\n[\s\S]*?\r?\n---\r?\n/.exec(current);
-if (!frontmatter) throw new Error('DESIGN.md must start with YAML frontmatter.');
+if (!frontmatter)
+  throw new Error('DESIGN.md must start with YAML frontmatter.');
 
 function yaml(object, depth = 0) {
   return Object.entries(object)

@@ -32,8 +32,8 @@ npm run demo            # resolve every export as a consumer does and write demo
 
 ## Release
 
-1. Bump `version` in `brand/package.json` (and `npm install` to carry it into `package-lock.json`), run `npm run identity` so the generated headers carry it, and merge the reviewed PR. A breaking change before 1.0 bumps the minor version, as 0.3.0 did.
-2. Push the tag `brand-v<version>` on the merge commit. The release workflow refuses a tag that disagrees with `package.json` or an `identity/` that `npm run identity:check` calls stale, then publishes the `npm pack` tarball and checks that the published copy downloads byte for byte.
+1. Bump `version` in `brand/package.json` and its lockfile, run `npm run identity` so the generated headers carry it, prove the running consumer, and merge the PR. A breaking change before 1.0 bumps the minor version, as 0.3.0 did.
+2. Run the manual `ci` and `brand` release gates and the release's critical-correctness/security assessment. Push `brand-v<version>` on the merge commit. The release workflow refuses a tag that disagrees with `package.json`, stale DESIGN.md frontmatter, or stale `identity/`, then publishes the `npm pack` tarball and checks that the published copy downloads byte for byte.
 3. Move the sites to the new tarball URL.
 
 ## The brand lab

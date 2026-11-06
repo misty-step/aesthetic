@@ -1,5 +1,12 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, rm, writeFile, copyFile } from 'node:fs/promises';
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  rm,
+  writeFile,
+  copyFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -11,7 +18,11 @@ test('token drift rejects a stale handoff without writing, then regeneration rep
   const fixture = await mkdtemp(join(tmpdir(), 'aesthetic-design-'));
   try {
     await mkdir(join(fixture, 'scripts'));
-    for (const file of ['tokens.json', 'DESIGN.md', 'scripts/build-design.mjs']) {
+    for (const file of [
+      'tokens.json',
+      'DESIGN.md',
+      'scripts/build-design.mjs',
+    ]) {
       await copyFile(new URL(file, root), join(fixture, file));
     }
     const run = (...args) =>
@@ -20,7 +31,9 @@ test('token drift rejects a stale handoff without writing, then regeneration rep
         encoding: 'utf8',
       });
     const original = await readFile(join(fixture, 'DESIGN.md'), 'utf8');
-    const tokens = JSON.parse(await readFile(join(fixture, 'tokens.json'), 'utf8'));
+    const tokens = JSON.parse(
+      await readFile(join(fixture, 'tokens.json'), 'utf8'),
+    );
     tokens.colors.primary = '#112233';
     await writeFile(join(fixture, 'tokens.json'), JSON.stringify(tokens));
 
@@ -32,7 +45,11 @@ test('token drift rejects a stale handoff without writing, then regeneration rep
     assert.equal(regenerate.status, 0, regenerate.stdout + regenerate.stderr);
     const repaired = await readFile(join(fixture, 'DESIGN.md'), 'utf8');
     assert.match(repaired, /primary: "#112233"/);
-    const body = (document) => document.split(/^---\s*$/m).slice(2).join('---');
+    const body = (document) =>
+      document
+        .split(/^---\s*$/m)
+        .slice(2)
+        .join('---');
     assert.equal(body(repaired), body(original));
     const fresh = run('--check');
     assert.equal(fresh.status, 0, fresh.stdout + fresh.stderr);
