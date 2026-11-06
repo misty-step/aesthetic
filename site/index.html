@@ -3,104 +3,183 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>aesthetic — the misty step design system</title>
-    <meta name="description" content="The Misty Step design system." />
-    <script>
-      try {
-        var m = localStorage.getItem('ae-mode');
-        if (m === 'dark' || m === 'light') {
-          document.documentElement.classList.add(m);
-          document.documentElement.style.colorScheme = m;
-        }
-      } catch (e) {}
-    </script>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+    <title>Misty Step identity</title>
+    <meta
+      name="description"
+      content="The symbol, palette, type and components of Misty Step's own sites."
     />
+    <!-- build:theme-script -->
+    <link rel="icon" href="brand/identity/icons/favicon.svg" />
+    <link rel="apple-touch-icon" href="brand/identity/icons/app-180-ink.png" />
     <link rel="stylesheet" href="aesthetic.css" />
     <link rel="stylesheet" href="site.css" />
+    <script type="module" src="site.js"></script>
   </head>
   <body>
-    <a class="gal-skip" href="#hero-main">Skip to content</a>
-    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
-      <symbol id="i-sun" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2" />
-        <path d="M12 20v2" />
-        <path d="m4.93 4.93 1.41 1.41" />
-        <path d="m17.66 17.66 1.41 1.41" />
-        <path d="M2 12h2" />
-        <path d="M20 12h2" />
-        <path d="m6.34 17.66-1.41 1.41" />
-        <path d="m19.07 4.93-1.41 1.41" />
-      </symbol>
-      <symbol id="i-moon" viewBox="0 0 24 24">
-        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-      </symbol>
-      <symbol id="i-swatch-book" viewBox="0 0 24 24">
-        <path d="M11 17a4 4 0 0 1-8 0V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2Z" />
-        <path d="M16.7 13H19a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H7" />
-        <path d="M 7 17h.01" />
-        <path
-          d="m11 8 2.3-2.3a2.4 2.4 0 0 1 3.404.004L18.6 7.6a2.4 2.4 0 0 1 .026 3.434L9.9 19.8"
-        />
-      </symbol>
-      <symbol id="i-github" viewBox="0 0 24 24">
-        <path
-          d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"
-        />
-        <path d="M9 18c-4.51 2-5-2-7-2" />
-      </symbol>
-    </svg>
-
-    <div class="ae-screen ae-wide hero-screen">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <header class="ae-bar site-bar">
-        <a class="ae-logo" href="./" aria-label="aesthetic home">
-          <span class="ae-app-mark" aria-hidden="true">
-            <svg class="ae-icon" data-lucide="swatch-book">
-              <use href="#i-swatch-book" />
-            </svg>
-          </span>
-          <span class="ae-name">AESTHETIC</span>
-        </a>
-        <nav class="ae-chrome bar-links gal-topnav" aria-label="primary">
-          <a href="primitives.html">primitives</a>
-          <a href="tokens.html">tokens</a>
-          <a href="law.html">law</a>
-          <a href="changelog.html">changelog</a>
-          <a href="https://github.com/misty-step/aesthetic">github</a>
-        </nav>
-      </header>
-
-      <main class="hero-main" id="hero-main">
-        <section class="hero-copy" aria-labelledby="hero-title">
-          <h1 id="hero-title">The Misty Step design system.</h1>
-          <a class="ae-button" href="get-started.html">Get started</a>
-        </section>
-      </main>
-
-      <footer class="ae-bar site-footer">
-        <button class="ae-mode" aria-label="toggle color mode">
-          <svg class="ae-icon ae-sun"><use href="#i-sun" /></svg>
-          <svg class="ae-icon ae-moon"><use href="#i-moon" /></svg>
-        </button>
-        <p class="ae-chrome site-project">
-          a <a href="https://mistystep.io">Misty Step</a> project
-          <a
-            class="site-github"
-            href="https://github.com/misty-step/aesthetic"
-            aria-label="aesthetic on GitHub"
-          >
-            <svg class="ae-icon" aria-hidden="true">
-              <use href="#i-github" />
-            </svg>
-          </a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <!-- build:header-lockup -->
+      <button
+        class="sp-ghost sp-icon-only"
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="Dark theme"
+      >
+        <!-- build:icon moon -->
+      </button>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <h1>Misty Step identity<span class="ms-stop">.</span></h1>
+        <p class="lede">
+          The symbol, palette, type and components of Misty Step's own sites.
+          Other products keep their own design.
         </p>
-      </footer>
-    </div>
-
-    <script src="recipes.js"></script>
+        <div class="actions">
+          <a
+            class="sp-button"
+            href="https://github.com/misty-step/aesthetic/blob/master/DESIGN.md"
+          >
+            Read DESIGN.md
+          </a>
+          <a
+            class="sp-secondary"
+            href="https://github.com/misty-step/aesthetic/tree/master/brand"
+          >
+            Install the brand package
+          </a>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Lockups</h2>
+        <!-- build:lockups -->
+      </section>
+      <section class="section">
+        <h2>Symbol</h2>
+        <!-- build:symbols -->
+      </section>
+      <section class="section">
+        <h2>Palette</h2>
+        <!-- build:palette -->
+      </section>
+      <section class="section">
+        <h2>Typography</h2>
+        <!-- build:type -->
+      </section>
+      <section class="section">
+        <h2>Components</h2>
+        <div class="specimens">
+          <div class="specimen">
+            <h3>Buttons</h3>
+            <div class="row">
+              <button class="sp-button" type="button">Build</button>
+              <button class="sp-secondary" type="button">Share</button>
+              <button class="sp-ghost" type="button">More</button>
+            </div>
+          </div>
+          <div class="specimen">
+            <h3>Input</h3>
+            <input
+              class="sp-input"
+              type="email"
+              placeholder="you@example.com"
+              aria-label="Email"
+            />
+          </div>
+          <div class="specimen">
+            <h3>Tags</h3>
+            <div class="row">
+              <span class="sp-tag">AI</span>
+              <span class="sp-tag">Agents</span>
+              <span class="sp-tag">Tools</span>
+            </div>
+          </div>
+          <div class="specimen">
+            <h3>Code</h3>
+            <!-- build:code -->
+            <p>
+              Every value lives in
+              <code class="sp-code-inline">tokens.json</code>.
+            </p>
+          </div>
+          <div class="specimen specimen-wide">
+            <h3>Cards</h3>
+            <div class="cards">
+              <article class="sp-card">
+                <h4>Misty Step</h4>
+                <p>
+                  The studio that reimagines business processes with AI and
+                  ships its own games and tools.
+                </p>
+                <a href="https://mistystep.io">mistystep.io</a>
+              </article>
+              <article class="sp-card">
+                <h4>mistystack</h4>
+                <p>Misty Step's open method for coding agents.</p>
+                <a href="https://stack.mistystep.io">stack.mistystep.io</a>
+              </article>
+            </div>
+          </div>
+          <div class="specimen specimen-wide">
+            <h3>Ranked results</h3>
+            <ol class="sp-ranked">
+              <li class="sp-ranked-result">
+                <h4 class="sp-ranked-name">retro</h4>
+                <p class="sp-closeness">
+                  <meter value="0.98" aria-hidden="true"></meter>
+                  <span>98%</span>
+                </p>
+                <p class="sp-ranked-description">
+                  Conduct a retrospective on a coding session.
+                </p>
+                <div class="sp-ranked-source">
+                  <span class="sp-tag">pocock 4ae2317</span>
+                  <div class="sp-command">
+                    <code>/skill:retro</code>
+                    <button
+                      class="sp-ghost sp-icon-only"
+                      type="button"
+                      aria-label="Copy /skill:retro"
+                      data-copy
+                    >
+                      <!-- build:icon copy -->
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="sp-ranked-result">
+                <h4 class="sp-ranked-name">reflect</h4>
+                <p class="sp-closeness">
+                  <meter value="0.84" aria-hidden="true"></meter>
+                  <span>84%</span>
+                </p>
+                <p class="sp-ranked-description">
+                  Route learnings from a transcript into skill edits.
+                </p>
+                <div class="sp-ranked-source">
+                  <span class="sp-tag">pstack c742dd6</span>
+                  <div class="sp-command">
+                    <code>/skill:reflect</code>
+                    <button
+                      class="sp-ghost sp-icon-only"
+                      type="button"
+                      aria-label="Copy /skill:reflect"
+                      data-copy
+                    >
+                      <!-- build:icon copy -->
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <a href="https://github.com/misty-step/aesthetic">Source on GitHub</a>
+    </footer>
+    <div class="sp-toasts" data-toasts></div>
   </body>
 </html>
