@@ -1,18 +1,9 @@
 name: brand lab deploy
 
-# Every push to master that touches brand/ deploys the configurator to
-# https://misty-brand-lab.misty-step.workers.dev after its build and quick WebGL smoke gate pass.
-#
-# Queue: one group with cancel-in-progress. A newer run cancels an older in-progress or pending
-# one, and every run builds master as it is when the run starts (not the triggering commit), so
-# the surviving run always deploys the newest lab. A stale rerun or a dispatch from another
-# branch also builds current master. Executed proof of that sequence on a disposable repository:
-# https://github.com/moomooskycow/deploy-queue-proof-20261030/actions
+# Deploy the locked identity lab after its manual release gate.
+# Always build current master so a stale dispatch cannot republish an older lab.
 
 on:
-  push:
-    branches: [master]
-    paths: ['brand/**', '.github/workflows/brand-lab-deploy.yml']
   workflow_dispatch:
 
 permissions:
@@ -47,8 +38,8 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - name: Quick WebGL smoke gate on the built lab
-        run: node scripts/smoke.mjs --webgl --quick --out evidence
+      - name: Smoke the built identity lab
+        run: npm run smoke -- --out evidence
       - name: Deploy misty-brand-lab
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

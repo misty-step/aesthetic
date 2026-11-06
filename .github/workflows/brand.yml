@@ -1,14 +1,9 @@
 name: brand
 
-# brand/: the configurator (the brand lab) and the @misty-step/brand identity package.
-# Pull requests and master pushes that touch brand/ check both.
+# Run focused package and lab checks as the pre-release gate.
 
 on:
-  pull_request:
-    paths: ['brand/**', '.github/workflows/brand.yml']
-  push:
-    branches: [master]
-    paths: ['brand/**', '.github/workflows/brand.yml']
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,7 +23,7 @@ jobs:
           cache: npm
           cache-dependency-path: brand/package-lock.json
       - run: npm ci --no-audit --no-fund
-      - name: identity/ matches the configurator's Locked preset
+      - name: identity/ matches the locked tokens and sources
         run: npm run identity:check
       - name: Runtime sources and published declarations type-check
         run: npx tsc -p scripts/identity
@@ -49,5 +44,5 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - name: Quick WebGL smoke gate on the built lab
-        run: node scripts/smoke.mjs --webgl --quick --out evidence
+      - name: Smoke the built identity lab
+        run: npm run smoke -- --out evidence
