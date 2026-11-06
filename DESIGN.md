@@ -1,197 +1,168 @@
-# DESIGN.md — the aesthetic, in words
+---
+version: "alpha"
+name: "Misty Step"
+description: "One identity for the Misty Step studio and mistystack, its open method for coding agents. Locked 2026-11-06 (MIS-866)."
+colors:
+  primary: "#5B5BF0"
+  secondary: "#8B5CF6"
+  ink: "#0E0F13"
+  graphite: "#646A77"
+  steel: "#A7ABB8"
+  canvas: "#F7F6F3"
+  surface: "#FFFFFF"
+  border: "#E4E3DF"
+  on-primary: "#FFFFFF"
+  dark-canvas: "#0B0C10"
+  dark-surface: "#15171D"
+  dark-border: "#262833"
+  dark-text: "#F7F6F3"
+  dark-primary: "#7C7CF5"
+typography:
+  display:
+    fontFamily: "Hedvig Letters Serif"
+    fontSize: "96px"
+    fontWeight: 400
+    lineHeight: 0.92
+    letterSpacing: "-0.02em"
+  heading:
+    fontFamily: "Hedvig Letters Serif"
+    fontSize: "48px"
+    fontWeight: 400
+    lineHeight: 0.94
+    letterSpacing: "-0.02em"
+  title:
+    fontFamily: "Hedvig Letters Serif"
+    fontSize: "24px"
+    fontWeight: 400
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
+  body:
+    fontFamily: "Uncut Sans"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.5
+  label:
+    fontFamily: "Uncut Sans"
+    fontSize: "14px"
+    fontWeight: 500
+    lineHeight: 1.4
+  mono:
+    fontFamily: "Commit Mono"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.4
+rounded:
+  sm: "6px"
+  md: "8px"
+  lg: "12px"
+  full: "9999px"
+spacing:
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "48px"
+  section: "96px"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "12px"
+  button-secondary:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "12px"
+  input:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body}"
+    rounded: "{rounded.md}"
+    padding: "12px"
+  tag:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.graphite}"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    padding: "8px"
+  card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.lg}"
+    padding: "24px"
+  code:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.canvas}"
+    typography: "{typography.mono}"
+    rounded: "{rounded.md}"
+    padding: "16px"
+  page-dark:
+    backgroundColor: "{colors.dark-canvas}"
+    textColor: "{colors.dark-text}"
+  card-dark:
+    backgroundColor: "{colors.dark-surface}"
+    textColor: "{colors.dark-text}"
+    rounded: "{rounded.lg}"
+    padding: "24px"
+  link-dark:
+    backgroundColor: "{colors.dark-canvas}"
+    textColor: "{colors.dark-primary}"
+  divider:
+    backgroundColor: "{colors.border}"
+  divider-dark:
+    backgroundColor: "{colors.dark-border}"
+  caption-dark:
+    backgroundColor: "{colors.dark-surface}"
+    textColor: "{colors.steel}"
+    typography: "{typography.mono}"
+---
 
-The agent-facing identity file. Machine-exact values live in
-`tokens.json`; canonical markup lives in `site/`; this file is the
-prose that makes new artifacts — views, components, images — come out
-unmistakably ours. Read it before generating anything visual, and copy
-the relevant block into prompts for tools that cannot read the repo.
+# Misty Step
 
-## The feel
+## Overview
 
-Instrument-panel restraint. Ink on paper: near-black text on
-paper-white (or warm-gray ink on near-black), hairline rules, hard 90°
-corners, generous negative space, a Swiss-typographic grid. Everything
-is quiet, precise, and editorial — the page reads like a beautifully
-set technical document, never like a brochure. One saturated
-ultramarine accent appears where it matters and nowhere else. Nothing
-glows, nothing floats, nothing bounces.
+One identity serves two faces: **Misty Step**, the studio that reimagines business processes with AI and ships its own games and tools, and **mistystack**, its open method for coding agents. The symbol is two parallel slanted parallelograms offset like a step. The studio and the method share the symbol, palette and type; only the wordmark changes.
 
-## The law
+The feel is precise, light-first and calm: warm canvas, near-black ink, one indigo accent, hairline borders and generous space. Light and dark are equal; pages default to the system setting. The mark is the only gradient (indigo to violet). Reference renders and the decision live in [MIS-866](https://linear.app/misty-step/issue/MIS-866).
 
-- One font size per surface. 16px content; the 13px chrome register
-  (footers, utility links, metadata) is the only exception. Hierarchy
-  comes from ink and weight, never from scale.
-- Nine registers: three inks (ink, muted, faint) by three weights
-  (400, 550, 800). The headline is heavier and blacker, not larger.
-- The accent is the consumer's: pin one named theme (`ultramarine`,
-  `moss`, `ember`, `violet`) or define your own scheme and use it with
-  judgment. The system carries any hue without losing its identity —
-  ink, hairlines, type, and motion do the identifying. There is no
-  counting rule and no placement rule; there is taste: spend the accent
-  where it earns its place — buttons, active states, anywhere the
-  product calls for it — and keep it from becoming ambient filler.
-  Restraint is judgment, never law.
-- Screens, not pages: every view fits the viewport. Long documents
-  scroll inside the stage; the chrome never moves.
-- Motion is feedback, never decoration: small, brief, eased. State
-  resolutions are gentler (480ms) and resolve exactly once — success
-  persists, it is never rewound. Nothing changes size while it
-  animates. Reduced motion makes everything instant.
-- Buttons are not links: links are inked text that navigates; buttons
-  are contained ink shapes that act. They never share a costume.
-- Status rides the glyph: danger, success, and warning color the
-  Lucide icon (`circle-x`, `circle-check`, `triangle-alert`), never
-  the sentence, never a filled pill. Categorical color is a different
-  axis — identity, not judgment. N agents, N series, N actors need N
-  distinguishable hues with no severity meaning; that color is allowed
-  to ride the word (`.ae-chip` + `.ae-cat-0`–`.ae-cat-7`), because
-  there's no glyph to carry it and nothing is being judged.
-- Light and dark are equals, defaulting to the system preference. The
-  change itself is quick and interruptible: the toggle never disables,
-  and a second click cuts the in-flight animation instead of waiting.
+`tokens.json` is the value authority. `npm run build:design` generates this document's frontmatter. `npm run check` rejects drift.
 
-## Mobile-first is law
+## Colors
 
-Design and preview at 390px first; desktop is the enhancement, never the
-baseline. This is an invariant, not a dial.
+- **Indigo** (`primary`): primary actions, links, focus rings and the leading parallelogram. Never a background wash.
+- **Violet** (`secondary`): the trailing parallelogram and the mark gradient only.
+- **Ink**, **Graphite**, **Steel**: text, secondary text and quiet UI, in that order of emphasis.
+- **Canvas** and **Surface**: the light page and raised cards; **Border** draws hairlines.
+- **Dark theme**: `dark-canvas` page, `dark-surface` cards, `dark-border` hairlines, `dark-text`, and `dark-primary` for links and actions where Indigo lacks contrast.
 
-- Every surface is authored for a 390px viewport before it is authored for
-  anything wider. A view that only works past some breakpoint is unshipped,
-  not "responsive later."
-- Rails collapse to header/bottom chrome below the `md` breakpoint
-  (`.ae-shell`'s `.ae-rail` becomes bottom chrome) — never a hidden drawer,
-  so places stay reachable without JavaScript state.
-- No horizontal body scroll, ever, at any width. A surface with
-  `document.documentElement.scrollWidth > window.innerWidth` at 390px is
-  broken, full stop — not a follow-up.
-- Lab and design-review previews (variation fans, test fixtures, the
-  playground harness) default their viewport to 390px; a preview that needs
-  a wider width opts up explicitly and says why, the same way a component
-  opts up out of the one-size-per-surface default. `playwright.config.ts`'s
-  shared `use.viewport` carries this default for every test in the repo.
+## Typography
 
-Fleet-wide audit against this law: `docs/MOBILE-AUDIT.md`.
+Hedvig Letters Serif carries display, headings and titles at regular weight, tightened to -2% tracking. Uncut Sans carries body, labels and UI, body at 18px with 1.5 leading. Commit Mono carries commands, metadata, versions, hashes and numbers in data rows. All three are SIL Open Font License faces, self-hosted with the brand package; Misty Step does not buy typefaces (owner, 2026-11-06). One system serves both sites. Hierarchy comes from size and weight; never from colour alone. Headlines end with a full stop in Indigo.
 
-## The volume knob
+## Layout
 
-Steering has two strata. **Invariants** are never steered: one size
-per surface (+ the 13px chrome register), nine ink-and-weight
-registers, hairlines and radius 0, motion as feedback that resolves
-once, status on the glyph, buttons are not links, the cursor law,
-light and dark as equals. **Dials** are the project's: the accent —
-one hue or several, extra hues named as project tokens
-(`--sploot-coral`) and spent on content, never on pills or hierarchy;
-the status triplet; density (measure, chrome register, app shell);
-the mono ratio. Named themes are presets for those dials, not new
-invariants. A calm tool turns every dial down; a loud one turns up hue
-count and accent frequency — never radius, size scale, or ambient
-motion. Worked examples: `docs/ADOPTING.md`.
+A 12-column grid with 24px gutters, content up to 1200px, sections 96px apart. Pages lead with one headline, one sentence and one primary action. Tools (Find a skill, the library) use a two-column split: input left, results right; on phones they stack.
 
-## Never
+## Elevation & Depth
 
-- No drop shadows as decoration (the panel/dialog/toast soft depth is
-  the lone sanctioned family), no gradients-as-paint, no
-  glassmorphism.
-- No rounded corners. Radius is 0 everywhere.
-- No filled colored pills or badges: status color rides the glyph
-  only — never the word, never a box.
-- No font-size hierarchy, no oversized hero type.
-- No ambient or looping animation; nothing moves unprompted.
-- No link-styled buttons or button-styled links.
-- No I-beam cursor on static text; pointer and text cursors are
-  earned by interactive elements only.
-- No stock photography, glossy 3D renders, or emoji-as-interface.
+Flat. Depth comes from Surface on Canvas and a 1px Border, not shadows. One soft shadow is allowed on floating menus only.
 
-## Composing a view
+## Shapes
 
-1. Decide how this surface uses its accent and apply it consistently;
-   the hierarchy itself is built from ink, not color.
-2. Build hierarchy with registers: 800 ink for the one loud thing,
-   550 for items that matter, 400 for prose; muted for support, faint
-   for whispers.
-3. Structure with whitespace and hairlines (`--ae-line`), never with
-   boxes around boxes.
-4. Forms are lines, not boxes; submission gets a send moment that
-   resolves once and persists. Choice controls keep progressive
-   disclosure: settings rest as label · value rows that fold open a
-   quiet chooser (`.ae-settings`).
-5. A decision is asked in the panel costume (`.ae-dialog`); a menu
-   floats as a hairline slip (`.ae-pop`); news waits at the edge
-   (`.ae-toast`); hints whisper (`[data-ae-tip]`); tables are 13px
-   mono instruments framed as numbered plates (`.ae-table`,
-   `.ae-plate`) and stack on phones when cells carry `data-label`;
-   view swaps are a simple cut.
-6. Choice marks are squares — checkbox fills with ink, radio holds an
-   ink core, the switch slides along a hairline channel
-   (`.ae-choice`). A badge is a mono word (`.ae-tag`), never a filled
-   pill. Status lines are icon-first (`.ae-status`): the Lucide glyph
-   carries `.ae-ok`, `.ae-warn`, or `.ae-err`; the label stays ink.
-   Waiting is still wash (`.ae-skeleton`), never a shimmer.
-7. Data is drawn in ink: gauges are ruled lines (`.ae-meter`), figures
-   are tabular numerals (`.ae-num`, loud by weight via `.ae-strong`),
-   deltas put the hue on the arrow (`.ae-delta`), trends are pen
-   strokes (`.ae-spark`), an interval is a level and its spread
-   (`.ae-ci` — a range band, a mean tick, hover for the exact figures),
-   and a field is a plane (`.ae-plot` — cost against quality, the
-   Pareto frontier dashed, the pick in accent), and a system is a
-   diagram (`.ae-flow` — hairline nodes, orthogonal wires, the running
-   stage in accent). App identity is an icon slot, not a text-only
-   prefix (`.ae-logo` + `.ae-app-mark`): a Lucide project mark sized
-   for headers and rails, paired with the name in ink. A header summary
-   is a stat band
-   (`.ae-stat-badges` — compact hairline badges with a tabular value
-   and quiet label; status may add a glyph, but the words stay ink).
-   A feed row is decomposed, not dot-separated prose
-   (`.ae-list-rows` / `.ae-list-row` / `.ae-list-cell`): time, app,
-   type, and status align as fields with optional Lucide/app marks, and
-   status hue still rides only the glyph.
-   A history is a spine (`.ae-trail` — a hairline run, a square tick
-   per entry, time and actor in the instrument register, the body in
-   prose; not a table, because entries carry variable-length bodies
-   and states that columns can't hold). Many of a kind is a wall
-   (`.ae-wall` — an auto-fit grid of hairline cards; each carries its
-   status on a glyph, never a filled tile, with an optional right
-   column for a figure, a timestamp, and a trace of recent readings —
-   the discrete cousin of `.ae-spark`). Several lanes of comparable
-   work are a board (`.ae-board` / `.ae-column`): ruled columns that
-   stack before their cards are squeezed.
-8. Three archetypes beyond the screen: the app shell (`.ae-shell` —
-   a 13px rail beside the working desk; below the `md` breakpoint the
-   same rail becomes bottom chrome, never a hidden drawer, so places
-   stay visible without adding JavaScript state), the document
-   (`.ae-doc` — markdown drops in unclassed; opt-in report registers
-   add a lede, numbered figures, a findings box, and a pull-quote, all
-   weight and space), and the form flow (settings rows, choice marks,
-   one send moment).
-9. The canonical markup for every primitive is in `site/` —
-   view-source is documentation.
+Corners are 8px on controls and 12px on cards; tags are pills. The symbol's parallelograms keep sharp corners at every size.
 
-## Lucide Mark
+## Components
 
-- Icon: `swatch-book`
-- Reason: operator-ratified 2026-07-06 — a swatch book is the literal
-  tool-of-trade for a design system, apt for the product that ships the
-  ink-and-registers instrument every other fleet site's mark rides on.
-- Rule: the mark is an inline Lucide SVG inside `.ae-app-mark`. No bespoke
-  marks, logo images, emoji marks, or colored wordmarks.
+Primary buttons are solid Indigo with white labels; secondary buttons are Surface with a Border. Inputs share the secondary button's frame. Ranked results show the name, a closeness bar in Indigo with its percent in mono, a one-line description, a source chip and a copyable command. Code blocks are Ink on light pages and Dark Surface on dark pages.
 
-## The image language
+## Do's and Don'ts
 
-The copy-paste style block for image models (vary only the subject
-clause; full canon, plate vocabulary, and dark-mode practice live in
-`docs/IMAGES.md`):
-
-> Technical pen-and-ink illustration in the style of a vintage
-> engineering manual: fine hairline linework, stipple and cross-hatch
-> shading, halftone dot textures. Monochrome dark-gray ink (#3a3a3a)
-> on an off-white ground (#f3f3f3), with exactly one element in
-> saturated ultramarine blue (#2643d0). Flat, matte, print-like; no
-> gradients, no gloss, no 3D rendering, no photography. Generous
-> negative space, off-center composition.
-
-## Exact values
-
-`tokens.json` is the source of truth. The ones a mock or image prompt
-needs most: surface `#fcfcfc` / `#121212`, wash `#f3f3f3` / `#1b1b1b`,
-ink `#151515` / `#ededed`, line `#e9e9e9` / `#262626`, accent
-`#2643d0` / `#8c9eff`, type Geist + Geist Mono.
+- Do use Indigo for the one primary action per view.
+- Do pair every numeric result with its unit or provenance in mono.
+- Do keep the symbol's two parallelograms in a fixed offset; never rotate, outline or recolour them outside Indigo, Violet, Ink or white.
+- Don't add gradients, glows or blurred backgrounds beyond the mark.
+- Don't use eyebrow labels or helper text that repeats the heading.
+- Don't place Graphite text on Dark Surface; use Steel or dark-text.

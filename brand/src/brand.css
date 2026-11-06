@@ -1,0 +1,70 @@
+/* Base: the brand's defaults for plain elements on html[data-brand="misty-step"]. Every rule sits at zero
+   specificity (:where), so any rule a site writes wins. Values are tokens only; generate.mjs refuses a colour
+   literal, a family name or an undeclared custom property here. */
+:where(html[data-brand="misty-step"]) {
+  background-color: var(--canvas);
+  color: var(--ink);
+  accent-color: var(--button-primary-background);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+:where(html[data-brand="misty-step"], html[data-brand="misty-step"] *, html[data-brand="misty-step"] *::before, html[data-brand="misty-step"] *::after) {
+  box-sizing: border-box;
+}
+:where(html[data-brand="misty-step"]) :where(body) {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font: var(--type-body);
+  letter-spacing: var(--body-tracking);
+}
+
+/* Headings: Hedvig Letters Serif at regular weight. Each reaches its token size at the 1200px content width and
+   steps down with the viewport, never below the next role's size. */
+:where(html[data-brand="misty-step"]) :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+:where(html[data-brand="misty-step"]) :where(h1) {
+  font-family: var(--font-display);
+  font-size: clamp(var(--heading-size), 8vw, var(--display-size));
+  font-weight: var(--display-weight);
+  line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking);
+}
+:where(html[data-brand="misty-step"]) :where(h2) {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--title-size), 4vw, var(--heading-size));
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-leading);
+  letter-spacing: var(--heading-tracking);
+}
+:where(html[data-brand="misty-step"]) :where(h3) {
+  font: var(--type-title);
+  letter-spacing: var(--title-tracking);
+}
+/* A headline ends with its full stop in Indigo: <h1>A method for coding agents<span class="ms-stop">.</span></h1> */
+.ms-stop {
+  color: var(--primary);
+}
+
+:where(html[data-brand="misty-step"]) :where(a) {
+  color: var(--primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+:where(html[data-brand="misty-step"]) :where(code, kbd, samp, pre) {
+  font: var(--type-mono);
+  letter-spacing: var(--mono-tracking);
+}
+:where(html[data-brand="misty-step"]) :where(hr) {
+  height: 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+:where(html[data-brand="misty-step"]) :where(:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+:where(html[data-brand="misty-step"]) ::selection {
+  background-color: var(--button-primary-background);
+  color: var(--on-primary);
+}

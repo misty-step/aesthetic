@@ -1,804 +1,201 @@
-/* the aesthetic site's own glue — page composition for the specimen
-   and catalog. The site is a consumer: aesthetic.css is imported
-   unmodified, and everything here is layout local to these pages. */
+/* The catalog's own layout. Colour, type, radii, padding and spacing all
+   come from the identity's variables in brand/identity/brand.css, generated
+   from tokens.json; this file only arranges the page around them. */
 
-.bar-end {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 1.6em;
+body,
+:where(h1, h2, h3, h4, p, figure) {
+  margin: 0;
 }
 
-.bar-links {
-  display: inline-flex;
-  gap: 1.5em;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.site-bar,
-.site-footer {
-  position: relative;
-  z-index: 1;
-}
-
-.site-bar .ae-name {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.site-footer {
-  justify-content: space-between;
-}
-
-.site-project {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45em;
-}
-
-.site-project a {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  text-decoration-color: var(--ae-ink-faint);
-}
-
-.site-project a:hover {
-  text-decoration-color: currentColor;
-}
-
-.site-github {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none !important;
-}
-
-/* ── locked fleet hero ───────────────────────────────────────────── */
-
-.hero-screen {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-bg {
+.skip-link {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image: url('assets/hero.jpg');
-  background-position: center;
-  background-size: cover;
-  opacity: 0.85;
+  inset-block-start: var(--space-sm);
+  inset-inline-start: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  translate: 0 -200%;
 }
 
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, var(--ae-surface) 0%, transparent 62%),
-    linear-gradient(
-      180deg,
-      var(--ae-surface) 0%,
-      transparent 24%,
-      var(--ae-surface) 100%
-    );
-  opacity: 0.72;
+.skip-link:focus {
+  translate: none;
 }
 
-.hero-main {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  min-height: 0;
-  width: min(var(--ae-measure-wide), 100% - 5rem);
+.site-header,
+main,
+.site-footer {
+  inline-size: min(100% - 2 * var(--space-lg), 1200px);
   margin-inline: auto;
+}
+
+.site-header {
   display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-md);
+  border-block-end: 1px solid var(--border);
+}
+
+.hero {
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: start;
+  padding-block: var(--space-xl) var(--space-section);
+}
+
+.lede {
+  max-inline-size: 36rem;
+  color: var(--muted);
+}
+
+.actions,
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
   align-items: center;
 }
 
-.hero-copy {
-  max-width: 52%;
-}
-
-.hero-copy h1 {
-  max-width: 24ch;
-  margin: 0 0 1.2em;
-  font-size: inherit;
-  line-height: 1.25;
-  font-weight: var(--ae-w-bold, var(--ae-w-black));
-  letter-spacing: -0.01em;
-}
-
-.get-started-doc {
-  max-width: min(44em, 100%);
-}
-
-/* ── the manual (index) ───────────────────────────────────────────── */
-
-/* the document: a sticky contents rail beside the chapters. The stage
-   is the scroller; the rail stands still against it. */
-.man-doc {
+.section {
   display: grid;
-  grid-template-columns: 10em minmax(0, 1fr);
-  gap: 0 3.5em;
-  align-items: start;
+  gap: var(--space-lg);
+  padding-block-end: var(--space-section);
 }
 
-.man-toc {
-  position: sticky;
-  top: 0;
-  border-right: 1px solid var(--ae-line);
-  padding: 0.2em 1.6em 0.6em 0;
+figcaption,
+.type-role,
+.type-row code,
+.swatch {
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  line-height: var(--mono-leading);
 }
 
-.man-toc-h {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--ae-ink-faint);
-  margin-bottom: 0.8em;
+figcaption,
+.type-role,
+.type-row code,
+.swatch code {
+  color: var(--muted);
 }
 
-.man-toc a {
-  display: block;
-  padding: 0.28em 0;
-  margin-block: 0;
+.tile {
+  display: grid;
+  place-items: center start;
+  padding: var(--card-padding);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
 }
 
-.man-toc .no {
-  font-family: var(--ae-font-mono);
-  color: var(--ae-ink-faint);
-  margin-right: 0.9em;
+.tile-light {
+  background: var(--color-canvas);
+  color: var(--color-ink);
 }
 
-.man-toc a[aria-current] {
-  color: var(--ae-ink);
-  font-weight: var(--ae-w-medium);
+.tile-ink {
+  background: var(--color-ink);
+  color: var(--color-surface);
 }
 
-/* a chapter: hairline-topped, whitespace-padded; the rule replaces the
-   group margin */
-.man-ch {
-  border-top: 1px solid var(--ae-line);
-  padding: 2.2em 0 2.6em;
-  margin-bottom: 0;
+.lockups,
+.specimens,
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-lg);
 }
 
-.man-ch:first-child {
-  border-top: 0;
-  padding-top: 0;
+.lockup,
+.symbols figure,
+.palette,
+.swatch,
+.specimen,
+.cards .sp-card {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
 }
 
-.man-ch:last-child {
-  padding-bottom: 0;
+.lockup .tile {
+  container-type: inline-size;
+  min-block-size: 8rem;
 }
 
-.man-ch p {
-  max-width: 36em;
+.lockup .ms-lockup {
+  font-size: min(var(--heading-size), 12cqi);
 }
 
-/* a demonstration: narrower than the prose, set off by a breath */
-.man-demo {
-  max-width: 34em;
-  margin-top: 1.2em;
+.symbols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  align-items: end;
 }
 
-.man-cap {
-  margin-top: 0.8em;
+.symbols .tile {
+  padding: var(--space-sm);
+  border-radius: var(--radius-control);
 }
 
-/* a second movement within one chapter */
-.man-gap {
-  margin-top: 2em;
-}
-
-.man-form .ae-input {
-  margin-bottom: 1.2em;
-}
-
-/* the law, ruled */
-.law-list {
-  list-style: none;
+.swatches,
+.type-scale {
   margin: 0;
   padding: 0;
-  max-width: 36em;
-  border-bottom: 1px solid var(--ae-line);
+  list-style: none;
 }
 
-.law-list li {
-  border-top: 1px solid var(--ae-line);
-  padding: 0.7em 0;
-}
-
-@media (max-width: 900px) {
-  .bar-end,
-  .site-bar {
-    align-items: flex-start;
-  }
-
-  .site-bar {
-    gap: 1em;
-  }
-
-  .hero-main {
-    width: min(var(--ae-measure-wide), 100% - 2rem);
-  }
-
-  .hero-copy {
-    max-width: 100%;
-    padding-block: 2rem;
-  }
-
-  .hero-bg::after {
-    background:
-      linear-gradient(90deg, var(--ae-surface) 0%, transparent 88%),
-      linear-gradient(
-        180deg,
-        var(--ae-surface) 0%,
-        transparent 35%,
-        var(--ae-surface) 100%
-      );
-    opacity: 0.82;
-  }
-
-  .man-doc {
-    grid-template-columns: 1fr;
-  }
-
-  .man-toc {
-    display: none;
-  }
-}
-
-@media (max-width: 620px) {
-  .site-bar {
-    flex-direction: column;
-  }
-
-  .site-bar .bar-links {
-    justify-content: flex-start;
-    gap: 0.9em 1.2em;
-  }
-
-  .site-footer {
-    align-items: center;
-  }
-}
-
-/* the register grid: three inks by three weights */
-.reg-grid {
+.swatches {
   display: grid;
-  grid-template-columns: auto repeat(3, minmax(0, 1fr));
-  gap: 0.1em 1.6em;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: var(--space-md);
+}
+
+.chip {
+  block-size: 4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr) auto;
+  gap: var(--space-lg);
   align-items: baseline;
+  padding-block: var(--space-md);
+  border-block-end: 1px solid var(--border);
 }
 
-.reg-grid .rh {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ae-ink-faint);
+.type-specimen {
+  overflow-wrap: anywhere;
 }
 
-.x-faint {
-  color: var(--ae-ink-faint);
-}
-.w4 {
-  font-weight: var(--ae-w-regular);
-}
-.w5 {
-  font-weight: var(--ae-w-medium);
-}
-.w8 {
-  font-weight: var(--ae-w-black);
+.specimens {
+  row-gap: var(--space-xl);
 }
 
-/* ── the catalog (primitives) ─────────────────────────────────────── */
-
-/* wide stages span the full viewport width so the scrollbar sits flush
-   at the browser edge; content is centered inside at the wide measure.
-   Applies to any direct child (.ae-view, .ae-group, etc.) so every wide
-   page — tokens, steering, catalog — gets the same flush scrollbar. */
-.ae-wide .ae-stage {
-  width: 100%;
-  margin-inline: 0;
+.specimen-wide {
+  grid-column: 1 / -1;
 }
 
-.ae-wide .ae-stage > * {
-  width: min(var(--ae-measure-wide), 100% - 5rem);
-  margin-inline: auto;
+.sp-card h4 {
+  font-family: var(--font-title);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: var(--title-leading);
+  letter-spacing: var(--title-tracking);
 }
 
-/* ── the gallery shell: sticky header + rail/desk band + sticky footer.
-   Every persistent-nav page (gallery, tokens, steering, law) composes
-   this way: .ae-screen (no page scroll) wraps a header .ae-bar, this
-   middle band, and a footer .ae-bar. The band reuses .ae-rail/.ae-desk
-   from the app-shell archetype — .gal-rail/.gal-desk only add the
-   width/fit rules this composition needs. ────────────────────────── */
-.gal-mid {
-  flex: 1;
-  min-height: 0;
-  width: min(var(--ae-measure-wide), 100% - 5rem);
-  margin-inline: auto;
+.site-footer {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* the desk scrolls; its scrollbar never shows. The chrome stands
-   still and the content moves under it, like paper behind a window. */
-.gal-mid .ae-desk {
-  scrollbar-width: none;
-}
-
-.gal-mid .ae-desk::-webkit-scrollbar {
-  display: none;
-}
-
-/* a focused plate heading is a screen-reader landing, not a control —
-   no ring on programmatic focus */
-.ae-view h2.ae-h:focus {
-  outline: none;
-}
-
-/* skip link: visually hidden until focused, first in the DOM */
-.gal-skip {
-  position: fixed;
-  top: -3em;
-  left: 1em;
-  z-index: var(--ae-z-toast);
-  background: var(--ae-surface);
-  color: var(--ae-ink);
-  border: 1px solid var(--ae-ink);
-  padding: 0.6em 1em;
-  transition: top var(--ae-quick) var(--ae-ease);
-}
-
-.gal-skip:focus {
-  top: 1em;
-}
-
-/* the topnav rides the header's chrome register, next to the toggle */
-.gal-topnav a[aria-current] {
-  color: var(--ae-ink);
-  text-decoration-color: var(--ae-ink);
-}
-
-/* ── the overview: a live specimen grid, grouped like the rail ────── */
-.gal-groups {
-  display: flex;
-  flex-direction: column;
-  gap: 2.2em;
-}
-
-.gal-group-h {
-  margin-bottom: 0.8em;
-}
-
-/* hairlines ride the cards, not the container: a short last row leaves
-   plain surface behind it, never a wash slab of exposed grid ground. */
-.gal-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  border-top: 1px solid var(--ae-line);
-  border-left: 1px solid var(--ae-line);
-}
-
-.gal-card {
-  background: var(--ae-surface);
-  border-right: 1px solid var(--ae-line);
-  border-bottom: 1px solid var(--ae-line);
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  text-decoration: none;
-  color: inherit;
-  animation: ae-enter var(--ae-soft) var(--ae-ease) both;
-  animation-delay: calc(var(--gal-i, 0) * 25ms);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gal-card {
-    animation: none;
-  }
-}
-
-.gal-card:focus-visible {
-  outline: 2px solid var(--ae-ink);
-  outline-offset: -2px;
-}
-
-/* the specimen: the live render on a wash ground, a fixed-height stage
-   so every card in a band reads at the same size regardless of how
-   little or much content its primitive needs — no card stretches into
-   dead wash, none look empty. Content that would overflow crops rather
-   than inflating the card (min-width: 0 keeps intrinsically-wide
-   children — tables, nav, SVGs — from pushing the grid track wider and
-   causing stage-level scroll). pointer-events: none — the card is the
-   link; the specimen only shows the look, never the behavior (the
-   detail view has the real thing). */
-.gal-specimen {
-  background: var(--ae-wash);
-  padding: 1.1em;
-  height: 6.5em;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
-.gal-specimen > * {
-  max-width: 100%;
-  min-width: 0;
-}
-
-.gal-meta {
-  padding: 0.6em 1.1em 0.7em;
-  border-top: 1px solid var(--ae-line);
-
-  /* absorbs row-height variance so neighbors never expose grid ground */
-  flex: 1;
-}
-
-.gal-meta-cls {
-  font-family: var(--ae-font-mono);
-  font-size: 13px;
-  color: var(--ae-ink);
-}
-
-.gal-card:hover .gal-meta-cls,
-.gal-card:focus-visible .gal-meta-cls {
-  color: var(--ae-accent);
-}
-
-/* specimen overrides: shrink dense primitives to fit the card */
-.gal-specimen .ae-table {
-  width: 100%;
-  table-layout: fixed;
-  font-size: 11px;
-}
-
-.gal-specimen .ae-table th,
-.gal-specimen .ae-table td {
-  padding: 0.15em 0.4em;
-  white-space: nowrap;
-}
-
-.gal-specimen .ae-toast {
-  position: relative;
-  bottom: auto;
-  right: auto;
-  max-width: none;
-  width: 100%;
-  animation: none;
-}
-
-.gal-specimen .ae-doc {
-  font-size: 13px;
-}
-
-.gal-specimen .ae-doc h2 {
-  margin: 0 0 0.2em;
-}
-
-.gal-specimen .ae-doc p {
-  margin: 0 0 0.2em;
-}
-
-.gal-specimen .ae-doc pre {
-  font-size: 11px;
-  padding: 0.3em 0.5em;
-  white-space: nowrap;
-}
-
-.gal-specimen .ae-flow,
-.gal-specimen .ae-plot {
-  width: 100%;
-  height: auto;
-}
-
-.gal-specimen .ae-panel,
-.gal-specimen .ae-plate {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* detail views: render beside canonical markup */
-.src-split {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 3.5em;
-  align-items: start;
-}
-
-@media (max-width: 900px) {
-  .src-split {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* soft-wrap: long lines wrap rather than clip or force a horizontal
-   scrollbar. A hanging indent keeps wrapped continuations legible
-   against the opening token. */
-.src-code {
-  background: var(--ae-wash);
-  border: 1px solid var(--ae-line);
-  padding: 1.6em;
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--ae-ink-muted);
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  padding-left: 2.4em;
-  text-indent: -0.8em;
-}
-
-.dark .src-code,
-[data-ae-mode='dark'] .src-code {
-  background: var(--ae-wash);
-  border-color: var(--ae-line);
-}
-
-.src-code .t {
-  color: var(--ae-ink);
-}
-
-/* copy affordance: a quiet chrome-register button per source block. The wrap
-   holds it fixed at the top-right. AA-contrast at rest (muted ink, not
-   faint) in both modes. */
-.src-codewrap {
-  position: relative;
-}
-
-.src-copy {
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-  overflow: hidden;
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ae-ink-muted);
-  background: var(--ae-surface);
-  border: 1px solid var(--ae-line);
-  padding: 0.3em 0.8em;
-  min-width: 4.6em;
-  min-height: 24px;
-  cursor: pointer;
-}
-
-.src-copy:hover,
-.src-copy:focus-visible {
-  color: var(--ae-ink);
-  border-color: var(--ae-ink-faint);
-}
-
-/* the copy confirm: the word itself flips to "copied" (so assistive tech
-   and toHaveText assertions read the real state, not a decorative
-   overlay) and a check glyph draws in beside it, once, then both revert
-   — the send-moment resolve, scoped to the site's own chrome. */
-.src-copy .cp-check {
-  display: inline-block;
-  width: 0;
-  margin-left: 0;
-  opacity: 0;
-  overflow: hidden;
-  vertical-align: -0.15em;
-  transition:
-    opacity var(--ae-gentle) var(--ae-ease),
-    width var(--ae-gentle) var(--ae-ease),
-    margin-left var(--ae-gentle) var(--ae-ease);
-}
-
-.src-copy.is-copied .cp-check {
-  width: 1.1em;
-  margin-left: 0.35em;
-  opacity: 1;
-}
-
-.src-copy.is-copied {
-  color: var(--ae-ink);
-  font-weight: var(--ae-w-medium);
-  border-color: var(--ae-ink-faint);
-}
-
-/* a plate trigger: run the behavior the specimen is otherwise static
-   about (send moment, toast, meter fill, flow advance) — the chrome
-   register, never a second button costume. */
-.plate-run {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ae-ink-muted);
-  background: transparent;
-  border: 1px solid var(--ae-line);
-  padding: 0.3em 0.8em;
-  min-height: 24px;
-  cursor: pointer;
-}
-
-.plate-run:hover,
-.plate-run:focus-visible {
-  color: var(--ae-ink);
-  border-color: var(--ae-ink-faint);
-}
-
-/* state matrices: a primitive shown in each of its states, so the law is
-   visible where consumers drift (disabled, error, loading, resolved) — not
-   just the happy path. The label is the 11px mono caption, the note 13px. */
-.states-cap {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--ae-ink-faint);
-  margin-bottom: 1.2em;
-}
-
-.states {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
-  gap: 1.8em 2.4em;
-  align-items: start;
-}
-
-.state {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7em;
-}
-
-.state-name {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--ae-ink-faint);
-}
-
-.state-demo {
-  min-height: 1.6em;
-}
-
-.state-note {
-  font-size: 13px;
-  color: var(--ae-ink-muted);
-}
-
-/* plate-to-plate steps ride the back-link line, right-aligned */
-.back-link {
-  margin-bottom: 1.6em;
-  display: flex;
-  justify-content: space-between;
-  gap: 1.6em;
-}
-
-/* small structural mock for the shell detail */
-.mini-shell {
-  border: 1px solid var(--ae-line);
-  font-size: 13px;
-  color: var(--ae-ink-muted);
-}
-
-.mini-shell .ms-bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.6em 1em;
-}
-
-.mini-shell .ms-stage {
-  border-block: 1px solid var(--ae-line);
-  padding: 2.2em 1em;
-  text-align: center;
-}
-
-/* bounded scroll sample for the stage-scroll detail */
-.scrollbox {
-  height: 8.5em;
-  overflow-y: auto;
-  border: 1px solid var(--ae-line);
-  padding: 0 1em;
-}
-
-/* ── the token reference (tokens.html) ────────────────────────────── */
-
-/* sections: hairline-topped like the manual's chapters */
-.tok-sec {
-  border-top: 1px solid var(--ae-line);
-  padding-top: 2em;
-  margin-top: 2.4em;
-}
-
-.tok-sec > p {
-  max-width: 40em;
-}
-
-/* the palette: token name, then its light and dark values side by side.
-   A dense reference reads in the 13px chrome register. */
-.tok-pal {
-  display: grid;
-  grid-template-columns: 11em minmax(0, 1fr) minmax(0, 1fr);
-  gap: 0.7em 2em;
-  align-items: center;
-  max-width: 40em;
-  margin-top: 1.4em;
-  font-size: 13px;
-}
-
-.tok-name {
-  display: flex;
-  flex-direction: column;
-}
-
-.tok-key {
-  font-family: var(--ae-font-mono);
-}
-
-.tok-role {
-  font-family: var(--ae-font-mono);
-  font-size: 11px;
-  color: var(--ae-ink-faint);
-}
-
-.tok-cell {
-  display: flex;
-  align-items: center;
-}
-
-/* the swatch: a square of the literal value (radius 0), a hairline so a
-   near-surface token still reads against the ground */
-.tok-sw {
-  display: inline-block;
-  width: 1.7em;
-  height: 1.7em;
-  margin-right: 0.7em;
-  border: 1px solid var(--ae-line);
-  flex: none;
-}
-
-.tok-hex {
-  font-family: var(--ae-font-mono);
-  color: var(--ae-ink-muted);
-}
-
-/* spec lists: term and value, both mono, 13px chrome register */
-.tok-spec {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.4em 1.5em;
-  align-items: baseline;
-  max-width: 40em;
-  margin-top: 1.4em;
-  font-size: 13px;
-}
-
-.tok-spec dt {
-  font-family: var(--ae-font-mono);
-  color: var(--ae-ink-muted);
-}
-
-.tok-spec dd {
-  margin: 0;
-  font-family: var(--ae-font-mono);
-}
-
-/* the two contrast plates, side by side until they crowd */
-.tok-plates {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5em;
-  align-items: start;
-  margin-top: 1.4em;
-}
-
-/* a contrast value that fails AA by contract: faint, never a red ✗ */
-.tok-dec {
-  color: var(--ae-ink-faint);
-}
-
-@media (max-width: 900px) {
-  .tok-plates {
-    grid-template-columns: 1fr;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  padding-block: var(--space-lg) var(--space-xl);
+  border-block-start: 1px solid var(--border);
+}
+
+@media (width < 48rem) {
+  .type-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
   }
 }

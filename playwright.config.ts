@@ -1,8 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
-/* the law gates run against the live site, served statically from the
-   repo root exactly as Pages serves it. Chromium only — the gate is
-   about the law, not engine matrices. */
+/* The browser proof runs against _site/, the artifact the pages workflow
+   deploys: the web server builds it, then serves it as static files. */
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -11,19 +10,12 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'list',
   use: {
     baseURL: 'http://127.0.0.1:8642',
-    viewport: { width: 390, height: 844 },
+    screenshot: 'only-on-failure',
   },
-  webServer: [
-    {
-      command: 'python3 -m http.server 8642 --bind 127.0.0.1',
-      url: 'http://127.0.0.1:8642/site/',
-      reuseExistingServer: !process.env.CI,
-    },
-    {
-      command:
-        'vite tests/fixtures/base-ui-app --host 127.0.0.1 --port 8643 --strictPort',
-      url: 'http://127.0.0.1:8643/',
-      reuseExistingServer: !process.env.CI,
-    },
-  ],
+  webServer: {
+    command:
+      'node scripts/build-site.mjs && python3 -m http.server 8642 --bind 127.0.0.1 --directory _site',
+    url: 'http://127.0.0.1:8642/',
+    reuseExistingServer: !process.env.CI,
+  },
 });

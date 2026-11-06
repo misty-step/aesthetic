@@ -6,7 +6,9 @@ explorations/lab-004/evidence/corpus/
 explorations/lab-005/evidence/screens/
 explorations/lab-006/dist/
 
+# npm run build:site
+_site/
+
 # playwright
 test-results/
 playwright-report/
-_site-kit-sample/

@@ -1,8 +1,11 @@
 name: pages
 
+# Deploys aesthetic.mistystep.io. Run it by hand after the ci workflow passes
+# on the same commit. npm run build:site writes _site/: site/, aesthetic.css
+# and brand/identity/ with its fonts, marks and icons, and it fails on any
+# reference the artifact cannot serve. It needs no installed packages.
+
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -22,11 +25,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      # cp -RL resolves the site/aesthetic.css symlink into a real file,
-      # so the published artifact is only the site — prototypes and the
-      # rest of the repo never reach the public URL.
-      - name: Stage the site
-        run: cp -RL site _site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run build:site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

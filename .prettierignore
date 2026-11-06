@@ -1,4 +1,4 @@
-# generated release notes artifacts (written by landmark after semantic-release)
+# release notes of the retired @misty-step/aesthetic package (history)
 docs/releases/
 
 # vendored third-party minified libraries (prototypes)
@@ -6,3 +6,6 @@ prototypes/*/vendor/
 
 # brand/ (configurator and @misty-step/brand) keeps its own formatting and checks (.github/workflows/brand.yml)
 brand/
+
+# scripts/build-design.mjs writes its frontmatter; designmd lint checks it
+DESIGN.md

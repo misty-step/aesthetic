@@ -1,0 +1,65 @@
+/* The demo site's own layout, as a consumer writes it: the package styles the type and the components, the page
+   owns its grid. DESIGN.md Layout: content up to 1200px with 24px gutters, sections 96px apart. Tokens only. */
+body { margin: 0; }
+.demo-nav, .demo, .demo-foot { box-sizing: border-box; width: 100%; max-width: calc(1200px + 2 * var(--space-lg)); margin-inline: auto; padding-inline: var(--space-lg); }
+.demo-nav {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-lg);
+  padding-block: var(--space-md); border-bottom: 1px solid var(--border);
+}
+.demo-nav > .ms-lockup { margin-right: auto; }
+.demo-links { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); font: var(--type-label); }
+.demo-links a { color: var(--ink); text-decoration: none; }
+.demo-links a:hover { color: var(--primary); }
+.demo-actions { display: flex; align-items: center; gap: var(--space-sm); }
+.demo { padding-bottom: var(--space-section); }
+.demo :is(h1, h2, h3) { margin: 0; }
+.demo-hero { display: grid; justify-items: start; gap: var(--space-lg); padding-block: var(--space-section) 0; }
+.demo-hero > h1 { max-width: 14em; }
+.demo-hero > .sp-command { width: min(100%, 44rem); }
+.demo-hero-mark { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; }
+.demo-hero-art { justify-self: end; width: min(100%, 22rem); }
+.demo-hero-art > .ms-mark { display: block; width: 100%; height: auto; }
+.demo-lede { max-width: 38em; margin: 0; }
+.demo-section { display: grid; gap: var(--space-lg); padding-top: var(--space-section); }
+.demo-stack { display: grid; align-content: start; gap: var(--space-md); min-width: 0; }
+.demo-stack > p { margin: 0; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+.demo-grid { display: grid; gap: var(--space-lg); grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.demo-split { display: grid; gap: var(--space-lg); grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+.demo-meta { font: var(--type-mono); letter-spacing: var(--mono-tracking); color: var(--muted); }
+
+.demo-tile, .demo-file {
+  display: grid; justify-items: start; align-content: space-between; gap: var(--space-lg); margin: 0;
+  padding: var(--card-padding); border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+}
+.demo-tile .ms-lockup { font-size: clamp(var(--title-size), 8vw, var(--heading-size)); }
+.demo-file img { display: block; max-width: 100%; height: auto; }
+.demo-grid > .demo-file img { width: min(100%, 10rem); }
+.demo-tile-ink { border-color: var(--color-ink); background: var(--color-ink); color: var(--color-dark-text); }
+.demo-tile-ink .demo-meta { color: var(--color-steel); }
+.demo-icons { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-md); }
+.demo-icons .demo-file { padding: var(--space-md); }
+.demo-icons img[width="90"] { border-radius: var(--radius-card); }
+
+.demo-swatches { display: grid; gap: var(--space-md) var(--space-lg); grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); margin: 0; padding: 0; list-style: none; }
+.demo-swatches li { display: grid; gap: var(--space-xs); font: var(--type-label); }
+.demo-chip { display: block; height: 4.5rem; border: 1px solid var(--border); border-radius: var(--radius-control); }
+
+.demo-type { display: grid; margin: 0; }
+.demo-type > div { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: var(--space-lg); align-items: baseline; padding-block: var(--space-lg); border-top: 1px solid var(--border); }
+.demo-type dt { display: grid; gap: var(--space-xs); font: var(--type-label); }
+.demo-type dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+.demo-steps { display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin: 0; padding: 0; list-style: none; }
+.demo-steps > li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-sm); }
+
+.demo-foot { display: grid; justify-items: start; gap: var(--space-md); padding-block: var(--space-xl); border-top: 1px solid var(--border); color: var(--muted); font: var(--type-label); }
+.demo-foot > p { margin: 0; }
+.demo-foot .ms-lockup { color: var(--ink); }
+
+@media (max-width: 800px) {
+  .demo-split, .demo-hero-mark { grid-template-columns: minmax(0, 1fr); }
+  .demo-hero-art { justify-self: start; width: min(100%, 14rem); }
+  .demo-type > div { grid-template-columns: minmax(0, 1fr); gap: var(--space-sm); }
+  .demo-hero, .demo-section { padding-top: var(--space-xl); }
+}

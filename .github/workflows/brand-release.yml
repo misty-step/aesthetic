@@ -33,7 +33,9 @@ jobs:
           cache: npm
           cache-dependency-path: brand/package-lock.json
       - run: npm ci --no-audit --no-fund
-      - name: identity/ matches the configurator's Locked preset
+      - name: DESIGN.md matches the locked token authority
+        run: node ../scripts/build-design.mjs --check
+      - name: identity/ matches the locked tokens and sources
         run: npm run identity:check
       - name: Pack and publish the release
         env:
