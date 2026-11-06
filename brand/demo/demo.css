@@ -32,7 +32,8 @@ body { margin: 0; }
   display: grid; justify-items: start; align-content: space-between; gap: var(--space-lg); margin: 0;
   padding: var(--card-padding); border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
 }
-.demo-tile .ms-lockup { font-size: clamp(var(--title-size), 8vw, var(--heading-size)); }
+.demo-tile { container-type: inline-size; }
+.demo-tile .ms-lockup { font-size: clamp(var(--title-size), 12cqi, var(--heading-size)); }
 .demo-file img { display: block; max-width: 100%; height: auto; }
 .demo-grid > .demo-file img { width: min(100%, 10rem); }
 .demo-tile-ink { border-color: var(--color-ink); background: var(--color-ink); color: var(--color-dark-text); }
